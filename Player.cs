@@ -58,6 +58,7 @@ public partial class Player : RigidBody3D//, InputActionListener
 		Vector3 curPos = GlobalTransform.Origin;
 		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
 		LinearVelocity = newVel;
+		GlobalPosition.MoveToward(nextPathPos, dt * 10);
 		GD.Print($"newvel={newVel}");
 		//ApplyCentralForce();
 		/*

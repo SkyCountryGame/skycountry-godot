@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgamse4kdh0p7"]
+
+[ext_resource type="Script" path="res://Player2.cs" id="1_3grmi"]
+[ext_resource type="Script" path="res://Camera.cs" id="1_qbohi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t7m4m"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qa7nr"]
+
+[node name="Player2" type="CharacterBody3D"]
+script = ExtResource("1_3grmi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.06, 0, 0, 0, 1.06, 0, 0, 0, 1.06, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_t7m4m")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="TwistPivot" type="Node3D" parent="."]
+
+[node name="PitchPivot" type="Node3D" parent="TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+script = ExtResource("1_qbohi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_qa7nr")

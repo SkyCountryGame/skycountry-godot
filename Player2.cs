@@ -50,6 +50,7 @@ public partial class Player2 : CharacterBody3D
 		Vector3 curPos = GlobalTransform.Origin;
 		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
 		GD.Print($"newvel={newVel}");
+		GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
 		//ApplyCentralForce();
 		/*
 		if (navAgent.AvoidanceEnabled)
@@ -63,8 +64,8 @@ public partial class Player2 : CharacterBody3D
 	}
 	public void SetTravelDestination(Vector3 pos)
 	{
-		navTargetPos = pos;
-		//navAgent.TargetPosition = pos;
+		//navTargetPos = pos;
+		navAgent.TargetPosition = pos;
 	}
 	/*
 	public override void _PhysicsProcess(double delta)

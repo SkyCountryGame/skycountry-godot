@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0i41rw5r6pd"]
+
+[ext_resource type="Script" path="res://FloorBody.cs" id="1_7kw0b"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ctsau"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_th67c"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r8avv"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="Floor" type="MeshInstance3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, -0.153785)
+mesh = SubResource("PlaneMesh_ctsau")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(12.5, 0, 0, 0, 12.5, 0, 0, 0, 12.5, 0, 0, 0.00768925)
+rotation_order = 0
+visible = false
+navigation_mesh = SubResource("NavigationMesh_th67c")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0, -0.00061514)
+script = ExtResource("1_7kw0b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_r8avv")
