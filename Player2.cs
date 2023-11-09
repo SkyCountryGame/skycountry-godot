@@ -1,13 +1,14 @@
 using Godot;
 using System;
-using System.Numerics;
-using SkyCountry;
-using Vector3 = Godot.Vector3;
 
-//currently this is the only script attached to the player, so it is acting as the playercontroller. 
-//the reason it's a RigidBody3D is because that's what the root scenenode of player is
-public partial class Player : RigidBody3D//, InputActionListener
+public partial class Player2 : CharacterBody3D
 {
+	public const float Speed = 5.0f;
+	public const float JumpVelocity = 4.5f;
+
+	// Get the gravity from the project settings to be synced with RigidBody nodes.
+	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	
 	private NavigationAgent3D navAgent;
 
 	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
@@ -18,7 +19,6 @@ public partial class Player : RigidBody3D//, InputActionListener
 		set { navAgent.TargetPosition = value; }
 	}
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
@@ -35,19 +35,11 @@ public partial class Player : RigidBody3D//, InputActionListener
 		
 		//CallDeferred("NavigationSetup");
 	}
-	
 	private async void Setup()
 	{
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		navTarget = navTargetPos;
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		
-	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
@@ -57,7 +49,6 @@ public partial class Player : RigidBody3D//, InputActionListener
 		Vector3 nextPathPos = navAgent.GetNextPathPosition();
 		Vector3 curPos = GlobalTransform.Origin;
 		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
-		LinearVelocity = newVel;
 		GD.Print($"newvel={newVel}");
 		//ApplyCentralForce();
 		/*
@@ -70,42 +61,40 @@ public partial class Player : RigidBody3D//, InputActionListener
 				//https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationagents.html
 		}*/
 	}
-	
-	public override void _Input(InputEvent @event){
-		//TODO make InputManager class
-		if (Input.IsActionPressed("player_action2"))
-		{ //set destination
-			navAgent.TargetPosition = Position + new Vector3(2, 0, 2);
-			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
-			//mEvent.Position;
-		}
-	}
-
-	public override void _InputEvent(Camera3D camera, InputEvent @event, Vector3 position, Vector3 normal, int shape_idx)
-	{
-		GD.Print($"{position}, {normal}, {shape_idx}");
-	}
-
 	public void SetTravelDestination(Vector3 pos)
 	{
 		navTargetPos = pos;
 		//navAgent.TargetPosition = pos;
 	}
-	
 	/*
-	public void HandleActionEnable(InputEventAction type, bool en)
+	public override void _PhysicsProcess(double delta)
 	{
-		//in the future i might actually want to use my own InputAction enum for further decoupling from godot or any engine
-		string t = type.AsText();
-		switch (t)
-		{
-			case "left":
-				break;
-		}
-	}
+		Vector3 velocity = Velocity;
 
-	public void HandleContinuousAction(InputEventAction a)
-	{
-		throw new NotImplementedException();
+		// Add the gravity.
+		if (!IsOnFloor())
+			velocity.Y -= gravity * (float)delta;
+
+		// Handle Jump.
+		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+			velocity.Y = JumpVelocity;
+
+		// Get the input direction and handle the movement/deceleration.
+		// As good practice, you should replace UI actions with custom gameplay actions.
+		Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		if (direction != Vector3.Zero)
+		{
+			velocity.X = direction.X * Speed;
+			velocity.Z = direction.Z * Speed;
+		}
+		else
+		{
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+		}
+
+		Velocity = velocity;
+		MoveAndSlide();
 	}*/
 }
