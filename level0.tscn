@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=9 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
-[ext_resource type="PackedScene" uid="uid://dgamse4kdh0p7" path="res://player2.tscn" id="4_40n2c"]
+[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player.tscn" id="3_53tcb"]
+[ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -40,5 +41,6 @@ navigation_mesh = SubResource("NavigationMesh_in3y1")
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("PlaneMesh_mu3m6")
 
-[node name="Player2" parent="." instance=ExtResource("4_40n2c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60584, 0)
+[node name="Marker3D" parent="." instance=ExtResource("3_hnujj")]
+
+[node name="Player" parent="." instance=ExtResource("3_53tcb")]

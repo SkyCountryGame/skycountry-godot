@@ -9,4 +9,7 @@
   <ItemGroup>
     <Content Include="README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Player_old.cs" />
+  </ItemGroup>
 </Project>
