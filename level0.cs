@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using SkyCountry;
 
 public partial class level0 : Node3D
 {
 	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
-
+	private World w;
 	private Camera3D cam;
 	
 	// Called when the node enters the scene tree for the first time.
@@ -12,6 +13,7 @@ public partial class level0 : Node3D
 	{
 		player =  GetNode<Player>("Player");
 		cam = GetNode<Camera3D>("Player/TwistPivot/PitchPivot/Camera3D");
+		w = new World();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

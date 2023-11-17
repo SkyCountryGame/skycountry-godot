@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
-[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player.tscn" id="3_53tcb"]
+[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player_old.tscn" id="3_53tcb"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -44,3 +44,4 @@ mesh = SubResource("PlaneMesh_mu3m6")
 [node name="Marker3D" parent="." instance=ExtResource("3_hnujj")]
 
 [node name="Player" parent="." instance=ExtResource("3_53tcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78254, 0)
