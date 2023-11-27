@@ -29,6 +29,10 @@ project/assembly_name="SkyCountry"
 
 script/search_in_file_extensions=PackedStringArray("gd", "gdshader", "cs")
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 left={

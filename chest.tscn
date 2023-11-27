@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://ih2e0himfm61"]
+[gd_scene load_steps=4 format=3 uid="uid://ih2e0himfm61"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_al5ey"]
+[ext_resource type="PackedScene" uid="uid://co2vvrm3umlll" path="res://Models/bowl.gltf" id="1_uhvdr"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u7vf3"]
-points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+[sub_resource type="SphereShape3D" id="SphereShape3D_81o81"]
+
+[sub_resource type="PlaceholderMesh" id="PlaceholderMesh_bwlj7"]
 
 [node name="Chest" type="RigidBody3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_al5ey")
+[node name="bowl" parent="." instance=ExtResource("1_uhvdr")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_u7vf3")
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.398785, 0)
+shape = SubResource("SphereShape3D_81o81")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaceholderMesh_bwlj7")

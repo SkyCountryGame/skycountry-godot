@@ -44,8 +44,8 @@ public partial class level0 : Node3D
 			
 		}
 
-        
-        
+		
+		
 		
 		
 	}
