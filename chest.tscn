@@ -11,7 +11,7 @@
 [node name="bowl" parent="." instance=ExtResource("1_uhvdr")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.398785, 0)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 shape = SubResource("SphereShape3D_81o81")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

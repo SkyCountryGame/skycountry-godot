@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=19 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
-[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player_old.tscn" id="3_53tcb"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
 [ext_resource type="AudioStream" uid="uid://hg8aoj086j4e" path="res://aud/mu_bg.ogg" id="5_45yjb"]
 [ext_resource type="PackedScene" uid="uid://ih2e0himfm61" path="res://chest.tscn" id="5_o36m4"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
+[ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
+[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player.tscn" id="9_ux5sx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -38,6 +39,7 @@ polygons = [PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Arr
 albedo_color = Color(0.298039, 0.298039, 0.301961, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qh0dp"]
+margin = 0.0
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -63,22 +65,26 @@ surface_material_override/0 = SubResource("StandardMaterial3D_xpqsc")
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+visible = false
 shape = SubResource("BoxShape3D_qh0dp")
 
 [node name="Marker3D" parent="." instance=ExtResource("3_hnujj")]
 
-[node name="Player" parent="." instance=ExtResource("3_53tcb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78254, 0)
-
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
 stream = ExtResource("5_45yjb")
-volume_db = -9.576
+volume_db = -38.826
 
 [node name="Chest" parent="." instance=ExtResource("5_o36m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53882, 1.33484)
 
 [node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, 4)
+visible = false
 
 [node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
+
+[node name="StaticOrbowl" parent="." instance=ExtResource("9_hydc3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.04544, 0, 4.05062)
+
+[node name="Player" parent="." instance=ExtResource("9_ux5sx")]

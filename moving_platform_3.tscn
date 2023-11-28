@@ -11,10 +11,8 @@ point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_j6quy"]
 
-[sub_resource type="Animation" id="Animation_h80yo"]
-resource_name = "move_platform"
-length = 2.0
-loop_mode = 2
+[sub_resource type="Animation" id="Animation_8y2q0"]
+length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -22,9 +20,9 @@ tracks/0/path = NodePath("PathFollow3D:progress_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 2)
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -60,8 +58,10 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_8y2q0"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_h80yo"]
+resource_name = "move_platform"
+length = 2.0
+loop_mode = 2
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -69,9 +69,9 @@ tracks/0/path = NodePath("PathFollow3D:progress_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
