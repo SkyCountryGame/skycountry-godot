@@ -3,12 +3,12 @@ using System;
 
 public partial class FloorBody : StaticBody3D
 {
-	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
+	private PlayerBase player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		player =  GetNode<Player>("../../../Player");
+		player =  GetNode<PlayerBase>("../../../PlayerBase");
 	}
 
 	

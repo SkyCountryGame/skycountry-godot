@@ -4,15 +4,15 @@ using SkyCountry;
 
 public partial class level0 : Node3D
 {
-	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
+	private PlayerBase player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
 	private World w;
 	private Camera3D cam;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		player =  GetNode<Player>("Player");
-		cam = GetNode<Camera3D>("Player/TwistPivot/PitchPivot/Camera3D");
+		player =  GetNode<PlayerBase>("PlayerBase");
+		cam = GetNode<Camera3D>("PlayerBase/TwistPivot/PitchPivot/Camera3D");
 		w = new World();
 	}
 
@@ -22,7 +22,7 @@ public partial class level0 : Node3D
 	}
 	
 	//perhaps all input should be handled here in this toplevel node, and then passed to the appropriate objects. at least this class should hold some type of INputManager
-	public override void _Input(InputEvent @event){
+	public override void _UnhandledInput(InputEvent @event){
 		if (@event is InputEventMouseButton ev && ev.ButtonIndex == MouseButton.Left && ev.IsReleased())
 		{
 			Vector2 screenPos = ev.Position;
@@ -32,8 +32,8 @@ public partial class level0 : Node3D
 
 			Vector3 p = NavigationServer3D.MapGetClosestPointToSegment(GetWorld3D().NavigationMap, rayStart, rayEnd);
 			player.SetTravelDestination(p);
-			var marker = GD.Load<PackedScene>("res://marker.tscn");
-			marker.Instantiate();
+			//var marker = GD.Load<PackedScene>("res://marker.tscn");
+			//marker.Instantiate();
 		} //TODO make InputManager class
 		else if (Input.IsActionPressed("player_action2"))
 		{ //set destination
@@ -49,5 +49,4 @@ public partial class level0 : Node3D
 		
 		
 	}
-	
 }

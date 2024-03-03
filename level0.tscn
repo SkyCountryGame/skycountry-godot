@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://ih2e0himfm61" path="res://chest.tscn" id="5_o36m4"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
+[ext_resource type="Script" path="res://PlayerBase.cs" id="9_gqrv1"]
 [ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
 [ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player_old.tscn" id="9_ux5sx"]
+[ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -43,8 +45,7 @@ emission_energy_multiplier = 2.15
 subsurf_scatter_enabled = true
 shadow_to_opacity = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qh0dp"]
-margin = 0.0
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -57,8 +58,9 @@ transform = Transform3D(0.954319, 0, -0.298791, 0.12963, 0.900986, 0.414029, 0.2
 visible = false
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(2.181, 0, 0, 0, 1, 0, 0, 0, 2.01, 0, 0, 0)
+transform = Transform3D(2.18, 0, 0, 0, 0.1, 0, 0, 0, 2.01, 0, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_in3y1")
+metadata/_edit_lock_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
@@ -67,12 +69,6 @@ material_overlay = SubResource("StandardMaterial3D_hmxmp")
 mesh = SubResource("PlaneMesh_mu3m6")
 surface_material_override/0 = SubResource("StandardMaterial3D_xpqsc")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
-visible = false
-shape = SubResource("BoxShape3D_qh0dp")
-
 [node name="Marker3D" parent="." instance=ExtResource("3_hnujj")]
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
@@ -80,6 +76,8 @@ volume_db = -38.826
 
 [node name="Chest" parent="." instance=ExtResource("5_o36m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53882, 1.33484)
+visible = false
+collision_layer = 3
 
 [node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, 4)
@@ -90,4 +88,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 [node name="StaticOrbowl" parent="." instance=ExtResource("9_hydc3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.04544, 0, 4.05062)
 
-[node name="Player" parent="." instance=ExtResource("9_ux5sx")]
+[node name="PlayerBase" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("9_gqrv1")
+
+[node name="PlayerMesh" type="MeshInstance3D" parent="PlayerBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_tlm4b")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="PlayerBase"]
+
+[node name="TwistPivot" type="Node3D" parent="PlayerBase"]
+
+[node name="PitchPivot" type="Node3D" parent="PlayerBase/TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="PlayerBase/TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+script = ExtResource("10_r1yr1")

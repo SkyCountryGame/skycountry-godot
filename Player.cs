@@ -49,7 +49,6 @@ public partial class Player : CharacterBody3D
 		Vector3 nextPathPos = navAgent.GetNextPathPosition();
 		Vector3 curPos = GlobalTransform.Origin;
 		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
-		GD.Print($"newvel={newVel}");
 		GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
 		//ApplyCentralForce();
 		/*

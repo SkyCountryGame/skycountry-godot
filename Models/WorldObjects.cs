@@ -1,3 +1,3 @@
-﻿struct Chest {
+﻿struct ChestMaybe {
     
 };

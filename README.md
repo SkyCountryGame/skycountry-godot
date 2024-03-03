@@ -4,4 +4,3 @@
 2. integrate the design into common godot engine design
 
 since this is my first time using godot, i'm going to start with #2 just to get something running quicker. but #1 is better for handling the case where we would switch to another engine, and might actually be a reason to switch to monogame (the fact that i've kind of made my own engine).
-
