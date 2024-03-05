@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ih2e0himfm61"]
+[gd_scene load_steps=6 format=3 uid="uid://ih2e0himfm61"]
 
 [ext_resource type="Script" path="res://Chest.cs" id="1_f5ldc"]
 [ext_resource type="PackedScene" uid="uid://co2vvrm3umlll" path="res://Models/bowl.gltf" id="1_uhvdr"]

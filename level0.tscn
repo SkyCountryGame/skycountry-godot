@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=19 format=3 uid="uid://ctvyxyregypno"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://PlayerBase.cs" id="9_gqrv1"]
 [ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
-[ext_resource type="PackedScene" uid="uid://c3x7gedyg0evh" path="res://player_old.tscn" id="9_ux5sx"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
