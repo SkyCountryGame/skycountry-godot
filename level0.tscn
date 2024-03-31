@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ctvyxyregypno"]
+[gd_scene load_steps=19 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
@@ -104,4 +104,5 @@ transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 
 
 [node name="Camera3D" type="Camera3D" parent="PlayerBase/TwistPivot/PitchPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+current = true
 script = ExtResource("10_r1yr1")

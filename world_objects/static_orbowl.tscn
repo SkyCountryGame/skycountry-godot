@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnob6v1h1hhs8"]
+[gd_scene load_steps=6 format=3 uid="uid://cnob6v1h1hhs8"]
 
 [ext_resource type="Script" path="res://world_objects/Orbowl.cs" id="1_kgi4p"]
 [ext_resource type="PackedScene" uid="uid://cjv8e6rqboxqt" path="res://assets/bowl.tscn" id="1_ktm1h"]

@@ -1,13 +1,15 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public partial class PlayerBase : Marker3D
+public partial class PlayerBase : Marker3D, Interactor
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private List<Interactable> availableInteractables = new List<Interactable>();
 	
 	private NavigationAgent3D navAgent;
 
@@ -51,8 +53,39 @@ public partial class PlayerBase : Marker3D
 	public override void _Process(double delta)
 	{
 	}
+
+	public override void _Input(){
+		if (Input.IsActionPressed("player_action2"))
+		{ //set destination
+			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
+			//mEvent.Position;
+		} else if (_Input.IsActionPressed("player_use")){
+			Interactable i = GetFirstInteractable();
+			if (i != null)
+			{
+				dynamic payload = i.Interact();
+				HandleInteract(i, payload);
+			}
+		} else if (Input.IsActionPressed("pause"))
+		{
+			
+		}
+	}
+
 	public void SetTravelDestination(Vector3 pos)
 	{
 		navAgent.TargetPosition = pos;
 	}
+
+    public void HandleInteract(Node interactionObj, dynamic payload)
+    {
+
+        throw new NotImplementedException();
+    }
+
+    public Interactable GetFirstInteractable()
+    {
+        return null;
+    }
+
 }
