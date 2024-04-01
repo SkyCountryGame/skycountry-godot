@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ih2e0himfm61" path="res://chest.tscn" id="5_o36m4"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
-[ext_resource type="Script" path="res://PlayerBase.cs" id="9_gqrv1"]
+[ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
 [ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 
@@ -87,22 +87,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 [node name="StaticOrbowl" parent="." instance=ExtResource("9_hydc3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.04544, 0, 4.05062)
 
-[node name="PlayerBase" type="Marker3D" parent="."]
+[node name="Player" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("9_gqrv1")
 
-[node name="PlayerMesh" type="MeshInstance3D" parent="PlayerBase"]
+[node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_tlm4b")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="PlayerBase"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
 
-[node name="TwistPivot" type="Node3D" parent="PlayerBase"]
+[node name="TwistPivot" type="Node3D" parent="Player"]
 
-[node name="PitchPivot" type="Node3D" parent="PlayerBase/TwistPivot"]
+[node name="PitchPivot" type="Node3D" parent="Player/TwistPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="PlayerBase/TwistPivot/PitchPivot"]
+[node name="Camera3D" type="Camera3D" parent="Player/TwistPivot/PitchPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
 current = true
 script = ExtResource("10_r1yr1")

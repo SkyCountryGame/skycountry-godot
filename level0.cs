@@ -4,16 +4,16 @@ using SkyCountry;
 
 public partial class level0 : Node3D
 {
-	private PlayerBase player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
+	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
 	private World w;
-	private Camera3D cam;
+	private Camera3D cam;	
 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		player =  GetNode<PlayerBase>("PlayerBase");
-		cam = GetNode<Camera3D>("PlayerBase/TwistPivot/PitchPivot/Camera3D");
+		player =  GetNode<Player>("Player");
+		cam = GetNode<Camera3D>("Player/TwistPivot/PitchPivot/Camera3D");
 		w = new World();
 	}
 

@@ -1,4 +1,4 @@
-using System;using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -33,5 +33,5 @@ public interface Interactable
     string Info();
 
     //can an interactor interact with this interactable? 
-    bool IsInteractionValid(GameObject interactor);
+    bool IsInteractionValid(Interactor interactor);
 }

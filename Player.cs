@@ -1,13 +1,15 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public partial class Player : CharacterBody3D
+public partial class Player : CharacterBody3D, Interactor
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private List<Interactable> availableInteractables = new List<Interactable>();
 	
 	private NavigationAgent3D navAgent;
 
@@ -18,7 +20,8 @@ public partial class Player : CharacterBody3D
 		get { return navAgent.TargetPosition;  }
 		set { navAgent.TargetPosition = value; }
 	}
-	
+
+	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
@@ -28,12 +31,6 @@ public partial class Player : CharacterBody3D
 		navAgent.PathDesiredDistance = .3f;
 		navAgent.TargetDesiredDistance = .3f;
 		Callable.From(Setup).CallDeferred();
-		/*navAgent.VelocityComputed += (Vector3 v) =>
-		{
-			navAgent.TargetPosition = navTarget;
-		};*/
-		
-		//CallDeferred("NavigationSetup");
 	}
 	private async void Setup()
 	{
@@ -50,20 +47,45 @@ public partial class Player : CharacterBody3D
 		Vector3 curPos = GlobalTransform.Origin;
 		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
 		GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
-		//ApplyCentralForce();
-		/*
-		if (navAgent.AvoidanceEnabled)
-		{
-			navAgent.SetVelocityForced(newVel);
-		}
-		else
-		{
-				//https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationagents.html
-		}*/
 	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+	public override void _UnhandledInput(InputEvent ev){
+		if (Input.IsActionPressed("player_action2"))
+		{ //set destination
+			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
+			//mEvent.Position;
+		} else if (Input.IsActionPressed("player_use")){
+			Interactable i = GetFirstInteractable();
+			if (i != null)
+			{
+				dynamic payload = i.Interact();
+				HandleInteract((Node)i, payload);
+			}
+		} else if (Input.IsActionPressed("pause"))
+		{
+			
+		}
+	}
+
 	public void SetTravelDestination(Vector3 pos)
 	{
-		//navTargetPos = pos;
 		navAgent.TargetPosition = pos;
 	}
+
+	public void HandleInteract(Node interactionObj, dynamic payload)
+	{
+
+		throw new NotImplementedException();
+	}
+
+	public Interactable GetFirstInteractable()
+	{
+		return null;
+	}
+
 }

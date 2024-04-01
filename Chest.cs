@@ -3,12 +3,12 @@ using System;
 
 public partial class Chest : RigidBody3D, Interactable
 {
-    public InteractionType interactionType => throw new NotImplementedException();
+	public InteractionType interactionType => throw new NotImplementedException();
 
-    public InteractionMethod interactionMethod => throw new NotImplementedException();
+	public InteractionMethod interactionMethod => throw new NotImplementedException();
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
 	{
 	}
 
@@ -33,30 +33,30 @@ public partial class Chest : RigidBody3D, Interactable
 		}
 	}
 
-    public dynamic Interact()
-    {
-        GD.Print("interact");
+	public dynamic Interact()
+	{
+		GD.Print("interact");
 		return null;
-    }
+	}
 
-    public void Retain()
-    {
-        throw new NotImplementedException();
-    }
+	public void Retain()
+	{
+		throw new NotImplementedException();
+	}
 
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
+	public void Clear()
+	{
+		throw new NotImplementedException();
+	}
 
-    public string Info()
-    {
-        throw new NotImplementedException();
-    }
+	public string Info()
+	{
+		throw new NotImplementedException();
+	}
 
-    public bool IsInteractionValid(GameObject interactor)
-    {
-        throw new NotImplementedException();
-    }
+	public bool IsInteractionValid(Interactor interactor)
+	{
+		throw new NotImplementedException();
+	}
 
 }
