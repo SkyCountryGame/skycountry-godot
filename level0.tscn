@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
 [ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
+[ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -45,6 +46,8 @@ subsurf_scatter_enabled = true
 shadow_to_opacity = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -106,3 +109,12 @@ transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
 current = true
 script = ExtResource("10_r1yr1")
+
+[node name="Area3D" type="Area3D" parent="Player"]
+script = ExtResource("10_2tvtr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
+shape = SubResource("SphereShape3D_s0opn")
+
+[node name="Popup" type="Popup" parent="."]
