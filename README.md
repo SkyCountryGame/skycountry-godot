@@ -8,5 +8,7 @@ since this is my first time using godot, i'm going to start with #2 just to get 
 
 -----
 
-2024/4/2: i am now separating out scripts that are attached to the game objects (scene nodes) from the controllers for those objects. each object script has a controller which extends ObjectController. The collideable objects have an Area3D node as child to represent a collision zone, which has a Collideable object script.
-actually i might not do any of that. it's not necessary; i thought it would be for a bit. the script itself will be the controller, just like with unity. i confused myself with the collider system. 
+2024/4/2: 
+move effects manager to project so we can keep track of what indicators and other stuff is temporarily displaying.
+clean up folder.
+maybe make a generalized script if there are enough things that need to be done in code that are common to every game object, then can just have a Controller object. 

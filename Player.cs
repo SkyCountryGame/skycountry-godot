@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public partial class Player : Marker3D, Collideable
 {
-	private PlayerController ctlr;
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
@@ -26,7 +25,6 @@ public partial class Player : Marker3D, Collideable
 	public override void _Ready()
 	{
 		base._Ready();
-		ctlr = new PlayerController(this);
 		navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		//would register controller if integrated with my architecture
 
@@ -92,7 +90,9 @@ public partial class Player : Marker3D, Collideable
 
     public void HandleCollide(ColliderZone zone, Node other)
     {
-        GD.Print("player collide ");
+        GD.Print($"player collide with {other.Name}, {zone}");
+		var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
+		AddChild(indicator);
     }
 
     public void HandleDecollide(ColliderZone zone, Node other)
