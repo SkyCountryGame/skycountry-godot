@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://world_objects/Orbowl.cs" id="1_kgi4p"]
 [ext_resource type="PackedScene" uid="uid://cjv8e6rqboxqt" path="res://assets/bowl.tscn" id="1_ktm1h"]
-[ext_resource type="Script" path="res://ColliderController.cs" id="3_hfjk8"]
+[ext_resource type="Script" path="res://CollideableObject.cs" id="3_hfjk8"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lxuha"]
 
