@@ -60,6 +60,7 @@ public partial class Player : Marker3D, Collideable
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
 		} else if (Input.IsActionPressed("player_use")){
+			GD.Print("player use");
 			Interactable i = GetFirstInteractable();
 			if (i != null)
 			{
@@ -91,7 +92,7 @@ public partial class Player : Marker3D, Collideable
     public void HandleCollide(ColliderZone zone, Node other)
     {
         GD.Print($"player collide with {other.Name}, {zone}");
-		ResourceManager.ShowText(other.Name, this, new Vector3(0,3,0));
+		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
 		//AddChild(indicator);
     }

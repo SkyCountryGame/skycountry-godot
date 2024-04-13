@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=22 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
 [ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
+[ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -119,3 +120,17 @@ transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
 shape = SubResource("SphereShape3D_s0opn")
 
 [node name="Popup" type="Popup" parent="."]
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_jp8nh")
+
+[node name="EventLog" type="ScrollContainer" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HUD/EventLog"]
+layout_mode = 2
