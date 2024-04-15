@@ -89,16 +89,16 @@ public partial class Player : Marker3D, Collideable
 		return null;
 	}
 
-    public void HandleCollide(ColliderZone zone, Node other)
-    {
-        GD.Print($"player collide with {other.Name}, {zone}");
+	public void HandleCollide(ColliderZone zone, Node other)
+	{
+		GD.Print($"player collide with {other.Name}, {zone}");
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
 		//AddChild(indicator);
-    }
+	}
 
-    public void HandleDecollide(ColliderZone zone, Node other)
-    {
-        throw new NotImplementedException();
-    }
+	public void HandleDecollide(ColliderZone zone, Node other)
+	{
+		throw new NotImplementedException();
+	}
 }
