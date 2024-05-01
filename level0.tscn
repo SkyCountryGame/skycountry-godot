@@ -53,6 +53,27 @@ shadow_to_opacity = true
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
 
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+script = ExtResource("11_jp8nh")
+
+[node name="EventLog" type="ScrollContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 1238.0
+offset_top = 745.0
+offset_right = 1881.0
+offset_bottom = 1006.0
+
+[node name="Label" type="Label" parent="HUD/EventLog"]
+custom_minimum_size = Vector2(200, 50)
+layout_direction = 1
+layout_mode = 2
+autowrap_mode = 2
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mck8e")
 
@@ -118,20 +139,3 @@ metadata/objtype = ""
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/CollisionZone0"]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
 shape = SubResource("SphereShape3D_s0opn")
-
-[node name="Popup" type="Popup" parent="."]
-
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("11_jp8nh")
-
-[node name="EventLog" type="ScrollContainer" parent="HUD"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="HUD/EventLog"]
-layout_mode = 2

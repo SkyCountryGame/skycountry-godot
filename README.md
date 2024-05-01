@@ -12,3 +12,5 @@ since this is my first time using godot, i'm going to start with #2 just to get 
 move effects manager to project so we can keep track of what indicators and other stuff is temporarily displaying.
 clean up folder.
 maybe make a generalized script if there are enough things that need to be done in code that are common to every game object, then can just have a Controller object. 
+
+https://www.reddit.com/r/godot/comments/16laocg/trouble_setting_up_godot_to_debug_c_code_in_vscode/

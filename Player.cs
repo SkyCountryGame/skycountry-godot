@@ -10,6 +10,9 @@ public partial class Player : Marker3D, Collideable
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	private List<Interactable> availableInteractables = new List<Interactable>();
+
+	[Export]
+	private HUDManager HUD;
 	
 	private NavigationAgent3D navAgent;
 
@@ -26,6 +29,7 @@ public partial class Player : Marker3D, Collideable
 	{
 		base._Ready();
 		navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		HUD = GetNode<HUDManager>("../HUD");
 		//would register controller if integrated with my architecture
 
 		navAgent.PathDesiredDistance = .3f;
@@ -60,12 +64,15 @@ public partial class Player : Marker3D, Collideable
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
 		} else if (Input.IsActionPressed("player_use")){
-			GD.Print("player use");
 			Interactable i = GetFirstInteractable();
 			if (i != null)
 			{
+				GD.Print("player use");
+				HUD.LogEvent("player use");
 				dynamic payload = i.Interact();
 				HandleInteract((Node)i, payload);
+			} else {
+				HUD.LogEvent("there is nothing with which to interact");
 			}
 		} else if (Input.IsActionPressed("pause"))
 		{
@@ -86,6 +93,10 @@ public partial class Player : Marker3D, Collideable
 
 	public Interactable GetFirstInteractable()
 	{
+		if (availableInteractables.Count > 0)
+		{
+			return availableInteractables[0];
+		}
 		return null;
 	}
 
@@ -95,6 +106,22 @@ public partial class Player : Marker3D, Collideable
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
 		//AddChild(indicator);
+
+		switch (zone){
+			case ColliderZone.Awareness0:
+				if (other is Interactable)
+				{
+					GD.Print($"{other.Name} is an interactable");
+					availableInteractables.Add((Interactable)other);
+				} else{
+					GD.Print("not an interactable");
+				}
+				break;
+			case ColliderZone.Awareness1:
+				break;
+			case ColliderZone.Body:
+				break;
+		}
 	}
 
 	public void HandleDecollide(ColliderZone zone, Node other)
