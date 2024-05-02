@@ -70,7 +70,7 @@ offset_right = 1881.0
 offset_bottom = 1006.0
 
 [node name="Label" type="Label" parent="HUD/EventLog"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(600, 50)
 layout_direction = 1
 layout_mode = 2
 autowrap_mode = 2

@@ -13,9 +13,9 @@ public class ResourceManager {
 
 
     //associate each godot node with the actual game object in the context of this game
-    public static Dictionary<Node, WorldObjectInfo> worldObjInfo = new Dictionary<Node, WorldObjectInfo>(); 
-
-    public static HashSet<Node> interactables = new HashSet<Node>(); //interactable objects in the game
+    public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
+    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
+    public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
     //NOTE: this might end up being a map, because we wont have interactables implemented by godot nodes, but by game objects
 
     //effects (such as floating text) that follow an in-game object
@@ -56,36 +56,46 @@ public class ResourceManager {
         removeText.Start();
     }
 
-    public static WorldObjectInfo GetWorldObject(Node obj){
-        //TODO might not be necessary
-        return worldObjInfo[obj];
+    public static void RegisterGameObject(Node node, GameObjectType type){
+        RegisterGameObject(node, node.Name, type);
     }
-
-    public static void RegisterGameObject(GameObjectConnector goc){
-
+    public static void RegisterGameObject(Node node, string name, GameObjectType type){
+        GameObject go;
+        if (!gameObjects.ContainsKey(node)){
+            go = new GameObject(node);
+            gameObjects.Add(node, go);
+        } else {
+            go = gameObjects[node];
+        }
+        switch(type){
+            case GameObjectType.Interactable:
+                interactables.Add((Interactable)node);
+                mapGameObjectToInteractable.Add(go, (Interactable)node);
+                break;
+            default:
+                break;
+        }
     }
 
     //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
-    public static Interactable GetInteractable(Node obj){
-        Node n = obj.GetParent();
-		if (interactables.Contains(n)){
-            return (Interactable) n;
+    public static Interactable GetInteractable(Node n){
+        GameObject go = GetGameObject(n);
+        if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
+            return mapGameObjectToInteractable[go];
+        }
+        return null;
+    }
+
+    public static GameObject GetGameObject(Node n){
+        if (gameObjects.ContainsKey(n)){
+            return gameObjects[n];
         }
         while (n.GetParent() != null){
 			n = n.GetParent();
-            if (interactables.Contains(n)){
-                return (Interactable) n;
+            if (gameObjects.ContainsKey(n)){
+                return gameObjects[n];
             }
 		}
         return null;
     }
-
-}
-
-public enum ObjectType {Entity, Prop, Structure, Item, Enemy, Friendly, Neutral};
-
-
-//NOTE: currently experimenting with different ways to represent this stuff
-public struct WorldObjectInfo{
-    public ObjectType type;
 }

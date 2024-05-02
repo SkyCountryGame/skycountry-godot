@@ -61,22 +61,21 @@ public partial class Player : Marker3D, Collideable, Interactor
 	}
 
 	public override void _UnhandledInput(InputEvent ev){
-		if (Input.IsActionPressed("player_action2"))
+		if (Input.IsActionJustPressed("player_action2"))
 		{ //set destination
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
-		} else if (Input.IsActionPressed("player_use")){
+		} else if (Input.IsActionJustPressed("player_use")){
 			Interactable i = GetFirstInteractable();
 			if (i != null)
 			{
-				GD.Print("player use");
-				HUD.LogEvent("player use");
+				HUD.LogEvent($"player use {((Node)i).Name}");
 				dynamic payload = i.Interact();
 				HandleInteract((Node)i, payload);
 			} else {
 				HUD.LogEvent("there is nothing with which to interact");
 			}
-		} else if (Input.IsActionPressed("pause"))
+		} else if (Input.IsActionJustPressed("pause"))
 		{
 			
 		}
@@ -104,16 +103,7 @@ public partial class Player : Marker3D, Collideable, Interactor
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		HashSet<Node> intrcbls = ResourceManager.interactables;
-		Dictionary<Node, WorldObjectInfo> woi = ResourceManager.worldObjInfo;
-		Node r = other.GetParent();
-		/*while (r.GetParent() != null){
-			r = other.GetParent();
-		}*/
-
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
-		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
-		//AddChild(indicator);
 
 		switch (zone){
 			case ColliderZone.Awareness0:
@@ -121,8 +111,6 @@ public partial class Player : Marker3D, Collideable, Interactor
 				if (i != null)
 				{
 					availableInteractables.Add(i);
-				} else{
-					GD.Print("not an interactable");
 				}
 				break;
 			case ColliderZone.Awareness1:

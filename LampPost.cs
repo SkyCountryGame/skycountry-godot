@@ -15,7 +15,8 @@ public partial class LampPost : Node, Interactable {
 
     public override void _Ready()
 	{
-        ResourceManager.interactables.Add(this);
+        //ResourceManager.interactables.Add(this);
+        ResourceManager.RegisterGameObject(this, GameObjectType.Interactable);
     }
 
     public void Clear()
@@ -30,6 +31,7 @@ public partial class LampPost : Node, Interactable {
 
     public dynamic Interact()
     {
+        //toggle lamp light
         return true;
     }
 
