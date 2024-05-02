@@ -1,15 +1,17 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 
-public partial class Player : Marker3D, Collideable
+public partial class Player : Marker3D, Collideable, Interactor
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-	private List<Interactable> availableInteractables = new List<Interactable>();
+	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 
 	[Export]
 	private HUDManager HUD;
@@ -95,24 +97,30 @@ public partial class Player : Marker3D, Collideable
 	{
 		if (availableInteractables.Count > 0)
 		{
-			return availableInteractables[0];
+			return availableInteractables.First();
 		}
 		return null;
 	}
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		GD.Print($"player collide with {other.Name}, {zone}");
+		HashSet<Node> intrcbls = ResourceManager.interactables;
+		Dictionary<Node, WorldObjectInfo> woi = ResourceManager.worldObjInfo;
+		Node r = other.GetParent();
+		/*while (r.GetParent() != null){
+			r = other.GetParent();
+		}*/
+
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
 		//AddChild(indicator);
 
 		switch (zone){
 			case ColliderZone.Awareness0:
-				if (other is Interactable)
+				Interactable i = ResourceManager.GetInteractable(other);
+				if (i != null)
 				{
-					GD.Print($"{other.Name} is an interactable");
-					availableInteractables.Add((Interactable)other);
+					availableInteractables.Add(i);
 				} else{
 					GD.Print("not an interactable");
 				}
@@ -126,6 +134,11 @@ public partial class Player : Marker3D, Collideable
 
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
-		throw new NotImplementedException();
+		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
+		Interactable i = ResourceManager.GetInteractable(other);
+		if (availableInteractables.Contains(i))
+		{
+			availableInteractables.Remove(i);
+		}
 	}
 }

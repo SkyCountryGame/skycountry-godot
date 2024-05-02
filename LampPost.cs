@@ -1,22 +1,17 @@
 using System;
 using Godot;
 
-
 /**
-    the idea here is to be able to attach this class to something in the godot editor and assign the exported properties from within the editor,
-    then in the code, there is a mapping between the names of the interactables and the functions that get executed upon interaction. 
+    this is an explicit implementation of an interactable lamppost
 */
-public partial class GenericInteractable : Node, Interactable {
+public partial class LampPost : Node, Interactable {
 	
 	[Export(PropertyHint.Enum, "interactionType")]
-	InteractionType interactionType;
+	InteractionType interactionType = InteractionType.General;
 
     public InteractionMethod interactionMethod => throw new NotImplementedException();
 
     InteractionType Interactable.interactionType => throw new NotImplementedException();
-
-    public Func<dynamic> interactionFunction;
-
 
     public override void _Ready()
 	{
@@ -35,7 +30,7 @@ public partial class GenericInteractable : Node, Interactable {
 
     public dynamic Interact()
     {
-        throw new NotImplementedException();
+        return true;
     }
 
     public bool IsInteractionValid(Interactor interactor)

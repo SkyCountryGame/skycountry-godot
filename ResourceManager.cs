@@ -5,10 +5,18 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Godot;
 
-/* EntityManager? ObjectManager? GameManager? */
+/* EntityManager? ObjectManager? GameManager? 
+    important idea here is to associate each game object with its godot node, to keep our code not dependent on game engine
+*/
 public class ResourceManager {
     public static PackedScene indicator; 
-    public static Dictionary<Node3D, WorldObjectInfo> worldObjInfo = new Dictionary<Node3D, WorldObjectInfo>(); //associate each object in the game with info about it
+
+
+    //associate each godot node with the actual game object in the context of this game
+    public static Dictionary<Node, WorldObjectInfo> worldObjInfo = new Dictionary<Node, WorldObjectInfo>(); 
+
+    public static HashSet<Node> interactables = new HashSet<Node>(); //interactable objects in the game
+    //NOTE: this might end up being a map, because we wont have interactables implemented by godot nodes, but by game objects
 
     //effects (such as floating text) that follow an in-game object
     //public static ConcurrentDictionary<string, (Node3D, Vector3)> followers = new ConcurrentDictionary<string, (Node3D, Vector3)>();
@@ -48,10 +56,36 @@ public class ResourceManager {
         removeText.Start();
     }
 
+    public static WorldObjectInfo GetWorldObject(Node obj){
+        //TODO might not be necessary
+        return worldObjInfo[obj];
+    }
+
+    public static void RegisterGameObject(GameObjectConnector goc){
+
+    }
+
+    //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
+    public static Interactable GetInteractable(Node obj){
+        Node n = obj.GetParent();
+		if (interactables.Contains(n)){
+            return (Interactable) n;
+        }
+        while (n.GetParent() != null){
+			n = n.GetParent();
+            if (interactables.Contains(n)){
+                return (Interactable) n;
+            }
+		}
+        return null;
+    }
+
 }
 
 public enum ObjectType {Entity, Prop, Structure, Item, Enemy, Friendly, Neutral};
 
+
+//NOTE: currently experimenting with different ways to represent this stuff
 public struct WorldObjectInfo{
     public ObjectType type;
 }

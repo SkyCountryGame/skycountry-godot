@@ -3,11 +3,28 @@
 using Godot;
 
 /**
-    * to associate data with generic game objects, and have the option to give it a controller for specific functionalities
+    * 
     */
-public abstract partial class GameObject : Node3D {
-    protected Node _o; //the in-game object
-    //controller here
+public abstract class GameObject {
+    protected Node gdNode; //the godot scene node
+
+    public GameObject(Node node){
+        gdNode = node;
+    }
+
+    public abstract void update(float dt);
+
+}
+
+/**
+*   connect a scene node to a GameObject in the editor 
+*/
+public abstract partial class GameObjectConnector : Node 
+{
+
+    public override void _Ready(){
+        //ResourceManager.RegisterGameObject((Node)this);
+    }
 
     [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]
     public ObjectType type {get; set;}
@@ -17,12 +34,4 @@ public abstract partial class GameObject : Node3D {
 
     [Export(PropertyHint.None, "note for object")]
 	public string devinfo {get; set;}
-
-
-    public GameObject(Node o){
-        _o = o;
-    }
-
-    public abstract void update(float dt);
-
 }
