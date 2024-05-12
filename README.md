@@ -1,14 +1,14 @@
-﻿this is the sky country unity game converted to a godot game. currently i am considering 2 different approaches. 
+﻿this is the sky country unity game converted to a godot game. 
 
-1. keep as much of the game code decoupled from godot engine stuff as possible. this means making a "godot controller adapter interface thing" to attach godot nodes to the C# controller class, making an input manager with enums for the actions, and similar things with the other classes in the existing unity project. 
-2. integrate the design into common godot engine design
+* development plan:
+here are some notes to organize my thoughts on the current architecture, how to approach development, and the current steps. 
 
-since this is my first time using godot, i'm going to start with #2 just to get something running quicker. but #1 is better for handling the case where we would switch to another engine, and might actually be a reason to switch to monogame (the fact that i've kind of made my own engine).
+- FOLDER STRUCTURE:
+	- currently it's a little messy, as i'm leaving almost all files in the root directory, because i don't want to prematurely confine us to any organizational system yet.
+	- some of the classes aren't even used. we will clean things up as the system evolves
+	
+- currently i'm in the process of setting up a way to connect "sky country game objects" to "godot scene nodes", so that in the game logic code, we only have to deal with skycountry game concepts. look at GameObject, GameObjectConnector, ResourceManager.RegisterGameObject(). it's still a WIP, and will probably evolve quite a bit. 
 
+- next i'm going to implement level switching, clean up some of the files, and implement lamp light toggling 
 
 -----
-
-2024/4/2: 
-move effects manager to project so we can keep track of what indicators and other stuff is temporarily displaying.
-clean up folder.
-maybe make a generalized script if there are enough things that need to be done in code that are common to every game object, then can just have a Controller object. 

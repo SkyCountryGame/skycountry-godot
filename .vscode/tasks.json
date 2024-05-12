@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        /*{
+            
+            "label": "build",
+            "command": "C:/Users/groth/Software/Godot_v4.2.2-stable_mono_win64/Godot_v4.2.2-stable_mono_win64_console.exe",
+            "type": "process",
+            "args": [
+                "--build-solutions",
+                "--path",
+                "${workspaceRoot}",
+                "--no-window",
+                "-q"
+            ],
+            "problemMatcher": "$msCompile"
+            
+        }*/
+    ]
+}

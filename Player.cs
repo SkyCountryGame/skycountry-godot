@@ -1,15 +1,20 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 
-public partial class Player : Marker3D, Collideable
+public partial class Player : Marker3D, Collideable, Interactor
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-	private List<Interactable> availableInteractables = new List<Interactable>();
+	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
+
+	[Export]
+	private HUDManager HUD;
 	
 	private NavigationAgent3D navAgent;
 
@@ -26,6 +31,7 @@ public partial class Player : Marker3D, Collideable
 	{
 		base._Ready();
 		navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		HUD = GetNode<HUDManager>("../HUD");
 		//would register controller if integrated with my architecture
 
 		navAgent.PathDesiredDistance = .3f;
@@ -55,19 +61,21 @@ public partial class Player : Marker3D, Collideable
 	}
 
 	public override void _UnhandledInput(InputEvent ev){
-		if (Input.IsActionPressed("player_action2"))
+		if (Input.IsActionJustPressed("player_action2"))
 		{ //set destination
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
-		} else if (Input.IsActionPressed("player_use")){
-			GD.Print("player use");
+		} else if (Input.IsActionJustPressed("player_use")){
 			Interactable i = GetFirstInteractable();
 			if (i != null)
 			{
+				HUD.LogEvent($"player use {((Node)i).Name}");
 				dynamic payload = i.Interact();
 				HandleInteract((Node)i, payload);
+			} else {
+				HUD.LogEvent("there is nothing with which to interact");
 			}
-		} else if (Input.IsActionPressed("pause"))
+		} else if (Input.IsActionJustPressed("pause"))
 		{
 			
 		}
@@ -86,19 +94,39 @@ public partial class Player : Marker3D, Collideable
 
 	public Interactable GetFirstInteractable()
 	{
+		if (availableInteractables.Count > 0)
+		{
+			return availableInteractables.First();
+		}
 		return null;
 	}
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		GD.Print($"player collide with {other.Name}, {zone}");
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
-		//var indicator = ResourceLoader.Load<PackedScene>("res://assets/indicator.tscn").Instantiate();
-		//AddChild(indicator);
+
+		switch (zone){
+			case ColliderZone.Awareness0:
+				Interactable i = ResourceManager.GetInteractable(other);
+				if (i != null)
+				{
+					availableInteractables.Add(i);
+				}
+				break;
+			case ColliderZone.Awareness1:
+				break;
+			case ColliderZone.Body:
+				break;
+		}
 	}
 
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
-		throw new NotImplementedException();
+		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
+		Interactable i = ResourceManager.GetInteractable(other);
+		if (availableInteractables.Contains(i))
+		{
+			availableInteractables.Remove(i);
+		}
 	}
 }

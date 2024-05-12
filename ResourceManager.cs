@@ -5,10 +5,18 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Godot;
 
-/* EntityManager? ObjectManager? GameManager? */
+/* EntityManager? ObjectManager? GameManager? 
+    important idea here is to associate each game object with its godot node, to keep our code not dependent on game engine
+*/
 public class ResourceManager {
     public static PackedScene indicator; 
-    public static Dictionary<Node3D, WorldObjectInfo> worldObjInfo = new Dictionary<Node3D, WorldObjectInfo>(); //associate each object in the game with info about it
+
+
+    //associate each godot node with the actual game object in the context of this game
+    public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
+    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
+    public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
+    //NOTE: this might end up being a map, because we wont have interactables implemented by godot nodes, but by game objects
 
     //effects (such as floating text) that follow an in-game object
     //public static ConcurrentDictionary<string, (Node3D, Vector3)> followers = new ConcurrentDictionary<string, (Node3D, Vector3)>();
@@ -48,10 +56,46 @@ public class ResourceManager {
         removeText.Start();
     }
 
-}
+    public static void RegisterGameObject(Node node, GameObjectType type){
+        RegisterGameObject(node, node.Name, type);
+    }
+    public static void RegisterGameObject(Node node, string name, GameObjectType type){
+        GameObject go;
+        if (!gameObjects.ContainsKey(node)){
+            go = new GameObject(node);
+            gameObjects.Add(node, go);
+        } else {
+            go = gameObjects[node];
+        }
+        switch(type){
+            case GameObjectType.Interactable:
+                interactables.Add((Interactable)node);
+                mapGameObjectToInteractable.Add(go, (Interactable)node);
+                break;
+            default:
+                break;
+        }
+    }
 
-public enum ObjectType {Entity, Prop, Structure, Item, Enemy, Friendly, Neutral};
+    //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
+    public static Interactable GetInteractable(Node n){
+        GameObject go = GetGameObject(n);
+        if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
+            return mapGameObjectToInteractable[go];
+        }
+        return null;
+    }
 
-public struct WorldObjectInfo{
-    public ObjectType type;
+    public static GameObject GetGameObject(Node n){
+        if (gameObjects.ContainsKey(n)){
+            return gameObjects[n];
+        }
+        while (n.GetParent() != null){
+			n = n.GetParent();
+            if (gameObjects.ContainsKey(n)){
+                return gameObjects[n];
+            }
+		}
+        return null;
+    }
 }

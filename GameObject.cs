@@ -3,26 +3,43 @@
 using Godot;
 
 /**
-    * to associate data with generic game objects, and have the option to give it a controller for specific functionalities
+    * 
     */
-public abstract partial class GameObject : Node3D {
-    protected Node _o; //the in-game object
-    //controller here
+public class GameObject {
+    protected Node gdNode; //the godot scene node
+    public string desc_short;
+    public string desc_long;
+    
+    public GameObject(Node node){
+        gdNode = node;
+    }
+
+    //public void update(float dt);
+
+}
+
+/**
+*   connect a scene node to a GameObject in the editor 
+*/
+public abstract partial class GameObjectConnector : Node 
+{
+
+    public override void _Ready(){
+        ResourceManager.RegisterGameObject((Node)this, Name, type);
+    }
 
     [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]
-    public ObjectType type {get; set;}
+    public GameObjectType type {get; set;}
 
     [Export(PropertyHint.ArrayType, "What quests are this object related to? This could affect gameplay and story.")]
     public int[] questIDs {get; set;}
 
     [Export(PropertyHint.None, "note for object")]
 	public string devinfo {get; set;}
+}
 
-
-    public GameObject(Node o){
-        _o = o;
-    }
-
-    public abstract void update(float dt);
-
+public enum GameObjectType {Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light};
+//NOTE: currently experimenting with different ways to represent this stuff
+public struct WorldObjectInfo{
+    public GameObjectType type;
 }
