@@ -1,11 +1,12 @@
+using Godot;
 using System;
 
-public class Talker : Interactable {
+public interface Talker : Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
-    public InteractionMethod interactionMethod { get => interactionMethod.Use; }
+    public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 
-    [Export("dialogue")]
-    public Dialogue dialogue;
+    //[Export(PropertyHint.None, "dialogue")]
+    public Dialogue dialogue;   
 
     //start dialogue when player interacts
     public dynamic Interact()
@@ -27,4 +28,15 @@ public class Talker : Interactable {
     {
         return true;
     }
+
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsInteractionValid(Interactor interactor)
+    {
+        throw new NotImplementedException();
+    }
+
 }

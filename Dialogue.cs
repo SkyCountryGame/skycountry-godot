@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Godot;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,7 +27,8 @@ public class Dialogue
             dialogueCurrentPoint = dialogueTree.root;
         } else if (responsesToSilence != null && responsesToSilence.Count > 0)
         {
-            return responsesToSilence[Random.Range(0, responsesToSilence.Count)];
+            Random rand = new Random();
+            return responsesToSilence[rand.Next(0, responsesToSilence.Count)];
         }
 
         return dialogueCurrentPoint.value;
