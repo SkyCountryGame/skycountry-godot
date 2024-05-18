@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /*
  * represents a conversation between the player and another character. keeps track of progression through the dialogue. 
  **/
-public class Dialogue
+public partial class Dialogue : Resource
 {
     //dialogue is a tree. root is always from the NPC, though they may say nothing.
     public Graph<string> dialogueTree;

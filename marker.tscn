@@ -1,4 +1,0 @@
-[gd_scene format=3 uid="uid://dmcxeawr0yxvx"]
-
-[node name="Marker3D" type="Marker3D"]
-gizmo_extents = 0.57

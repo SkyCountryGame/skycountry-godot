@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public interface Talker : Interactable {
+public partial class Talker : Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
     public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 

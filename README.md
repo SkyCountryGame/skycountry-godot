@@ -11,4 +11,11 @@ here are some notes to organize my thoughts on the current architecture, how to 
 
 - next i'm going to implement level switching, clean up some of the files, and implement lamp light toggling 
 
+FILE CLEANUP and ORGANIZE:
+	- categories of scenes (*.tscn)
+		- things that spawn into the world upon certain events, like bullets or a specific NPC
+		- levels. a relationship between nodes that comprise a playable world of game
+	- categories of code (*.cs)
+		- 
+
 -----

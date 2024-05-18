@@ -1,14 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
-[ext_resource type="PackedScene" uid="uid://dmcxeawr0yxvx" path="res://marker.tscn" id="3_hnujj"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
-[ext_resource type="PackedScene" uid="uid://ih2e0himfm61" path="res://chest.tscn" id="5_o36m4"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
-[ext_resource type="PackedScene" uid="uid://cnob6v1h1hhs8" path="res://world_objects/static_orbowl.tscn" id="9_hydc3"]
 [ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 [ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
@@ -94,15 +91,8 @@ material_overlay = SubResource("StandardMaterial3D_hmxmp")
 mesh = SubResource("PlaneMesh_mu3m6")
 surface_material_override/0 = SubResource("StandardMaterial3D_xpqsc")
 
-[node name="Marker3D" parent="." instance=ExtResource("3_hnujj")]
-
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
 volume_db = -38.826
-
-[node name="Chest" parent="." instance=ExtResource("5_o36m4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53882, 12.8269)
-visible = false
-collision_layer = 3
 
 [node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, -11.578)
@@ -112,20 +102,17 @@ interactionType = 3
 [node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
-[node name="StaticOrbowl" parent="." instance=ExtResource("9_hydc3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4959, 0, 4.05062)
-
-[node name="Player" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="Player" type="Node3D" parent="."]
 script = ExtResource("9_gqrv1")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 mesh = SubResource("CapsuleMesh_tlm4b")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
 
 [node name="TwistPivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="PitchPivot" type="Node3D" parent="Player/TwistPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 0, 0)
@@ -136,6 +123,7 @@ current = true
 script = ExtResource("10_r1yr1")
 
 [node name="CollisionZone0" type="Area3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("10_2tvtr")
 metadata/objtype = ""
 
