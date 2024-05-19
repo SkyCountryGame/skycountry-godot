@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
@@ -49,6 +49,10 @@ shadow_to_opacity = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2kcn"]
+radius = 0.497713
+height = 2.01993
 
 [sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
 
@@ -108,7 +112,7 @@ interactionType = 3
 [node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
-[node name="Player" type="Node3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("9_gqrv1")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
@@ -136,6 +140,10 @@ metadata/objtype = ""
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/CollisionZone0"]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
 shape = SubResource("SphereShape3D_s0opn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99445, 0)
+shape = SubResource("CapsuleShape3D_o2kcn")
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)

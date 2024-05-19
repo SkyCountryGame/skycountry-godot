@@ -1,10 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Linq;
 
-public partial class Player : Node3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
@@ -19,7 +18,14 @@ public partial class Player : Node3D, Collideable, Interactor
 	private NavigationAgent3D navAgent;
 
 	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
+	
+	private MovementType movementType = MovementType.WASD;
 
+	public enum MovementType
+	{
+		WASD,
+		Mouse
+	}
 	public Vector3 navTarget
 	{
 		get { return navAgent.TargetPosition;  }
@@ -45,14 +51,28 @@ public partial class Player : Node3D, Collideable, Interactor
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		base._PhysicsProcess(delta);
-		if (navAgent.IsNavigationFinished()) return;
-		float dt = (float)delta;
+		GD.Print(movementType.ToString());
+		if (movementType == MovementType.WASD)
+		{
+			var velocity = Vector3.Zero;
+			velocity.X += Input.GetAxis("left", "right");
+			velocity.Z += Input.GetAxis("forward", "backward");
+			velocity = velocity.Normalized() * 500 * (float)delta;
+			Velocity = velocity;
+			GD.Print(velocity);
+			MoveAndSlide();
+		}
+		else if (movementType == MovementType.Mouse)
+		{
+			base._PhysicsProcess(delta);
+			if (navAgent.IsNavigationFinished()) return;
+			float dt = (float)delta;
 
-		Vector3 nextPathPos = navAgent.GetNextPathPosition();
-		Vector3 curPos = GlobalTransform.Origin;
-		Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
-		GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
+			Vector3 nextPathPos = navAgent.GetNextPathPosition();
+			Vector3 curPos = GlobalTransform.Origin;
+			Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
+			GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

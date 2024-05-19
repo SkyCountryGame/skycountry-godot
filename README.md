@@ -1,4 +1,4 @@
-﻿this is the sky country unity game converted to a godot game. 
+this is the sky country unity game converted to a godot game. 
 
 * development plan:
 here are some notes to organize my thoughts on the current architecture, how to approach development, and the current steps. 
