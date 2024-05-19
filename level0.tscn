@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
 [ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
+[ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
+[ext_resource type="Script" path="res://Dialogue.cs" id="11_6v5jl"]
 [ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -47,6 +49,10 @@ shadow_to_opacity = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -130,3 +136,18 @@ metadata/objtype = ""
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/CollisionZone0"]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
 shape = SubResource("SphereShape3D_s0opn")
+
+[node name="Clerk" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
+script = ExtResource("10_mxve8")
+dialogue = ExtResource("11_6v5jl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Clerk"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Clerk/StaticBody3D"]
+mesh = SubResource("TorusMesh_cl3xm")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Clerk/StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_jdkl7")

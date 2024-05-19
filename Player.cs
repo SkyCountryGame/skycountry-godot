@@ -15,7 +15,7 @@ public partial class Player : Node3D, Collideable, Interactor
 
 	[Export]
 	private HUDManager HUD;
-	
+
 	private NavigationAgent3D navAgent;
 
 	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
@@ -69,9 +69,9 @@ public partial class Player : Node3D, Collideable, Interactor
 			Interactable i = GetFirstInteractable();
 			if (i != null)
 			{
-				HUD.LogEvent($"player use {((Node)i).Name}");
+				//was for dbging HUD.LogEvent($"player use {((Node)i).Name}");
 				dynamic payload = i.Interact();
-				HandleInteract((Node)i, payload);
+				HandleInteract(i, (Node)i, payload);
 			} else {
 				HUD.LogEvent("there is nothing with which to interact");
 			}
@@ -86,10 +86,25 @@ public partial class Player : Node3D, Collideable, Interactor
 		navAgent.TargetPosition = pos;
 	}
 
-	public void HandleInteract(Node interactionObj, dynamic payload)
+	public void HandleInteract(Interactable i, Node interactionObj, dynamic payload)
 	{
-
-		throw new NotImplementedException();
+		switch (i.interactionType)
+		{
+			case InteractionType.Dialogue:
+				ResourceManager.SpawnFloatingText("dialogue_initiation", payload, this, new Vector3(0, 3, 0));
+				HUD.LogEvent($"talking to someone"); //TODO name of talker
+				break;
+			case InteractionType.Inventory:
+				break;
+			case InteractionType.Pickup:
+				break;
+			case InteractionType.General:
+				break;
+			case InteractionType.Mineable:
+				break;
+			default:
+				break;
+		}
 	}
 
 	public Interactable GetFirstInteractable()
@@ -103,6 +118,7 @@ public partial class Player : Node3D, Collideable, Interactor
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
+		//TODO get the actual text to spawn
 		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 
 		switch (zone){

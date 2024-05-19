@@ -14,6 +14,9 @@ public partial class Dialogue : Resource
 
     public List<string> responsesToSilence;
 
+    [Export]
+    public int testExp; 
+
     public Dialogue(string start)
     {
         dialogueTree = new Graph<string>(start);

@@ -3,6 +3,13 @@
 * development plan:
 here are some notes to organize my thoughts on the current architecture, how to approach development, and the current steps. 
 
+TODO:
+	- automatically set CollisionShape transform from parent Body3D on load
+	- currently collision logic is handled in Player, because it extends Collideable. decide if this is the best implementation. will there ever be a case where it better to have logic in the object, inanimate or not?
+	- traversing up node tree to find associated node, for maps. did i already deal with this? 
+	- Interactor.HandleInteract() should take a GameObject instead of Node probably 
+	
+	
 - FOLDER STRUCTURE:
 	- currently it's a little messy, as i'm leaving almost all files in the root directory, because i don't want to prematurely confine us to any organizational system yet.
 	- some of the classes aren't even used. we will clean things up as the system evolves
@@ -17,5 +24,9 @@ FILE CLEANUP and ORGANIZE:
 		- levels. a relationship between nodes that comprise a playable world of game
 	- categories of code (*.cs)
 		- 
-
+	- what do with Controllers. 
+		
+		
+EXPLANATION of SYSTEMS:
+	- game object registration. ResourceManager.RegisterGameObject()
 -----

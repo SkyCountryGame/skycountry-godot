@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ytie7onnkebe"
-path.s3tc="res://.godot/imported/bowl_Opensuse_lightray_nologo.png-89f8d81e34a32bb432afd08a3cdcc831.s3tc.ctex"
+path.s3tc="res://.godot/imported/bowl_Opensuse_lightray_nologo.png-15c7fdf4e1f30a9ae1c6b001a0daec88.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://Models/bowl_Opensuse_lightray_nologo.png"
-dest_files=["res://.godot/imported/bowl_Opensuse_lightray_nologo.png-89f8d81e34a32bb432afd08a3cdcc831.s3tc.ctex"]
+source_file="res://assets/bowl/bowl_Opensuse_lightray_nologo.png"
+dest_files=["res://.godot/imported/bowl_Opensuse_lightray_nologo.png-15c7fdf4e1f30a9ae1c6b001a0daec88.s3tc.ctex"]
 
 [params]
 

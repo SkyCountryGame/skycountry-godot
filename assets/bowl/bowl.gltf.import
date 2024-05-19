@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://co2vvrm3umlll"
-path="res://.godot/imported/bowl.gltf-2b9a4363682328f037bffd18b837417a.scn"
+path="res://.godot/imported/bowl.gltf-b3078680cf3fcb5f6e67a2a0a10f8c95.scn"
 
 [deps]
 
-source_file="res://Models/bowl.gltf"
-dest_files=["res://.godot/imported/bowl.gltf-2b9a4363682328f037bffd18b837417a.scn"]
+source_file="res://assets/bowl/bowl.gltf"
+dest_files=["res://.godot/imported/bowl.gltf-b3078680cf3fcb5f6e67a2a0a10f8c95.scn"]
 
 [params]
 

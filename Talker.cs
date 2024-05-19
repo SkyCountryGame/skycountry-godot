@@ -1,16 +1,21 @@
 using Godot;
 using System;
 
-public partial class Talker : Interactable {
+public partial class Talker : Node, Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
     public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 
-    //[Export(PropertyHint.None, "dialogue")]
-    public Dialogue dialogue;   
+    [Export(PropertyHint.None, "dialogue")]
+    public Dialogue dialogue;
+
+    public override void _Ready(){
+        ResourceManager.RegisterGameObject(this, GameObjectType.Interactable);
+    }
 
     //start dialogue when player interacts
     public dynamic Interact()
     {
+
         return dialogue.Next();
     }
 
