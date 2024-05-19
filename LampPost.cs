@@ -5,13 +5,13 @@ using Godot;
     this is an explicit implementation of an interactable lamppost
 */
 public partial class LampPost : Node, Interactable {
-	
-	[Export(PropertyHint.Enum, "interactionType")]
-	InteractionType interactionType = InteractionType.General;
+
 
     public InteractionMethod interactionMethod => throw new NotImplementedException();
 
-    InteractionType Interactable.interactionType => throw new NotImplementedException();
+  	//[Export(PropertyHint.Enum, "interactionType")]
+    public InteractionType interactionType => InteractionType.General;
+
 
     public override void _Ready()
 	{
