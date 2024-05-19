@@ -24,9 +24,13 @@ public class Graph<T> : ICollection<T>
     {
         adjacencyList = new Dictionary<Node, List<Node>>();
         nodes = new HashSet<Node>();
-        Node n = new Node(rootNodeValue);
-        nodes.Add(n);
-        root = n;
+        if (rootNodeValue != null){
+            Node n = new Node(rootNodeValue);
+            nodes.Add(n);
+            root = n;
+            this.n = 1;
+        }
+        
     }
 
     public void Add(T item)

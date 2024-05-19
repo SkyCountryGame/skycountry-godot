@@ -8,7 +8,7 @@ TODO:
 	- currently collision logic is handled in Player, because it extends Collideable. decide if this is the best implementation. will there ever be a case where it better to have logic in the object, inanimate or not?
 	- traversing up node tree to find associated node, for maps. did i already deal with this? 
 	- Interactor.HandleInteract() should take a GameObject instead of Node probably 
-	
+	- check player collidabeshape situation
 	
 - FOLDER STRUCTURE:
 	- currently it's a little messy, as i'm leaving almost all files in the root directory, because i don't want to prematurely confine us to any organizational system yet.

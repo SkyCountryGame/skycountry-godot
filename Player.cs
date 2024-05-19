@@ -21,10 +21,27 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	
 	private MovementType movementType = MovementType.WASD;
 
+	private State activityState = State.DEFAULT;
+	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+
 	public enum MovementType
 	{
 		WASD,
 		Mouse
+	}
+	private enum State //maybe activity state? 
+	{
+		DEFAULT, 
+        CHARGING, //preparing to roll
+        ROLLING, 
+        PREPARING, //preparing to attack 
+        ATTACKING,
+        COOLDOWN,
+        HEALING,
+        RELOADING,
+        AIMING, //this could be different instance flag
+        INVENTORY, //in an inventory menu
+        BUSY, //talking to something, mining, 
 	}
 	public Vector3 navTarget
 	{
@@ -43,7 +60,51 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		navAgent.PathDesiredDistance = .3f;
 		navAgent.TargetDesiredDistance = .3f;
 		Callable.From(Setup).CallDeferred();
+
+		dS = new Dictionary<State, HashSet<State>>();
+        dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.BUSY});
+        dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
+        dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
+        dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
+        dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+        dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
+        dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
+        dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
+        dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
+        dS.Add(State.BUSY, new HashSet<State>() { State.DEFAULT });
 	}
+
+	private void UpdateState(State ps){
+		State prev = ps; //some states need to know previous
+		if (dS[activityState].Contains(ps)){
+			activityState = ps;
+			switch (activityState){
+				case State.DEFAULT:
+					break;
+				case State.CHARGING:
+					break;
+				case State.ROLLING:
+					break;
+				case State.PREPARING:
+					break;
+				case State.ATTACKING:
+					break;
+				case State.COOLDOWN:
+					break;
+				case State.HEALING:
+					break;
+				case State.RELOADING:
+					break;
+				case State.AIMING:
+					break;
+				case State.INVENTORY:
+					break;
+				case State.BUSY:
+					break;
+			}
+		}
+	}
+
 	private async void Setup()
 	{
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
@@ -111,8 +172,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				ResourceManager.SpawnFloatingText("dialogue_initiation", payload, this, new Vector3(0, 3, 0));
-				HUD.LogEvent($"talking to someone"); //TODO name of talker
+				UpdateState(State.BUSY);
+				HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
 			case InteractionType.Inventory:
 				break;

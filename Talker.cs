@@ -5,11 +5,12 @@ public partial class Talker : Node, Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
     public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 
-    [Export(PropertyHint.None, "dialogue")]
+    //[Export(PropertyHint.None, "dialogue")]
     public Dialogue dialogue;
 
     public override void _Ready(){
         ResourceManager.RegisterGameObject(this, GameObjectType.Interactable);
+        dialogue = new Dialogue("Hello"); //TODO load from config file that specifies what npc says what
     }
 
     //start dialogue when player interacts

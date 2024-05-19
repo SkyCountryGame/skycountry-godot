@@ -8,11 +8,22 @@ using Godot;
 public partial class HUDManager : Node {
 
     public Node eventLog;
+    public BoxContainer dialoguePanel;
+    private RichTextLabel dialogueText;
+
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
 
+    enum State {
+        DEFAULT,
+        DIALOGUE
+    }
+    private State state = State.DEFAULT;
+
     public override void _Ready(){
         eventLog = GetNode("EventLog");
+        dialoguePanel = GetNode<BoxContainer>("DialoguePanel");
+        dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
         messages = new ConcurrentQueue<string>();
     }
 
@@ -23,15 +34,38 @@ public partial class HUDManager : Node {
         }
     }
 
+    private void UpdateState(State s){
+        switch (s){
+            case State.DEFAULT:
+                dialoguePanel.Visible = false;
+                state = s;
+                break;
+            case State.DIALOGUE:
+                dialoguePanel.Visible = true;
+                state = s;
+                break;
+        }
+    }
+
     /**
      * update the event log on the HUD with the list of messages
      */
-    public void UpdateEventLog(){
+    private void UpdateEventLog(){
         string eventLogText = "";
         foreach (string s in messages){
             eventLogText += s + "\n";
         }
         eventLog.GetNode<Label>("Label").Text = eventLogText;
+    }
+
+    public void ShowDialogue(string msg){
+        //show the dialogue without text disappearing
+        UpdateState(State.DIALOGUE);
+        dialogueText.Text = msg;
+    }
+
+    public void HideDialogue(){
+        UpdateState(State.DEFAULT);
     }
 
     /**
