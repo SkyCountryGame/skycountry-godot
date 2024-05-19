@@ -41,7 +41,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
         RELOADING,
         AIMING, //this could be different instance flag
         INVENTORY, //in an inventory menu
-        BUSY, //talking to something, mining, 
+        DIALOGUE
 	}
 	public Vector3 navTarget
 	{
@@ -62,7 +62,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		Callable.From(Setup).CallDeferred();
 
 		dS = new Dictionary<State, HashSet<State>>();
-        dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.BUSY});
+        dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
         dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
         dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
         dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
@@ -71,10 +71,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
         dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
         dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
         dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
-        dS.Add(State.BUSY, new HashSet<State>() { State.DEFAULT });
+        dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 	}
 
-	private void UpdateState(State ps){
+	private bool UpdateState(State ps){
 		State prev = ps; //some states need to know previous
 		if (dS[activityState].Contains(ps)){
 			activityState = ps;
@@ -99,10 +99,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 					break;
 				case State.INVENTORY:
 					break;
-				case State.BUSY:
+				case State.DIALOGUE:
 					break;
 			}
+		} else {
+			return false;
 		}
+		return true;
 	}
 
 	private async void Setup()
@@ -159,6 +162,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else if (Input.IsActionJustPressed("pause"))
 		{
 			
+		} else if (Input.IsActionJustPressed("ui_back")){
+			if (activityState == State.DIALOGUE){
+				HUD.HideDialogue();
+				UpdateState(State.DEFAULT);
+			}
 		}
 	}
 
@@ -172,7 +180,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				UpdateState(State.BUSY);
+				UpdateState(State.DIALOGUE);
 				HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
 			case InteractionType.Inventory:
