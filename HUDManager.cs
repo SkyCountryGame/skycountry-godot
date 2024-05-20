@@ -8,7 +8,7 @@ using Godot;
 public partial class HUDManager : Node {
 
     public Node eventLog;
-    public BoxContainer dialoguePanel;
+    public PanelContainer dialoguePanel;
     private RichTextLabel dialogueText;
 
     public ConcurrentQueue<string> messages; //the messages currently displayed
@@ -22,7 +22,7 @@ public partial class HUDManager : Node {
 
     public override void _Ready(){
         eventLog = GetNode("EventLog");
-        dialoguePanel = GetNode<BoxContainer>("DialoguePanel");
+        dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
         messages = new ConcurrentQueue<string>();
     }

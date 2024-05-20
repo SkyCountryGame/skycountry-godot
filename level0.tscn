@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
@@ -10,8 +10,6 @@
 [ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
 [ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 [ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nx2lt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -83,15 +81,12 @@ layout_direction = 1
 layout_mode = 2
 autowrap_mode = 2
 
-[node name="DialoguePanel" type="BoxContainer" parent="HUD"]
-modulate = Color(0, 0.0273965, 0.098494, 0.266667)
-self_modulate = Color(0.0807833, 0.0807833, 0.0807833, 1)
-material = SubResource("CanvasItemMaterial_nx2lt")
+[node name="DialoguePanel" type="PanelContainer" parent="HUD"]
 layout_mode = 0
-offset_top = 800.0
-offset_right = 1600.0
-offset_bottom = 1022.0
-vertical = true
+offset_left = 5.0
+offset_top = 724.0
+offset_right = 1914.0
+offset_bottom = 1068.0
 
 [node name="MessageLabel" type="RichTextLabel" parent="HUD/DialoguePanel"]
 custom_minimum_size = Vector2(16, 32)
