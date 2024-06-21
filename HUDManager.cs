@@ -25,6 +25,7 @@ public partial class HUDManager : Node {
         dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
         messages = new ConcurrentQueue<string>();
+        dialoguePanel.Visible = false;
     }
 
     public override void _Process(double dt){

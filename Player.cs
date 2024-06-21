@@ -150,14 +150,21 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
 		} else if (Input.IsActionJustPressed("player_use")){
-			Interactable i = GetFirstInteractable();
-			if (i != null)
-			{
-				//was for dbging HUD.LogEvent($"player use {((Node)i).Name}");
-				dynamic payload = i.Interact();
-				HandleInteract(i, (Node)i, payload);
-			} else {
-				HUD.LogEvent("there is nothing with which to interact");
+			switch (activityState){
+				case State.DEFAULT:
+					Interactable i = GetFirstInteractable();
+					if (i != null)
+					{
+						//was for dbging HUD.LogEvent($"player use {((Node)i).Name}");
+						dynamic payload = i.Interact();
+						HandleInteract(i, (Node)i, payload);
+					} else {
+						HUD.LogEvent("there is nothing with which to interact");
+					}
+					break;
+				case State.DIALOGUE:
+					//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
+					break;
 			}
 		} else if (Input.IsActionJustPressed("pause"))
 		{

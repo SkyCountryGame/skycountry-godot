@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
+[ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
 [ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
 [ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
-[ext_resource type="Script" path="res://Camera.cs" id="10_r1yr1"]
 [ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -70,8 +70,8 @@ script = ExtResource("11_jp8nh")
 
 [node name="EventLog" type="ScrollContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 1238.0
-offset_top = 745.0
+offset_left = 33.0
+offset_top = 756.0
 offset_right = 1881.0
 offset_bottom = 1006.0
 
@@ -83,10 +83,10 @@ autowrap_mode = 2
 
 [node name="DialoguePanel" type="PanelContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 724.0
-offset_right = 1914.0
-offset_bottom = 1068.0
+offset_left = 435.0
+offset_top = 424.0
+offset_right = 1116.0
+offset_bottom = 548.0
 
 [node name="MessageLabel" type="RichTextLabel" parent="HUD/DialoguePanel"]
 custom_minimum_size = Vector2(16, 32)
@@ -131,17 +131,6 @@ mesh = SubResource("CapsuleMesh_tlm4b")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
 
-[node name="TwistPivot" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="PitchPivot" type="Node3D" parent="Player/TwistPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/TwistPivot/PitchPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
-current = true
-script = ExtResource("10_r1yr1")
-
 [node name="CollisionZone0" type="Area3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("10_2tvtr")
@@ -168,3 +157,9 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Clerk/StaticBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_jdkl7")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
+transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
+current = true
+script = ExtResource("8_7fw5a")
+HUD = NodePath("../HUD")
