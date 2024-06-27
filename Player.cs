@@ -5,43 +5,49 @@ using System.Linq;
 
 public partial class Player : CharacterBody3D, Collideable, Interactor
 {
-	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
-
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
-
-	[Export]
-	private HUDManager HUD;
-
-	private NavigationAgent3D navAgent;
-
-	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
-	
-	private MovementType movementType = MovementType.WASD;
-
-	private State activityState = State.DEFAULT;
-	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
-
-	public enum MovementType
+	//MOVEMENT 
+	private const float JumpVelocity = 4.5f;
+	private AnimationPlayer rollcurve; //function that defines vel during roll
+	private enum MovementType
 	{
 		WASD,
 		Mouse
-	}
+	} //TODO move some of this stuff into config struct if needed
+	private Vector3 controlDir; //user-inputted vector of intended direction of player
+	private Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
+	private MovementType movementType = MovementType.WASD;
+	private const float accelScalar = 40f;
+	private const float velMagnitudeMax = 16f; //approximate max velocity allowed
+
+	private NavigationAgent3D navAgent;
+
+	// Get the gravity from the project settings to be synced with RigidBody nodes.
+	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+
+	//INTERACTION STUFF
+	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
+
+
+	//UI stuff
+	[Export]
+	private HUDManager HUD;
+
+	//PLAYER STATE
+	private State activityState = State.DEFAULT;
+	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	private enum State //maybe activity state? 
 	{
 		DEFAULT, 
-        CHARGING, //preparing to roll
-        ROLLING, 
-        PREPARING, //preparing to attack 
-        ATTACKING,
-        COOLDOWN,
-        HEALING,
-        RELOADING,
-        AIMING, //this could be different instance flag
-        INVENTORY, //in an inventory menu
-        DIALOGUE
+		CHARGING, //preparing to roll
+		ROLLING, 
+		PREPARING, //preparing to attack 
+		ATTACKING,
+		COOLDOWN,
+		HEALING,
+		RELOADING,
+		AIMING, //this could be different instance flag
+		INVENTORY, //in an inventory menu
+		DIALOGUE
 	}
 	public Vector3 navTarget
 	{
@@ -62,20 +68,20 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		Callable.From(Setup).CallDeferred();
 
 		dS = new Dictionary<State, HashSet<State>>();
-        dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
-        dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
-        dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
-        dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
-        dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
-        dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
-        dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
-        dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
-        dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
-        dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
+		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
+		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
+		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
+		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
+		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
+		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 	}
 
 	private bool UpdateState(State ps){
-		State prev = ps; //some states need to know previous
+		State prev = activityState; //some states need to know previous
 		if (dS[activityState].Contains(ps)){
 			activityState = ps;
 			switch (activityState){
@@ -115,23 +121,29 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		GD.Print(movementType.ToString());
+		base._PhysicsProcess(delta);
+		float dt = (float)delta;
+		//apply motion
 		if (movementType == MovementType.WASD)
 		{
-			var velocity = Vector3.Zero;
-			velocity.X += Input.GetAxis("left", "right");
-			velocity.Z += Input.GetAxis("forward", "backward");
-			velocity = velocity.Normalized() * 500 * (float)delta;
-			Velocity = velocity;
-			GD.Print(velocity);
+			controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized(); 
+			GD.Print(controlDir);
+			Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
+			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				Velocity = new Vector3(0,0,0);
+				accel = new Vector3(0,0,0);
+			} else if (Velocity.Length() > gv.Length()) {
+				Velocity = gv;
+			}
+			if (Velocity.Length() < velMagnitudeMax){
+				Velocity += accel * dt;    
+			}
 			MoveAndSlide();
 		}
 		else if (movementType == MovementType.Mouse)
 		{
-			base._PhysicsProcess(delta);
 			if (navAgent.IsNavigationFinished()) return;
-			float dt = (float)delta;
-
 			Vector3 nextPathPos = navAgent.GetNextPathPosition();
 			Vector3 curPos = GlobalTransform.Origin;
 			Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;

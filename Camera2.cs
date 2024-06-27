@@ -35,7 +35,7 @@ public partial class Camera2 : Camera3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
+        
 		posDest = target.GlobalPosition + offset;
 		//NOTE maybe use interpolation instead? 
 		if (posDest != Position && !isRotating){

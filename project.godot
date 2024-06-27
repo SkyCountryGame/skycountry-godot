@@ -31,7 +31,7 @@ script/search_in_file_extensions=PackedStringArray("gd", "gdshader", "cs")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg")
+enabled=PackedStringArray()
 
 [filesystem]
 
