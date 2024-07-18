@@ -11,12 +11,13 @@ public partial class LampPost : Node, Interactable {
 
   	//[Export(PropertyHint.Enum, "interactionType")]
     public InteractionType interactionType => InteractionType.General;
-
+    private OmniLight3D lamplight;
 
     public override void _Ready()
 	{
         //ResourceManager.interactables.Add(this);
         ResourceManager.RegisterGameObject(this, GameObjectType.Interactable);
+        lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
     }
 
     public void Clear()
@@ -32,6 +33,7 @@ public partial class LampPost : Node, Interactable {
     public dynamic Interact()
     {
         //toggle lamp light
+        lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;
         return true;
     }
 

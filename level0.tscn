@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
 [ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
 [ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
+[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -27,24 +28,6 @@ sky = SubResource("Sky_esjiq")
 ambient_light_source = 1
 tonemap_mode = 2
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_in3y1"]
-vertices = PackedVector3Array(0, 0.5, -9.5, -9.5, 0.5, 0, -9.5, 0.5, 9.5, 0, 0.5, 9.5, 9.5, 0.5, 0, 9.5, 0.5, -9.5, 0, 0.5, 9.5, 9.5, 0.5, 9.5, 9.5, 0.5, 0, 0, 0.5, -9.5, -9.5, 0.5, -9.5, -9.5, 0.5, 0)
-polygons = [PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 2), PackedInt32Array(8, 7, 6), PackedInt32Array(11, 10, 9)]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k0u3w"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmxmp"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_mu3m6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpqsc"]
-albedo_color = Color(0.298039, 0.298039, 0.301961, 1)
-emission_enabled = true
-emission = Color(0, 0.427451, 0.14902, 1)
-emission_energy_multiplier = 2.15
-subsurf_scatter_enabled = true
-shadow_to_opacity = true
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
@@ -56,6 +39,24 @@ height = 2.01993
 [sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4q33"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_50fex"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcwpa"]
+blend_mode = 2
+metallic = 1.0
+metallic_texture = SubResource("MeshTexture_50fex")
+roughness = 0.77
+refraction_enabled = true
+refraction_texture_channel = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q726u"]
+material = SubResource("StandardMaterial3D_mcwpa")
+size = Vector2(50, 50)
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -97,20 +98,19 @@ layout_mode = 2
 environment = SubResource("Environment_mck8e")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.954319, 0, -0.298791, 0.12963, 0.900986, 0.414029, 0.269207, -0.433848, 0.859828, -3.27003, 7.11523, 6.50269)
-visible = false
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(2.18, 0, 0, 0, 0.1, 0, 0, 0, 2.01, 0, 0, 0)
-navigation_mesh = SubResource("NavigationMesh_in3y1")
-metadata/_edit_lock_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_k0u3w")
-material_overlay = SubResource("StandardMaterial3D_hmxmp")
-mesh = SubResource("PlaneMesh_mu3m6")
-surface_material_override/0 = SubResource("StandardMaterial3D_xpqsc")
+transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
+light_color = Color(0.796172, 0.801828, 0.649819, 1)
+light_energy = 0.92
+light_indirect_energy = 0.16
+light_angular_distance = 4.05
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 1.0
+shadow_opacity = 0.85
+shadow_blur = 0.5
+directional_shadow_fade_start = 0.74
+directional_shadow_pancake_size = 17.4
+sky_mode = 1
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
 volume_db = -38.826
@@ -123,6 +123,7 @@ script = ExtResource("7_ph10c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
 [node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.63093, 0)
 script = ExtResource("9_gqrv1")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
@@ -163,3 +164,16 @@ transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 
 current = true
 script = ExtResource("8_7fw5a")
 HUD = NodePath("../HUD")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = ExtResource("12_knnwi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+material_override = SubResource("StandardMaterial3D_t4q33")
+material_overlay = SubResource("StandardMaterial3D_4jcw5")
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_q726u")
+skeleton = NodePath("../..")

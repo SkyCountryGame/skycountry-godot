@@ -6,10 +6,11 @@ using System.Linq;
 public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
+	public const float JumpVelocity = 300;
+	private bool jump = false;
+	private Vector3 velocity = Vector3.Zero;
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	public double gravity = -4.5f;
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 
 	[Export]
@@ -18,17 +19,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private NavigationAgent3D navAgent;
 
 	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
-	
-	private MovementType movementType = MovementType.WASD;
 
 	private State activityState = State.DEFAULT;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 
-	public enum MovementType
-	{
-		WASD,
-		Mouse
-	}
 	private enum State //maybe activity state? 
 	{
 		DEFAULT, 
@@ -60,6 +54,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		navAgent.PathDesiredDistance = .3f;
 		navAgent.TargetDesiredDistance = .3f;
 		Callable.From(Setup).CallDeferred();
+
+		ApplyFloorSnap();
 
 		dS = new Dictionary<State, HashSet<State>>();
         dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
@@ -115,28 +111,22 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		GD.Print(movementType.ToString());
-		if (movementType == MovementType.WASD)
-		{
-			var velocity = Vector3.Zero;
-			velocity.X += Input.GetAxis("left", "right");
-			velocity.Z += Input.GetAxis("forward", "backward");
-			velocity = velocity.Normalized() * 500 * (float)delta;
-			Velocity = velocity;
-			GD.Print(velocity);
-			MoveAndSlide();
+		velocity = Vector3.Zero;
+		velocity.X += (float)(Input.GetAxis("left", "right")*500*delta);
+		velocity.Z += (float)(Input.GetAxis("forward", "backward")*500*delta);
+		
+		if (jump){
+			velocity.Y += JumpVelocity;
+			jump = false;
+			GD.Print("jumping");
+		} else if (IsOnFloor()) {
+			velocity.Y = 0; 
+		} else {
+			velocity.Y += (float) (gravity * delta) * 300;
 		}
-		else if (movementType == MovementType.Mouse)
-		{
-			base._PhysicsProcess(delta);
-			if (navAgent.IsNavigationFinished()) return;
-			float dt = (float)delta;
-
-			Vector3 nextPathPos = navAgent.GetNextPathPosition();
-			Vector3 curPos = GlobalTransform.Origin;
-			Vector3 newVel = (nextPathPos - curPos).Normalized() * 10;
-			GlobalPosition = GlobalPosition.MoveToward(nextPathPos, dt * 10);
-		}
+		//velocity = velocity.Normalized() * 500 * (float)delta;
+		Velocity = velocity;
+		MoveAndSlide();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -149,6 +139,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{ //set destination
 			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
 			//mEvent.Position;
+			
+			jump = true;
 		} else if (Input.IsActionJustPressed("player_use")){
 			switch (activityState){
 				case State.DEFAULT:
@@ -174,6 +166,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				HUD.HideDialogue();
 				UpdateState(State.DEFAULT);
 			}
+		} else if (Input.IsKeyPressed(Key.R)){
+			Position += new Vector3(0, .2f, 0);
+		} else if (Input.IsKeyPressed(Key.F)){
+			Position += new Vector3(0, -.2f, 0);
 		}
 	}
 
