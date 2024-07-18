@@ -5,73 +5,68 @@ using System.Linq;
 
 public partial class Player : CharacterBody3D, Collideable, Interactor
 {
-	public const float Speed = 5.0f;
+	//MOVEMENT 
+	public double gravity = -4.5f;
 	public const float JumpVelocity = 300;
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
+	private AnimationPlayer rollcurve; //function that defines vel during roll
+	private Vector3 controlDir; //user-inputted vector of intended direction of player
+	private const float accelScalar = 40f;
+	private const float velMagnitudeMax = 16f; //approximate max velocity allowed
 
-	public double gravity = -4.5f;
+	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 
+
+	//UI stuff
 	[Export]
 	private HUDManager HUD;
 
-	private NavigationAgent3D navAgent;
-
-	public Vector3 navTargetPos = new Vector3(3, 0, 1); //where go
-
+	//PLAYER STATE
 	private State activityState = State.DEFAULT;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
-
 	private enum State //maybe activity state? 
 	{
 		DEFAULT, 
-        CHARGING, //preparing to roll
-        ROLLING, 
-        PREPARING, //preparing to attack 
-        ATTACKING,
-        COOLDOWN,
-        HEALING,
-        RELOADING,
-        AIMING, //this could be different instance flag
-        INVENTORY, //in an inventory menu
-        DIALOGUE
-	}
-	public Vector3 navTarget
-	{
-		get { return navAgent.TargetPosition;  }
-		set { navAgent.TargetPosition = value; }
+		CHARGING, //preparing to roll
+		ROLLING, 
+		PREPARING, //preparing to attack 
+		ATTACKING,
+		COOLDOWN,
+		HEALING,
+		RELOADING,
+		AIMING, //this could be different instance flag
+		INVENTORY, //in an inventory menu
+		DIALOGUE
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
-		navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		HUD = GetNode<HUDManager>("../HUD");
 		//would register controller if integrated with my architecture
 
-		navAgent.PathDesiredDistance = .3f;
-		navAgent.TargetDesiredDistance = .3f;
 		Callable.From(Setup).CallDeferred();
 
 		ApplyFloorSnap();
 
 		dS = new Dictionary<State, HashSet<State>>();
-        dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
-        dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
-        dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
-        dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
-        dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
-        dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
-        dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
-        dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
-        dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
-        dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
+		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
+		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
+		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
+		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
+		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
+		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 	}
 
 	private bool UpdateState(State ps){
-		State prev = ps; //some states need to know previous
+		State prev = activityState; //some states need to know previous
 		if (dS[activityState].Contains(ps)){
 			activityState = ps;
 			switch (activityState){
@@ -107,23 +102,37 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private async void Setup()
 	{
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		navTarget = navTargetPos;
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		velocity = Vector3.Zero;
-		velocity.X += (float)(Input.GetAxis("left", "right")*500*delta);
-		velocity.Z += (float)(Input.GetAxis("forward", "backward")*500*delta);
-		
+		base._PhysicsProcess(delta);
+		controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized();
+		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
+		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+		if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+			velocity = Vector3.Zero;
+			accel = Vector3.Zero;
+		} else if (Velocity.Length() > gv.Length()) {
+			velocity = gv;
+		}
+		if (Velocity.Length() < velMagnitudeMax){
+			velocity += accel * (float)delta;
+		}
 		if (jump){
 			velocity.Y += JumpVelocity;
+			//Velocity += new Vector3(0, JumpVelocity, 0);
 			jump = false;
-			GD.Print("jumping");
 		} else if (IsOnFloor()) {
 			velocity.Y = 0; 
 		} else {
 			velocity.Y += (float) (gravity * delta) * 300;
 		}
+		
+		/*velocity = Vector3.Zero;  //old implementation without acceleration
+		velocity.X += (float)(Input.GetAxis("left", "right")*500*delta);
+		velocity.Z += (float)(Input.GetAxis("forward", "backward")*500*delta);
+		*/
+
 		//velocity = velocity.Normalized() * 500 * (float)delta;
 		Velocity = velocity;
 		MoveAndSlide();
@@ -136,10 +145,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 	public override void _UnhandledInput(InputEvent ev){
 		if (Input.IsActionJustPressed("player_action2"))
-		{ //set destination
-			//InputEventMouseButton mEvent = ((InputEventMouseButton)@event);
-			//mEvent.Position;
-			
+		{
 			jump = true;
 		} else if (Input.IsActionJustPressed("player_use")){
 			switch (activityState){
@@ -171,11 +177,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else if (Input.IsKeyPressed(Key.F)){
 			Position += new Vector3(0, -.2f, 0);
 		}
-	}
-
-	public void SetTravelDestination(Vector3 pos)
-	{
-		navAgent.TargetPosition = pos;
 	}
 
 	public void HandleInteract(Interactable i, Node interactionObj, dynamic payload)
