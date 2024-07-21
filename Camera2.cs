@@ -1,23 +1,21 @@
 using Godot;
 using System;
 //using System.Numerics;
-//using System.Numerics;
 
 public partial class Camera2 : Camera3D
 {
+	//NOTE i'm currently playing around with different possibilites, so some of the vars will be removed etc
 	private bool isRotating = false;
 	private Node3D target; //thing to follow and look at
-	private Player plyr;
 	private Vector3 posDest; //current destination of camera
-	private Vector3 vel = new Vector3(0, 0, 0); //current velocity of camera
+	private Vector3 vel; //current velocity of camera
 	private float accelCoeff = 2f; //acceleration magnitude
 	private float ct = .1f; //time for camera to 
 	private Vector3 offset = new Vector3(0, 8, 10);
 	private float offsetDist = 10; 
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
-	private float camRotateIncrement = (float) (Math.PI / 96.0d);
-
+	private float camRotate = (float) (Math.PI / 128.0d);
 
 	[Export]
 	private HUDManager HUD;
@@ -25,12 +23,8 @@ public partial class Camera2 : Camera3D
 
 	public override void _Ready()
 	{
-		if (target == null){ //target wasn't set in editor
-			target = (Node3D)GetNode("../Player");
-		}
-		if (target is Player){
-			plyr = (Player)target;
-		}
+		target = (Node3D)GetNode("../Player"); //FUTUREDESIGN: general Node
+		vel = new Vector3(0, 0, 0);
 	}
 
 	public override void _Process(double delta)
@@ -41,26 +35,22 @@ public partial class Camera2 : Camera3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-		if (isRotating && Input.GetLastMouseVelocity().Length() > 0){
-			float theta = Input.GetLastMouseVelocity().X > 0 ? -camRotateIncrement : camRotateIncrement;
-			offset = offset.Rotated(Vector3.Up, theta);
-			if (plyr != null){
-				//plyr.SetForward(offset - Vector3.Up * offset.Dot(Vector3.Up)); //update the player's orientation to the offset without its y component (projected onto xz plane)
-				plyr.SetForward(new Vector3(offset.X, 0, offset.Z));
-			}
-		}	
+        
 		posDest = target.GlobalPosition + offset;
 		//NOTE maybe use interpolation instead? 
-		if (posDest != Position){// && !isRotating){
+		if (posDest != Position && !isRotating){
 			Vector3 dir = (posDest - Position).Normalized(); 
 			float d = (posDest - Position).Length(); //displacement
-			
 			//vel =  dir * accelCoeff * (float)delta + (posDest - Position) * .1f;
 			vel = (posDest-Position)/ct; // we want to reach the destination in ct seconds
 			Position += vel * (float)delta + .5f * accelCoeff * dir * (float)(delta*delta);
-			
+			LookAt(target.GlobalPosition);
 		}
-		LookAt(target.GlobalPosition);
+
+		if (isRotating && Input.GetLastMouseVelocity().Length() > 0){
+			//rotate about target TODO this is obviously wrong but leaving it there
+			RotateY(Input.GetLastMouseVelocity().X > 0 ? -camRotate : camRotate);
+		}
 
 		//goal: camera never ends up lagging behind and looking at an angle. so will have to go faster as the difference is greater from the player accelerating
     }
@@ -77,8 +67,9 @@ public partial class Camera2 : Camera3D
 		}
 		else
 		{
-			//if (!isRotating && Input.IsActionPressed("cam_rotate"))
+			if (!isRotating && Input.IsActionPressed("cam_rotate")) HUD.LogEvent("yes i know camera rotation is broken. ");
 			isRotating = Input.IsActionPressed("cam_rotate");
+			
 		}
 	}
 }
