@@ -25,8 +25,8 @@ public partial class level0 : Node3D
 	{
 		float r = (float)Math.Sin(.3f*Time.GetTicksMsec() / 1000f);
 		float g = (float)Math.Sin(.8f*Time.GetTicksMsec() / 1000f);
-		float b = (float)Math.Sin(-.5*delta / 1000f);
-		sunlight.LightColor = new Color(r, g, b, 1);
+		float b = (float)Math.Cos(-.5f*Time.GetTicksMsec() / 1000f);
+		sunlight.LightColor = new Color(r, g, b, .8f);
 	}
 	
 	public override void _UnhandledInput(InputEvent @event){

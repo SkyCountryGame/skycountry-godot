@@ -16,8 +16,6 @@ TODO:
 	
 - currently i'm in the process of setting up a way to connect "sky country game objects" to "godot scene nodes", so that in the game logic code, we only have to deal with skycountry game concepts. look at GameObject, GameObjectConnector, ResourceManager.RegisterGameObject(). it's still a WIP, and will probably evolve quite a bit. 
 
-- next i'm going to implement level switching, clean up some of the files, and implement lamp light toggling 
-
 FILE CLEANUP and ORGANIZE:
 	- categories of scenes (*.tscn)
 		- things that spawn into the world upon certain events, like bullets or a specific NPC
