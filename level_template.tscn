@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://8qof26j4jd18"]
+[gd_scene load_steps=6 format=3 uid="uid://8qof26j4jd18"]
 
 [ext_resource type="Script" path="res://Camera2.cs" id="1_f6jas"]
+[ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_wxw3l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -42,3 +43,5 @@ sky_mode = 1
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("1_f6jas")
+
+[node name="HUD" parent="." instance=ExtResource("2_wxw3l")]
