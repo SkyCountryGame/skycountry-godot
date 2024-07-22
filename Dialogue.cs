@@ -2,55 +2,65 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /*
  * represents a conversation between the player and another character. keeps track of progression through the dialogue. 
+    - typewriting text, hold button to skip, 
+	- talker has emotional-expression associated with point in sentence
+	- choices after each statement to start actions (like barter UI)
  **/
 public partial class Dialogue : Resource
 {
-    //dialogue is a tree. root is always from the NPC, though they may say nothing.
-    public Graph<string> dialogueTree;
-    public Graph<string>.Node dialogueCurrentPoint;
+    //dialogue is a tree of nodes containing all the relevant information for a conversation
+    public struct DialogueNode {
+        int who; //0 = player, 1 = npc, 2 = other npc, etc.
+        public string text; //what "who" says
+        public List<DialogueNode> responses;
+        public List<DialogueNode> next; //most cases will only lead to one, but we might want to randomly pick one
+        public DialogueNode(int who, string text){
+            this.who = who;
+            this.text = text;
+            responses = new List<DialogueNode>();
+            next = new List<DialogueNode>();
+        }
+    }
 
-    public List<string> responsesToSilence;
+    public DialogueNode start; // the beginning of the dialogue
+    public DialogueNode cur; // the current point in the dialogue
 
-    [Export]
-    public int testExp; 
+    [JsonInclude]
+    public List<string> statements { get; set; }
+    // List<StatementNode> statements
+    // StatementNode contains: string statement, List<ChoiceNode> choices
+    // ChoiceNode contains: List<string> responseChoices, List<StatementNode> nextStatements
+
+
+    [JsonInclude]
+    public string testStr { get; set; }
+
+    public Dialogue()
+    {
+        //TODO construct from the spec file
+    }
 
     public Dialogue(string start)
     {
-        dialogueTree = new Graph<string>(start);
+        DialogueNode dn = new DialogueNode(1, start);
+        dn.responses.Add(new DialogueNode(0, "hello"));
+
+
     }
 
     //return next thing to say when player says nothing
     public string Next()
-    {
-        if (dialogueCurrentPoint == null)
-        {
-            dialogueCurrentPoint = dialogueTree.root;
-        } else if (responsesToSilence != null && responsesToSilence.Count > 0)
-        {
-            Random rand = new Random();
-            return responsesToSilence[rand.Next(0, responsesToSilence.Count)];
-        }
-
-        return dialogueCurrentPoint.value;
+    { 
     }
 
     //return next thing to say based on what player says
     public string Next(int i)
     {
-        //TODO
-        string res;
-        if (dialogueCurrentPoint == null)
-        {
-            dialogueCurrentPoint = dialogueTree.root;
-            res = dialogueCurrentPoint.value;
-        } else
-        {
-            res = dialogueTree.adjacencyList[dialogueCurrentPoint][i].value; 
-            dialogueCurrentPoint = dialogueTree.adjacencyList[dialogueCurrentPoint][i];
-        }
         return res;
     }
 
