@@ -36,17 +36,17 @@ tonemap_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcwpa"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k4f7a"]
 specular_mode = 1
 metallic_specular = 0.34
 roughness_texture_channel = 1
 refraction_texture_channel = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q726u"]
-material = SubResource("StandardMaterial3D_mcwpa")
+material = SubResource("StandardMaterial3D_k4f7a")
 size = Vector2(50, 50)
 
-[node name="Wod" type="Node3D"]
+[node name="Wod2" type="Node3D"]
 script = ExtResource("1_ux354")
 
 [node name="HUD" parent="." instance=ExtResource("2_tvajd")]
@@ -100,7 +100,7 @@ shape = SubResource("CapsuleShape3D_jdkl7")
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-HUD = NodePath("")
+HUD = NodePath("../HUD")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

@@ -12,6 +12,7 @@ public partial class LampPost : Node, Interactable {
   	//[Export(PropertyHint.Enum, "interactionType")]
     public InteractionType interactionType => InteractionType.General;
     private OmniLight3D lamplight;
+    private int n = 0;
 
     public override void _Ready()
 	{
@@ -32,8 +33,13 @@ public partial class LampPost : Node, Interactable {
 
     public dynamic Interact()
     {
+        if (n > 4){
+            PackedScene levelscene = ResourceLoader.Load<PackedScene>("res://level2.tscn");
+            GetTree().ChangeSceneToPacked(levelscene);
+        }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;
+        n += 1;
         return true;
     }
 
