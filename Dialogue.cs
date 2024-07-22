@@ -1,21 +1,32 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 /*
  * represents a conversation between the player and another character. keeps track of progression through the dialogue. 
  **/
 public partial class Dialogue : Resource
 {
     //dialogue is a tree. root is always from the NPC, though they may say nothing.
-    public Graph<string> dialogueTree;
-    public Graph<string>.Node dialogueCurrentPoint;
+    public Graph<string> dialogueTree { get; set; }
+    public Graph<string>.Node dialogueCurrentPoint { get; set; }
 
-    public List<string> responsesToSilence;
+    [JsonInclude]
+    public List<string> statements { get; set; }
 
-    [Export]
+    [JsonInclude]
+    public string testStr { get; set; }
+
+    
     public int testExp; 
+
+
+    public Dialogue()
+    {
+        dialogueTree = new Graph<string>();
+    }
 
     public Dialogue(string start)
     {
@@ -24,14 +35,14 @@ public partial class Dialogue : Resource
 
     //return next thing to say when player says nothing
     public string Next()
-    {
+    { 
         if (dialogueCurrentPoint == null)
         {
             dialogueCurrentPoint = dialogueTree.root;
-        } else if (responsesToSilence != null && responsesToSilence.Count > 0)
+        } else if (statements != null && statements.Count > 0)
         {
             Random rand = new Random();
-            return responsesToSilence[rand.Next(0, responsesToSilence.Count)];
+            return statements[rand.Next(0, statements.Count)];
         }
 
         return dialogueCurrentPoint.value;
