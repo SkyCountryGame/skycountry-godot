@@ -39,9 +39,8 @@ directional_shadow_fade_start = 0.74
 directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
-current = true
-script = ExtResource("1_f6jas")
-
 [node name="HUD" parent="." instance=ExtResource("2_wxw3l")]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
+script = ExtResource("1_f6jas")
+HUD = NodePath("../HUD")

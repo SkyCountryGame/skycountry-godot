@@ -16,6 +16,7 @@ public class Global {
     * the current player data, to persist between scenes
     */
     public static PlayerModel _P;
+    public static Camera2 _Cam; 
 
     //associate each godot node with the actual game object in the context of this game
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
