@@ -20,9 +20,10 @@ size = Vector2(50, 50)
 
 [node name="Wod" instance=ExtResource("1_yy4dy")]
 
-[node name="Player" parent="." index="3" instance=ExtResource("2_y040l")]
+[node name="Camera3D" parent="." index="2" node_paths=PackedStringArray("HUD")]
+HUD = NodePath("../HUD")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." index="4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 shape = ExtResource("3_pxpml")
@@ -34,3 +35,5 @@ cast_shadow = 0
 gi_mode = 2
 mesh = SubResource("PlaneMesh_4dvwg")
 skeleton = NodePath("../..")
+
+[node name="Player" parent="." index="5" instance=ExtResource("2_y040l")]

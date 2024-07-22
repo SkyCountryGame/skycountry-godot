@@ -25,7 +25,7 @@ public abstract partial class GameObjectConnector : Node
 {
 
     public override void _Ready(){
-        ResourceManager.RegisterGameObject((Node)this, Name, type);
+        Global.RegisterGameObject((Node)this, Name, type);
     }
 
     [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]
@@ -38,7 +38,7 @@ public abstract partial class GameObjectConnector : Node
 	public string devinfo {get; set;}
 }
 
-public enum GameObjectType {Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light};
+public enum GameObjectType {SpawnPoint, Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light};
 //NOTE: currently experimenting with different ways to represent this stuff
 public struct WorldObjectInfo{
     public GameObjectType type;

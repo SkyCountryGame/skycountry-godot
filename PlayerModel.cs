@@ -1,0 +1,69 @@
+using System.Collections.Generic;
+
+public class PlayerModel{
+    public State activityState = State.DEFAULT;
+    public int hp = 0;
+	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+	public enum State //maybe activity state? 
+	{
+		DEFAULT, 
+		CHARGING, //preparing to roll
+		ROLLING, 
+		PREPARING, //preparing to attack 
+		ATTACKING,
+		COOLDOWN,
+		HEALING,
+		RELOADING,
+		AIMING, //this could be different instance flag
+		INVENTORY, //in an inventory menu
+		DIALOGUE
+	}
+
+    public PlayerModel(){
+        dS = new Dictionary<State, HashSet<State>>();
+		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
+		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
+		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
+		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
+		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
+		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
+		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
+		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
+    }
+
+    public bool UpdateState(State ps){
+		State prev = activityState; //some states need to know previous
+		if (dS[activityState].Contains(ps)){
+			activityState = ps;
+			switch (activityState){
+				case State.DEFAULT:
+					break;
+				case State.CHARGING:
+					break;
+				case State.ROLLING:
+					break;
+				case State.PREPARING:
+					break;
+				case State.ATTACKING:
+					break;
+				case State.COOLDOWN:
+					break;
+				case State.HEALING:
+					break;
+				case State.RELOADING:
+					break;
+				case State.AIMING:
+					break;
+				case State.INVENTORY:
+					break;
+				case State.DIALOGUE:
+					break;
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+}

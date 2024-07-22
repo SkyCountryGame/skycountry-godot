@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 using Godot;
 
 /* EntityManager? ObjectManager? GameManager? 
-    important idea here is to associate each game object with its godot node, to keep our code not dependent on game engine
+    things that need to be accessible anywhere in the codebase.
+    hashmaps to associate godot stuff with game stuff, and more. 
 */
-public class ResourceManager {
+public class Global {
     public static PackedScene indicator; 
 
+    /**
+    * the current player data, to persist between scenes
+    */
+    public static PlayerModel _P;
 
     //associate each godot node with the actual game object in the context of this game
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
     public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
+    public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
     //NOTE: this might end up being a map, because we wont have interactables implemented by godot nodes, but by game objects
 
@@ -72,9 +78,15 @@ public class ResourceManager {
                 interactables.Add((Interactable)node);
                 mapGameObjectToInteractable.Add(go, (Interactable)node);
                 break;
+            case GameObjectType.SpawnPoint:
+                spawnPoints.Add((SpawnPoint)node);
+                break;
             default:
                 break;
         }
+    }
+    public static void RegisterSpawnPoint(Node node){
+
     }
 
     //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level

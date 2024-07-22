@@ -21,6 +21,7 @@ public partial class level0 : Node3D
 		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
 		w = new World();
+		
 		//neighborLevels.Add();
 	}
 

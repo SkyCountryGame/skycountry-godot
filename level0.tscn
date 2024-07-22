@@ -1,9 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
-[ext_resource type="AudioStream" uid="uid://cdwh2mog4ppyv" path="res://assets/aud/bg1.mp3" id="4_m1u6u"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
@@ -70,7 +69,7 @@ directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
-stream = ExtResource("4_m1u6u")
+stream = null
 volume_db = -9.041
 
 [node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
@@ -81,6 +80,7 @@ script = ExtResource("7_ph10c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
 [node name="Player" parent="." instance=ExtResource("8_ywuup")]
+process_mode = 1
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)

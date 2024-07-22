@@ -6,6 +6,7 @@ using System.Linq;
 
 public partial class Player : CharacterBody3D, Collideable, Interactor
 {
+
 	//MOVEMENT 
 	public double gravity = -.3f;
 	public const float JumpVelocity = 200;
@@ -19,12 +20,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 
-
 	//UI stuff
-	[Export]
 	private HUDManager HUD;
 
 	//PLAYER STATE
+	private PlayerModel p; //this is the player data that should be persisted between scenes
 	private State activityState = State.DEFAULT;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	private enum State //maybe activity state? 
@@ -42,15 +42,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		DIALOGUE
 	}
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
-		HUD = GetNode<HUDManager>("../HUD");
-		//would register controller if integrated with my architecture
-
-		Callable.From(Setup).CallDeferred();
-
+		if (Global._P == null){
+			p = new PlayerModel(); //TODO what parameters to give here
+			Global._P = p;
+		} else {
+			p = Global._P;
+		}
+		
+		HUD = GetNode<HUDManager>("../HUD"); 
 		ApplyFloorSnap();
 
 		dS = new Dictionary<State, HashSet<State>>();
@@ -100,10 +102,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return true;
 	}
 
-	private async void Setup()
-	{
-		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-	}
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
@@ -148,16 +146,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 
 	public override void _UnhandledInput(InputEvent ev){
-		if (Input.IsActionJustPressed("player_action2"))
+		if (Input.IsActionJustPressed("player_action2")){
+
+		} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
 		{
 			jump = true;
+			p.hp += 1; //TODO remove. this is just to show that state is persisted
 		} else if (Input.IsActionJustPressed("player_use")){
 			switch (activityState){
 				case State.DEFAULT:
 					Interactable i = GetFirstInteractable();
 					if (i != null)
 					{
-						//was for dbging HUD.LogEvent($"player use {((Node)i).Name}");
 						dynamic payload = i.Interact();
 						HandleInteract(i, (Node)i, payload);
 					} else {
@@ -170,7 +170,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			}
 		} else if (Input.IsActionJustPressed("pause"))
 		{
-			
 		} else if (Input.IsActionJustPressed("ui_back")){
 			if (activityState == State.DIALOGUE){
 				HUD.HideDialogue();
@@ -216,11 +215,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
 		//TODO get the actual text to spawn
-		ResourceManager.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
+		Global.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
 
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable i = ResourceManager.GetInteractable(other);
+				Interactable i = Global.GetInteractable(other);
 				if (i != null)
 				{
 					availableInteractables.Add(i);
@@ -236,7 +235,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = ResourceManager.GetInteractable(other);
+		Interactable i = Global.GetInteractable(other);
 		if (availableInteractables.Contains(i))
 		{
 			availableInteractables.Remove(i);
