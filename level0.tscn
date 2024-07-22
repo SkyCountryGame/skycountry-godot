@@ -1,16 +1,15 @@
-[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
+[ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
 [ext_resource type="AudioStream" uid="uid://cdwh2mog4ppyv" path="res://assets/aud/bg1.mp3" id="4_m1u6u"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
-[ext_resource type="Script" path="res://Player.cs" id="9_gqrv1"]
-[ext_resource type="Script" path="res://CollideableObject.cs" id="10_2tvtr"]
+[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
-[ext_resource type="Script" path="res://HUDManager.cs" id="11_jp8nh"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -20,22 +19,14 @@ sky_energy_multiplier = 1.5
 ground_bottom_color = Color(0.164706, 0.176471, 0.168627, 1)
 ground_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
 
-[sub_resource type="Sky" id="Sky_esjiq"]
+[sub_resource type="Sky" id="Sky_3r2si"]
 sky_material = SubResource("ProceduralSkyMaterial_lwqku")
 
 [sub_resource type="Environment" id="Environment_mck8e"]
 background_mode = 2
-sky = SubResource("Sky_esjiq")
+sky = SubResource("Sky_3r2si")
 ambient_light_source = 1
 tonemap_mode = 2
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2kcn"]
-radius = 0.497713
-height = 2.01993
 
 [sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
 
@@ -58,38 +49,7 @@ size = Vector2(50, 50)
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
 
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-script = ExtResource("11_jp8nh")
-
-[node name="EventLog" type="ScrollContainer" parent="HUD"]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 756.0
-offset_right = 1881.0
-offset_bottom = 1006.0
-
-[node name="Label" type="Label" parent="HUD/EventLog"]
-custom_minimum_size = Vector2(600, 50)
-layout_direction = 1
-layout_mode = 2
-autowrap_mode = 2
-
-[node name="DialoguePanel" type="PanelContainer" parent="HUD"]
-layout_mode = 0
-offset_left = 435.0
-offset_top = 424.0
-offset_right = 1116.0
-offset_bottom = 548.0
-
-[node name="MessageLabel" type="RichTextLabel" parent="HUD/DialoguePanel"]
-custom_minimum_size = Vector2(16, 32)
-layout_direction = 2
-layout_mode = 2
+[node name="HUD" parent="." instance=ExtResource("2_tvajd")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mck8e")
@@ -120,28 +80,7 @@ script = ExtResource("7_ph10c")
 [node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.63093, 0)
-script = ExtResource("9_gqrv1")
-
-[node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-mesh = SubResource("CapsuleMesh_tlm4b")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player"]
-
-[node name="CollisionZone0" type="Area3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("10_2tvtr")
-metadata/objtype = ""
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/CollisionZone0"]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1, 0)
-shape = SubResource("SphereShape3D_s0opn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99445, 0)
-shape = SubResource("CapsuleShape3D_o2kcn")
+[node name="Player" parent="." instance=ExtResource("8_ywuup")]
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
@@ -161,7 +100,7 @@ shape = SubResource("CapsuleShape3D_jdkl7")
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-HUD = NodePath("../HUD")
+HUD = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
