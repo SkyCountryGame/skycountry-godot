@@ -46,7 +46,7 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_k4f7a")
 size = Vector2(50, 50)
 
-[node name="Wod2" type="Node3D"]
+[node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
 
 [node name="HUD" parent="." instance=ExtResource("2_tvajd")]
