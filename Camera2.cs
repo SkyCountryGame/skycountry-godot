@@ -5,8 +5,10 @@ using System;
 
 public partial class Camera2 : Camera3D
 {
-	private bool isRotating = false;
-	private Node3D target; //thing to follow and look at
+
+	[Export]
+	public Node3D target; //thing to follow and look at
+
 	private Player plyr;
 	private Vector3 posDest; //current destination of camera
 	private Vector3 vel = new Vector3(0, 0, 0); //current velocity of camera
@@ -17,7 +19,7 @@ public partial class Camera2 : Camera3D
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
 	private float camRotateIncrement = (float) (Math.PI / 96.0d);
-
+	private bool isRotating = false;
 
 	[Export]
 	private HUDManager HUD;
@@ -31,11 +33,15 @@ public partial class Camera2 : Camera3D
 		if (target is Player){
 			plyr = (Player)target;
 		}
+		if (Global._Cam == null){
+			Global._Cam = this;
+		} else {
+			//Ah! there is another camera! what do we do??
+		}
 	}
 
 	public override void _Process(double delta)
 	{
-	
 	}
 
     public override void _PhysicsProcess(double delta)
