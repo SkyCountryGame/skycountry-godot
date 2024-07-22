@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://bantfsh2sxy0v"]
+
+[ext_resource type="Script" path="res://HUDManager.cs" id="1_72ij7"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+script = ExtResource("1_72ij7")
+
+[node name="EventLog" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 756.0
+offset_right = 1881.0
+offset_bottom = 1006.0
+
+[node name="Label" type="Label" parent="EventLog"]
+custom_minimum_size = Vector2(600, 50)
+layout_direction = 1
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="DialoguePanel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 424.0
+offset_right = 1116.0
+offset_bottom = 548.0
+
+[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
+custom_minimum_size = Vector2(16, 32)
+layout_direction = 2
+layout_mode = 2

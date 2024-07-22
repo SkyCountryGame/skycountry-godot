@@ -1,7 +1,9 @@
 using Godot;
 using System;
 using SkyCountry;
+using System.Collections.Generic;
 
+//NOTE: do we want to make our own custom level class?
 public partial class level0 : Node3D
 {
 	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
@@ -9,6 +11,7 @@ public partial class level0 : Node3D
 	private OmniLight3D lampPost;
 	private DirectionalLight3D sunlight;
 	private HUDManager HUD;
+	private List<Node3D> neighborLevels = new List<Node3D>();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

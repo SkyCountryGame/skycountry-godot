@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 
 /**
-this is so that in game entities (enemies, NPCs, etc.) can behave differently based on what collider zone is triggered. unity doesn't allow that by default for Colliders attached to GameObjects
+this is so that in game entities (enemies, NPCs, etc.) can behave differently based on what collider zone is triggered
 */
 
 public enum ColliderZone
