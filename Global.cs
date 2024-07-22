@@ -22,13 +22,6 @@ public class Global {
     public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
     public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
-    //NOTE: this might end up being a map, because we wont have interactables implemented by godot nodes, but by game objects
-
-    //effects (such as floating text) that follow an in-game object
-    //public static ConcurrentDictionary<string, (Node3D, Vector3)> followers = new ConcurrentDictionary<string, (Node3D, Vector3)>();
-
-    //in-game objects that are following other objects. usually floating text above something. 
-    //public static Dictionary<Node3D, List<Node3D>> followers = new Dictionary<Node3D, List<Node3D>>();
     
     //key = parent object
     //value = dict of floating text strings (key -> label3d)
@@ -62,6 +55,7 @@ public class Global {
         removeText.Start();
     }
 
+    //NOTE: 20240722: game object system currently isn't used for much. remove it doesn't prove to be useful. 
     public static void RegisterGameObject(Node node, GameObjectType type){
         RegisterGameObject(node, node.Name, type);
     }
