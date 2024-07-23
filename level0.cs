@@ -11,8 +11,8 @@ public partial class level0 : Node3D
 	private OmniLight3D lampPost;
 	private DirectionalLight3D sunlight;
 	private HUDManager HUD;
-	private List<Node3D> neighborLevels = new List<Node3D>();
-
+	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
+		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
