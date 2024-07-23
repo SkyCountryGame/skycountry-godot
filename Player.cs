@@ -19,7 +19,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
-
 	//UI stuff
 	private HUDManager HUD;
 
@@ -79,6 +78,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Camera3D camera =  Global._Cam;
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
+		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,1));
+		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+			Vector3 pos = (Vector3)intersection["position"];
+			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+			LookAt(viewAngle);
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent ev){

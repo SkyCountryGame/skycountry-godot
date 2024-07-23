@@ -33,11 +33,8 @@ public partial class Camera2 : Camera3D
 		if (target is Player){
 			plyr = (Player)target;
 		}
-		if (Global._Cam == null){
-			Global._Cam = this;
-		} else {
-			//Ah! there is another camera! what do we do??
-		}
+
+		Global._Cam = this;	
 	}
 
 	public override void _Process(double delta)

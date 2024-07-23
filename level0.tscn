@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
-[ext_resource type="AudioStream" uid="uid://k4rsosjf3qxh" path="res://assets/aud/20230128_CB.mp3" id="4_xj1mv"]
+[ext_resource type="AudioStream" uid="uid://gcn0s78w5ecf" path="res://assets/aud/20230128_CB.mp3" id="4_xj1mv"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
@@ -97,11 +97,10 @@ skeleton = NodePath("../..")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_jdkl7")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
+[node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-HUD = NodePath("../HUD")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
