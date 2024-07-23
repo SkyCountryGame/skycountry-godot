@@ -1,9 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
-[ext_resource type="AudioStream" uid="uid://k4rsosjf3qxh" path="res://assets/aud/20230128_CB.mp3" id="4_xj1mv"]
+[ext_resource type="AudioStream" uid="uid://gcn0s78w5ecf" path="res://assets/aud/20230128_CB.mp3" id="4_xj1mv"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
