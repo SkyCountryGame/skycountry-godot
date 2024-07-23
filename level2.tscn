@@ -1,23 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dpkxfobs7jdt5"]
+[gd_scene load_steps=9 format=3 uid="uid://dpkxfobs7jdt5"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://level_template.tscn" id="1_yy4dy"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="2_y040l"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_pxpml"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
-
-[sub_resource type="GDScript" id="GDScript_txdkk"]
-script/source = "extends Node3D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
 
@@ -33,8 +19,7 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_mcwpa")
 size = Vector2(50, 50)
 
-[node name="Wod" instance=ExtResource("1_yy4dy")]
-script = SubResource("GDScript_txdkk")
+[node name="Wod2" instance=ExtResource("1_yy4dy")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="3"]
 
@@ -48,6 +33,9 @@ cast_shadow = 0
 gi_mode = 2
 mesh = SubResource("PlaneMesh_4dvwg")
 skeleton = NodePath("../..")
+
+[node name="Camera3D" parent="." index="4"]
+current = true
 
 [node name="Player" parent="." index="5" instance=ExtResource("2_y040l")]
 
