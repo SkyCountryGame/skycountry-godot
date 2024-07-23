@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 /*
  * represents a conversation between the player and another character. keeps track of progression through the dialogue. 
     - typewriting text, hold button to skip, 
@@ -56,12 +55,13 @@ public partial class Dialogue : Resource
     //return next thing to say when player says nothing
     public string Next()
     { 
+        return null;
     }
 
     //return next thing to say based on what player says
     public string Next(int i)
     {
-        return res;
+        return null;
     }
 
 }
