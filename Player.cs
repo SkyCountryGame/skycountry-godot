@@ -20,6 +20,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 
 
+	private Camera3D camera;
+
 	//UI stuff
 	[Export]
 	private HUDManager HUD;
@@ -145,6 +147,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		var cameraController = GetNode<CameraController>("/root/CameraController");
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		camera = cameraController.CurrentCamera;
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
+		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,1));
+		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+			Vector3 pos = (Vector3)intersection["position"];
+			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+			LookAt(viewAngle);
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent ev){

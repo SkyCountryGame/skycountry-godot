@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cirg5lcesnafx"]
+[gd_scene load_steps=8 format=3 uid="uid://cirg5lcesnafx"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_qhngp"]
 [ext_resource type="Script" path="res://CollideableObject.cs" id="3_l7pwu"]
@@ -10,6 +10,12 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2kcn"]
 radius = 0.497713
 height = 2.01993
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v37ol"]
+albedo_color = Color(1, 0.156863, 0.156863, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hekuf"]
+material = SubResource("StandardMaterial3D_v37ol")
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.63093, 0)
@@ -33,3 +39,7 @@ shape = SubResource("SphereShape3D_s0opn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99445, 0)
 shape = SubResource("CapsuleShape3D_o2kcn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.4623, -0.327906)
+mesh = SubResource("BoxMesh_hekuf")

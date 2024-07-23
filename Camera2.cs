@@ -17,6 +17,8 @@ public partial class Camera2 : Camera3D
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
 	private float camRotateIncrement = (float) (Math.PI / 96.0d);
+	
+	
 
 
 	[Export]
@@ -31,6 +33,8 @@ public partial class Camera2 : Camera3D
 		if (target is Player){
 			plyr = (Player)target;
 		}
+		var cameraController = GetNode<CameraController>("/root/CameraController");
+		cameraController.CurrentCamera = this;
 	}
 
 	public override void _Process(double delta)
