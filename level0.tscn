@@ -101,7 +101,6 @@ shape = SubResource("CapsuleShape3D_jdkl7")
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-HUD = NodePath("../HUD")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
