@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bif7d50eolv12"]
+
+[ext_resource type="PackedScene" uid="uid://c745hw82aqkgx" path="res://assets/RollinDude/Textures/WITHPACK/RollinDudeMk5WithPack.glb" id="1_0wj0d"]
+
+[node name="RollinDudeMk5WithPack" instance=ExtResource("1_0wj0d")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 0, 0)
+
+[node name="Pack" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.284183, 0.115775, -0.22269, 0.159899, 0.342811, -0.0258281, 0.19346, -0.113274, -0.305772, -0.172883, 2.36427, -1.52101)
