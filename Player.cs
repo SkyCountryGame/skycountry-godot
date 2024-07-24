@@ -13,10 +13,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
-	private Vector3 controlDir; //user-inputted vector of intended direction of player
-	private const float accelScalar = 40f;
-	private const float velMagnitudeMax = 16f; //approximate max velocity allowed
+	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
+	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
+	private const float accelScalar = 90f;
+	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
+
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 	//UI stuff
@@ -42,9 +44,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		
+		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
 		//desired direction of player movement is based on user input and the current orientation of the camera
-		controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
-						.Rotated(Vector3.Down, -Mathf.Acos(camForward.Dot(Vector3.Forward)));
+		/*controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
+							.Rotated(Vector3.Down, angleToCam);*/
+		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
 		
 		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
 		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
@@ -59,20 +64,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		if (jump){
 			velocity.Y += JumpVelocity;
-			//Velocity += new Vector3(0, JumpVelocity, 0);
 			jump = false;
 		} else if (IsOnFloor()) {
 			velocity.Y = 0; 
 		} else {
 			velocity.Y += (float) (gravity * delta) * 300 - 20;
 		}
-		
-		/*velocity = Vector3.Zero;  //old implementation without acceleration
-		velocity.X += (float)(Input.GetAxis("left", "right")*500*delta);
-		velocity.Z += (float)(Input.GetAxis("forward", "backward")*500*delta);
-		*/
-
-		//velocity = velocity.Normalized() * 500 * (float)delta;
 		Velocity = velocity;
 		MoveAndSlide();
 	}
@@ -97,7 +94,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
 		{
 			jump = true;
-			_.hp += 1; //TODO remove. this is just to show that state is persisted
 		} else if (Input.IsActionJustPressed("player_use")){
 			switch (_.activityState){
 				case State.DEFAULT:
@@ -126,6 +122,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			//_.UpdateState(State.INVENTORY);
 			GD.Print(_.inv);
 		}
+		inputDir.X = Input.GetAxis("left", "right");
+		inputDir.Z = Input.GetAxis("forward", "backward");
 	}
 
 	public void HandleInteract(Interactable i, Node interactionObj, dynamic payload)
@@ -201,16 +199,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 	}
 
-	//set the player's forward vector
+	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
-	
-		// Normalize the input vector
-		camForward = f.Normalized();
-		
-		// Calculate the angle between the current forward vector and the new forward vector
-		//float angle = Mathf.Acos(GlobalTransform.Basis.Z.Dot(f));
-		// Rotate the player's transform around the Y-axis by the calculated angle
-		//GlobalTransform = GlobalTransform.Rotated(Vector3.Up, angle);
-	
+		camForward = f.Normalized();	
 	}
 }

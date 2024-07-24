@@ -53,6 +53,9 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="LabelAction" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.115
+anchor_bottom = 0.238
+offset_right = -180.8
+offset_bottom = -234.04

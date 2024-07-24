@@ -49,7 +49,7 @@ public partial class Camera2 : Camera3D
 			offset = offset.Rotated(Vector3.Up, theta);
 			if (plyr != null){
 				//plyr.SetForward(offset - Vector3.Up * offset.Dot(Vector3.Up)); //update the player's orientation to the offset without its y component (projected onto xz plane)
-				plyr.SetForward(new Vector3(offset.X, 0, offset.Z));
+				plyr.SetForward(-new Vector3(offset.X, 0, offset.Z));
 			}
 		}	
 		posDest = target.GlobalPosition + offset;
