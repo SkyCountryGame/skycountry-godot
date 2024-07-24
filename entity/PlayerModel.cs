@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Godot;
 
 public class PlayerModel {
     public State activityState = State.DEFAULT;
@@ -33,7 +34,9 @@ public class PlayerModel {
 		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
 		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
-    }
+		inv = new Inventory(4);
+	
+	}
 
 	/**
 	  * logic to perform when switching states
@@ -62,7 +65,8 @@ public class PlayerModel {
 				case State.AIMING:
 					break;
 				case State.INVENTORY:
-					Global.HUD.ShowInventory();
+					//Global.HUD.ShowInventory();
+					GD.Print("show inventory");
 					break;
 				case State.DIALOGUE:
 					break;

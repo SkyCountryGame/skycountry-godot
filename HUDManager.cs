@@ -8,9 +8,19 @@ using Godot;
 public partial class HUDManager : Node {
 
     public Node eventLog;
+
+    private Label actionLabel; //pops up when there is an interaction available or other action
+
+    //dialogue stuff
     public PanelContainer dialoguePanel;
     private RichTextLabel dialogueText;
+    private ItemList dialogueChoices;
+
+    //inventory stuff    
     private ItemList inventoryMenu;
+    private Label equippedLabel;
+    
+    private Label hpLabel;
 
 
     public ConcurrentQueue<string> messages; //the messages currently displayed

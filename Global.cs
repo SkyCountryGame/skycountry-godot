@@ -50,7 +50,7 @@ public class Global {
         //set the timer to remove this floating text after spcified duration
         Task removeText = new Task(() => {
             System.Threading.Thread.Sleep(2000);
-            obj.RemoveChild(floatingTextNodes[obj][key]);
+            obj.CallDeferred("remove_child", floatingTextNodes[obj][key]);
             floatingTextNodes[obj][key].QueueFree();
             floatingTextNodes[obj].Remove(key);
         });

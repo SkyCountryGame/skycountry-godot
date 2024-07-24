@@ -41,3 +41,18 @@ offset_left = 461.0
 offset_top = 529.0
 offset_right = 1362.0
 offset_bottom = 854.0
+
+[node name="LabelHP" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="LabelEquip" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="LabelAction" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

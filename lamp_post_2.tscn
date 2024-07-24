@@ -1,6 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvvscrhuoifvh"]
-
-[ext_resource type="Script" path="res://GenericInteractable.cs" id="1_kmt25"]
+[gd_scene load_steps=6 format=3 uid="uid://bvvscrhuoifvh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7miyi"]
 
@@ -14,7 +12,6 @@ albedo_color = Color(0.521569, 0.372549, 0.45098, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_rbrj6"]
 
 [node name="LampPost2" type="StaticBody3D"]
-script = ExtResource("1_kmt25")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_7miyi")

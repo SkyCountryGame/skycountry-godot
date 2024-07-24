@@ -123,7 +123,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.UpdateState(State.DEFAULT);
 			}
 		} else if (Input.IsActionJustPressed("player_inv")){
-			_.UpdateState(State.INVENTORY);
+			//_.UpdateState(State.INVENTORY);
+			GD.Print(_.inv);
 		}
 	}
 
@@ -147,7 +148,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 						_.hp += thing.Item2;
 						break;
 					case Pickup.PickupType.Ammo:
-						
+						break;
+					case Pickup.PickupType.PlayerEffect:
 						break;
 				}
 				break;
