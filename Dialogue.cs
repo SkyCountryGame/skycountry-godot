@@ -14,8 +14,12 @@ public partial class Dialogue : Resource
 {
     //dialogue is a tree of nodes containing all the relevant information for a conversation
     public struct DialogueNode {
-        int who; //0 = player, 1 = npc, 2 = other npc, etc.
+        public int who; //0 = player, 1 = npc, 2 = other npc, etc. NOTE this might end up being like an NPC ID
         public string text; //what "who" says
+        public string name; //might end up using NPC ID instead
+        public int textSpeed;
+        //public emotion
+        //event
         public List<DialogueNode> responses;
         public List<DialogueNode> next; //most cases will only lead to one, but we might want to randomly pick one
         public DialogueNode(int who, string text){

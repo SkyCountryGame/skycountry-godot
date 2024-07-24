@@ -125,6 +125,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case InteractionType.Dialogue:
 				_.UpdateState(State.DIALOGUE);
 				HUD.ShowDialogue($"{payload}"); //TODO name of talker
+				//should probably pass the whole DialogueNode through payload, so that we can deal with textspeed etc., and tell the HUD who's speaking, if we're showing responses, 
 				break;
 			case InteractionType.Inventory:
 				break;
