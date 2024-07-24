@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class PlayerModel{
+public class PlayerModel {
     public State activityState = State.DEFAULT;
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
@@ -19,6 +19,8 @@ public class PlayerModel{
 		DIALOGUE
 	}
 
+	public Inventory inv; //NOTE this might be moved into an Entity superclass 
+
     public PlayerModel(){
         dS = new Dictionary<State, HashSet<State>>();
 		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
@@ -33,6 +35,9 @@ public class PlayerModel{
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
     }
 
+	/**
+	  * logic to perform when switching states
+	  */
     public bool UpdateState(State ps){
 		State prev = activityState; //some states need to know previous
 		if (dS[activityState].Contains(ps)){
@@ -57,6 +62,7 @@ public class PlayerModel{
 				case State.AIMING:
 					break;
 				case State.INVENTORY:
+					Global.HUD.ShowInventory();
 					break;
 				case State.DIALOGUE:
 					break;
@@ -66,4 +72,29 @@ public class PlayerModel{
 		}
 		return true;
 	}
+
+	//---INVENTORY---	
+	public void AddToInventory(InventoryItem item)
+    {
+        inv.Add(item);
+    }
+
+    public void AddToInventory(Inventory inv)
+    {
+        foreach (InventoryItem ii in inv.GetItems())
+        {
+            AddToInventory(ii);
+        }
+    }
+
+    public bool IsInvFull()
+    {
+        return inv.IsFull();
+    }
+
+	/*public List<Wearable> GetActiveArmor()
+    {
+        return armor;
+    }*/
+
 }

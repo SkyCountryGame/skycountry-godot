@@ -34,3 +34,10 @@ offset_bottom = 548.0
 custom_minimum_size = Vector2(16, 32)
 layout_direction = 2
 layout_mode = 2
+
+[node name="InventoryMenu" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 529.0
+offset_right = 1362.0
+offset_bottom = 854.0

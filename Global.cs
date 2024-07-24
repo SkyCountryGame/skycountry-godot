@@ -16,7 +16,8 @@ public class Global {
     * the current player data, to persist between scenes
     */
     public static PlayerModel _P;
-    public static Camera2 _Cam; 
+    public static Camera2 _Cam;
+    public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
 
     //associate each godot node with the actual game object in the context of this game
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 

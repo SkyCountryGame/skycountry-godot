@@ -14,8 +14,7 @@ public enum InteractionMethod
 	Use //execute main "use" action, may require some prerequisite item to be equipped, within some distance, etc.
 }
 
-
-
+// -- ALL IMPLEMENTING CLASSES SHOULD SPECIFY THE PAYLOAD DATATYPE IN A COMMENT --
 public interface Interactable
 {
 	InteractionType interactionType { get; }

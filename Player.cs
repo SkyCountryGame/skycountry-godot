@@ -116,15 +116,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			}
 		} else if (Input.IsActionJustPressed("pause"))
 		{
+
 		} else if (Input.IsActionJustPressed("ui_back")){
-			if (_.activityState == State.DIALOGUE){
-				HUD.HideDialogue();
+			if (_.activityState == State.DIALOGUE || _.activityState == State.INVENTORY){
+				HUD.Back();
 				_.UpdateState(State.DEFAULT);
 			}
-		} else if (Input.IsKeyPressed(Key.R)){
-			Position += new Vector3(0, .2f, 0);
-		} else if (Input.IsKeyPressed(Key.F)){
-			Position += new Vector3(0, -.2f, 0);
+		} else if (Input.IsActionJustPressed("player_inv")){
+			_.UpdateState(State.INVENTORY);
 		}
 	}
 
@@ -136,9 +135,21 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.UpdateState(State.DIALOGUE);
 				HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
-			case InteractionType.Inventory:
+			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
-			case InteractionType.Pickup:
+			case InteractionType.Pickup: 
+				dynamic thing = (Tuple<dynamic,dynamic>) payload;
+				switch (thing.Item1){
+					case Pickup.PickupType.Item:
+						_.inv.Add(thing.Item2);
+						break;
+					case Pickup.PickupType.HP:
+						_.hp += thing.Item2;
+						break;
+					case Pickup.PickupType.Ammo:
+						
+						break;
+				}
 				break;
 			case InteractionType.General:
 				break;

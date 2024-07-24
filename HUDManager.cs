@@ -10,22 +10,31 @@ public partial class HUDManager : Node {
     public Node eventLog;
     public PanelContainer dialoguePanel;
     private RichTextLabel dialogueText;
+    private ItemList inventoryMenu;
+
 
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
 
     enum State {
         DEFAULT,
-        DIALOGUE
+        DIALOGUE,
+        INVENTORY,
+        DANGER,
+        PAUSE,
+        CUTSCENE
     }
     private State state = State.DEFAULT;
 
     public override void _Ready(){
+        Global.HUD = this;
         eventLog = GetNode("EventLog");
         dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
         messages = new ConcurrentQueue<string>();
         dialoguePanel.Visible = false;
+        inventoryMenu = GetNode<ItemList>("InventoryMenu");
+        inventoryMenu.Visible = false;
     }
 
     public override void _Process(double dt){
@@ -35,6 +44,7 @@ public partial class HUDManager : Node {
         }
     }
 
+    //NOTE does hud actually need a state system?
     private void UpdateState(State s){
         switch (s){
             case State.DEFAULT:
@@ -69,6 +79,12 @@ public partial class HUDManager : Node {
         UpdateState(State.DEFAULT);
     }
 
+    public void Back(){
+        switch (state){
+
+        }
+    }
+
     /**
      * add a message to the event log on the HUD
      */
@@ -87,5 +103,9 @@ public partial class HUDManager : Node {
         });
         removeMessage.Start();
         
+    }
+
+    public void ShowInventory(){
+        inventoryMenu.Visible = true;
     }
 }
