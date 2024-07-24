@@ -9,7 +9,7 @@ public partial class HUDManager : Node {
 
     public Node eventLog;
 
-    private Label actionLabel; //pops up when there is an interaction available or other action
+    public Label actionLabel; //pops up when there is an interaction available or other action
 
     //dialogue stuff
     public PanelContainer dialoguePanel;
@@ -38,13 +38,15 @@ public partial class HUDManager : Node {
 
     public override void _Ready(){
         Global.HUD = this;
-        eventLog = GetNode("EventLog");
+        eventLog = GetNode("MarginContainer/EventLog");
         dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
         messages = new ConcurrentQueue<string>();
         dialoguePanel.Visible = false;
         inventoryMenu = GetNode<ItemList>("InventoryMenu");
         inventoryMenu.Visible = false;
+        actionLabel = GetNode<Label>("LabelAction");
+        actionLabel.Visible = false;
     }
 
     public override void _Process(double dt){
@@ -117,5 +119,13 @@ public partial class HUDManager : Node {
 
     public void ShowInventory(){
         inventoryMenu.Visible = true;
+    }
+
+    public void ShowAction(string text){
+        actionLabel.Visible = true;
+        actionLabel.Text = "interact: " + text; //TODO this will have a sprite for key instead of 'interact'
+    }
+    public void HideAction(){
+        actionLabel.Visible = false;
     }
 }

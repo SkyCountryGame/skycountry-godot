@@ -75,6 +75,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
+		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global._Cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
@@ -85,6 +86,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			Vector3 pos = (Vector3)intersection["position"];
 			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
 			LookAt(viewAngle);
+		}
+
+		//HUD stuff
+		if (!HUD.actionLabel.Visible && availableInteractables.Count > 0){
+			HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
 
@@ -115,7 +121,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 		} else if (Input.IsActionJustPressed("ui_back")){
 			if (_.activityState == State.DIALOGUE || _.activityState == State.INVENTORY){
-				HUD.Back();
+				//HUD.Back();
 				_.UpdateState(State.DEFAULT);
 			}
 		} else if (Input.IsActionJustPressed("player_inv")){
@@ -171,15 +177,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		//TODO get the actual text to spawn
-		Global.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
-
 		switch (zone){
 			case ColliderZone.Awareness0:
 				Interactable i = Global.GetInteractable(other);
 				if (i != null)
 				{
 					availableInteractables.Add(i);
+					HUD.ShowAction($"{GetFirstInteractable().Info()}");
 				}
 				break;
 			case ColliderZone.Awareness1:
@@ -196,6 +200,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (availableInteractables.Contains(i))
 		{
 			availableInteractables.Remove(i);
+			if (availableInteractables.Count > 0){
+				HUD.ShowAction($"{GetFirstInteractable().Info()}");
+			} else {
+				HUD.HideAction();
+			}
 		}
 	}
 

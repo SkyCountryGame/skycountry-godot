@@ -1,0 +1,49 @@
+using Godot;
+using System;
+
+public partial class Rock : RigidBody3D, Interactable {
+    public InteractionType interactionType => throw new NotImplementedException();
+
+    public InteractionMethod interactionMethod => throw new NotImplementedException();
+
+
+    public Rock()
+    {
+    }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+	{
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+    public string Info()
+    {
+        return "Rock";
+    }
+
+    public dynamic Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Retain()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsInteractionValid(Interactor interactor)
+    {
+        throw new NotImplementedException();
+    }
+}

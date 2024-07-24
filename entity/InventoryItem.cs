@@ -1,7 +1,7 @@
 public class InventoryItem : System.ICloneable {
     public int id;
     public string title;
-    public enum Type {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest};
+    public enum Type {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
     public Type type;
     public bool inited = false;
 

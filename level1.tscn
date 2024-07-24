@@ -19,7 +19,7 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_mcwpa")
 size = Vector2(50, 50)
 
-[node name="Wod" instance=ExtResource("1_im1ok")]
+[node name="Wod2" instance=ExtResource("1_im1ok")]
 script = ExtResource("2_om4ml")
 
 [node name="Camera3D" parent="." index="3" node_paths=PackedStringArray("target")]
