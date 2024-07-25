@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
-[ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
+[ext_resource type="Script" path="res://Camera.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="8_ywuup"]

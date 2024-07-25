@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://8qof26j4jd18"]
 
-[ext_resource type="Script" path="res://Camera2.cs" id="1_f6jas"]
+[ext_resource type="Script" path="res://Camera.cs" id="1_f6jas"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_wxw3l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
