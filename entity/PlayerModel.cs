@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 
 public class PlayerModel {
+	private CharacterBody3D playerNode;
     public State activityState = State.DEFAULT;
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
@@ -23,8 +24,10 @@ public class PlayerModel {
 	}
 
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
+	public InventoryItem equipped; 
 
-    public PlayerModel(){
+    public PlayerModel(CharacterBody3D playerNode){
+		this.playerNode = playerNode;
         dS = new Dictionary<State, HashSet<State>>();
 		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
 		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
@@ -97,6 +100,28 @@ public class PlayerModel {
     {
         return inv.IsFull();
     }
+
+	/** equip the primary iten in inv */
+	public bool EquipItem(InventoryItem item = null){
+		if (inv.IsEmpty()) return false;
+		if (item == null){
+			equipped = inv.primary.Value;
+		} else {
+			if (inv.Contains(item)){
+				equipped = item;
+			}
+		}
+		return equipped != null;
+	}
+
+	public bool DropItem(InventoryItem item = null){
+		if (inv.IsEmpty()) return false;
+		if (inv.RemoveItem(item)){
+			playerNode.GetParent().AddChild(item.gameObject);
+			return true;
+		}
+		return false;
+	}
 
 	/*public List<Wearable> GetActiveArmor()
     {

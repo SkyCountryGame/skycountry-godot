@@ -31,7 +31,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		base._Ready();
 		if (Global._P == null){
-			_ = new PlayerModel(); //TODO what parameters to give here
+			_ = new PlayerModel(this); //TODO what parameters to give here
 			Global._P = _;
 		} else {
 			_ = Global._P;
@@ -141,6 +141,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				//_.UpdateState(State.INVENTORY);
 				//GD.Print(_.inv);
 				HUD.ToggleInventory(_.inv);
+			} else if (Input.IsActionJustPressed("player_equip")){
+				_.EquipItem();
 			}
 		}
 	}
@@ -159,6 +161,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case InteractionType.Pickup: 
 				InventoryItem item = payload;
 				_.AddToInventory(item);
+				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				HUD.LogEvent($" + {item.title}");
 				break;
@@ -168,6 +171,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				break;
 			case InteractionType.Function:
 				HUD.LogEvent($"{i.Info()}");
+				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				payload(this); //TODO what return? 
 				break;
 			default:

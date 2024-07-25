@@ -75,3 +75,5 @@ custom_minimum_size = Vector2(600, 50)
 layout_direction = 1
 layout_mode = 2
 autowrap_mode = 2
+
+[connection signal="item_clicked" from="InventoryMenu" to="." method="OnInventoryMenuItemClicked"]

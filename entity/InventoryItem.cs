@@ -1,8 +1,13 @@
+using System;
+using Godot;
+
 public class InventoryItem : System.ICloneable {
     public int id;
+    private static int nextId = 0; //keep count so that id is always unique
     public string title;
     public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
     public ItemType itemType;
+    public Node3D gameObject; //godot node for the world object. this was either picked up off ground or is instantiated elsewhere if this inv item wasn't ever in the world
     public bool inited = false;
     //mass? volume? other properties
 
@@ -15,6 +20,7 @@ public class InventoryItem : System.ICloneable {
     {
         itemType = t;
         this.title = title;
+        id = nextId++;
     }
 
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up
@@ -31,14 +37,18 @@ public class InventoryItem : System.ICloneable {
         return itemType.ToString() + ": " + title;
     }
 
-    public int GetHashCode()
+    public override int GetHashCode()
     {
         return id + title.GetHashCode();
     }
 
     public object Clone()
     {
-        return this.MemberwiseClone();
+        return MemberwiseClone();
+    }
+
+    public void SetGameObject(Node3D obj){
+        gameObject = obj;
     }
 
     /**

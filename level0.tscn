@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
-[ext_resource type="Script" path="res://interact/Rock.cs" id="11_hn21p"]
+[ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -51,12 +51,6 @@ size = Vector2(50, 50)
 [sub_resource type="PrismMesh" id="PrismMesh_j76bu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_1pd73"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_wycwp"]
-
-[sub_resource type="Skin" id="Skin_qnpgq"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
@@ -135,14 +129,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789129, 0)
 mesh = SubResource("PrismMesh_j76bu")
 surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 
-[node name="Rock" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.32175, 11)
-freeze_mode = 1
-script = ExtResource("11_hn21p")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Rock"]
-shape = SubResource("SphereShape3D_1pd73")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Rock/CollisionShape3D"]
-mesh = SubResource("SphereMesh_wycwp")
-skin = SubResource("Skin_qnpgq")
+[node name="Rock" parent="." instance=ExtResource("11_xa5x2")]

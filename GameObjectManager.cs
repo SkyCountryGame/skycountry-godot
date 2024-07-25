@@ -2,8 +2,9 @@ using Godot;
 using System.Collections.Generic;
 public class GameObjectManager {
 
-    private static Dictionary<string, PackedScene> gameObjectsPacked;
-    //private static SceneTree _ST = Global._SceneTree;
+    //NOTE since this is static, it will be reloaded upon each scene change, so might switch to have this class be a singleton
+    public static Dictionary<string, PackedScene> gameObjectsPacked;
+    
     
     private static List<StaticBody3D> floor;
 
@@ -13,6 +14,7 @@ public class GameObjectManager {
         gameObjectsPacked.Add("Rock", ResourceLoader.Load<PackedScene>("res://interact/rock.tscn"));
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://entity/lamppost.tscn"));
         gameObjectsPacked.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
+        gameObjectsPacked.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
     }
 
     public static void SpawnObject(string obj, Vector3 position){

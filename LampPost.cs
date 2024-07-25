@@ -7,7 +7,7 @@ using Godot;
 public partial class LampPost : Node, Interactable {
 
 
-    public InteractionMethod interactionMethod => throw new NotImplementedException();
+    public InteractionMethod interactionMethod => InteractionMethod.Use;
 
   	//[Export(PropertyHint.Enum, "interactionType")]
     public InteractionType interactionType => InteractionType.General;

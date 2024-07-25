@@ -2,10 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
+/**
+* an inventory of items for any entity that can hold items
+*/
 public class Inventory : System.ICloneable
 {
-    private LinkedList<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda
-    private LinkedListNode<InventoryItem> primary;
+    private LinkedList<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda    
+    public LinkedListNode<InventoryItem> primary; //item first in line to be equipped (not the equipped item)
+    //public Dictionary<int, InventoryItem> stockIndexed; //for quick access //TODO will only need this if we decide to use a select-anything inv instead of cycle-through
 
     public int capacity; //max # items can be wwww
 
@@ -21,7 +25,7 @@ public class Inventory : System.ICloneable
         GD.Print($"inv add {item.title}. stock = {stock.Count}");
         if (stock.Count < capacity)
         {
-            stock.AddLast(new LinkedListNode<InventoryItem>((InventoryItem)item.Clone()));
+            stock.AddLast(new LinkedListNode<InventoryItem>(item));
             return true;
         }
         return false;
@@ -69,16 +73,37 @@ public class Inventory : System.ICloneable
             else
             {
                 break;
-            }
-            
+            }    
         }
 
+        return res;
+    }
+
+    public InventoryItem GetItem(int itemID)
+    {
+        InventoryItem res = primary.Value;
+        while (res != null){
+            if (res.id == itemID){
+                return res;
+            }
+            res = primary.Next?.Value;
+        }
         return res;
     }
 
     public List<InventoryItem> GetItems()
     {
         return stock.ToList();
+    }
+
+    public bool RemoveItem(InventoryItem item)
+    {
+        return stock.Remove(item);
+    }
+
+    public bool Contains(InventoryItem item)
+    {
+        return stock.Contains(item);
     }
 
     public int Count()
