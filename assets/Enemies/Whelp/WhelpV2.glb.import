@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dyxkr4dh82qrd"
-path="res://.godot/imported/BlockheadTest1.glb-7ed752efb9df8dd1bf09de97d8480aea.scn"
+uid="uid://dwci2etcgbxbb"
+path="res://.godot/imported/WhelpV2.glb-b118a3a81453883cd50046070f700699.scn"
 
 [deps]
 
-source_file="res://assets/NPCs/Blockhead/BlockheadTest1.glb"
-dest_files=["res://.godot/imported/BlockheadTest1.glb-7ed752efb9df8dd1bf09de97d8480aea.scn"]
+source_file="res://assets/Enemies/Whelp/WhelpV2.glb"
+dest_files=["res://.godot/imported/WhelpV2.glb-b118a3a81453883cd50046070f700699.scn"]
 
 [params]
 

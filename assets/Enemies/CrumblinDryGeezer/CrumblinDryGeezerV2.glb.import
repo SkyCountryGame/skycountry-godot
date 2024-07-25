@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dyxkr4dh82qrd"
-path="res://.godot/imported/BlockheadTest1.glb-7ed752efb9df8dd1bf09de97d8480aea.scn"
+uid="uid://bbjx5j78w0mn0"
+path="res://.godot/imported/CrumblinDryGeezerV2.glb-62186489fd068d9be8bb0048d7219c88.scn"
 
 [deps]
 
-source_file="res://assets/NPCs/Blockhead/BlockheadTest1.glb"
-dest_files=["res://.godot/imported/BlockheadTest1.glb-7ed752efb9df8dd1bf09de97d8480aea.scn"]
+source_file="res://assets/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2.glb"
+dest_files=["res://.godot/imported/CrumblinDryGeezerV2.glb-62186489fd068d9be8bb0048d7219c88.scn"]
 
 [params]
 
