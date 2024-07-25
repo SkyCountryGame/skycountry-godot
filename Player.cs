@@ -164,6 +164,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				break;
 			case InteractionType.Mineable:
 				break;
+			case InteractionType.Function:
+				payload(this); //TODO what return? 
+				break;
 			default:
 				break;
 		}
@@ -185,8 +188,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				Interactable i = Global.GetInteractable(other);
 				if (i != null)
 				{
-					availableInteractables.Add(i);
-					HUD.ShowAction($"{GetFirstInteractable().Info()}");
+					if (i.interactionMethod == InteractionMethod.Use){
+						availableInteractables.Add(i);
+						HUD.ShowAction($"{GetFirstInteractable().Info()}");
+					} else if (i.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(i, other);
+					}
 				}
 				break;
 			case ColliderZone.Awareness1:

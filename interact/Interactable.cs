@@ -8,7 +8,8 @@ public enum InteractionType
 	Inventory, 
 	Pickup, //for now will always give InventoryItem,  
 	General, 
-	Mineable
+	Mineable,
+	Function //give a function to execute with player as parameter
 }
 
 public enum InteractionMethod
