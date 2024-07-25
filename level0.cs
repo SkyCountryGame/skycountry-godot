@@ -21,6 +21,14 @@ public partial class level0 : Node3D
 		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
 		w = new World();
+		Global._SceneTree = GetTree();
+		GameObjectManager.init();
+		GameObjectManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
+		//dynamically spawn things
+		//health pickups
+		//enemies
+
+		//find random position on floor
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

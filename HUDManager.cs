@@ -18,6 +18,7 @@ public partial class HUDManager : Node {
 
     //inventory stuff    
     private ItemList inventoryMenu;
+
     private Label equippedLabel;
     
     private Label hpLabel;
@@ -117,8 +118,24 @@ public partial class HUDManager : Node {
         
     }
 
-    public void ShowInventory(){
+    public void ShowInventory(Inventory inv){
         inventoryMenu.Visible = true;
+        inventoryMenu.AddItem("Inventory", null, false);
+        foreach (InventoryItem i in inv.GetItems()){
+            inventoryMenu.AddItem(i.title);
+        }
+    }
+    public void HideInventory(){
+        inventoryMenu.Clear();
+        inventoryMenu.Visible = false;
+        
+    }
+    public void ToggleInventory(Inventory inv){
+        if (inventoryMenu.Visible){
+            HideInventory();
+        } else {
+            ShowInventory(inv);
+        }
     }
 
     public void ShowAction(string text){

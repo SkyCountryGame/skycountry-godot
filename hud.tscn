@@ -24,10 +24,10 @@ layout_mode = 2
 
 [node name="InventoryMenu" type="ItemList" parent="."]
 layout_mode = 0
-offset_left = 461.0
-offset_top = 529.0
-offset_right = 1362.0
-offset_bottom = 854.0
+offset_left = 1222.0
+offset_top = 564.0
+offset_right = 1763.0
+offset_bottom = 1017.0
 
 [node name="LabelHP" type="Label" parent="."]
 layout_mode = 0

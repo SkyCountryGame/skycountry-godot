@@ -17,6 +17,7 @@ public class Global {
     */
     public static PlayerModel _P;
     public static Camera2 _Cam;
+    public static SceneTree _SceneTree;
     public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
 
     //associate each godot node with the actual game object in the context of this game

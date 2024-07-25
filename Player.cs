@@ -139,7 +139,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				//TODO pause
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY);
-				GD.Print(_.inv);
+				//GD.Print(_.inv);
+				HUD.ToggleInventory(_.inv);
 			}
 		}
 	}
@@ -159,12 +160,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				InventoryItem item = payload;
 				_.AddToInventory(item);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				HUD.LogEvent($" + {item.title}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
+				HUD.LogEvent($"{i.Info()}");
 				payload(this); //TODO what return? 
 				break;
 			default:
