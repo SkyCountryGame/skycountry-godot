@@ -4,7 +4,11 @@ using System.Collections.Generic;
 
 public enum InteractionType
 { //more than anything, this specifies the datatype of the payload
-	Dialogue, Inventory, Pickup, General, Mineable
+	Dialogue, 
+	Inventory, 
+	Pickup, //for now will always give InventoryItem,  
+	General, 
+	Mineable
 }
 
 public enum InteractionMethod

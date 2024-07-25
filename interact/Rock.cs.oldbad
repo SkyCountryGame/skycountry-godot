@@ -1,39 +1,37 @@
 using Godot;
 using System;
-using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
-    public InteractionType interactionType => InteractionType.Pickup;
+public partial class Rock : Pickup
+{
+    public InteractionType interactionType => throw new NotImplementedException();
 
-    public InteractionMethod interactionMethod => InteractionMethod.Use;
+    public InteractionMethod interactionMethod => throw new NotImplementedException();
 
-    private InventoryItem rockItem;
 
-    public Rock()
+    public Rock() : base()
     {
+		pickupType = PickupType.Item;
+		thing = new InventoryItem(InventoryItem.Type.Mineral, "Rock"); //"God DAMMIT Marie!"
     }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "Rock");
-    }
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
 
-    public string Info()
+    public override string Info()
     {
         return "Rock";
     }
 
-    //PAYLOAD 
     public dynamic Interact()
     {
-        return rockItem;
+        throw new NotImplementedException();
     }
 
     public void Retain()

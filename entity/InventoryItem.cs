@@ -1,18 +1,19 @@
 public class InventoryItem : System.ICloneable {
     public int id;
     public string title;
-    public enum Type {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
-    public Type type;
+    public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
+    public ItemType itemType;
     public bool inited = false;
+    //mass? volume? other properties
 
     //from old unity code. part of the skill system
     //public Dictionary<EntityTypes.Skill, int> EffectivenessMap; //each skill's weight on an entities effectiveness with this item
 
     public InventoryItem() : base() { }
 
-    public InventoryItem(Type type, string title) : base()
+    public InventoryItem(ItemType t, string title) : base()
     {
-        this.type = type;
+        itemType = t;
         this.title = title;
     }
 
@@ -27,7 +28,7 @@ public class InventoryItem : System.ICloneable {
     override
     public string ToString()
     {
-        return type.ToString() + ": " + title;
+        return itemType.ToString() + ": " + title;
     }
 
     public int GetHashCode()

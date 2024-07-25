@@ -95,45 +95,58 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 
 	public override void _UnhandledInput(InputEvent ev){
-		if (Input.IsActionJustPressed("player_action2")){
-
-		} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
-		{
-			jump = true;
-		} else if (Input.IsActionJustPressed("player_use")){
-			switch (_.activityState){
-				case State.DEFAULT:
-					Interactable i = GetFirstInteractable();
-					if (i != null)
-					{
-						dynamic payload = i.Interact();
-						HandleInteract(i, (Node)i, payload);
-					} else {
-						HUD.LogEvent("there is nothing with which to interact");
-					}
-					break;
-				case State.DIALOGUE:
-					//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
-					break;
-			}
-		} else if (Input.IsActionJustPressed("pause"))
-		{
-
-		} else if (Input.IsActionJustPressed("ui_back")){
-			if (_.activityState == State.DIALOGUE || _.activityState == State.INVENTORY){
-				//HUD.Back();
+		
+		//do appropriate thing whether we are in inventory or not
+		if (_.activityState == (State.DIALOGUE | State.INVENTORY)){
+			if (Input.IsActionJustPressed("ui_back")){
 				_.UpdateState(State.DEFAULT);
+			} else if (Input.IsActionJustPressed("left")){
+				//TODO inv left
+			} else if (Input.IsActionJustPressed("right")){
+				//TODO inv right
+			} else if (Input.IsActionJustPressed("up")){
+				//TODO inv up
+			} else if (Input.IsActionJustPressed("down")){
+				//TODO inv down
 			}
-		} else if (Input.IsActionJustPressed("player_inv")){
-			//_.UpdateState(State.INVENTORY);
-			GD.Print(_.inv);
+		} else {
+			inputDir.X = Input.GetAxis("left", "right");
+			inputDir.Z = Input.GetAxis("forward", "backward");
+			if (Input.IsActionJustPressed("player_action2")){
+
+			} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
+			{
+				jump = true;
+			} else if (Input.IsActionJustPressed("player_use")){
+				switch (_.activityState){
+					case State.DEFAULT:
+						Interactable i = GetFirstInteractable();
+						if (i != null)
+						{
+							if (i.interactionMethod == InteractionMethod.Use){
+								HandleInteract(i, (Node)i);
+							}
+						} else {
+							HUD.LogEvent("there is nothing with which to interact");
+						}
+						break;
+					case State.DIALOGUE:
+						//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
+						break;
+				}
+			} else if (Input.IsActionJustPressed("pause"))
+			{
+				//TODO pause
+			} else if (Input.IsActionJustPressed("player_inv")){
+				//_.UpdateState(State.INVENTORY);
+				GD.Print(_.inv);
+			}
 		}
-		inputDir.X = Input.GetAxis("left", "right");
-		inputDir.Z = Input.GetAxis("forward", "backward");
 	}
 
-	public void HandleInteract(Interactable i, Node interactionObj, dynamic payload)
+	public void HandleInteract(Interactable i, Node interactionObj)
 	{
+		dynamic payload = i.Interact();
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
@@ -143,19 +156,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				dynamic thing = (Tuple<dynamic,dynamic>) payload;
-				switch (thing.Item1){
-					case Pickup.PickupType.Item:
-						_.inv.Add(thing.Item2);
-						break;
-					case Pickup.PickupType.HP:
-						_.hp += thing.Item2;
-						break;
-					case Pickup.PickupType.Ammo:
-						break;
-					case Pickup.PickupType.PlayerEffect:
-						break;
-				}
+				InventoryItem item = payload;
+				_.AddToInventory(item);
+				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				break;
 			case InteractionType.General:
 				break;

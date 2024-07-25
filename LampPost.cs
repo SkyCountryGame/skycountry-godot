@@ -28,7 +28,7 @@ public partial class LampPost : Node, Interactable {
 
     public string Info()
     {
-        throw new NotImplementedException();
+        return "Does one seek light?";
     }
 
     public dynamic Interact()

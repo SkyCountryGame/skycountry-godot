@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public class Inventory : System.ICloneable
 {
-    private LinkedList<InventoryItem> stock;
+    private LinkedList<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda
     private LinkedListNode<InventoryItem> primary;
 
     public int capacity; //max # items can be wwww
@@ -17,6 +18,7 @@ public class Inventory : System.ICloneable
 
     public bool Add(InventoryItem item)
     {
+        GD.Print($"inv add {item.title}. stock = {stock.Count}");
         if (stock.Count < capacity)
         {
             stock.AddLast(new LinkedListNode<InventoryItem>((InventoryItem)item.Clone()));
@@ -39,7 +41,7 @@ public class Inventory : System.ICloneable
         string res = stock.Count + "/" + capacity + "\n";
         foreach (InventoryItem i in stock)
         {
-                res += i.title + "(" + i.type + ") \n";
+                res += i.title + "(" + i.itemType + ") \n";
         }
         return res;
     }

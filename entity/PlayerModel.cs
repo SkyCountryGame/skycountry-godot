@@ -5,19 +5,21 @@ public class PlayerModel {
     public State activityState = State.DEFAULT;
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+	
+	[System.Flags]
 	public enum State //maybe activity state? 
 	{
-		DEFAULT, 
-		CHARGING, //preparing to roll
-		ROLLING, 
-		PREPARING, //preparing to attack 
-		ATTACKING,
-		COOLDOWN,
-		HEALING,
-		RELOADING,
-		AIMING, //this could be different instance flag
-		INVENTORY, //in an inventory menu
-		DIALOGUE
+		DEFAULT = 1 << 0,
+		CHARGING = 1 << 1, 
+		ROLLING = 1 << 2, 
+		PREPARING = 1 << 3, 
+		ATTACKING = 1 << 4,
+		COOLDOWN = 1 << 5,
+		HEALING = 1 << 6,
+		RELOADING = 1 << 7,
+		AIMING = 1 << 8, 
+		INVENTORY = 1 << 9, 
+		DIALOGUE = 1 << 10
 	}
 
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
