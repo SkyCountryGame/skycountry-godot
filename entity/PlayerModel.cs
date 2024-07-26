@@ -40,7 +40,6 @@ public class PlayerModel {
 		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 		inv = new Inventory(4);
-	
 	}
 
 	/**
@@ -105,7 +104,7 @@ public class PlayerModel {
 	public bool EquipItem(InventoryItem item = null){
 		if (inv.IsEmpty()) return false;
 		if (item == null){
-			equipped = inv.primary.Value;
+			equipped = inv.primary;
 		} else {
 			if (inv.Contains(item)){
 				equipped = item;

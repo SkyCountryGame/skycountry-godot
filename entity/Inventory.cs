@@ -7,8 +7,8 @@ using Godot;
 */
 public class Inventory : System.ICloneable
 {
-    private LinkedList<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda    
-    public LinkedListNode<InventoryItem> primary; //item first in line to be equipped (not the equipped item)
+    public List<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda    
+    public InventoryItem primary; //item first in line to be equipped (not the equipped item)
     //public Dictionary<int, InventoryItem> stockIndexed; //for quick access //TODO will only need this if we decide to use a select-anything inv instead of cycle-through
 
     public int capacity; //max # items can be wwww
@@ -16,8 +16,8 @@ public class Inventory : System.ICloneable
     public Inventory(int capacity)
     {
         this.capacity = capacity;
-        stock = new LinkedList<InventoryItem>();
-        primary = stock.First; //yes it's currently null
+        stock = new List<InventoryItem>(4);
+        primary = null;
     }
 
     public bool Add(InventoryItem item)
@@ -25,7 +25,7 @@ public class Inventory : System.ICloneable
         GD.Print($"inv add {item.title}. stock = {stock.Count}");
         if (stock.Count < capacity)
         {
-            stock.AddLast(new LinkedListNode<InventoryItem>(item));
+            stock.Add(item);
             return true;
         }
         return false;
@@ -50,50 +50,18 @@ public class Inventory : System.ICloneable
         return res;
     }
 
-    /**
-     * grab the currently most primary item
-     */
-    public InventoryItem GetFirstItem()
+    public InventoryItem GetItemByID(int itemID)
     {
-        if (primary.Value == null) return null;
-        InventoryItem res = primary.Value;
-        primary = primary.Next ?? stock.First; //if next is null (end of list) cycle back to beginning
-        return res;
+        return stock.Find(item => item.id == itemID);
     }
 
-    public List<InventoryItem> GetFirstNItems(int n)
-    {
-        List<InventoryItem> res = new List<InventoryItem>();
-        for (int i = 0; i < n; i++)
-        {
-            if (stock.Count > 0)
-            {
-                res.Add(GetFirstItem());    
-            }
-            else
-            {
-                break;
-            }    
-        }
-
-        return res;
-    }
-
-    public InventoryItem GetItem(int itemID)
-    {
-        InventoryItem res = primary.Value;
-        while (res != null){
-            if (res.id == itemID){
-                return res;
-            }
-            res = primary.Next?.Value;
-        }
-        return res;
+    public InventoryItem GetItemByIndex(int idx){
+        return stock[idx];
     }
 
     public List<InventoryItem> GetItems()
     {
-        return stock.ToList();
+        return stock;
     }
 
     public bool RemoveItem(InventoryItem item)
@@ -113,6 +81,6 @@ public class Inventory : System.ICloneable
 
     public object Clone()
     {
-        return this.MemberwiseClone();
+        return MemberwiseClone();
     }
 }

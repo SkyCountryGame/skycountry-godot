@@ -120,16 +120,17 @@ public partial class HUDManager : Node {
 
     public void ShowInventory(Inventory inv){
         inventoryMenu.Visible = true;
-        int idx = inventoryMenu.AddItem("Inventory", null, false);
-        inventoryMenu.SetItemDisabled(idx, true);
-        inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        //int idx = inventoryMenu.AddItem("Inventory", null, false);
+        //inventoryMenu.SetItemDisabled(idx, true);
+        //inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         foreach (InventoryItem item in inv.GetItems()){
-            if (inv.primary != null && inv.primary.Value == item){
-                inventoryMenu.AddItem($" - {item.title} - ");
+            int idx = -1;
+            if (inv.primary != null && inv.primary == item){
+                idx = inventoryMenu.AddItem($" - {item.title} - ");
             } else {
                 idx = inventoryMenu.AddItem(item.title);
-                inventoryMenu.SetItemMetadata(idx, item.id); //assoc the inventory item
             }
+            inventoryMenu.SetItemMetadata(idx, item.id); //assoc the inventory item
         }
     }
     public void HideInventory(){
@@ -155,7 +156,7 @@ public partial class HUDManager : Node {
 
     public void OnInventoryMenuItemClicked(int index, Vector2 pos, int mouseButton){
         GD.Print($"clicked {index}");
-        InventoryItem item = Global._P.inv.GetItem((int)inventoryMenu.GetItemMetadata(index)); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
+        InventoryItem item = Global._P.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 0){
                 Global._P.EquipItem(item);

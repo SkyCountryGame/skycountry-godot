@@ -22,8 +22,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 	//UI stuff
-	private HUDManager HUD;
-
+	
 	//PLAYER STATE
 	private PlayerModel _; //this is the player data that should be persisted between scenes
 
@@ -36,8 +35,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else {
 			_ = Global._P;
 		}
-		
-		HUD = GetNode<HUDManager>("../HUD"); 
+		 
 		ApplyFloorSnap();
 	}
 
@@ -89,8 +87,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 
 		//HUD stuff
-		if (!HUD.actionLabel.Visible && availableInteractables.Count > 0){
-			HUD.ShowAction($"{GetFirstInteractable().Info()}");
+		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
+			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
 
@@ -127,7 +125,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 								HandleInteract(i, (Node)i);
 							}
 						} else {
-							HUD.LogEvent("there is nothing with which to interact");
+							Global.HUD.LogEvent("there is nothing with which to interact");
 						}
 						break;
 					case State.DIALOGUE:
@@ -140,7 +138,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY);
 				//GD.Print(_.inv);
-				HUD.ToggleInventory(_.inv);
+				Global.HUD.ToggleInventory(_.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
 				_.EquipItem();
 			}
@@ -154,7 +152,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			case InteractionType.Dialogue:
 				_.UpdateState(State.DIALOGUE);
-				HUD.ShowDialogue($"{payload}"); //TODO name of talker
+				Global.HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
@@ -163,14 +161,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.AddToInventory(item);
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-				HUD.LogEvent($" + {item.title}");
+				Global.HUD.LogEvent($" + {item.title}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
-				HUD.LogEvent($"{i.Info()}");
+				Global.HUD.LogEvent($"{i.Info()}");
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				payload(this); //TODO what return? 
 				break;
@@ -197,7 +195,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				{
 					if (i.interactionMethod == InteractionMethod.Use){
 						availableInteractables.Add(i);
-						HUD.ShowAction($"{GetFirstInteractable().Info()}");
+						Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 					} else if (i.interactionMethod == InteractionMethod.Contact){
 						HandleInteract(i, other);
 					}
@@ -218,9 +216,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			availableInteractables.Remove(i);
 			if (availableInteractables.Count > 0){
-				HUD.ShowAction($"{GetFirstInteractable().Info()}");
+				Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
-				HUD.HideAction();
+				Global.HUD.HideAction();
 			}
 		}
 	}
