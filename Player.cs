@@ -91,7 +91,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
-	
+
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
@@ -161,6 +161,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.AddToInventory(item);
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
 				Global.HUD.LogEvent($" + {item.title}");
 				break;
 			case InteractionType.General:

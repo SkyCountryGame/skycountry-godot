@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using Godot;
 
 public class PlayerModel {
-	private CharacterBody3D playerNode;
+	public CharacterBody3D playerNode;
     public State activityState = State.DEFAULT;
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
@@ -122,12 +122,14 @@ public class PlayerModel {
 			item = equipped;
 		}
 		if (inv.RemoveItem(item)){
-			item.gameObject.Position = playerNode.GlobalPosition + new Vector3(0,1,1); //TODO pos placement
 			playerNode.GetParent().AddChild(item.gameObject);
+			item.gameObject.Position = playerNode.GlobalPosition + new Vector3(0,1,1);
+			//this only works if the node has not been disposed. should be fixed as part of the level switching update. 
+
 			if (item == equipped){
 				equipped = null;
 			}
-			Global.HUD.ShowEquipped();
+			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
 			return true;
 		}
 		return false;

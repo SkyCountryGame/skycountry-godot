@@ -120,7 +120,7 @@ public partial class HUDManager : Node {
         
     }
 
-    public void ShowInventory(Inventory inv){
+    public void ShowInventory(Inventory inv){ //TODO reactive fix update: we hold a reference to inventory, and ItemList automatically updates on change
         inventoryMenu.Visible = true;
         //int idx = inventoryMenu.AddItem("Inventory", null, false);
         //inventoryMenu.SetItemDisabled(idx, true);
@@ -169,7 +169,10 @@ public partial class HUDManager : Node {
         InventoryItem item = Global._P.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                Global._P.EquipItem(item);
+                if (Global._P.EquipItem(item)){
+                    inventoryMenu.SetItemText(index, $" - {item.title} - "); //TODO bad. will be fixed after reactive ui update
+                    ShowEquipped(item.title);
+                }
             } else if (mouseButton == 2){
                 if (Global._P.DropItem(item)){
                     inventoryMenu.RemoveItem(index);
