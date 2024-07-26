@@ -48,6 +48,7 @@ public partial class HUDManager : Node {
         inventoryMenu.Visible = false;
         actionLabel = GetNode<Label>("LabelAction");
         actionLabel.Visible = false;
+        equippedLabel = GetNode<Label>("LabelEquip");
     }
 
     public override void _Process(double dt){
@@ -55,6 +56,7 @@ public partial class HUDManager : Node {
             UpdateEventLog();
             needsUpdate = false;
         }
+        //TODO show equipped item
     }
 
     //NOTE does hud actually need a state system?
@@ -125,7 +127,7 @@ public partial class HUDManager : Node {
         //inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         foreach (InventoryItem item in inv.GetItems()){
             int idx = -1;
-            if (inv.primary != null && inv.primary == item){
+            if (item == Global._P.equipped){
                 idx = inventoryMenu.AddItem($" - {item.title} - ");
             } else {
                 idx = inventoryMenu.AddItem(item.title);
@@ -145,6 +147,14 @@ public partial class HUDManager : Node {
             ShowInventory(inv);
         }
     }
+    public void ShowEquipped(string label = null){ 
+        if (label == null){
+            equippedLabel.Visible = false;
+        } else {
+            equippedLabel.Visible = true;
+            equippedLabel.Text = label;
+        }
+    }
 
     public void ShowAction(string text){
         actionLabel.Visible = true;
@@ -158,11 +168,19 @@ public partial class HUDManager : Node {
         GD.Print($"clicked {index}");
         InventoryItem item = Global._P.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
-            if (mouseButton == 0){
+            if (mouseButton == 1){ //left click
                 Global._P.EquipItem(item);
-            } else if (mouseButton == 1){
-                Global._P.DropItem(item);
+            } else if (mouseButton == 2){
+                if (Global._P.DropItem(item)){
+                    inventoryMenu.RemoveItem(index);
+                }
             }
         }       
     }
+
+    /* might have to use this later when HUD elements are focused (taking input priority)
+    public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+    }*/
 }

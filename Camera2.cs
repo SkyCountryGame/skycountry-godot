@@ -18,7 +18,7 @@ public partial class Camera2 : Camera3D
 	private float offsetDist = 10; 
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
-	private float camRotateIncrement = (float) (Math.PI / 96.0d);
+	private float camRotateIncrement = (float) (Math.PI / 72.0d);
 	private bool isRotating = false;
 
 	[Export]

@@ -12,13 +12,15 @@ using Godot;
 public class Global {
     public static PackedScene indicator; 
 
-    /**
-    * the current player data, to persist between scenes
+    /** ======= GLOBAL STATIC REFERENCES ========
+    * current player data, to persist between scenes
+    * NOTE i want to use a shorter name other than "global", like "G" or "__" 
     */
     public static PlayerModel _P;
     public static Camera2 _Cam;
     public static SceneTree _SceneTree;
     public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
+
 
     //associate each godot node with the actual game object in the context of this game
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 

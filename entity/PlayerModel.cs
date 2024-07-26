@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Godot;
 
 public class PlayerModel {
@@ -100,11 +101,12 @@ public class PlayerModel {
         return inv.IsFull();
     }
 
-	/** equip the primary iten in inv */
+	/** by default equip the primary item, or give an item to equip */
 	public bool EquipItem(InventoryItem item = null){
 		if (inv.IsEmpty()) return false;
-		if (item == null){
-			equipped = inv.primary;
+		if (item == null){ //or maybe dequip?
+			equipped = inv.GetItemByIndex(0);
+			Global.HUD.ShowEquipped(equipped.title);
 		} else {
 			if (inv.Contains(item)){
 				equipped = item;
@@ -113,10 +115,19 @@ public class PlayerModel {
 		return equipped != null;
 	}
 
+	/** drop the equipped item, or a specific item */
 	public bool DropItem(InventoryItem item = null){
 		if (inv.IsEmpty()) return false;
+		if (item == null){
+			item = equipped;
+		}
 		if (inv.RemoveItem(item)){
+			item.gameObject.Position = playerNode.GlobalPosition + new Vector3(0,1,1); //TODO pos placement
 			playerNode.GetParent().AddChild(item.gameObject);
+			if (item == equipped){
+				equipped = null;
+			}
+			Global.HUD.ShowEquipped();
 			return true;
 		}
 		return false;

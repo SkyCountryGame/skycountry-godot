@@ -91,8 +91,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
-
-	public override void _UnhandledInput(InputEvent ev){
+	
+	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
 		if (_.activityState == (State.DIALOGUE | State.INVENTORY)){
@@ -136,7 +136,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			{
 				//TODO pause
 			} else if (Input.IsActionJustPressed("player_inv")){
-				//_.UpdateState(State.INVENTORY);
+				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
 				Global.HUD.ToggleInventory(_.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
