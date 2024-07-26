@@ -7,8 +7,7 @@ using System.Collections.Generic;
 public partial class level0 : Node3D
 {
 	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
-	private World w;
-	private OmniLight3D lampPost;
+	private World w; //TODO remove this if not used
 	private DirectionalLight3D sunlight;
 	private HUDManager HUD;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
@@ -17,10 +16,16 @@ public partial class level0 : Node3D
 	public override void _Ready()
 	{
 		player =  GetNode<Player>("Player");
-		//lampPost = GetNode<OmniLight3D>("LampPost/CollisionShape3D/StaticBody3D/OmniLight3D");
 		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
 		w = new World();
+		Global._SceneTree = GetTree();
+		GameObjectManager.init();
+		GameObjectManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
+		//dynamically spawn things
+		//health pickups
+		//enemies
+		//find random position on floor
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

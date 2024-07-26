@@ -18,7 +18,7 @@ public partial class Camera2 : Camera3D
 	private float offsetDist = 10; 
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
-	private float camRotateIncrement = (float) (Math.PI / 96.0d);
+	private float camRotateIncrement = (float) (Math.PI / 72.0d);
 	private bool isRotating = false;
 
 	[Export]
@@ -49,7 +49,7 @@ public partial class Camera2 : Camera3D
 			offset = offset.Rotated(Vector3.Up, theta);
 			if (plyr != null){
 				//plyr.SetForward(offset - Vector3.Up * offset.Dot(Vector3.Up)); //update the player's orientation to the offset without its y component (projected onto xz plane)
-				plyr.SetForward(new Vector3(offset.X, 0, offset.Z));
+				plyr.SetForward(-new Vector3(offset.X, 0, offset.Z));
 			}
 		}	
 		posDest = target.GlobalPosition + offset;

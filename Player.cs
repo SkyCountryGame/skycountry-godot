@@ -13,15 +13,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
-	private Vector3 controlDir; //user-inputted vector of intended direction of player
-	private const float accelScalar = 40f;
-	private const float velMagnitudeMax = 16f; //approximate max velocity allowed
+	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
+	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
+	private const float accelScalar = 90f;
+	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
+
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 	//UI stuff
-	private HUDManager HUD;
-
+	
 	//PLAYER STATE
 	private PlayerModel _; //this is the player data that should be persisted between scenes
 
@@ -29,22 +30,24 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		base._Ready();
 		if (Global._P == null){
-			_ = new PlayerModel(); //TODO what parameters to give here
+			_ = new PlayerModel(this); //TODO what parameters to give here
 			Global._P = _;
 		} else {
 			_ = Global._P;
 		}
-		
-		HUD = GetNode<HUDManager>("../HUD"); 
+		 
 		ApplyFloorSnap();
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		
+		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
 		//desired direction of player movement is based on user input and the current orientation of the camera
-		controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
-						.Rotated(Vector3.Down, -Mathf.Acos(camForward.Dot(Vector3.Forward)));
+		/*controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
+							.Rotated(Vector3.Down, angleToCam);*/
+		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
 		
 		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
 		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
@@ -59,25 +62,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		if (jump){
 			velocity.Y += JumpVelocity;
-			//Velocity += new Vector3(0, JumpVelocity, 0);
 			jump = false;
 		} else if (IsOnFloor()) {
 			velocity.Y = 0; 
 		} else {
 			velocity.Y += (float) (gravity * delta) * 300 - 20;
 		}
-		
-		/*velocity = Vector3.Zero;  //old implementation without acceleration
-		velocity.X += (float)(Input.GetAxis("left", "right")*500*delta);
-		velocity.Z += (float)(Input.GetAxis("forward", "backward")*500*delta);
-		*/
-
-		//velocity = velocity.Normalized() * 500 * (float)delta;
 		Velocity = velocity;
 		MoveAndSlide();
 	}
 	public override void _Process(double delta)
 	{
+		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global._Cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
@@ -89,60 +85,93 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
 			LookAt(viewAngle);
 		}
-	}
 
-	public override void _UnhandledInput(InputEvent ev){
-		if (Input.IsActionJustPressed("player_action2")){
-
-		} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
-		{
-			jump = true;
-			_.hp += 1; //TODO remove. this is just to show that state is persisted
-		} else if (Input.IsActionJustPressed("player_use")){
-			switch (_.activityState){
-				case State.DEFAULT:
-					Interactable i = GetFirstInteractable();
-					if (i != null)
-					{
-						dynamic payload = i.Interact();
-						HandleInteract(i, (Node)i, payload);
-					} else {
-						HUD.LogEvent("there is nothing with which to interact");
-					}
-					break;
-				case State.DIALOGUE:
-					//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
-					break;
-			}
-		} else if (Input.IsActionJustPressed("pause"))
-		{
-		} else if (Input.IsActionJustPressed("ui_back")){
-			if (_.activityState == State.DIALOGUE){
-				HUD.HideDialogue();
-				_.UpdateState(State.DEFAULT);
-			}
-		} else if (Input.IsKeyPressed(Key.R)){
-			Position += new Vector3(0, .2f, 0);
-		} else if (Input.IsKeyPressed(Key.F)){
-			Position += new Vector3(0, -.2f, 0);
+		//HUD stuff
+		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
+			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
 
-	public void HandleInteract(Interactable i, Node interactionObj, dynamic payload)
+	public override void _Input(InputEvent ev){
+		
+		//do appropriate thing whether we are in inventory or not
+		if (_.activityState == (State.DIALOGUE | State.INVENTORY)){
+			if (Input.IsActionJustPressed("ui_back")){
+				_.UpdateState(State.DEFAULT);
+			} else if (Input.IsActionJustPressed("left")){
+				//TODO inv left
+			} else if (Input.IsActionJustPressed("right")){
+				//TODO inv right
+			} else if (Input.IsActionJustPressed("up")){
+				//TODO inv up
+			} else if (Input.IsActionJustPressed("down")){
+				//TODO inv down
+			}
+		} else {
+			inputDir.X = Input.GetAxis("left", "right");
+			inputDir.Z = Input.GetAxis("forward", "backward");
+			if (Input.IsActionJustPressed("player_action2")){
+
+			} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
+			{
+				jump = true;
+			} else if (Input.IsActionJustPressed("player_use")){
+				switch (_.activityState){
+					case State.DEFAULT:
+						Interactable i = GetFirstInteractable();
+						if (i != null)
+						{
+							if (i.interactionMethod == InteractionMethod.Use){
+								HandleInteract(i, (Node)i);
+							}
+						} else {
+							Global.HUD.LogEvent("there is nothing with which to interact");
+						}
+						break;
+					case State.DIALOGUE:
+						//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
+						break;
+				}
+			} else if (Input.IsActionJustPressed("pause"))
+			{
+				//TODO pause
+			} else if (Input.IsActionJustPressed("player_inv")){
+				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
+				//GD.Print(_.inv);
+				Global.HUD.ToggleInventory(_.inv);
+			} else if (Input.IsActionJustPressed("player_equip")){
+				_.EquipItem();
+			}
+		}
+	}
+
+	public void HandleInteract(Interactable i, Node interactionObj)
 	{
+		dynamic payload = i.Interact();
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
 				_.UpdateState(State.DIALOGUE);
-				HUD.ShowDialogue($"{payload}"); //TODO name of talker
+				Global.HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
-			case InteractionType.Inventory:
+			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
-			case InteractionType.Pickup:
+			case InteractionType.Pickup: 
+				InventoryItem item = payload;
+				_.AddToInventory(item);
+				item.SetGameObject((Node3D)interactionObj);
+				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
+				Global.HUD.LogEvent($" + {item.title}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
+				break;
+			case InteractionType.Function:
+				Global.HUD.LogEvent($"{i.Info()}");
+				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				payload(this); //TODO what return? 
 				break;
 			default:
 				break;
@@ -160,15 +189,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		//TODO get the actual text to spawn
-		Global.SpawnFloatingText("collision"+other.GetHashCode(), other.Name, this, new Vector3(0,3,0));
-
 		switch (zone){
 			case ColliderZone.Awareness0:
 				Interactable i = Global.GetInteractable(other);
 				if (i != null)
 				{
-					availableInteractables.Add(i);
+					if (i.interactionMethod == InteractionMethod.Use){
+						availableInteractables.Add(i);
+						Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+					} else if (i.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(i, other);
+					}
 				}
 				break;
 			case ColliderZone.Awareness1:
@@ -185,19 +216,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (availableInteractables.Contains(i))
 		{
 			availableInteractables.Remove(i);
+			if (availableInteractables.Count > 0){
+				Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+			} else {
+				Global.HUD.HideAction();
+			}
 		}
 	}
 
-	//set the player's forward vector
+	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
-	
-		// Normalize the input vector
-		camForward = f.Normalized();
-		
-		// Calculate the angle between the current forward vector and the new forward vector
-		//float angle = Mathf.Acos(GlobalTransform.Basis.Z.Dot(f));
-		// Rotate the player's transform around the Y-axis by the calculated angle
-		//GlobalTransform = GlobalTransform.Rotated(Vector3.Up, angle);
-	
+		camForward = f.Normalized();	
 	}
 }
