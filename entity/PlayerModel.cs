@@ -123,7 +123,7 @@ public class PlayerModel {
 		}
 		if (inv.RemoveItem(item)){
 			playerNode.GetParent().AddChild(item.gameObject);
-			item.gameObject.Position = playerNode.GlobalPosition + new Vector3(0,1,1);
+			item.gameObject.Position = playerNode.Position + new Vector3(0,1,1);
 			//this only works if the node has not been disposed. should be fixed as part of the level switching update. 
 
 			if (item == equipped){

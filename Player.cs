@@ -35,7 +35,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else {
 			_ = Global._P;
 		}
-		 
 		ApplyFloorSnap();
 	}
 
@@ -73,6 +72,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
+		if (LevelManager._ != null && LevelManager._.currentLevelScene != GetTree().CurrentScene){
+			LevelManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		}
+
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global._Cam;

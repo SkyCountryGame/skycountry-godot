@@ -1,6 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
-[ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
+[ext_resource type="Script" path="res://levels/level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
+[ext_resource type="Script" path="res://levels/LevelManager.cs" id="12_btpjs"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -130,3 +131,13 @@ mesh = SubResource("PrismMesh_j76bu")
 surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 
 [node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+
+[node name="LevelManager" type="Node" parent="."]
+script = ExtResource("12_btpjs")
+
+[node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
+
+[node name="Rock3" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
