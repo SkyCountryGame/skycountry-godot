@@ -1,0 +1,41 @@
+item spawning
+
+main menu
+
+level switchin system
+    on level start:
+    GD.Load<PackedScene>(path) all the relevant scenes that can be access from this scene.
+
+    when item picked up and added to inv, mark it to not be disposed of.
+    OR dispose the Node3D and keep track of the object type, so that it can be respawned. it can be the same mesh+texture, but the datamodel will have to be saved and reapplied. the datamodel should just stay in mem.
+    for items that have Node3D changes based on modelstate, use a scene that automatically deals with that.
+
+    with this, we could use ChangePackedScene(). but we should still avoid that because of performance of repeated disk usage and reloading the same stuff onto mem that we just freed.
+
+
+
+dialogue
+
+audio from http. 
+
+
+thinking on GameObjectManager, LevelManager, Global. want to make sure these abstractions make sense. 
+    LevelManager: 
+        preloads all the scenes (that are levels) that the current scene can go into
+        these loaded scenes obviously need to persist accross scene changes
+        which classes will call this class? what are the only events that would result in scene(level/room) change? 
+    GameObjectManager: 
+        preloads all the scenes (that are gameobjects) that are or might be used in the current level
+        also should persist 
+    a "level" can be thought of as a set of scenes for now
+    maybe both of these concerns can be handled by "SceneManager"
+    Global: 
+        holds static references to things that need to be widely accessible throughout the codebase and need to persist across scene changes. 
+
+    perhaps SceneManager that just loads ALL of the ".tscn" files and organizes them by type (level,gameobject,) would be good.
+    this case would require that the relevant scene-file paths be specified in a config file, so that only the scenes needed by the level are preloaded. 
+    this would combine LevelManager & GameObjectManager into 1 class. level 
+
+
+random ideas:
+    voice-over: it's the interface, the form of the interface, the interface to what is known.

@@ -2,7 +2,6 @@ using Godot;
 using System.Collections.Generic;
 public class GameObjectManager {
 
-    //NOTE since this is static, it will be reloaded upon each scene change, so might switch to have this class be a singleton
     public static Dictionary<string, PackedScene> gameObjectsPacked;
     
     
@@ -32,5 +31,9 @@ public class GameObjectManager {
         foreach (var f in floors){
             GameObjectManager.floor.Add(f);
         }
+    }
+
+    public static void probe(){
+        GD.Print("ok");
     }
 }

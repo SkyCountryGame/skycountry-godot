@@ -135,6 +135,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Input.IsActionJustPressed("pause"))
 			{
 				//TODO pause
+				GameObjectManager.probe();
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
