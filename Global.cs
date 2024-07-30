@@ -43,7 +43,7 @@ public class Global {
         if (floatingTextNodes[obj].ContainsKey(key)){
             floatingTextNodes[obj][key].Text = text;
         } else {
-            Label3D textObj = (Label3D) GameObjectManager.gameObjectsPacked["FloatingText"].Instantiate();
+            Label3D textObj = (Label3D) SceneManager._.gameObjectsPacked["FloatingText"].Instantiate();
             textObj.Text = text;
             textObj.Position = offset;
             obj.AddChild(textObj);

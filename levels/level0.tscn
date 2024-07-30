@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
-[ext_resource type="Script" path="res://levels/LevelManager.cs" id="12_btpjs"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
+[ext_resource type="Script" path="res://SceneManager.cs" id="12_ttgca"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -134,7 +134,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
 
 [node name="LevelManager" type="Node" parent="."]
-script = ExtResource("12_btpjs")
+script = ExtResource("12_ttgca")
 
 [node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)

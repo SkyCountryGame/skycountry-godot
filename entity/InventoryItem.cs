@@ -4,9 +4,10 @@ using Godot;
 public class InventoryItem : System.ICloneable {
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
-    public string title;
+    public string name; 
     public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
     public ItemType itemType;
+
     public Node3D gameObject; //godot node for the world object. this was either picked up off ground or is instantiated elsewhere if this inv item wasn't ever in the world
     public bool inited = false;
     //mass? volume? other properties
@@ -16,10 +17,11 @@ public class InventoryItem : System.ICloneable {
 
     public InventoryItem() : base() { }
 
-    public InventoryItem(ItemType t, string title) : base()
+    //name is the same as the key in the GameObjectManager.gameObjectsPacked
+    public InventoryItem(ItemType t, string name) : base()
     {
         itemType = t;
-        this.title = title;
+        this.name = name;
         id = nextId++;
     }
 
@@ -34,12 +36,12 @@ public class InventoryItem : System.ICloneable {
     override
     public string ToString()
     {
-        return itemType.ToString() + ": " + title;
+        return itemType.ToString() + ": " + name;
     }
 
     public override int GetHashCode()
     {
-        return id + title.GetHashCode();
+        return id + name.GetHashCode();
     }
 
     public object Clone()
@@ -49,6 +51,7 @@ public class InventoryItem : System.ICloneable {
 
     public void SetGameObject(Node3D obj){
         gameObject = obj;
+        SceneManager._.activeGameObjects.Add(obj);
     }
 
     /**

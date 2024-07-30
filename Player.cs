@@ -72,8 +72,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
-		if (LevelManager._ != null && LevelManager._.currentLevelScene != GetTree().CurrentScene){
-			LevelManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		if (SceneManager._ != null && SceneManager._.currentLevelScene != GetTree().CurrentScene){
+			SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
 		}
 
 		//RayCast Stuff
@@ -138,7 +138,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Input.IsActionJustPressed("pause"))
 			{
 				//TODO pause
-				GameObjectManager.probe();
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
@@ -165,8 +164,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.AddToInventory(item);
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				//interactionObj.QueueFree();
 				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
-				Global.HUD.LogEvent($" + {item.title}");
+				Global.HUD.LogEvent($" + {item.name}");
 				break;
 			case InteractionType.General:
 				break;

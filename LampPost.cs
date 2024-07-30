@@ -37,7 +37,7 @@ public partial class LampPost : Node, Interactable {
             //NOTE this is obviously not how we will be changing levels in the end. it is just proof of concept
             //PackedScene levelscene = ResourceLoader.Load<PackedScene>("res://levels/level2.tscn");
             
-            LevelManager._.ChangeLevel("l2");
+            SceneManager._.ChangeLevel("l2");
 
             //GetTree().ChangeSceneToPacked(levelscene);
         }

@@ -128,9 +128,9 @@ public partial class HUDManager : Node {
         foreach (InventoryItem item in inv.GetItems()){
             int idx = -1;
             if (item == Global._P.equipped){
-                idx = inventoryMenu.AddItem($" - {item.title} - ");
+                idx = inventoryMenu.AddItem($" - {item.name} - ");
             } else {
-                idx = inventoryMenu.AddItem(item.title);
+                idx = inventoryMenu.AddItem(item.name);
             }
             inventoryMenu.SetItemMetadata(idx, item.id); //assoc the inventory item
         }
@@ -170,8 +170,8 @@ public partial class HUDManager : Node {
         if (item != null){
             if (mouseButton == 1){ //left click
                 if (Global._P.EquipItem(item)){
-                    inventoryMenu.SetItemText(index, $" - {item.title} - "); //TODO bad. will be fixed after reactive ui update
-                    ShowEquipped(item.title);
+                    inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
+                    ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
                 if (Global._P.DropItem(item)){
