@@ -1,3 +1,5 @@
+
+
 item spawning
 
 main menu
@@ -18,24 +20,25 @@ dialogue
 
 audio from http. 
 
+folder organization:
+    gameobjects (or prefab): all the tscn files for in game objects that have meshes
 
 thinking on GameObjectManager, LevelManager, Global. want to make sure these abstractions make sense. 
-    LevelManager: 
-        preloads all the scenes (that are levels) that the current scene can go into
-        these loaded scenes obviously need to persist accross scene changes
-        which classes will call this class? what are the only events that would result in scene(level/room) change? 
-    GameObjectManager: 
-        preloads all the scenes (that are gameobjects) that are or might be used in the current level
-        also should persist 
     a "level" can be thought of as a set of scenes for now
-    maybe both of these concerns can be handled by "SceneManager"
     Global: 
         holds static references to things that need to be widely accessible throughout the codebase and need to persist across scene changes. 
 
-    perhaps SceneManager that just loads ALL of the ".tscn" files and organizes them by type (level,gameobject,) would be good.
-    this case would require that the relevant scene-file paths be specified in a config file, so that only the scenes needed by the level are preloaded. 
-    this would combine LevelManager & GameObjectManager into 1 class. level 
 
+    some object are instantiated right away in the scene (set in editor)
+    some object will be instantiated dynamically via code/events
+    objects that can be picked up can be either of those classes, therefore pickupables need to have a PackedScene assoc with them
+    the already-instantiated ones 
+
+    we need IDs/labels for every possible inventory item. but first, what are all the properties that invitems can have? and how do we want to make that stuff in game? 
+    remember to clean up the commented-out code in scenemanager
+    need a way to clear out the active gameobjects when a node is unloaded
+    i really feel like SceneManager stuff should be static
+    remember to move RegisterGameObject into SceneManager. also what is all the purpose of this function?     
 
 random ideas:
     voice-over: it's the interface, the form of the interface, the interface to what is known.

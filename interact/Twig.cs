@@ -2,14 +2,15 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
+public partial class Twig : RigidBody3D, Interactable {
     public InteractionType interactionType => InteractionType.Pickup;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
 
-    private InventoryItem rockItem;
 
-    public Rock()
+    private InventoryItem invItem;
+
+    public Twig()
     {
     }
 
@@ -17,8 +18,7 @@ public partial class Rock : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "Rock");
-        rockItem.gameObject = this;
+        invItem = new InventoryItem(InventoryItem.ItemType.Mineral, "Rock", this);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,13 +28,13 @@ public partial class Rock : RigidBody3D, Interactable {
 
     public string Info()
     {
-        return "Rock";
+        return "Twig";
     }
 
     //PAYLOAD 
     public dynamic Interact()
     {
-        return rockItem;
+        return invItem;
     }
 
     public void Retain()

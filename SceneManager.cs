@@ -12,7 +12,8 @@ using System.Collections.Generic;
     */
 public partial class SceneManager : Node {
 
-    public static SceneManager _; //the instance
+    private static SceneManager _instance; //the instance
+    public static SceneManager _ => GetInstance(); //the instance
     
     //LEVEL STUFF
     //experimenting with how to deal with this. 
@@ -29,16 +30,23 @@ public partial class SceneManager : Node {
     //GAME OBJECT STUFF
     public Dictionary<string, PackedScene> gameObjectsPacked; //can this be static? 
     public HashSet<Node>activeGameObjects; //game objects that have been instantiated during this session.
+    public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes
 
-    
+    //private Player player; //the current player 
+
     private static List<StaticBody3D> floor;
+
+    public static SceneManager GetInstance(){
+        if (_instance == null){
+            _instance = new SceneManager();
+            _instance.init();
+        }
+        return _instance;
+    }
 
     public override void _Ready()
     {
-        if (_ == null){
-            init();
-            _ = this;
-        }
+        
     }
 
     public void init(){
@@ -73,10 +81,17 @@ public partial class SceneManager : Node {
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://entity/lamppost.tscn"));
         gameObjectsPacked.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
         gameObjectsPacked.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
+        gameObjectsPacked.Add("ERROR", ResourceLoader.Load<PackedScene>("res://error.tscn"));
+        //player = ResourceLoader.Load<PackedScene>("res://player.tscn").Instantiate() as Player;
+        //player = Global._PlayerNode;
+
+        activeGameObjects = new HashSet<Node>();
+
     }
 
     public void ChangeLevel(string levelname){
-        /*Node nextScene;
+        /*
+        Node nextScene;
         if (activeLevelScenes.ContainsKey(levelname)){
             nextScene = activeLevelScenes[levelname];
         } else if (levelScenesPacked.ContainsKey(levelname)){ 
@@ -85,19 +100,30 @@ public partial class SceneManager : Node {
             GD.Print("something went wrong while loading level " + levelname);
             return;
         }
-        GetTree().Root.AddChild(nextScene);
+        currentLevelScene.RemoveChild(player);
+        Node levelParent = currentLevelScene.GetParent();
         GetTree().Root.RemoveChild(currentLevelScene);
-        ((Node3D)currentLevelScene).Visible = false;
+        //player.GetParent().RemoveChild(player);
+        //levelParent.AddChild(player);
+        GetTree().Root.AddChild(currentLevelScene);
+        nextScene.AddChild(player);
+        //Global._Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera2;
+        
+        //GetTree().Root.AddChild(nextScene);
+        //((Node3D)currentLevelScene).Visible = false;
+
         SetActiveLevelScene(nextScene);
         */
 
+        //note: if can't get this to work, just going to stick with ChangeSceneToPacked. at least we're keeping the PackedScene s in mem and not loading that from disk. 
+            //just need to make sure to save the state of the level
 
-
-        //this is just a sanity check. 
         if (levelScenesPacked.ContainsKey(levelname)){
-            Node testLeveLoad = levelScenesPacked[levelname].Instantiate();
-            GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
-        }
+            currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
+            activeGameObjects.Clear();
+            currentLevelScene = GetTree().CurrentScene;
+            Global._SceneTree = GetTree();
+        }    
     }
 
     /**

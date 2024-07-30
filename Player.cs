@@ -32,6 +32,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (Global._P == null){
 			_ = new PlayerModel(this); //TODO what parameters to give here
 			Global._P = _;
+			Global._PlayerNode = this;
 		} else {
 			_ = Global._P;
 		}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=26 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="Script" path="res://SceneManager.cs" id="12_ttgca"]
+[ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://interact/interactable_node.tscn" id="13_bvu8j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -133,7 +134,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 [node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
 
-[node name="LevelManager" type="Node" parent="."]
+[node name="SceneManager" type="Node" parent="."]
 script = ExtResource("12_ttgca")
 
 [node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
@@ -141,3 +142,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
 
 [node name="Rock3" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
+
+[node name="Node3D" parent="." instance=ExtResource("13_bvu8j")]

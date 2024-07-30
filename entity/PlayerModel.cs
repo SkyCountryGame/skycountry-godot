@@ -122,14 +122,9 @@ public class PlayerModel {
 			item = equipped;
 		}
 		if (inv.RemoveItem(item)){
-			playerNode.GetParent().AddChild(item.gameObject);
-			if (item.gameObject.IsNodeReady()){
-				item.gameObject.Position = playerNode.Position + new Vector3(0,1,1);
-			} else {
-				item.gameObject = (Node3D) item.packedScene.Instantiate();
-			}
-			
-			//this only works if the node has not been disposed. should be fixed as part of the level switching update. 
+			Node gameObject = item.packedScene.Instantiate();
+			playerNode.GetParent().AddChild(gameObject);
+			((Node3D) gameObject).Position = playerNode.Position + new Vector3(0,1,1);
 
 			if (item == equipped){
 				equipped = null;

@@ -33,13 +33,8 @@ public partial class LampPost : Node, Interactable {
 
     public dynamic Interact()
     {
-        if (n > 4){
-            //NOTE this is obviously not how we will be changing levels in the end. it is just proof of concept
-            //PackedScene levelscene = ResourceLoader.Load<PackedScene>("res://levels/level2.tscn");
-            
+        if (n > 4){ //it's a magic lamp
             SceneManager._.ChangeLevel("l2");
-
-            //GetTree().ChangeSceneToPacked(levelscene);
         }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;

@@ -17,6 +17,7 @@ public class Global {
     * NOTE i want to use a shorter name other than "global", like "G" or "__" 
     */
     public static PlayerModel _P;
+    public static Player _PlayerNode;
     public static Camera2 _Cam;
     public static SceneTree _SceneTree;
     public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 

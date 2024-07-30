@@ -8,7 +8,10 @@ public class InventoryItem : System.ICloneable {
     public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
     public ItemType itemType;
 
+    //TODO establish all the properties than inventory items can have
+
     public Node3D gameObject; //godot node for the world object. this was either picked up off ground or is instantiated elsewhere if this inv item wasn't ever in the world
+    public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
     public bool inited = false;
     //mass? volume? other properties
 
@@ -18,11 +21,17 @@ public class InventoryItem : System.ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, string name) : base()
+    public InventoryItem(ItemType t, string name, Node3D gameObject = null) : base()
     {
         itemType = t;
         this.name = name;
         id = nextId++;
+        this.gameObject = gameObject;
+        if (SceneManager._.gameObjectsPacked.ContainsKey(name)){
+            packedScene = SceneManager._.gameObjectsPacked[name];
+        } else {
+            packedScene = SceneManager._.gameObjectsPacked["ERROR"];
+        }
     }
 
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up
@@ -51,7 +60,6 @@ public class InventoryItem : System.ICloneable {
 
     public void SetGameObject(Node3D obj){
         gameObject = obj;
-        SceneManager._.activeGameObjects.Add(obj);
     }
 
     /**
