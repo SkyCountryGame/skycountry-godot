@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpkxfobs7jdt5"]
+[gd_scene load_steps=12 format=3 uid="uid://dpkxfobs7jdt5"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_yy4dy"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="2_y040l"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_pxpml"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
 [ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
+[ext_resource type="PackedScene" uid="uid://b6465p4mb4ts" path="res://scene_manager.tscn" id="6_4yxge"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
 
@@ -24,12 +25,12 @@ size = Vector2(50, 50)
 
 [node name="Wod2" instance=ExtResource("1_yy4dy")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." index="3"]
+[node name="Floor" type="StaticBody3D" parent="." index="3"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" index="0"]
 shape = ExtResource("3_pxpml")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" index="0"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D" index="0"]
 material_override = SubResource("StandardMaterial3D_nv66b")
 material_overlay = SubResource("StandardMaterial3D_dqjjg")
 cast_shadow = 0
@@ -46,7 +47,6 @@ stream = ExtResource("4_jtexw")
 
 [node name="Guy" type="RigidBody3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
-visible = false
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="Guy" index="0"]
 
@@ -59,3 +59,5 @@ shape = SubResource("SphereShape3D_lj6cb")
 skeleton = NodePath("../../../..")
 
 [node name="Player" parent="." index="7" instance=ExtResource("2_y040l")]
+
+[node name="SceneManager" parent="." index="8" instance=ExtResource("6_4yxge")]

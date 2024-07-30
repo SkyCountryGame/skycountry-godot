@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
+[ext_resource type="PackedScene" uid="uid://b6465p4mb4ts" path="res://scene_manager.tscn" id="12_dd4lg"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
-[ext_resource type="Script" path="res://SceneManager.cs" id="12_ttgca"]
 [ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://interact/interactable_node.tscn" id="13_bvu8j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -38,14 +38,14 @@ tonemap_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k4f7a"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72h3h"]
 specular_mode = 1
 metallic_specular = 0.34
 roughness_texture_channel = 1
 refraction_texture_channel = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q726u"]
-material = SubResource("StandardMaterial3D_k4f7a")
+material = SubResource("StandardMaterial3D_72h3h")
 size = Vector2(50, 50)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]
@@ -134,8 +134,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 [node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
 
-[node name="SceneManager" type="Node" parent="."]
-script = ExtResource("12_ttgca")
+[node name="SceneManager" parent="." instance=ExtResource("12_dd4lg")]
 
 [node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
