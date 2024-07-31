@@ -7,7 +7,7 @@ using Godot;
 public partial class LampPost : Node, Interactable {
 
 
-    public InteractionMethod interactionMethod => throw new NotImplementedException();
+    public InteractionMethod interactionMethod => InteractionMethod.Use;
 
   	//[Export(PropertyHint.Enum, "interactionType")]
     public InteractionType interactionType => InteractionType.General;
@@ -28,17 +28,20 @@ public partial class LampPost : Node, Interactable {
 
     public string Info()
     {
-        throw new NotImplementedException();
+        return "Does one seek light?";
     }
 
     public dynamic Interact()
     {
         if (n > 4){
-            //this is obviously not how we will be changing levels in the end. it is just proof of concept
+            //NOTE this is obviously not how we will be changing levels in the end. it is just proof of concept
             PackedScene levelscene = ResourceLoader.Load<PackedScene>("res://level2.tscn");
             //Node nextlevel = levelscene.Instantiate();
             //PackedScene player = ResourceLoader.Load<PackedScene>("res://player.tscn");
-            //nextlevel.AddChild(player.Instantiate());
+            //nextlevel.AddChild(Global._P.playerNode);
+            //TODO need to think about level switching logic. there will be 2 different types of scene switch: enter/exit rooms, and switch "big levels". in first case, want to keep things in memory, in second case, want to free old scene from mem.
+            //GetTree().Root.RemoveChild(GetParent());
+            //GetTree().Root.AddChild(nextlevel);
             GetTree().ChangeSceneToPacked(levelscene);
         }
         //toggle lamp light
