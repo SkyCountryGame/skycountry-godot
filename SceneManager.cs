@@ -8,7 +8,8 @@ using System.Collections.Generic;
     - loading gameobjects
     - keeping track of relevant scenes (nodes) 
  * holds a collection of levels and a collection of game objects, loaded from given folder path. 
- * you can also use a config file to map what levels point to which other levels. 
+ * you can also use a config file to map what levels point to which other levels (TODO).
+ * we use ChangeSceneToPacked() for scene switching. performance seems to be fine. we only load PackedScenes from disk on level start, not on each scene start. each scene just instantiates that PackedScene (which is in RAM) into a Node3D.  
     */
 public partial class SceneManager : Node {
 
@@ -38,13 +39,11 @@ public partial class SceneManager : Node {
     //public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();  //TODO how to set this stuff up. see GameObjectType in GameObject.cs
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
 
-    //private Player player; //the current player 
-
     private static List<StaticBody3D> floor;
 
     public override void _Ready()
     {
-        if (Instance == null){
+        if (Instance == null){ //only preload the stuff once on level start (not scene start)
             GD.Print("init SceneManager");
             init();
             Instance = this;
@@ -53,7 +52,6 @@ public partial class SceneManager : Node {
     }
 
     public void init(){
-        //TODO, maybe this should be called from level script which passes in the level names. 
         //load the level scenes from somewhere
         levelScenesPacked = new Dictionary<string, PackedScene>(){ //this would also be the place to load from save file instead of default scene definition
             {"l0", ResourceLoader.Load<PackedScene>("res://levels/level0.tscn")},
@@ -85,8 +83,6 @@ public partial class SceneManager : Node {
         prefabs.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://error.tscn"));
-        //player = ResourceLoader.Load<PackedScene>("res://player.tscn").Instantiate() as Player;
-        //player = Global._PlayerNode;
 
         activeNodes = new HashSet<Node>();
     }
@@ -117,6 +113,12 @@ public partial class SceneManager : Node {
     }
 
     public void ChangeLevel(string levelname){
+        if (levelScenesPacked.ContainsKey(levelname)){
+            currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
+            activeNodes.Clear();
+            currentLevelScene = GetTree().CurrentScene;
+            Global._SceneTree = GetTree();
+        }
         /*
         Node nextScene;
         if (activeLevelScenes.ContainsKey(levelname)){
@@ -140,17 +142,7 @@ public partial class SceneManager : Node {
         //((Node3D)currentLevelScene).Visible = false;
 
         SetActiveLevelScene(nextScene);
-        */
-
-        //note: if can't get this to work, just going to stick with ChangeSceneToPacked. at least we're keeping the PackedScene s in mem and not loading that from disk. 
-            //just need to make sure to save the state of the level
-
-        if (levelScenesPacked.ContainsKey(levelname)){
-            currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
-            activeNodes.Clear();
-            currentLevelScene = GetTree().CurrentScene;
-            Global._SceneTree = GetTree();
-        }    
+        */    
     }
 
     /**
