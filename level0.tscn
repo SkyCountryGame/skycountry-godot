@@ -1,15 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=24 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://level0.cs" id="1_ux354"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://hud.tscn" id="2_tvajd"]
-[ext_resource type="PackedScene" uid="uid://cl6bjmy17mjve" path="res://bg_music.tscn" id="4_c2ts5"]
-[ext_resource type="AudioStream" uid="uid://gcn0s78w5ecf" path="res://assets/aud/20230128_CB.mp3" id="4_xj1mv"]
 [ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="8_ywuup"]
-[ext_resource type="Script" path="res://Talker.cs" id="10_mxve8"]
+[ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
+[ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
+[ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -46,6 +46,12 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_k4f7a")
 size = Vector2(50, 50)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_j76bu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
+
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ux354")
 
@@ -69,10 +75,6 @@ directional_shadow_fade_start = 0.74
 directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
-[node name="AudioStreamPlayer" parent="." instance=ExtResource("4_c2ts5")]
-stream = ExtResource("4_xj1mv")
-volume_db = -2.402
-
 [node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, -11.578)
 script = ExtResource("7_ph10c")
@@ -85,7 +87,7 @@ process_mode = 1
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
-script = ExtResource("10_mxve8")
+script = ExtResource("9_80eq6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Clerk"]
 
@@ -102,15 +104,29 @@ transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 
 current = true
 script = ExtResource("8_7fw5a")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Floor" type="StaticBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = ExtResource("12_knnwi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
 material_override = SubResource("StandardMaterial3D_t4q33")
 material_overlay = SubResource("StandardMaterial3D_4jcw5")
 cast_shadow = 0
 gi_mode = 2
 mesh = SubResource("PlaneMesh_q726u")
 skeleton = NodePath("../..")
+
+[node name="Drugz" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.52858)
+script = ExtResource("10_c8j53")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Drugz"]
+shape = SubResource("SphereShape3D_gcr6y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Drugz/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789129, 0)
+mesh = SubResource("PrismMesh_j76bu")
+surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
+
+[node name="Rock" parent="." instance=ExtResource("11_xa5x2")]

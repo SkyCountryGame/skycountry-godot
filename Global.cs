@@ -12,11 +12,15 @@ using Godot;
 public class Global {
     public static PackedScene indicator; 
 
-    /**
-    * the current player data, to persist between scenes
+    /** ======= GLOBAL STATIC REFERENCES ========
+    * current player data, to persist between scenes
+    * NOTE i want to use a shorter name other than "global", like "G" or "__" 
     */
     public static PlayerModel _P;
-    public static Camera2 _Cam; 
+    public static Camera2 _Cam;
+    public static SceneTree _SceneTree;
+    public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
+
 
     //associate each godot node with the actual game object in the context of this game
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
@@ -39,7 +43,7 @@ public class Global {
         if (floatingTextNodes[obj].ContainsKey(key)){
             floatingTextNodes[obj][key].Text = text;
         } else {
-            Label3D textObj = (Label3D) ResourceLoader.Load<PackedScene>("res://floatingtext.tscn").Instantiate();
+            Label3D textObj = (Label3D) GameObjectManager.gameObjectsPacked["FloatingText"].Instantiate();
             textObj.Text = text;
             textObj.Position = offset;
             obj.AddChild(textObj);
@@ -49,7 +53,7 @@ public class Global {
         //set the timer to remove this floating text after spcified duration
         Task removeText = new Task(() => {
             System.Threading.Thread.Sleep(2000);
-            obj.RemoveChild(floatingTextNodes[obj][key]);
+            obj.CallDeferred("remove_child", floatingTextNodes[obj][key]);
             floatingTextNodes[obj][key].QueueFree();
             floatingTextNodes[obj].Remove(key);
         });

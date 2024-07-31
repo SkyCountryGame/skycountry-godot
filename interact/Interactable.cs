@@ -4,7 +4,12 @@ using System.Collections.Generic;
 
 public enum InteractionType
 { //more than anything, this specifies the datatype of the payload
-	Dialogue, Inventory, Pickup, General, Mineable
+	Dialogue, 
+	Inventory, 
+	Pickup, //for now will always give InventoryItem,  
+	General, 
+	Mineable,
+	Function //give a function to execute with player as parameter
 }
 
 public enum InteractionMethod
@@ -14,8 +19,7 @@ public enum InteractionMethod
 	Use //execute main "use" action, may require some prerequisite item to be equipped, within some distance, etc.
 }
 
-
-
+// -- ALL IMPLEMENTING CLASSES SHOULD SPECIFY THE PAYLOAD DATATYPE IN A COMMENT --
 public interface Interactable
 {
 	InteractionType interactionType { get; }
