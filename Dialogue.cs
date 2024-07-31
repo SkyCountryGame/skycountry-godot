@@ -16,7 +16,6 @@ public partial class Dialogue : Resource
     public struct DialogueNode {
         public int who; //0 = player, 1 = npc, 2 = other npc, etc. NOTE this might end up being like an NPC ID
         public string text; //what "who" says
-        public string name; //might end up using NPC ID instead
         public int textSpeed;
         //public emotion
         //event
@@ -27,6 +26,7 @@ public partial class Dialogue : Resource
             this.text = text;
             responses = new List<DialogueNode>();
             next = new List<DialogueNode>();
+            textSpeed = 1;
         }
     }
 
