@@ -140,3 +140,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
 
 [node name="Node3D" parent="." instance=ExtResource("13_bvu8j")]
+
+[node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
+mass = 0.27

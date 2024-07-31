@@ -24,7 +24,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//UI stuff
 	
 	//PLAYER STATE
-	private PlayerModel _; //this is the player data that should be persisted between scenes
+	private PlayerModel _; //this is the player data that should be persisted between scenes. '_' because shorthand
 
 	public override void _Ready()
 	{
@@ -166,6 +166,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				//interactionObj.QueueFree();
+				Global.HUD.UpdateInventoryMenu(_.inv);
 				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
 				Global.HUD.LogEvent($" + {item.name}");
 				break;

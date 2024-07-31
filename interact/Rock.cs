@@ -19,6 +19,7 @@ public partial class Rock : RigidBody3D, Interactable {
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
         rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "Rock");
         rockItem.gameObject = this;
+        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
