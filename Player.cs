@@ -196,7 +196,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable i = Global.GetInteractable(other);
+				Interactable i = SceneManager.GetInteractable(other);
 				if (i != null)
 				{
 					if (i.interactionMethod == InteractionMethod.Use){
@@ -217,7 +217,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = Global.GetInteractable(other);
+		Interactable i = SceneManager.GetInteractable(other);
 		if (availableInteractables.Contains(i))
 		{
 			availableInteractables.Remove(i);

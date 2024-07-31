@@ -12,8 +12,8 @@ using System.Collections.Generic;
     */
 public partial class SceneManager : Node {
 
-    private static SceneManager _instance; //the instance
-    public static SceneManager _ => GetInstance(); //the instance
+    public static SceneManager Instance {get; private set; } //the instance
+    public static SceneManager _; //shorhand for the instance 
     
     //LEVEL STUFF
     //experimenting with how to deal with this. 
@@ -28,25 +28,28 @@ public partial class SceneManager : Node {
     public HashSet<Node> activeLevelScenesSet; 
     
     //GAME OBJECT STUFF
-    public Dictionary<string, PackedScene> gameObjectsPacked; //can this be static? 
-    public HashSet<Node>activeGameObjects; //game objects that have been instantiated during this session.
-    public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes
+    public Dictionary<string, PackedScene> prefabs; //prefabs are just PackedScenes that are used to instantiate game objects
+    public HashSet<Node>activeNodes; //game object nodes that have been instantiated during this session and are currently active in the scene
+    public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
+
+    //associate each godot node with its "sky country game object" 
+    public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
+    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
+    //public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();  //TODO how to set this stuff up. see GameObjectType in GameObject.cs
+    public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
 
     //private Player player; //the current player 
 
     private static List<StaticBody3D> floor;
 
-    public static SceneManager GetInstance(){
-        if (_instance == null){
-            _instance = new SceneManager();
-            _instance.init();
-        }
-        return _instance;
-    }
-
     public override void _Ready()
     {
-        
+        if (Instance == null){
+            GD.Print("init SceneManager");
+            init();
+            Instance = this;
+            _ = Instance;
+        }
     }
 
     public void init(){
@@ -75,18 +78,42 @@ public partial class SceneManager : Node {
         //TODO
 
         //GameObject Stuff
-        gameObjectsPacked = new Dictionary<string, PackedScene>();
+        prefabs = new Dictionary<string, PackedScene>();
         floor = new List<StaticBody3D>();
-        gameObjectsPacked.Add("Rock", ResourceLoader.Load<PackedScene>("res://interact/rock.tscn"));
+        prefabs.Add("Rock", ResourceLoader.Load<PackedScene>("res://interact/rock.tscn"));
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://entity/lamppost.tscn"));
-        gameObjectsPacked.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
-        gameObjectsPacked.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
-        gameObjectsPacked.Add("ERROR", ResourceLoader.Load<PackedScene>("res://error.tscn"));
+        prefabs.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
+        prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
+        prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://error.tscn"));
         //player = ResourceLoader.Load<PackedScene>("res://player.tscn").Instantiate() as Player;
         //player = Global._PlayerNode;
 
-        activeGameObjects = new HashSet<Node>();
+        activeNodes = new HashSet<Node>();
+    }
 
+    
+    public static void RegisterGameObject(Node node, GameObjectType type){
+        RegisterGameObject(node, node.Name, type);
+    }
+    public static void RegisterGameObject(Node node, string name, GameObjectType type){
+        GameObject go;
+        if (!gameObjects.ContainsKey(node)){
+            go = new GameObject(node);
+            gameObjects.Add(node, go);
+        } else {
+            go = gameObjects[node];
+        }
+        switch(type){
+            case GameObjectType.Interactable:
+                interactables.Add((Interactable)node);
+                mapGameObjectToInteractable.Add(go, (Interactable)node);
+                break;
+            case GameObjectType.SpawnPoint:
+                //spawnPoints.Add((SpawnPoint)node);
+                break;
+            default:
+                break;
+        }
     }
 
     public void ChangeLevel(string levelname){
@@ -120,7 +147,7 @@ public partial class SceneManager : Node {
 
         if (levelScenesPacked.ContainsKey(levelname)){
             currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
-            activeGameObjects.Clear();
+            activeNodes.Clear();
             currentLevelScene = GetTree().CurrentScene;
             Global._SceneTree = GetTree();
         }    
@@ -137,12 +164,12 @@ public partial class SceneManager : Node {
     }
 
     public void SpawnObject(string obj, Vector3 position){
-        if (gameObjectsPacked.ContainsKey(obj) && gameObjectsPacked[obj] != null){
-            Node3D node = (Node3D) gameObjectsPacked[obj].Instantiate();
+        if (prefabs.ContainsKey(obj) && prefabs[obj] != null){
+            Node3D node = (Node3D) prefabs[obj].Instantiate();
             node.Position = position;
             node.Name = obj;
             Global._SceneTree.Root.AddChild(node);
-            gameObjectsPacked[obj].Instantiate();
+            prefabs[obj].Instantiate();
         }
     }
 
@@ -151,5 +178,28 @@ public partial class SceneManager : Node {
         foreach (var f in floors){
             floor.Add(f);
         }
+    }
+
+    //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
+    public static Interactable GetInteractable(Node n){
+        GameObject go = GetGameObject(n);
+        if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
+            return mapGameObjectToInteractable[go];
+        }
+        return null;
+    }
+
+    public static GameObject GetGameObject(Node n){
+        if (gameObjects.ContainsKey(n)){
+            return gameObjects[n];
+        }
+        while (n.GetParent() != null){
+            GD.Print("traversing up the tree to find gameobject");
+			n = n.GetParent();
+            if (gameObjects.ContainsKey(n)){
+                return gameObjects[n];
+            }
+		}
+        return null;
     }
 }

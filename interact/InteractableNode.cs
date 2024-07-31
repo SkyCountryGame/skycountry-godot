@@ -17,7 +17,7 @@ public partial class InteractableNode : Node, Interactable
 
     public override void _Ready()
     {
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
     }
 
     public void Clear()

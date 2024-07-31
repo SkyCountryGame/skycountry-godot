@@ -16,8 +16,7 @@ public partial class LampPost : Node, Interactable {
 
     public override void _Ready()
 	{
-        //Global.interactables.Add(this);
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
         lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
     }
 

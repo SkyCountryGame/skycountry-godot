@@ -29,10 +29,11 @@ thinking on GameObjectManager, LevelManager, Global. want to make sure these abs
         holds static references to things that need to be widely accessible throughout the codebase and need to persist across scene changes. 
 
 
-    some object are instantiated right away in the scene (set in editor)
-    some object will be instantiated dynamically via code/events
+    some objects are instantiated right away in the scene (set in editor)
+    some objects will be instantiated dynamically via code/events
     objects that can be picked up can be either of those classes, therefore pickupables need to have a PackedScene assoc with them
-    the already-instantiated ones 
+    the ones that are a part of the scene itself need to have their PackedScenes specified manually in the editor
+        OR just read the .tscn files upon level start. 
 
     we need IDs/labels for every possible inventory item. but first, what are all the properties that invitems can have? and how do we want to make that stuff in game? 
     remember to clean up the commented-out code in scenemanager

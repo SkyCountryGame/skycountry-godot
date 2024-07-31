@@ -27,10 +27,10 @@ public class InventoryItem : System.ICloneable {
         this.name = name;
         id = nextId++;
         this.gameObject = gameObject;
-        if (SceneManager._.gameObjectsPacked.ContainsKey(name)){
-            packedScene = SceneManager._.gameObjectsPacked[name];
+        if (SceneManager._.prefabs.ContainsKey(name)){
+            packedScene = SceneManager._.prefabs[name];
         } else {
-            packedScene = SceneManager._.gameObjectsPacked["ERROR"];
+            packedScene = SceneManager._.prefabs["ERROR"];
         }
     }
 
