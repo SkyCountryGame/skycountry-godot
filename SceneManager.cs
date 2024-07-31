@@ -44,7 +44,6 @@ public partial class SceneManager : Node {
     public override void _Ready()
     {
         if (Instance == null){ //only preload the stuff once on level start (not scene start)
-            GD.Print("init SceneManager");
             init();
             Instance = this;
             _ = Instance;
@@ -186,7 +185,6 @@ public partial class SceneManager : Node {
             return gameObjects[n];
         }
         while (n.GetParent() != null){
-            GD.Print("traversing up the tree to find gameobject");
 			n = n.GetParent();
             if (gameObjects.ContainsKey(n)){
                 return gameObjects[n];
