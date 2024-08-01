@@ -120,31 +120,35 @@ public partial class HUDManager : Node {
         
     }
 
-    public void ShowInventory(Inventory inv){ //TODO reactive fix update: we hold a reference to inventory, and ItemList automatically updates on change
+    //also used to update the inventory list if it's already visible
+    public void ShowInventory(){ //TODO reactive fix update: we hold a reference to inventory, and ItemList automatically updates on change
         inventoryMenu.Visible = true;
+    }
+    public void HideInventory(){
+        inventoryMenu.Visible = false;   
+    }
+    public void UpdateInventoryMenu(Inventory inv){
+        inventoryMenu.Clear();
         //int idx = inventoryMenu.AddItem("Inventory", null, false);
         //inventoryMenu.SetItemDisabled(idx, true);
         //inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         foreach (InventoryItem item in inv.GetItems()){
             int idx = -1;
             if (item == Global._P.equipped){
-                idx = inventoryMenu.AddItem($" - {item.title} - ");
+                idx = inventoryMenu.AddItem($" - {item.name} - ");
             } else {
-                idx = inventoryMenu.AddItem(item.title);
+                idx = inventoryMenu.AddItem(item.name);
             }
             inventoryMenu.SetItemMetadata(idx, item.id); //assoc the inventory item
         }
     }
-    public void HideInventory(){
-        inventoryMenu.Clear();
-        inventoryMenu.Visible = false;
-        
-    }
+
     public void ToggleInventory(Inventory inv){
+        UpdateInventoryMenu(inv);
         if (inventoryMenu.Visible){
             HideInventory();
         } else {
-            ShowInventory(inv);
+            ShowInventory();
         }
     }
     public void ShowEquipped(string label = null){ 
@@ -170,8 +174,8 @@ public partial class HUDManager : Node {
         if (item != null){
             if (mouseButton == 1){ //left click
                 if (Global._P.EquipItem(item)){
-                    inventoryMenu.SetItemText(index, $" - {item.title} - "); //TODO bad. will be fixed after reactive ui update
-                    ShowEquipped(item.title);
+                    inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
+                    ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
                 if (Global._P.DropItem(item)){

@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpkxfobs7jdt5"]
+
+[ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_yy4dy"]
+[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="2_y040l"]
+[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_pxpml"]
+[ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
+[ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dqjjg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcwpa"]
+specular_mode = 1
+metallic_specular = 0.34
+roughness_texture_channel = 1
+refraction_texture_channel = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4dvwg"]
+material = SubResource("StandardMaterial3D_mcwpa")
+size = Vector2(50, 50)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lj6cb"]
+
+[node name="Wod2" instance=ExtResource("1_yy4dy")]
+
+[node name="Floor" type="StaticBody3D" parent="." index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" index="0"]
+shape = ExtResource("3_pxpml")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D" index="0"]
+material_override = SubResource("StandardMaterial3D_nv66b")
+material_overlay = SubResource("StandardMaterial3D_dqjjg")
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_4dvwg")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" parent="." index="4" node_paths=PackedStringArray("target")]
+current = true
+target = NodePath("../Player")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource("4_jtexw")
+
+[node name="Guy" type="RigidBody3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="Guy" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Guy/AnimatableBody3D" index="0"]
+shape = SubResource("SphereShape3D_lj6cb")
+
+[node name="BlockheadTest1" parent="Guy/AnimatableBody3D/CollisionShape3D" index="0" instance=ExtResource("5_pwp6t")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Guy/AnimatableBody3D/CollisionShape3D/BlockheadTest1" index="2"]
+skeleton = NodePath("../../../..")
+
+[node name="Player" parent="." index="7" instance=ExtResource("2_y040l")]

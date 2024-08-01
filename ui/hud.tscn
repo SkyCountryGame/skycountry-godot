@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bantfsh2sxy0v"]
 
-[ext_resource type="Script" path="res://HUDManager.cs" id="1_72ij7"]
+[ext_resource type="Script" path="res://ui/HUDManager.cs" id="1_qxbrm"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -8,7 +8,7 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
-script = ExtResource("1_72ij7")
+script = ExtResource("1_qxbrm")
 
 [node name="DialoguePanel" type="PanelContainer" parent="."]
 layout_mode = 0

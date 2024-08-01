@@ -15,7 +15,7 @@ public partial class Talker : Node, Interactable {
     public Dialogue dialogue;
     public List<Dialogue> dialogues; //each character has his own set of dialogues. how to know when to use which? 
     public override void _Ready(){
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
         dialogue = new Dialogue("Hello"); //TODO load from config file that specifies what npc says what
         try
         {

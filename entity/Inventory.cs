@@ -21,7 +21,7 @@ public class Inventory : System.ICloneable
 
     public bool Add(InventoryItem item)
     {
-        GD.Print($"inv add {item.title}. stock = {stock.Count}");
+        GD.Print($"inv add {item.name}. stock = {stock.Count}");
         if (stock.Count < capacity)
         {
             stock.Add(item);
@@ -44,7 +44,7 @@ public class Inventory : System.ICloneable
         string res = stock.Count + "/" + capacity + "\n";
         foreach (InventoryItem i in stock)
         {
-                res += i.title + "(" + i.itemType + ") \n";
+                res += i.name + "(" + i.itemType + ") \n";
         }
         return res;
     }

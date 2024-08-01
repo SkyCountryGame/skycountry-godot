@@ -9,7 +9,6 @@
 [sub_resource type="Skin" id="Skin_qnpgq"]
 
 [node name="Rock" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.32175, 11)
 freeze_mode = 1
 script = ExtResource("1_4q8ih")
 

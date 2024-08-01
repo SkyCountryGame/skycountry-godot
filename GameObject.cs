@@ -3,7 +3,7 @@
 using Godot;
 
 /**
-    * 
+    * the idea behind this is that to have a representation of the game itself, separate from godot engine. 
     */
 public class GameObject {
     protected Node gdNode; //the godot scene node
@@ -25,7 +25,7 @@ public abstract partial class GameObjectConnector : Node
 {
 
     public override void _Ready(){
-        Global.RegisterGameObject((Node)this, Name, type);
+        SceneManager.RegisterGameObject((Node)this, Name, type);
     }
 
     [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]

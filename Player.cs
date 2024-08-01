@@ -24,7 +24,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//UI stuff
 	
 	//PLAYER STATE
-	private PlayerModel _; //this is the player data that should be persisted between scenes
+	private PlayerModel _; //this is the player data that should be persisted between scenes. '_' because shorthand
 
 	public override void _Ready()
 	{
@@ -35,7 +35,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else {
 			_ = Global._P;
 		}
-		 
+		Global._PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 	}
 
@@ -73,6 +73,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
+		if (SceneManager._ != null && SceneManager._.currentLevelScene != GetTree().CurrentScene){
+			SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		}
+
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global._Cam;
@@ -161,8 +165,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				_.AddToInventory(item);
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				//interactionObj.QueueFree();
+				Global.HUD.UpdateInventoryMenu(_.inv);
 				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
-				Global.HUD.LogEvent($" + {item.title}");
+				Global.HUD.LogEvent($" + {item.name}");
 				break;
 			case InteractionType.General:
 				break;
@@ -191,7 +197,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable i = Global.GetInteractable(other);
+				Interactable i = SceneManager.GetInteractable(other);
 				if (i != null)
 				{
 					if (i.interactionMethod == InteractionMethod.Use){
@@ -212,7 +218,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = Global.GetInteractable(other);
+		Interactable i = SceneManager.GetInteractable(other);
 		if (availableInteractables.Contains(i))
 		{
 			availableInteractables.Remove(i);
