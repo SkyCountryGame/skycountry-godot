@@ -16,7 +16,7 @@ public class Global {
     * current player data, to persist between scenes
     * NOTE i want to use a shorter name other than "global", like "G" or "__" 
     */
-    public static PlayerModel _P;
+    public static PlayerModel _PlayerModel;
     public static Player _PlayerNode;
     public static Camera2 _Cam;
     public static SceneTree _SceneTree;
