@@ -3,7 +3,7 @@ using System;
 //using System.Numerics;
 //using System.Numerics;
 
-public partial class Camera2 : Camera3D
+public partial class Camera : Camera3D
 {
 
 	[Export]

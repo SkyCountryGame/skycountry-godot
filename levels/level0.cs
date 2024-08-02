@@ -1,13 +1,11 @@
 using Godot;
 using System;
-using SkyCountry;
 using System.Collections.Generic;
 
 //NOTE: do we want to make our own custom level class?
-public partial class level0 : Node3D
+public partial class Level0 : Node3D
 {
 	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
-	private World w; //TODO remove this if not used
 	private DirectionalLight3D sunlight;
 	private HUDManager HUD;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
@@ -16,9 +14,8 @@ public partial class level0 : Node3D
 	public override void _Ready()
 	{
 		player =  GetNode<Player>("Player");
-		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
+		//sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
-		w = new World();
 		Global.SceneTree = GetTree();
 		
 		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
@@ -34,7 +31,7 @@ public partial class level0 : Node3D
 		float r = (float)Math.Sin(.3f*Time.GetTicksMsec() / 1000f);
 		float g = (float)Math.Sin(.8f*Time.GetTicksMsec() / 1000f);
 		float b = (float)Math.Cos(-.5f*Time.GetTicksMsec() / 1000f);
-		sunlight.LightColor = new Color(r, g, b, .8f);
+		//sunlight.LightColor = new Color(r, g, b, .8f);
 	}
 	
 	public override void _UnhandledInput(InputEvent @event){

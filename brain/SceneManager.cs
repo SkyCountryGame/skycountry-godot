@@ -77,11 +77,11 @@ public partial class SceneManager : Node {
         //GameObject Stuff
         prefabs = new Dictionary<string, PackedScene>();
         floor = new List<StaticBody3D>();
-        prefabs.Add("Rock", ResourceLoader.Load<PackedScene>("res://interact/rock.tscn"));
-        //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://entity/lamppost.tscn"));
-        prefabs.Add("Enemy", ResourceLoader.Load<PackedScene>("res://entity/enemy.tscn"));
-        prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://floatingtext.tscn"));
-        prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://error.tscn"));
+        prefabs.Add("Rock", ResourceLoader.Load<PackedScene>("res://gameobjects/rock.tscn"));
+        //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
+        prefabs.Add("Enemy", ResourceLoader.Load<PackedScene>("res://gameobject/enemy.tscn"));
+        prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
+        prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
 
         activeNodes = new HashSet<Node>();
     }
@@ -112,10 +112,12 @@ public partial class SceneManager : Node {
     }
 
     public void ChangeLevel(string levelname){
+        activeLevelScenesSet.Clear();
         if (levelScenesPacked.ContainsKey(levelname)){
             currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
             activeNodes.Clear();
             currentLevelScene = GetTree().CurrentScene;
+            SetActiveLevelScene(currentLevelScene);
             Global.SceneTree = GetTree();
         }
         /*
@@ -135,7 +137,7 @@ public partial class SceneManager : Node {
         //levelParent.AddChild(player);
         GetTree().Root.AddChild(currentLevelScene);
         nextScene.AddChild(player);
-        //Global.Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera2;
+        //Global.Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera;
         
         //GetTree().Root.AddChild(nextScene);
         //((Node3D)currentLevelScene).Visible = false;
