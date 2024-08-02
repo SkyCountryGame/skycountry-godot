@@ -1,13 +1,11 @@
 using Godot;
 using System;
-using SkyCountry;
 using System.Collections.Generic;
 
 //NOTE: do we want to make our own custom level class?
 public partial class Level2 : Node3D
 {
 	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
-	private World w; //TODO remove this if not used
 	private DirectionalLight3D sunlight;
 	private HUDManager HUD;
 		
@@ -17,7 +15,6 @@ public partial class Level2 : Node3D
 		player =  GetNode<Player>("Player");
 		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
-		w = new World();
 		Global.SceneTree = GetTree();
 		
 		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});

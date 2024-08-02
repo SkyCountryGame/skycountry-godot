@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfo02tr7e32ym"]
 
-[ext_resource type="Script" path="res://interact/Rock.cs" id="1_4q8ih"]
+[ext_resource type="Script" path="res://gameobjects/Rock.cs" id="1_4q8ih"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1pd73"]
 

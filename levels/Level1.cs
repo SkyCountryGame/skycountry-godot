@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using SkyCountry;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Runtime;
@@ -33,7 +32,7 @@ public partial class Level1 : Node3D
 			System.Threading.Thread.Sleep(2000);
 			GD.Print("spawn soon");
 			System.Threading.Thread.Sleep(1000);
-			Player p = ResourceLoader.Load<PackedScene>("res://player.tscn").Instantiate() as Player;
+			Player p = ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate() as Player;
 			GetTree().Root.CallDeferred("add_child", p);
 			Global.Cam.target = p;	
 		});

@@ -1,18 +1,17 @@
-[gd_scene load_steps=26 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
-[ext_resource type="Script" path="res://levels/level0.cs" id="1_ux354"]
+[ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
-[ext_resource type="Script" path="res://ui/HUDManager.cs" id="3_yoyji"]
-[ext_resource type="Script" path="res://LampPost.cs" id="7_ph10c"]
-[ext_resource type="Script" path="res://Camera2.cs" id="8_7fw5a"]
-[ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://lamp_post_2.tscn" id="8_87jf0"]
-[ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://moving_platform_3.tscn" id="8_t3ins"]
-[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player.tscn" id="8_ywuup"]
-[ext_resource type="Script" path="res://interact/Talker.cs" id="9_80eq6"]
-[ext_resource type="Script" path="res://interact/Drugz.cs" id="10_c8j53"]
-[ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://interact/rock.tscn" id="11_xa5x2"]
+[ext_resource type="Script" path="res://gameobjects/LampPost.cs" id="7_ph10c"]
+[ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
+[ext_resource type="PackedScene" uid="uid://bvvscrhuoifvh" path="res://gameobjects/lamp_post_2.tscn" id="8_87jf0"]
+[ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://gameobjects/moving_platform_3.tscn" id="8_t3ins"]
+[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
+[ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
+[ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
+[ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
-[ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://interact/interactable_node.tscn" id="13_bvu8j"]
+[ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://gameobjects/interactable_node.tscn" id="13_bvu8j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -55,10 +54,9 @@ size = Vector2(50, 50)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
 
 [node name="Wod" type="Node3D"]
-script = ExtResource("1_ux354")
+script = ExtResource("1_iiogu")
 
 [node name="HUD" parent="." instance=ExtResource("2_fsd0o")]
-script = ExtResource("3_yoyji")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mck8e")
@@ -78,7 +76,7 @@ directional_shadow_fade_start = 0.74
 directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
-[node name="LampPost2" parent="." instance=ExtResource("8_87jf0")]
+[node name="LampPost" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, -11.578)
 script = ExtResource("7_ph10c")
 
@@ -102,11 +100,10 @@ skeleton = NodePath("../..")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_jdkl7")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
+[node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-HUD = NodePath("")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 

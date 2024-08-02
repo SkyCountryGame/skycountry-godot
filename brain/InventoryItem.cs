@@ -13,6 +13,7 @@ public class InventoryItem : System.ICloneable {
     public Node3D gameObject; //godot node for the world object. this was either picked up off ground or is instantiated elsewhere if this inv item wasn't ever in the world
     
     public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
+
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
     public bool inited = false;
@@ -36,6 +37,8 @@ public class InventoryItem : System.ICloneable {
             packedScene = SceneManager._.prefabs[name];
         } else if (ResourceLoader.Exists($"res://prefabs/{name}.tscn")){
             packedScenePath = $"res://prefabs/{name}.tscn";
+        } else if (ResourceLoader.Exists($"res://gameobjects/{name}.tscn")){
+            packedScenePath = $"res://gameobjects/{name}.tscn";
         } else {
             packedScene = SceneManager._.prefabs["ERROR"];
         }
