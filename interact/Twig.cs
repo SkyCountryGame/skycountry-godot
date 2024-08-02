@@ -2,24 +2,23 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
+public partial class Twig : RigidBody3D, Interactable {
     public InteractionType interactionType => InteractionType.Pickup;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
 
-    private InventoryItem rockItem;
 
-    public Rock()
+    private InventoryItem invItem;
+
+    public Twig()
     {
     }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "Rock");
-        rockItem.gameObject = this;
-        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
+        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
+        invItem = new InventoryItem(InventoryItem.ItemType.Quest, "Twig", this);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,13 +28,13 @@ public partial class Rock : RigidBody3D, Interactable {
 
     public string Info()
     {
-        return "Rock";
+        return "Twig";
     }
 
     //PAYLOAD 
     public dynamic Interact()
     {
-        return rockItem;
+        return invItem;
     }
 
     public void Retain()

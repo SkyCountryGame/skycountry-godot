@@ -16,17 +16,14 @@ public class Global {
     * current player data, to persist between scenes
     * NOTE i want to use a shorter name other than "global", like "G" or "__" 
     */
-    public static PlayerModel _P;
-    public static Camera2 _Cam;
-    public static SceneTree _SceneTree;
+    public static PlayerModel PlayerModel;
+    public static Player PlayerNode;
+    public static Camera2 Cam;
+    public static SceneTree SceneTree;
     public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
 
 
-    //associate each godot node with the actual game object in the context of this game
-    public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>(); 
-    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
-    public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();
-    public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
+    
     
     //key = parent object
     //value = dict of floating text strings (key -> label3d)
@@ -43,7 +40,7 @@ public class Global {
         if (floatingTextNodes[obj].ContainsKey(key)){
             floatingTextNodes[obj][key].Text = text;
         } else {
-            Label3D textObj = (Label3D) GameObjectManager.gameObjectsPacked["FloatingText"].Instantiate();
+            Label3D textObj = (Label3D) SceneManager._.prefabs["FloatingText"].Instantiate();
             textObj.Text = text;
             textObj.Position = offset;
             obj.AddChild(textObj);
@@ -58,55 +55,5 @@ public class Global {
             floatingTextNodes[obj].Remove(key);
         });
         removeText.Start();
-    }
-
-    //NOTE: 20240722: game object system currently isn't used for much. remove it doesn't prove to be useful. 
-    public static void RegisterGameObject(Node node, GameObjectType type){
-        RegisterGameObject(node, node.Name, type);
-    }
-    public static void RegisterGameObject(Node node, string name, GameObjectType type){
-        GameObject go;
-        if (!gameObjects.ContainsKey(node)){
-            go = new GameObject(node);
-            gameObjects.Add(node, go);
-        } else {
-            go = gameObjects[node];
-        }
-        switch(type){
-            case GameObjectType.Interactable:
-                interactables.Add((Interactable)node);
-                mapGameObjectToInteractable.Add(go, (Interactable)node);
-                break;
-            case GameObjectType.SpawnPoint:
-                spawnPoints.Add((SpawnPoint)node);
-                break;
-            default:
-                break;
-        }
-    }
-    public static void RegisterSpawnPoint(Node node){
-
-    }
-
-    //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
-    public static Interactable GetInteractable(Node n){
-        GameObject go = GetGameObject(n);
-        if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
-            return mapGameObjectToInteractable[go];
-        }
-        return null;
-    }
-
-    public static GameObject GetGameObject(Node n){
-        if (gameObjects.ContainsKey(n)){
-            return gameObjects[n];
-        }
-        while (n.GetParent() != null){
-			n = n.GetParent();
-            if (gameObjects.ContainsKey(n)){
-                return gameObjects[n];
-            }
-		}
-        return null;
     }
 }

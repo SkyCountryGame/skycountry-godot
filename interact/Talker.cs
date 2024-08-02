@@ -9,7 +9,7 @@ public partial class Talker : Node, Interactable {
     public Dialogue dialogue;
 
     public override void _Ready(){
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
         dialogue = new Dialogue("Hello"); //TODO load from config file that specifies what npc says what
     }
 

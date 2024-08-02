@@ -106,7 +106,7 @@ public class PlayerModel {
 		if (inv.IsEmpty()) return false;
 		if (item == null){ //or maybe dequip?
 			equipped = inv.GetItemByIndex(0);
-			Global.HUD.ShowEquipped(equipped.title);
+			Global.HUD.ShowEquipped(equipped.name);
 		} else {
 			if (inv.Contains(item)){
 				equipped = item;
@@ -122,9 +122,9 @@ public class PlayerModel {
 			item = equipped;
 		}
 		if (inv.RemoveItem(item)){
-			playerNode.GetParent().AddChild(item.gameObject);
-			item.gameObject.Position = playerNode.GlobalPosition + new Vector3(0,1,1);
-			//this only works if the node has not been disposed. should be fixed as part of the level switching update. 
+			Node gameObject = item.GetPackedScene().Instantiate();
+			SceneManager._.currentLevelScene.AddChild(gameObject);
+			((Node3D) gameObject).Position = Global.PlayerNode.Position + new Vector3(0,1,1);
 
 			if (item == equipped){
 				equipped = null;
