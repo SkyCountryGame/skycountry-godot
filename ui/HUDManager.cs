@@ -134,7 +134,7 @@ public partial class HUDManager : Node {
         //inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         foreach (InventoryItem item in inv.GetItems()){
             int idx = -1;
-            if (item == Global._P.equipped){
+            if (item == Global.PlayerModel.equipped){
                 idx = inventoryMenu.AddItem($" - {item.name} - ");
             } else {
                 idx = inventoryMenu.AddItem(item.name);
@@ -170,15 +170,15 @@ public partial class HUDManager : Node {
 
     public void OnInventoryMenuItemClicked(int index, Vector2 pos, int mouseButton){
         GD.Print($"clicked {index}");
-        InventoryItem item = Global._P.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
+        InventoryItem item = Global.PlayerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                if (Global._P.EquipItem(item)){
+                if (Global.PlayerModel.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
-                if (Global._P.DropItem(item)){
+                if (Global.PlayerModel.DropItem(item)){
                     inventoryMenu.RemoveItem(index);
                 }
             }

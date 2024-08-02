@@ -19,7 +19,7 @@ public partial class level0 : Node3D
 		sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
 		w = new World();
-		Global._SceneTree = GetTree();
+		Global.SceneTree = GetTree();
 		
 		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 		//dynamically spawn things

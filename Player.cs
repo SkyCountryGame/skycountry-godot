@@ -24,18 +24,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//UI stuff
 	
 	//PLAYER STATE
-	private PlayerModel _; //this is the player data that should be persisted between scenes. '_' because shorthand
+	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
 
 	public override void _Ready()
 	{
 		base._Ready();
-		if (Global._P == null){
-			_ = new PlayerModel(this); //TODO what parameters to give here
-			Global._P = _;
+		if (Global.PlayerModel == null){
+			pm = new PlayerModel(this); //TODO what parameters to give here
+			Global.PlayerModel = pm;
 		} else {
-			_ = Global._P;
+			pm = Global.PlayerModel;
 		}
-		Global._PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
+		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 	}
 
@@ -79,7 +79,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Camera3D camera =  Global._Cam;
+		Camera3D camera =  Global.Cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
 		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
@@ -99,9 +99,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if (_.activityState == (State.DIALOGUE | State.INVENTORY)){
+		if (pm.activityState == (State.DIALOGUE | State.INVENTORY)){
 			if (Input.IsActionJustPressed("ui_back")){
-				_.UpdateState(State.DEFAULT);
+				pm.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
 				//TODO inv left
 			} else if (Input.IsActionJustPressed("right")){
@@ -120,7 +120,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			{
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
-				switch (_.activityState){
+				switch (pm.activityState){
 					case State.DEFAULT:
 						Interactable i = GetFirstInteractable();
 						if (i != null)
@@ -142,9 +142,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.HUD.ToggleInventory(_.inv);
+				Global.HUD.ToggleInventory(pm.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
-				_.EquipItem();
+				pm.EquipItem();
 			}
 		}
 	}
@@ -155,18 +155,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				_.UpdateState(State.DIALOGUE);
+				pm.UpdateState(State.DIALOGUE);
 				Global.HUD.ShowDialogue($"{payload}"); //TODO name of talker
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
 				InventoryItem item = payload;
-				_.AddToInventory(item);
+				pm.AddToInventory(item);
 				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				//interactionObj.QueueFree();
-				Global.HUD.UpdateInventoryMenu(_.inv);
+				Global.HUD.UpdateInventoryMenu(pm.inv);
 				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
 				Global.HUD.LogEvent($" + {item.name}");
 				break;

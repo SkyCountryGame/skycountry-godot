@@ -116,7 +116,7 @@ public partial class SceneManager : Node {
             currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
             activeNodes.Clear();
             currentLevelScene = GetTree().CurrentScene;
-            Global._SceneTree = GetTree();
+            Global.SceneTree = GetTree();
         }
         /*
         Node nextScene;
@@ -135,7 +135,7 @@ public partial class SceneManager : Node {
         //levelParent.AddChild(player);
         GetTree().Root.AddChild(currentLevelScene);
         nextScene.AddChild(player);
-        //Global._Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera2;
+        //Global.Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera2;
         
         //GetTree().Root.AddChild(nextScene);
         //((Node3D)currentLevelScene).Visible = false;
@@ -159,7 +159,7 @@ public partial class SceneManager : Node {
             Node3D node = (Node3D) prefabs[obj].Instantiate();
             node.Position = position;
             node.Name = obj;
-            Global._SceneTree.Root.AddChild(node);
+            Global.SceneTree.Root.AddChild(node);
             prefabs[obj].Instantiate();
         }
     }
