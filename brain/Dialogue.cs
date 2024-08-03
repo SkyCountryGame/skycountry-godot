@@ -13,7 +13,7 @@ using System.Text.Json.Serialization;
 public partial class Dialogue : Resource
 {
     //dialogue is a tree of nodes containing all the relevant information for a conversation
-    public struct DialogueNode {
+    /*public struct DialogueNode {
         public int who; //0 = player, 1 = npc, 2 = other npc, etc. NOTE this might end up being like an NPC ID
         public string text; //what "who" says
         public int textSpeed;
@@ -28,19 +28,20 @@ public partial class Dialogue : Resource
             next = new List<DialogueNode>();
             textSpeed = 1;
         }
-    }
+    }*/
 
-    public DialogueNode start; // the beginning of the dialogue
-    public DialogueNode cur; // the current point in the dialogue
+    [Export]
+    private DialogueNode start {get; set;} // the beginning of the dialogue
+    private DialogueNode cur; // the current point in the dialogue
 
-    [JsonInclude]
+    //[JsonInclude]
     public List<string> statements { get; set; }
     // List<StatementNode> statements
     // StatementNode contains: string statement, List<ChoiceNode> choices
     // ChoiceNode contains: List<string> responseChoices, List<StatementNode> nextStatements
 
 
-    [JsonInclude]
+    [Export]//[JsonInclude]
     public string testStr { get; set; }
 
     public Dialogue()
@@ -67,5 +68,25 @@ public partial class Dialogue : Resource
     {
         return null;
     }
+    partial class DialogueNode : Resource {
+        [Export]
+        public int who; //0 = player, 1 = npc, 2 = other npc, etc. NOTE this might end up being like an NPC ID
+        [Export]
+        public string text; //what "who" says
+        public int textSpeed;
+        //public emotion
+        //event
+        public List<DialogueNode> responses;
+        public List<DialogueNode> next; //most cases will only lead to one, but we might want to randomly pick one
 
+        public DialogueNode(){}
+        public DialogueNode(int who, string text){
+            this.who = who;
+            this.text = text;
+            responses = new List<DialogueNode>();
+            next = new List<DialogueNode>();
+            textSpeed = 1;
+        }
+    }
 }
+

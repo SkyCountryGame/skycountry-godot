@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=27 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://gameobjects/interactable_node.tscn" id="13_bvu8j"]
+[ext_resource type="Script" path="res://brain/Dialogue.cs" id="13_mxgse"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -52,6 +53,8 @@ size = Vector2(50, 50)
 [sub_resource type="PrismMesh" id="PrismMesh_j76bu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rdmt0"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_iiogu")
@@ -144,3 +147,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
 [node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
 mass = 0.27
+
+[node name="GramaphoneSkele" type="Skeleton3D" parent="."]
+script = ExtResource("13_mxgse")
+testExp = 2
+
+[node name="PhysicalBone3D" type="PhysicalBone3D" parent="GramaphoneSkele"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GramaphoneSkele/PhysicalBone3D"]
+shape = SubResource("BoxShape3D_rdmt0")
+
+[node name="Node" type="Node" parent="GramaphoneSkele"]
