@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 /**
@@ -79,7 +80,6 @@ public partial class SceneManager : Node {
         floor = new List<StaticBody3D>();
         prefabs.Add("Rock", ResourceLoader.Load<PackedScene>("res://gameobjects/rock.tscn"));
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
-        prefabs.Add("Enemy", ResourceLoader.Load<PackedScene>("res://gameobject/enemy.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
 
@@ -150,10 +150,12 @@ public partial class SceneManager : Node {
      * update the currently-being-played level scene Node
      */
     public void SetActiveLevelScene(Node scene){
-        if (!activeLevelScenesSet.Contains(scene)){
-            activeLevelScenesSet.Add(scene);
+        if(scene!=null){
+            if (!activeLevelScenesSet.Contains(scene)){
+                activeLevelScenesSet.Add(scene);
+            }
+            currentLevelScene = scene;
         }
-        currentLevelScene = scene;
     }
 
     public void SpawnObject(string obj, Vector3 position){
