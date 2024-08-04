@@ -78,7 +78,6 @@ public partial class SceneManager : Node {
         //GameObject Stuff
         prefabs = new Dictionary<string, PackedScene>();
         floor = new List<StaticBody3D>();
-        prefabs.Add("Rock", ResourceLoader.Load<PackedScene>("res://gameobjects/rock.tscn"));
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));

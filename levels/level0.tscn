@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
-[ext_resource type="Script" path="res://levels/level0.cs" id="1_iiogu"]
+[ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
 [ext_resource type="Script" path="res://gameobjects/LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
-[ext_resource type="PackedScene" uid="uid://cfo02tr7e32ym" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
+[ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://gameobjects/interactable_node.tscn" id="13_bvu8j"]
 
