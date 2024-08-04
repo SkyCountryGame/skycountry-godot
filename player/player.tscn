@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cirg5lcesnafx"]
 
-[ext_resource type="Script" path="res://Player.cs" id="1_qhngp"]
-[ext_resource type="Script" path="res://CollideableObject.cs" id="3_l7pwu"]
+[ext_resource type="Script" path="res://player/Player.cs" id="1_3km67"]
+[ext_resource type="Script" path="res://brain/CollideableObject.cs" id="2_11arr"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 
@@ -19,7 +19,7 @@ material = SubResource("StandardMaterial3D_v37ol")
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.63093, 0)
-script = ExtResource("1_qhngp")
+script = ExtResource("1_3km67")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -29,7 +29,7 @@ mesh = SubResource("CapsuleMesh_tlm4b")
 
 [node name="CollisionZone0" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_l7pwu")
+script = ExtResource("2_11arr")
 metadata/objtype = ""
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionZone0"]

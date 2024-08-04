@@ -122,6 +122,7 @@ curve = SubResource("Curve3D_snyci")
 remote_path = NodePath("../../AnimatableBody3D")
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
 shape = SubResource("BoxShape3D_ebpym")

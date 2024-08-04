@@ -18,7 +18,7 @@ public class Global {
     */
     public static PlayerModel PlayerModel;
     public static Player PlayerNode;
-    public static Camera2 Cam;
+    public static Camera Cam;
     public static SceneTree SceneTree;
     public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
 

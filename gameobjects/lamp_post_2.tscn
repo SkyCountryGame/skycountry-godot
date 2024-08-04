@@ -11,7 +11,7 @@ albedo_color = Color(0.521569, 0.372549, 0.45098, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_rbrj6"]
 
-[node name="LampPost2" type="StaticBody3D"]
+[node name="LampPost" type="StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_7miyi")
