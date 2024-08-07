@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
-[ext_resource type="Script" path="res://levels/level0.cs" id="1_iiogu"]
+[ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
 [ext_resource type="Script" path="res://gameobjects/LampPost.cs" id="7_ph10c"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
