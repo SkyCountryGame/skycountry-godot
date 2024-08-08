@@ -17,7 +17,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
-	private float velMagnitudeMaxSqr;
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION STUFF
@@ -41,7 +40,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
-		velMagnitudeMaxSqr = velMagnitudeMax * velMagnitudeMax;
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
@@ -52,7 +50,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		base._PhysicsProcess(delta);
 		DoMotion(delta); 
-		animationTree.Set("parameters/Run/blend_position", Velocity.LengthSquared() / velMagnitudeMaxSqr);
+		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
 	}
 	public override void _Process(double delta)
 	{
