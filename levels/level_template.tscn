@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://8qof26j4jd18"]
+
+[ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
+[ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_wxw3l"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
+sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
+sky_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+sky_energy_multiplier = 1.5
+ground_bottom_color = Color(0.164706, 0.176471, 0.168627, 1)
+ground_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+
+[sub_resource type="Sky" id="Sky_esjiq"]
+sky_material = SubResource("ProceduralSkyMaterial_mu5b3")
+
+[sub_resource type="Environment" id="Environment_jq7mq"]
+background_mode = 2
+sky = SubResource("Sky_esjiq")
+ambient_light_source = 1
+tonemap_mode = 2
+
+[node name="Wod" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jq7mq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
+light_color = Color(0.796172, 0.801828, 0.649819, 1)
+light_energy = 0.92
+light_indirect_energy = 0.16
+light_angular_distance = 4.05
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 1.0
+shadow_opacity = 0.85
+shadow_blur = 0.5
+directional_shadow_fade_start = 0.74
+directional_shadow_pancake_size = 17.4
+sky_mode = 1
+
+[node name="HUD" parent="." instance=ExtResource("2_wxw3l")]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
+script = ExtResource("1_f6jas")
+HUD = NodePath("../HUD")

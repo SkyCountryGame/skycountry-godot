@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7suifadqfxfl"]
+
+[ext_resource type="Script" path="res://gameobjects/Rock.cs" id="1_4q8ih"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1pd73"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wycwp"]
+
+[sub_resource type="Skin" id="Skin_qnpgq"]
+
+[node name="Rock" type="RigidBody3D"]
+freeze_mode = 1
+script = ExtResource("1_4q8ih")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_1pd73")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_wycwp")
+skin = SubResource("Skin_qnpgq")

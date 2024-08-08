@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://35ivlbts3vlb"]
+
+[ext_resource type="Script" path="res://gameobjects/Chest.cs" id="1_f5ldc"]
+[ext_resource type="PackedScene" uid="uid://co2vvrm3umlll" path="res://assets/bowl/bowl.gltf" id="1_uhvdr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_81o81"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5i2bi"]
+metallic = 0.1
+
+[sub_resource type="PlaceholderMesh" id="PlaceholderMesh_bwlj7"]
+
+[node name="Chest" type="RigidBody3D"]
+script = ExtResource("1_f5ldc")
+
+[node name="bowl" parent="." instance=ExtResource("1_uhvdr")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("SphereShape3D_81o81")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_5i2bi")
+extra_cull_margin = 1005.15
+mesh = SubResource("PlaceholderMesh_bwlj7")
