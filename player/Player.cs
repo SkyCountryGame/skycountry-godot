@@ -18,8 +18,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	private float velMagnitudeMaxSqr;
-	public Vector3 camForward = Vector3.Forward; //forward vector of camera
-	public AnimationTree animationTree;
+	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();

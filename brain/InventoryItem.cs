@@ -66,11 +66,11 @@ public class InventoryItem : System.ICloneable {
     }
 
     public PackedScene GetPackedScene(){
-        if (packedScene != null){
-            return packedScene;
-        } else {
-            return ResourceLoader.Load<PackedScene>(packedScenePath);
+        if (packedScene == null){
+            packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
+            SceneManager._.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }
+        return packedScene;
     }
 
 
