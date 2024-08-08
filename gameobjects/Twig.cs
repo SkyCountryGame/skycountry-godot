@@ -18,7 +18,7 @@ public partial class Twig : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-        invItem = new InventoryItem(InventoryItem.ItemType.Quest, "Twig", true);
+        invItem = new InventoryItem(InventoryItem.ItemType.Quest, "Twig", false);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

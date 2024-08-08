@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=25 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
-[ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
 [ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://gameobjects/interactable_node.tscn" id="13_bvu8j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -145,5 +144,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
 [node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
 mass = 0.27
-
-[node name="Devtool" parent="." instance=ExtResource("13_3aiva")]
