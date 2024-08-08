@@ -32,11 +32,13 @@ public class InventoryItem : System.ICloneable {
         id = nextId++;
         
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(this.name)){
+        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){
             packedScene = SceneManager._.prefabs[this.name];
-        } else if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
+        }
+        if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
-        } else {
+        }
+        if (packedScene == null && packedScenePath == null) {
             packedScene = SceneManager._.prefabs["ERROR"];
         }
     }
