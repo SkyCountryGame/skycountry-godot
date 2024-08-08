@@ -15,10 +15,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
-	private const float accelScalar = 90f;
+	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
+	private const float velMagnitudeMaxSqr = velMagnitudeMax * velMagnitudeMax;
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
-	public AnimationTree animationTree;
+	public MotionModule motor = new MotionModule(); //TODO basically a "motion engine" to tell the player how to move based on input and other factors
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
@@ -26,6 +27,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	
 	//PLAYER STATE
 	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
+	[Export]
+	public AnimationTree animationTree;
+
 
 	public override void _Ready()
 	{
@@ -38,7 +42,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
-		animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree");
+
+		if (animationTree == null){ //animtree might be set from editor (.tscn file)
+			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -51,27 +58,38 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 							.Rotated(Vector3.Down, angleToCam);*/
 		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
 		
+		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
+
 		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-		if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-			velocity = Vector3.Zero;
-			accel = Vector3.Zero;
-		} else if (Velocity.Length() > gv.Length()) {
-			velocity = gv;
-		}
-		if (Velocity.Length() < velMagnitudeMax){
-			velocity += accel * (float)delta;
-		}
-		if (jump){
-			velocity.Y += JumpVelocity;
-			jump = false;
-		} else if (IsOnFloor()) {
-			velocity.Y = 0; 
+		if (accelScalar == 0){ //acceleration activation toggle
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+			} else {
+				velocity = gv;
+			}
 		} else {
-			velocity.Y += (float) (gravity * delta) * 300 - 20;
-		}
+			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+				accel = Vector3.Zero;
+			} else if (Velocity.Length() > gv.Length()) {
+				velocity = gv;
+			}
+			if (Velocity.Length() < velMagnitudeMax){
+				velocity += accel * (float)delta;
+			}
+			if (jump){
+				velocity.Y += JumpVelocity;
+				jump = false;
+			} else if (IsOnFloor()) {
+				velocity.Y = 0; 
+			} else {
+				velocity.Y += (float) (gravity * delta) * 300 - 20;
+			}
+		} 
+		
 		Velocity = velocity;
-		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
+		animationTree.Set("parameters/Run/blend_position", Velocity.LengthSquared() / velMagnitudeMaxSqr);
 		MoveAndSlide();
 	}
 	public override void _Process(double delta)
