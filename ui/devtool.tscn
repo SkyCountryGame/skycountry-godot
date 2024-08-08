@@ -6,22 +6,83 @@
 script = ExtResource("1_c3ebi")
 
 [node name="DevPanel" type="PanelContainer" parent="."]
-offset_left = 111.0
-offset_top = 72.0
-offset_right = 506.0
-offset_bottom = 500.0
+layout_direction = 2
+offset_left = 16.0
+offset_top = 18.0
+offset_right = 677.0
+offset_bottom = 705.0
 
-[node name="VBox1" type="VBoxContainer" parent="DevPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="DevPanel"]
+layout_mode = 2
+
+[node name="VBox1" type="VBoxContainer" parent="DevPanel/HBoxContainer"]
+custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Label" type="Label" parent="DevPanel/VBox1"]
+[node name="Label" type="Label" parent="DevPanel/HBoxContainer/VBox1"]
 layout_mode = 2
 text = "Accel"
 
-[node name="VSlider" type="VSlider" parent="DevPanel/VBox1"]
+[node name="VSlider" type="VSlider" parent="DevPanel/HBoxContainer/VBox1"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LabelValue" type="Label" parent="DevPanel/VBox1"]
+[node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox1"]
+layout_mode = 2
+
+[node name="VBox2" type="VBoxContainer" parent="DevPanel/HBoxContainer"]
+custom_minimum_size = Vector2(74, 0)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="DevPanel/HBoxContainer/VBox2"]
+layout_mode = 2
+text = "MaxVel"
+
+[node name="VSlider" type="VSlider" parent="DevPanel/HBoxContainer/VBox2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox2"]
+layout_mode = 2
+
+[node name="VBox3" type="VBoxContainer" parent="DevPanel/HBoxContainer"]
+custom_minimum_size = Vector2(74, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="DevPanel/HBoxContainer/VBox3"]
+layout_mode = 2
+text = "Jump"
+
+[node name="VSlider" type="VSlider" parent="DevPanel/HBoxContainer/VBox3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox3"]
+layout_mode = 2
+
+[node name="VBox4" type="VBoxContainer" parent="DevPanel/HBoxContainer"]
+custom_minimum_size = Vector2(74, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="DevPanel/HBoxContainer/VBox4"]
+layout_mode = 2
+text = "Gravity"
+
+[node name="TextEdit" type="TextEdit" parent="DevPanel/HBoxContainer/VBox4"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="VSlider" type="VSlider" parent="DevPanel/HBoxContainer/VBox4"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+min_value = -200.0
+max_value = 0.0
+
+[node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox4"]
 layout_mode = 2

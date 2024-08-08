@@ -8,18 +8,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 
 	//MOVEMENT 
-	public double gravity = -.3f;
-	public const float JumpVelocity = 200;
+	public double gravity = -20f;
+	public float JumpVelocity = 200;
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
-	private const float velMagnitudeMaxSqr = velMagnitudeMax * velMagnitudeMax;
+	public float velMagnitudeMax = 24f; //approximate max velocity allowed
+	private float velMagnitudeMaxSqr;
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
-	public MotionModule motor = new MotionModule(); //TODO basically a "motion engine" to tell the player how to move based on input and other factors
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
@@ -42,6 +41,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
+		velMagnitudeMaxSqr = velMagnitudeMax * velMagnitudeMax;
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
@@ -51,46 +51,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		
-		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
-		//desired direction of player movement is based on user input and the current orientation of the camera
-		/*controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
-							.Rotated(Vector3.Down, angleToCam);*/
-		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
-		
-		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
-
-		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		if (accelScalar == 0){ //acceleration activation toggle
-			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-				velocity = Vector3.Zero;
-			} else {
-				velocity = gv;
-			}
-		} else {
-			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-				velocity = Vector3.Zero;
-				accel = Vector3.Zero;
-			} else if (Velocity.Length() > gv.Length()) {
-				velocity = gv;
-			}
-			if (Velocity.Length() < velMagnitudeMax){
-				velocity += accel * (float)delta;
-			}
-			if (jump){
-				velocity.Y += JumpVelocity;
-				jump = false;
-			} else if (IsOnFloor()) {
-				velocity.Y = 0; 
-			} else {
-				velocity.Y += (float) (gravity * delta) * 300 - 20;
-			}
-		} 
-		
-		Velocity = velocity;
+		DoMotion(delta); 
 		animationTree.Set("parameters/Run/blend_position", Velocity.LengthSquared() / velMagnitudeMaxSqr);
-		MoveAndSlide();
+		
 	}
 	public override void _Process(double delta)
 	{
@@ -168,6 +131,47 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				pm.EquipItem();
 			}
 		}
+	}
+
+	//process player movement based on user input and other factors. this is WIP
+	private void DoMotion(double delta){
+		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
+		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
+		
+		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
+
+		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
+		float vy = velocity.Y;
+		if (accelScalar == 0){ //acceleration activation toggle
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+			} else {
+				velocity = gv;
+			}
+			velocity.Y = vy;
+		} else {
+			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+				accel = Vector3.Zero;
+			} else if (Velocity.Length() > gv.Length()) {
+				velocity = gv;
+			}
+			velocity.Y = vy;
+			if (Velocity.Length() < velMagnitudeMax){
+				velocity += accel * (float)delta;
+			}
+		}
+		if (jump){
+			velocity.Y += JumpVelocity;
+			jump = false;
+		} else if (IsOnFloor()) {
+			velocity.Y = 0; 
+		} else {
+			velocity.Y += (float) (gravity * delta) * 10; //- 20;
+		}
+		Velocity = velocity;
+		MoveAndSlide();
 	}
 
 	public void HandleInteract(Interactable i, Node interactionObj)
