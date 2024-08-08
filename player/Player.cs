@@ -19,6 +19,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	private float velMagnitudeMaxSqr;
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
+	public AnimationTree animationTree;
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
