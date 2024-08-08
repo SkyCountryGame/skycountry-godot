@@ -140,14 +140,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
 
 		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		float vy = velocity.Y;
 		if (accelScalar == 0){ //acceleration activation toggle
 			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
 				velocity = Vector3.Zero;
 			} else {
 				velocity = gv;
 			}
-			velocity.Y = vy;
+			velocity.Y = Velocity.Y; //thank you adam
 		} else {
 			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
 			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
@@ -156,7 +155,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Velocity.Length() > gv.Length()) {
 				velocity = gv;
 			}
-			velocity.Y = vy;
+			velocity.Y = Velocity.Y;
 			if (Velocity.Length() < velMagnitudeMax){
 				velocity += accel * (float)delta;
 			}
