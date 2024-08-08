@@ -40,8 +40,9 @@ gi_mode = 2
 mesh = SubResource("PlaneMesh_4dvwg")
 skeleton = NodePath("../..")
 
-[node name="Camera3D" parent="." index="4"]
+[node name="Camera3D" parent="." index="4" node_paths=PackedStringArray("target")]
 current = true
+target = NodePath("../Player")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource("4_jtexw")
