@@ -53,7 +53,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		base._PhysicsProcess(delta);
 		DoMotion(delta); 
 		animationTree.Set("parameters/Run/blend_position", Velocity.LengthSquared() / velMagnitudeMaxSqr);
-		
 	}
 	public override void _Process(double delta)
 	{
@@ -168,7 +167,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else if (IsOnFloor()) {
 			velocity.Y = 0; 
 		} else {
-			velocity.Y += (float) (gravity * delta) * 10; //- 20;
+			velocity.Y += (float) (gravity * delta) * 64; //- 20;
 		}
 		Velocity = velocity;
 		MoveAndSlide();
