@@ -8,16 +8,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 
 	//MOVEMENT 
-	public double gravity = -.3f;
-	public const float JumpVelocity = 200;
+	public double gravity = -20f;
+	public float JumpVelocity = 200;
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
-	private const float accelScalar = 90f;
-	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
-	public Vector3 camForward = Vector3.Forward; //forward vector of camera
+	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
+	public float velMagnitudeMax = 24f; //approximate max velocity allowed
+	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
@@ -25,6 +25,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	
 	//PLAYER STATE
 	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
+	[Export]
+	public AnimationTree animationTree;
+
 
 	public override void _Ready()
 	{
@@ -37,39 +40,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
+
+		if (animationTree == null){ //animtree might be set from editor (.tscn file)
+			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		
-		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
-		//desired direction of player movement is based on user input and the current orientation of the camera
-		/*controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
-							.Rotated(Vector3.Down, angleToCam);*/
-		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
-		
-		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-		if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-			velocity = Vector3.Zero;
-			accel = Vector3.Zero;
-		} else if (Velocity.Length() > gv.Length()) {
-			velocity = gv;
-		}
-		if (Velocity.Length() < velMagnitudeMax){
-			velocity += accel * (float)delta;
-		}
-		if (jump){
-			velocity.Y += JumpVelocity;
-			jump = false;
-		} else if (IsOnFloor()) {
-			velocity.Y = 0; 
-		} else {
-			velocity.Y += (float) (gravity * delta) * 300 - 20;
-		}
-		Velocity = velocity;
-		MoveAndSlide();
+		DoMotion(delta); 
+		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
 	}
 	public override void _Process(double delta)
 	{
@@ -149,6 +130,46 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 	}
 
+	//process player movement based on user input and other factors. this is WIP
+	private void DoMotion(double delta){
+		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
+		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
+		
+		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
+
+		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
+		if (accelScalar == 0){ //acceleration activation toggle
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+			} else {
+				velocity = gv;
+			}
+			velocity.Y = Velocity.Y; //thank you adam
+		} else {
+			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				velocity = Vector3.Zero;
+				accel = Vector3.Zero;
+			} else if (Velocity.Length() > gv.Length()) {
+				velocity = gv;
+			}
+			velocity.Y = Velocity.Y;
+			if (Velocity.Length() < velMagnitudeMax){
+				velocity += accel * (float)delta;
+			}
+		}
+		if (jump){
+			velocity.Y += JumpVelocity;
+			jump = false;
+		} else if (IsOnFloor()) {
+			velocity.Y = 0; 
+		} else {
+			velocity.Y += (float) (gravity * delta) * 64; //- 20;
+		}
+		Velocity = velocity;
+		MoveAndSlide();
+	}
+
 	public void HandleInteract(Interactable i, Node interactionObj)
 	{
 		dynamic payload = i.Interact();
@@ -163,7 +184,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case InteractionType.Pickup: 
 				InventoryItem item = payload;
 				pm.AddToInventory(item);
-				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				//interactionObj.QueueFree();
 				Global.HUD.UpdateInventoryMenu(pm.inv);

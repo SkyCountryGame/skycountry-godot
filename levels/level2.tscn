@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpkxfobs7jdt5"]
+[gd_scene load_steps=12 format=3 uid="uid://dpkxfobs7jdt5"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_yy4dy"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="2_y040l"]
@@ -22,6 +22,9 @@ size = Vector2(50, 50)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lj6cb"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hi71w"]
+size = Vector3(1, 2.73619, 1.02371)
+
 [node name="Wod2" instance=ExtResource("1_yy4dy")]
 
 [node name="Floor" type="StaticBody3D" parent="." index="3"]
@@ -37,9 +40,8 @@ gi_mode = 2
 mesh = SubResource("PlaneMesh_4dvwg")
 skeleton = NodePath("../..")
 
-[node name="Camera3D" parent="." index="4" node_paths=PackedStringArray("target")]
+[node name="Camera3D" parent="." index="4"]
 current = true
-target = NodePath("../Player")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource("4_jtexw")
@@ -57,4 +59,10 @@ shape = SubResource("SphereShape3D_lj6cb")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Guy/AnimatableBody3D/CollisionShape3D/BlockheadTest1" index="2"]
 skeleton = NodePath("../../../..")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Guy" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34731, -0.0210724)
+shape = SubResource("BoxShape3D_hi71w")
+
 [node name="Player" parent="." index="7" instance=ExtResource("2_y040l")]
+
+[editable path="Player"]
