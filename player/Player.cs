@@ -18,6 +18,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private const float accelScalar = 90f;
 	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
+	public AnimationTree animationTree;
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
@@ -37,6 +38,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
+		animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -69,6 +71,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			velocity.Y += (float) (gravity * delta) * 300 - 20;
 		}
 		Velocity = velocity;
+		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
 		MoveAndSlide();
 	}
 	public override void _Process(double delta)
@@ -163,7 +166,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case InteractionType.Pickup: 
 				InventoryItem item = payload;
 				pm.AddToInventory(item);
-				item.SetGameObject((Node3D)interactionObj);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				//interactionObj.QueueFree();
 				Global.HUD.UpdateInventoryMenu(pm.inv);
