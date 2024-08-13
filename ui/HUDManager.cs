@@ -27,7 +27,7 @@ public partial class HUDManager : Node {
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
 
-    enum State {
+    enum State { //TODO hud might not need its own state because can just look at player
         DEFAULT,
         DIALOGUE,
         INVENTORY,
@@ -84,14 +84,25 @@ public partial class HUDManager : Node {
         eventLog.GetNode<Label>("Label").Text = eventLogText;
     }
 
-    public void ShowDialogue(string msg){
+    public void ShowDialogue(Talker t){
         //show the dialogue without text disappearing
+        //first get the current state of dialogue with the thing to which you are talking 
         UpdateState(State.DIALOGUE);
-        dialogueText.Text = msg;
-    }
+        //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
+        if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
+            dialogueText.Text = t.dialogue.Next();
+            return;
+        } else {
 
+        }
+        dialogueText.Text = t.dialogue.Next();
+    }
+    //NOTE might move dialogue stuff into DialogueManager
     public void HideDialogue(){
         UpdateState(State.DEFAULT);
+    }
+    public void ContinueDialogue(){
+
     }
 
     public void Back(){

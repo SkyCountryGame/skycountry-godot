@@ -53,8 +53,6 @@ public partial class Dialogue : Resource
     {
         DialogueNode dn = new DialogueNode(1, start);
         dn.responses.Add(new DialogueNode(0, "hello"));
-
-
     }
 
     //return next thing to say when player says nothing
