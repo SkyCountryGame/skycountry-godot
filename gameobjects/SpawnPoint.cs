@@ -1,15 +1,20 @@
 using Godot;
 using System;
 
+
 public partial class SpawnPoint : Node3D
 {
-	// Called when the node enters the scene tree for the first time.
+
+	[Export]
+	public int radius = 1; //radius around point within which the thing can spawn
+
+	public PackedScene thing; //thing to spawn
+
 	public override void _Ready()
 	{
 		SceneManager.RegisterGameObject(this, GameObjectType.SpawnPoint);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
