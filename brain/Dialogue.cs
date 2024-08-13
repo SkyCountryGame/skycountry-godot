@@ -37,17 +37,14 @@ public partial class Dialogue : Resource
             this.nextStatementID = nextStatementID;
         }
     }
-    public Dialogue()
+    public Dialogue(string filepath = null)
     {
+        if (filepath != null){ //might already be set from editor
+            this.filepath = filepath;
+        }
         statements = new Dictionary<int, StatementNode>();
         string dialogueStr = FileAccess.GetFileAsString(filepath);
         ParseDialogue(dialogueStr);
-    }
-
-    public Dialogue(string start)
-    {
-        DialogueNode dn = new DialogueNode(1, start);
-        dn.responses.Add(new DialogueNode(0, "hello"));
     }
 
     //see doc for formatting

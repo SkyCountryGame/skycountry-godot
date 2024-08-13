@@ -18,23 +18,8 @@ public partial class Talker : Node, Interactable {
 
     public override void _Ready(){
         SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-        dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
-
-        /* no more json because godot resources appear to be better
-        try
-        {
-            string jsonString = File.ReadAllText(dialogueFilename);
-            var options = new JsonSerializerOptions
-            {
-                IncludeFields = true,
-            };
-            dialogue = JsonSerializer.Deserialize<Dialogue>(jsonString);
-        }
-        catch (Exception e)
-        {
-            GD.Print("Failed to load dialogue from JSON file: " + e.Message);
-        }*/
-        //dialogue = new Dialogue(); //TODO load from config file that specifies what npc says what
+        //dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
+        dialogue = new Dialogue(dialogueFilename);
     }
 
     //start dialogue when player interacts
