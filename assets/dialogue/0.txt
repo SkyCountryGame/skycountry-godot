@@ -14,7 +14,7 @@
 ##################################
 everything below the above line is comments
 format is: (whitespace and newlines are ignored)
-[id]:"[statement]" "[statement]" [...]  #a list of statements to be spoken by the npc
+[id]:"[statement]","[statement]",[...]  #a list of statements to be spoken by the npc
 - "[player response]":[id] #a response option and the id of the npc response statement it results in.
 - "[player response]":[id]
 [id]: #cont...

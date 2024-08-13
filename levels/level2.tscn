@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="4_een1g"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
 [ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
-[ext_resource type="Resource" uid="uid://0kgw1v3vgnlh" path="res://brain/Dialogue.tres" id="5_wasen"]
+[ext_resource type="Resource" uid="uid://0kgw1v3vgnlh" path="res://assets/dialogue/Dialogue0.tres" id="5_wasen"]
 [ext_resource type="Script" path="res://brain/Dialogue.cs" id="6_siwyb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
