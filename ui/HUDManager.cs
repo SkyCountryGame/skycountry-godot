@@ -111,6 +111,11 @@ public partial class HUDManager : Node {
     public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
         if (mouseButton == 1){ //left click
             int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
+            if (id == 0){
+                HideDialogue();
+                Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT);
+                return;
+            }
             Dialogue.StatementNode sn = currentDialogue.statements[id];
             currentDialogue.currentStatement = sn;
             UpdateDialoguePanel(sn);
@@ -118,7 +123,7 @@ public partial class HUDManager : Node {
     }
     //update the dialogue panel. display a statement and its responses
     private void UpdateDialoguePanel(Dialogue.StatementNode sn){
-        dialogueText.Clear();
+        //dialogueText.Clear();
         dialogueChoices.Clear();
         dialogueText.Text = sn.statement;
         int idx = -1; //index of response just added to list
