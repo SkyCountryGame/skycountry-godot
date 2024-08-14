@@ -13,7 +13,7 @@ public class NPC {
     public enum State { IDLE, TALKING, ROAMING, ATTACKING, SLEEPING, ACTION, DEAD } //cycles through these states, changes based on environment and TBD functions
     public enum Emotion { HAPPY, SAD, ANGRY, SCARED, SURPRISED, DISGUSTED, NEUTRAL }
     public Tuple<State, Emotion> state;
-    public Dictionary<State, Animation> mapEmotionAnimation; //which animation for which emotion 
+    public Dictionary<State, Animation> mapStateAnimation; //which animation for which state 
 
     public NPC(string name, string description){
         this.name = name;
