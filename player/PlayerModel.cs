@@ -55,6 +55,8 @@ public class PlayerModel {
 			activityState = ps;
 			switch (activityState){
 				case State.DEFAULT:
+					Global.HUD.HideDialogue();
+					Global.HUD.HideInventory();
 					break;
 				case State.CHARGING:
 					break;

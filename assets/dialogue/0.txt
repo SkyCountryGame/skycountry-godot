@@ -4,11 +4,11 @@
 - "Goodbye. ": 0
 2:"This place in my head that I can't escape. "
 - "How did we get here? ":3
-- "But how can I be inside your head, if I'm standing outside of it right now? ": 
+- "But how can I be inside your head, if I'm standing outside of it right now? ":0
 3:"I don't know the answer to that, though if you truly seek the answer, there are some others around here who have been trying to figure it out."
 - "Where might I find these ones of whom you speak?":4
 4:"Quiet! You mustn't be so careless when speaking of such a one. "
- "The whereabouts are not known."
+#"The whereabouts are not known."
            
 
 ##################################

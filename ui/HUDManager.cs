@@ -91,6 +91,7 @@ public partial class HUDManager : Node {
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
         if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
             dialogueText.Text = t.dialogue.Next();
+            //TODO response text
             return;
         } else {
 

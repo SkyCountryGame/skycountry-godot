@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Schema;
@@ -21,8 +22,9 @@ public partial class Dialogue : Resource
     [Export]
     private string filepath {get; set;} //the file that contains the dialogue tree
     private Dictionary<int, StatementNode> statements; //map statement id to statement
+    private StatementNode currentStatement;
     private struct StatementNode {
-        public string statement;
+        public string statement; //NOTE should be "statementText"?
         public List<ResponseNode> responses;
         public StatementNode(string statement){
             this.statement = statement;
@@ -30,13 +32,15 @@ public partial class Dialogue : Resource
         }
     }
     private struct ResponseNode {
-        public string response;
+        public string response; //NOTE should be "responseText"?
         public int nextStatementID;
         public ResponseNode(string response, int nextStatementID){
             this.response = response;
             this.nextStatementID = nextStatementID;
         }
     }
+    //---
+
     public Dialogue(string filepath = null)
     {
         if (filepath != null){ //might already be set from editor
@@ -44,47 +48,65 @@ public partial class Dialogue : Resource
         }
         statements = new Dictionary<int, StatementNode>();
         string dialogueStr = FileAccess.GetFileAsString(filepath);
-        ParseDialogue(dialogueStr);
+        if (ParseDialogue(dialogueStr)){
+            currentStatement = statements.First().Value; //grab the first entry, because we don't know the id of the first statement
+        } else {
+            GD.Print("Failed to parse dialogue file. TODO what do?");
+        }
     }
 
     //see doc for formatting
-    private void ParseDialogue(string dstr){ //TODO add error handling
-        int pid = -1; //parent dialoguenode id
+    private bool ParseDialogue(string dstr){ //TODO add error handling
+        int pid = -1; //parent dialoguenode id. "parent" of any player responses in subsequent lines
         foreach (string l in dstr.Split('\n')){
+            if (l.StartsWith("###")){ //end
+                break;
+            }
+            if (l.StartsWith("#") || l.Trim() == ""){ //comment or blank
+                continue;
+            }
             string[] parts = l.Split(':', StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries);
             if (int.TryParse(parts[0], out int id)){ //this is said by npc
+                pid = id; //set parent id for the subsequent player responses
                 //there can by multiple statements that can be selected at random. get each string that's between quotes
                 //TODO read through and get in between quotes
-                if (parts.Length > 2){ //there are colons in the statement
-                    string statementsStr = string.Join(":", parts[1..^0]);
-                    //TODO handle multiple statements. separated by commas
+                if (parts.Length > 2){ //there happen to be colons in the text of the statement
+                    string statementsStr = string.Join(":", parts[1..^1]);
+                    //TODO handle multiple statements. separated by commas https://learn.microsoft.com/en-us/dotnet/api/system.string?view=net-8.0
                     statements.Add(id, new StatementNode(statementsStr));
                 } else {
                     statements.Add(id, new StatementNode(parts[1]));
                 }
-            } else if (int.TryParse(parts[^0], out id)){ //this is a player response
+            } else if (int.TryParse(parts[^1], out id)){ //this is a player response, and the id points to the NPC statement that would follow after this response
                 //TODO read through and get in between quotes
-                if (parts.Length > 2){
-                    string responseStr = string.Join(":", parts[0..^1]);
+                if (parts.Length > 2){ //there happen to be colons in the text of the response
+                    string responseStr = string.Join(":", parts[0..^2]);
                     //TODO handle multiple responses. separated by commas
                     statements[pid].responses.Add(new ResponseNode(responseStr, id));
                 } else {
                     statements[pid].responses.Add(new ResponseNode(parts[0], id));
                 }
+            } else {
+                return false;
             }
         }
+        return true;
     }
 
     //return next thing to say when player says nothing
     public string Next()
     { 
-        return null;
+        return currentStatement.statement;
     }
 
     //return next thing to say based on what player says
     public string Next(int i)
     {
-        return null;
+        if (i >= currentStatement.responses.Count){
+            return ""; //this shouldn't have been called with incorrect index anyway
+        }
+        currentStatement = statements[currentStatement.responses[i].nextStatementID];
+        return currentStatement.statement;
     }
     //TODO remove DialogueNode. don't think need it
     partial class DialogueNode : Resource {

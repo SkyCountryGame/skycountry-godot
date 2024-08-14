@@ -11,11 +11,12 @@ mouse_filter = 2
 script = ExtResource("1_qxbrm")
 
 [node name="DialoguePanel" type="PanelContainer" parent="."]
+layout_direction = 2
 layout_mode = 0
-offset_left = 435.0
-offset_top = 424.0
-offset_right = 1116.0
-offset_bottom = 548.0
+offset_left = 200.0
+offset_top = 500.0
+offset_right = 956.0
+offset_bottom = 895.0
 
 [node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
 custom_minimum_size = Vector2(16, 32)

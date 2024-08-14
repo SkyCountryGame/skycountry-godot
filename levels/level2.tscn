@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dpkxfobs7jdt5"]
+[gd_scene load_steps=14 format=3 uid="uid://dpkxfobs7jdt5"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_yy4dy"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="2_y040l"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="4_een1g"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
 [ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
-[ext_resource type="Resource" uid="uid://0kgw1v3vgnlh" path="res://assets/dialogue/Dialogue0.tres" id="5_wasen"]
 [ext_resource type="Script" path="res://brain/Dialogue.cs" id="6_siwyb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
@@ -53,7 +52,6 @@ stream = ExtResource("4_jtexw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 script = ExtResource("4_een1g")
 dialogueFilename = "gameobjects/Dialogue.tres"
-dialogue = ExtResource("5_wasen")
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="Guy" index="0"]
 
@@ -71,8 +69,6 @@ shape = SubResource("BoxShape3D_hi71w")
 
 [node name="Node" type="Node" parent="Guy" index="2"]
 script = ExtResource("6_siwyb")
-start = ExtResource("5_wasen")
-testStr = "yo"
 
 [node name="Player" parent="." index="7" instance=ExtResource("2_y040l")]
 
@@ -88,7 +84,6 @@ bones/5/rotation = Quaternion(0.0117867, -0.00146387, -0.765452, 0.643383)
 bones/7/rotation = Quaternion(0.11216, 0.548359, -0.342116, 0.754771)
 bones/8/rotation = Quaternion(0.204532, -5.07496e-05, 0.170369, 0.96392)
 bones/9/rotation = Quaternion(-0.11971, -0.43318, -0.178168, 0.875375)
-bones/9/scale = Vector3(1, 1, 1)
 bones/10/position = Vector3(-0.0357737, 0.60514, 0.0807944)
 bones/10/rotation = Quaternion(0.0117328, -0.00226535, -0.262743, 0.964792)
 bones/11/rotation = Quaternion(-3.6647e-08, 2.55394e-07, -0.175888, 0.98441)
@@ -109,7 +104,6 @@ bones/23/rotation = Quaternion(0.0117865, 0.00146372, 0.765452, 0.643383)
 bones/25/rotation = Quaternion(0.122755, -0.407849, 0.478035, 0.768162)
 bones/26/rotation = Quaternion(0.200045, 5.08157e-05, -0.166631, 0.965513)
 bones/27/rotation = Quaternion(-0.0726758, 0.584465, 0.0706113, 0.805067)
-bones/27/scale = Vector3(1, 1, 1)
 bones/28/position = Vector3(0.0357736, 0.60514, 0.0807945)
 bones/28/rotation = Quaternion(0.0117328, 0.00226534, 0.262743, 0.964792)
 bones/29/rotation = Quaternion(-3.25609e-08, -2.63631e-07, 0.175888, 0.98441)
@@ -150,11 +144,9 @@ bones/49/scale = Vector3(0.99998, 1.01726, 1)
 bones/50/rotation = Quaternion(-0.0183729, 0.00749559, 0.158664, 0.987133)
 bones/50/scale = Vector3(0.999856, 1.11163, 0.999999)
 bones/51/rotation = Quaternion(0.811536, 0.188846, 0.537911, 0.12806)
-bones/51/scale = Vector3(1, 1, 1)
 bones/52/rotation = Quaternion(2.07651e-08, 3.5925e-09, 0.10361, 0.994618)
 bones/53/rotation = Quaternion(-0.0805923, 0.0297267, -0.490249, 0.867339)
 bones/54/rotation = Quaternion(0.780688, -0.0447508, -0.615547, -0.0981092)
-bones/54/scale = Vector3(1, 1, 1)
 bones/55/rotation = Quaternion(3.71181e-08, -1.4701e-08, -0.218823, 0.975765)
 bones/56/rotation = Quaternion(-0.0260726, -0.058467, 0.514876, 0.854871)
 bones/57/position = Vector3(-0.00506207, 3.56721, 0.320517)
