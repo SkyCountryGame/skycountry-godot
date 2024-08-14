@@ -27,7 +27,7 @@ public partial class HUDManager : Node {
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
     private Dialogue currentDialogue; //currently active dialogue, if any
-    
+
     enum State { //TODO hud might not need its own state because can just look at player
         DEFAULT,
         DIALOGUE,
@@ -95,14 +95,7 @@ public partial class HUDManager : Node {
         UpdateState(State.DIALOGUE, t.dialogue);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
         if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
-            dialogueText.Text = t.dialogue.Next();
-            //TODO responses
-            int idx = -1; //index of response just added to list
-            foreach (ResponseNode r in t.dialogue.GetResponses()){ //currently i think it's ok for HUDManager to know about ResponseNode struct
-                idx = dialogueChoices.AddItem(r.response);
-                dialogueChoices.SetItemMetadata(idx, r.nextStatementID); //metadata is the id of next statement if this response selected
-                
-            }
+            UpdateDialoguePanel(currentDialogue.currentStatement); //not necessarily the first statement
             return;
         } else {
 
@@ -116,8 +109,23 @@ public partial class HUDManager : Node {
 
     }
     public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
-        StatementNode sn = dialogueChoices.GetItemMetadata(index);
-        
+        if (mouseButton == 1){ //left click
+            int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
+            Dialogue.StatementNode sn = currentDialogue.statements[id];
+            currentDialogue.currentStatement = sn;
+            UpdateDialoguePanel(sn);
+        }
+    }
+    //update the dialogue panel. display a statement and its responses
+    private void UpdateDialoguePanel(Dialogue.StatementNode sn){
+        dialogueText.Clear();
+        dialogueChoices.Clear();
+        dialogueText.Text = sn.statement;
+        int idx = -1; //index of response just added to list
+        foreach (Dialogue.ResponseNode r in sn.responses){
+            idx = dialogueChoices.AddItem(r.response);
+            dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
+        }
     }
     public void Back(){
         switch (state){

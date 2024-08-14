@@ -80,7 +80,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if (pm.activityState == (State.DIALOGUE | State.INVENTORY)){
+		if ((pm.activityState & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
 				pm.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){

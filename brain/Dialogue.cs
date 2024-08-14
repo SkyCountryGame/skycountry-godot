@@ -21,9 +21,9 @@ public partial class Dialogue : Resource
 
     [Export]
     private string filepath {get; set;} //the file that contains the dialogue tree
-    private Dictionary<int, StatementNode> statements; //map statement id to statement
-    private StatementNode currentStatement;
-    private struct StatementNode {
+    public Dictionary<int, StatementNode> statements; //map statement id to statement
+    public StatementNode currentStatement;
+    public struct StatementNode {
         public string statement; //NOTE should be "statementText"?
         public List<ResponseNode> responses;
         public StatementNode(string statement){
@@ -31,7 +31,7 @@ public partial class Dialogue : Resource
             responses = new List<ResponseNode>();
         }
     }
-    private struct ResponseNode {
+    public struct ResponseNode {
         public string response; //NOTE should be "responseText"?
         public int nextStatementID;
         public ResponseNode(string response, int nextStatementID){

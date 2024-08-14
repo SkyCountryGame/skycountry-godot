@@ -35,7 +35,7 @@ format is: (whitespace and newlines are ignored)
             },
             {
                 text: "Goodbye.",
-                next: -
+                next: x
             },
         ],
         speed: 2,
@@ -44,11 +44,15 @@ format is: (whitespace and newlines are ignored)
     },
     {
         id: 2,
-        text: ,
+        text: "This place in my head that I can't escape. ",
         responses: [
             {
-                text: ,
-                next:
+                text: "How did we get here? ",
+                next: 3
+            },
+            {
+                text: "But how can I be inside your head, if I'm standing outside of it right now? ",
+                next: x
             }
         ],
         speed: 2,
@@ -56,12 +60,12 @@ format is: (whitespace and newlines are ignored)
         emotion: 0
     },
     {
-        id: 2,
-        text: ,
+        id: 3,
+        text: "I don't know the answer to that, though if you truly seek the answer, there are some others around here who have been trying to figure it out.",
         responses: [
             {
-                text: ,
-                next:
+                text: "Where might I find these ones of whom you speak?",
+                next: 4
             }
         ],
         speed: 2,
@@ -69,13 +73,10 @@ format is: (whitespace and newlines are ignored)
         emotion: 0
     },
     {
-        id: 2,
-        text: ,
-        responses: [
-            {
-                text: ,
-                next:
-            }
+        id: 4,
+        text: [
+            "Quiet! You mustn't be so careless when speaking of such a one. ",
+            "The whereabouts are not known."
         ],
         speed: 2,
         fontSize: 1,
