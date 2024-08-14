@@ -108,6 +108,18 @@ public partial class Dialogue : Resource
         currentStatement = statements[currentStatement.responses[i].nextStatementID];
         return currentStatement.statement;
     }
+
+    public List<string> GetResponsesAsString(){
+        List<string> responses = new List<string>();
+        foreach (ResponseNode r in currentStatement.responses){
+            responses.Add(r.response);
+        }
+        return responses;
+    }
+    public List<ResponseNode> GetResponses(){
+        return currentStatement.responses;
+    }
+
     //TODO remove DialogueNode. don't think need it
     partial class DialogueNode : Resource {
         [Export]

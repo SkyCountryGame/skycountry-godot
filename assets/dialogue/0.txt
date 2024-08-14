@@ -18,3 +18,67 @@ format is: (whitespace and newlines are ignored)
 - "[player response]":[id] #a response option and the id of the npc response statement it results in.
 - "[player response]":[id]
 [id]: #cont...
+
+- - - - - - - - - - - - - - - -
+[
+    {
+        id: 1,
+        text: "Hello and welcome to this place. ",
+        responses: [
+            {
+                text: "What is this place?",
+                next: 2
+            },
+            {
+                text: "How did we get here?",
+                next: 3
+            },
+            {
+                text: "Goodbye.",
+                next: -
+            },
+        ],
+        speed: 2,
+        fontSize: 1,
+        emotion: 0
+    },
+    {
+        id: 2,
+        text: ,
+        responses: [
+            {
+                text: ,
+                next:
+            }
+        ],
+        speed: 2,
+        fontSize: 1,
+        emotion: 0
+    },
+    {
+        id: 2,
+        text: ,
+        responses: [
+            {
+                text: ,
+                next:
+            }
+        ],
+        speed: 2,
+        fontSize: 1,
+        emotion: 0
+    },
+    {
+        id: 2,
+        text: ,
+        responses: [
+            {
+                text: ,
+                next:
+            }
+        ],
+        speed: 2,
+        fontSize: 1,
+        emotion: 0
+    }
+]

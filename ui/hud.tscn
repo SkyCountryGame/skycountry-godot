@@ -10,19 +10,6 @@ offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("1_qxbrm")
 
-[node name="DialoguePanel" type="PanelContainer" parent="."]
-layout_direction = 2
-layout_mode = 0
-offset_left = 200.0
-offset_top = 500.0
-offset_right = 956.0
-offset_bottom = 895.0
-
-[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
-custom_minimum_size = Vector2(16, 32)
-layout_direction = 2
-layout_mode = 2
-
 [node name="InventoryMenu" type="ItemList" parent="."]
 layout_mode = 0
 offset_left = 1222.0
@@ -79,5 +66,24 @@ custom_minimum_size = Vector2(600, 50)
 layout_direction = 1
 layout_mode = 2
 autowrap_mode = 2
+
+[node name="DialoguePanel" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
+custom_minimum_size = Vector2(960, 64)
+layout_direction = 2
+layout_mode = 2
+
+[node name="ResponsesList" type="ItemList" parent="DialoguePanel"]
+custom_minimum_size = Vector2(700, 50)
+layout_direction = 2
+layout_mode = 2
+max_text_lines = 6
+text_overrun_behavior = 0
+item_count = 1
+item_0/text = ""
 
 [connection signal="item_clicked" from="InventoryMenu" to="." method="OnInventoryMenuItemClicked"]

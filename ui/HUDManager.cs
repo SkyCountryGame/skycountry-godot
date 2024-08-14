@@ -12,7 +12,7 @@ public partial class HUDManager : Node {
     public Label actionLabel; //pops up when there is an interaction available or other action
 
     //dialogue stuff
-    public PanelContainer dialoguePanel;
+    public VBoxContainer dialoguePanel;
     private RichTextLabel dialogueText;
     private ItemList dialogueChoices;
 
@@ -26,7 +26,8 @@ public partial class HUDManager : Node {
 
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
-
+    private Dialogue currentDialogue; //currently active dialogue, if any
+    
     enum State { //TODO hud might not need its own state because can just look at player
         DEFAULT,
         DIALOGUE,
@@ -40,8 +41,9 @@ public partial class HUDManager : Node {
     public override void _Ready(){
         Global.HUD = this;
         eventLog = GetNode("MarginContainer/EventLog");
-        dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
+        dialoguePanel = GetNode<VBoxContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
+        dialogueChoices = dialoguePanel.GetNode<ItemList>("ResponsesList");
         messages = new ConcurrentQueue<string>();
         dialoguePanel.Visible = false;
         inventoryMenu = GetNode<ItemList>("InventoryMenu");
@@ -60,13 +62,16 @@ public partial class HUDManager : Node {
     }
 
     //NOTE does hud actually need a state system?
-    private void UpdateState(State s){
+    private void UpdateState(State s, dynamic payload = null){
         switch (s){
             case State.DEFAULT:
                 dialoguePanel.Visible = false;
                 state = s;
                 break;
             case State.DIALOGUE:
+                if (payload != null && payload is Dialogue){
+                    currentDialogue = (Dialogue)payload;
+                }
                 dialoguePanel.Visible = true;
                 state = s;
                 break;
@@ -87,16 +92,21 @@ public partial class HUDManager : Node {
     public void ShowDialogue(Talker t){
         //show the dialogue without text disappearing
         //first get the current state of dialogue with the thing to which you are talking 
-        UpdateState(State.DIALOGUE);
+        UpdateState(State.DIALOGUE, t.dialogue);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
         if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
             dialogueText.Text = t.dialogue.Next();
-            //TODO response text
+            //TODO responses
+            int idx = -1; //index of response just added to list
+            foreach (ResponseNode r in t.dialogue.GetResponses()){ //currently i think it's ok for HUDManager to know about ResponseNode struct
+                idx = dialogueChoices.AddItem(r.response);
+                dialogueChoices.SetItemMetadata(idx, r.nextStatementID); //metadata is the id of next statement if this response selected
+                
+            }
             return;
         } else {
 
         }
-        dialogueText.Text = t.dialogue.Next();
     }
     //NOTE might move dialogue stuff into DialogueManager
     public void HideDialogue(){
@@ -105,7 +115,10 @@ public partial class HUDManager : Node {
     public void ContinueDialogue(){
 
     }
-
+    public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
+        StatementNode sn = dialogueChoices.GetItemMetadata(index);
+        
+    }
     public void Back(){
         switch (state){
 
