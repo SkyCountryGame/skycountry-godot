@@ -1,1 +1,63 @@
-{"_DType":"Scene","_ID":0.07461103083342091,"_saveVersion":"0.2","name":"Scene","options":{"defaultColor":"#36a8e0","defaultTime":0,"allSpeakers":["default"],"allEmotions":["neutral","happy","sad","angry"],"previewURLs":{"speakers":[[]],"backgrounds":[]}},"trees":[{"_DType":"Tree","_ID":0.8507256485245875,"name":"Tree","color":"#36a8e0","nodes":[{"_DType":"Node","_ID":0.9671982360669757,"_position":{"x":820,"y":160},"name":"Node","color":"#36a8e0","nextNode":null,"options":{"speaker":0,"emotion":0,"camera":-1,"time":0,"onStartEvent":null,"onChoiceEvent":0.12048626582461064,"onTimeoutEvent":null},"texts":["Hello and welcome to this place. "],"choices":[{"text":"What is this place?","nextNode":0.12048626582461064},{"text":"How did we get here?","nextNode":0.3860735309186152},{"text":"Goodbye. ","nextNode":0.08356772295345893}]},{"_DType":"Node","_ID":0.12048626582461064,"_position":{"x":600,"y":360},"name":"New Node","color":"#36a8e0","nextNode":null,"options":{"speaker":0,"emotion":0,"camera":-1,"time":0,"onStartEvent":null,"onChoiceEvent":null,"onTimeoutEvent":null},"texts":["This place in my head that I can't escape. "],"choices":[{"text":"How did we get here? "},{"text":"But how can I be inside your head, if I'm standing outside of it right now? "},{"text":""}]},{"_DType":"Node","_ID":0.3860735309186152,"_position":{"x":980,"y":320},"name":"New Node","color":"#36a8e0","nextNode":null,"options":{"speaker":0,"emotion":0,"camera":-1,"time":0,"onStartEvent":null,"onChoiceEvent":null,"onTimeoutEvent":null},"texts":["I don't know the answer to that, though if you truly seek the answer, there are some others around here who have been trying to figure it out."],"choices":[{"text":"Where might I find these ones of whom you speak?","nextNode":0.529940151337641},{"text":""}]},{"_DType":"Node","_ID":0.529940151337641,"_position":{"x":1060,"y":520},"name":"New Node","color":"#36a8e0","nextNode":0.8368415748609342,"options":{"speaker":0,"emotion":0,"camera":-1,"time":0,"onStartEvent":null,"onChoiceEvent":null,"onTimeoutEvent":null},"texts":["Quiet! You mustn't be so careless when speaking of such a one. "],"choices":[]},{"_DType":"Node","_ID":0.8368415748609342,"_position":{"x":1100,"y":680},"name":"New Node","color":"#36a8e0","nextNode":null,"options":{"speaker":0,"emotion":0,"camera":-1,"time":0,"onStartEvent":null,"onChoiceEvent":null,"onTimeoutEvent":null},"texts":["The whereabouts are not known."],"choices":[]},{"_DType":"EventNode","_ID":0.08356772295345893,"_position":{"x":1260,"y":320},"name":"New Event Node","color":"#36a8e0","nextNode":null,"options":{"eventType":0,"eventKey":"","eventValue":null}}],"entryNode":0.9671982360669757,"options":{"autoplay":false,"cutscene":false}}]}
+[
+    {
+        "id": 1,
+        "text": "Hello and welcome to this place. ",
+        "responses": [
+            {
+                "text": "What is this place?",
+                "next": 2
+            },
+            {
+                "text": "How did we get here?",
+                "next": 3
+            },
+            {
+                "text": "Goodbye.",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 2,
+        "text": "This place in my head that I can't escape. ",
+        "responses": [
+            {
+                "text": "How did we get here? ",
+                "next": 3
+            },
+            {
+                "text": "But how can I be inside your head, if I'm standing outside of it right now? ",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 3,
+        "text": "I don't know the answer to that, though if you truly seek the answer, there are some others around here who have been trying to figure it out.",
+        "responses": [
+            {
+                "text": "Where might I find these ones of whom you speak?",
+                "next": 4
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 4,
+        "text": [
+            "Quiet! You mustn't be so careless when speaking of such a one. ",
+            "The whereabouts are not known."
+        ],
+        "speed": [2,1],
+        "fontSize": 1,
+        "emotion": -1
+    }
+]

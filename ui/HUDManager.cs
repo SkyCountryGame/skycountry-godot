@@ -89,10 +89,10 @@ public partial class HUDManager : Node {
         eventLog.GetNode<Label>("Label").Text = eventLogText;
     }
 
-    public void ShowDialogue(Talker t){
+    public void ShowDialogue(Dialogue d){
         //show the dialogue without text disappearing
         //first get the current state of dialogue with the thing to which you are talking 
-        UpdateState(State.DIALOGUE, t.dialogue);
+        UpdateState(State.DIALOGUE, d);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
         if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
             UpdateDialoguePanel(currentDialogue.currentStatement); //not necessarily the first statement
@@ -111,7 +111,7 @@ public partial class HUDManager : Node {
     public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
         if (mouseButton == 1){ //left click
             int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
-            if (id == 0){
+            if (id == -1){
                 HideDialogue();
                 Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT);
                 return;

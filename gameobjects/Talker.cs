@@ -15,7 +15,7 @@ public partial class Talker : Node, Interactable {
     
     //[Export]
     public Dialogue dialogue;
-    public List<Dialogue> dialogues; //each character has his own set of dialogues. how to know when to use which? 
+    public List<Dialogue> dialogues; //each character has his own set of dialogues
 
     public override void _Ready(){
         SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
@@ -27,6 +27,11 @@ public partial class Talker : Node, Interactable {
     public dynamic Interact()
     {
         return dialogue.Next();
+    }
+
+    //get the appropriate dialogue based on the state of things
+    public Dialogue GetDialogue(){
+        return dialogue; //TODO logic to get the correct dialogue
     }
 
     public void Retain()

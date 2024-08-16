@@ -23,7 +23,7 @@ public partial class Dialogue : Resource
     private string filepath {get; set;} //the file that contains the dialogue tree
     public Dictionary<int, StatementNode> statements; //map statement id to statement
     public StatementNode currentStatement;
-    public struct StatementNode {
+    public struct StatementNode { //NOTE dont know if should also store id
         public string statement; //NOTE should be "statementText"?
         public List<ResponseNode> responses;
         public StatementNode(string statement){
@@ -48,6 +48,7 @@ public partial class Dialogue : Resource
         }
         statements = new Dictionary<int, StatementNode>();
         string dialogueStr = FileAccess.GetFileAsString(filepath);
+
         if (ParseDialogue(dialogueStr)){
             currentStatement = statements.First().Value; //grab the first entry, because we don't know the id of the first statement
         } else {
@@ -55,11 +56,56 @@ public partial class Dialogue : Resource
         }
     }
 
-    //see doc for formatting
-    private bool ParseDialogue(string dstr){ //TODO add error handling
+    //parse file contents as json and populate this object
+    private bool ParseDialogue(string dstr){
+        JsonDocument dj = JsonDocument.Parse(dstr); //dialogue as json
+        if (dj.RootElement.ValueKind != JsonValueKind.Array){
+            return false;
+        }
+        foreach (JsonElement s in dj.RootElement.EnumerateArray()){ //iterate through each statement
+            if (s.TryGetProperty("text", out JsonElement tj)){ //statement text
+                StatementNode sn;
+                if (tj.ValueKind == JsonValueKind.String){
+                    sn = new StatementNode(tj.GetString());
+                } else if (tj.ValueKind == JsonValueKind.Array){
+                    //TODO handle multiple statements in some way
+                    string tmp = ""; //temporary
+                    foreach (JsonElement stj in tj.EnumerateArray()){
+                            tmp += stj.GetString();
+                    }
+                    sn = new StatementNode(tmp);
+                } else { return false; }
+                
+                if (s.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement
+                    if ( s.TryGetProperty("responses", out JsonElement rj)){ //responses
+                        if (rj.ValueKind == JsonValueKind.Array){
+                            foreach (JsonElement r in rj.EnumerateArray()){
+                                if (r.TryGetProperty("text", out JsonElement rtj) && r.TryGetProperty("next", out JsonElement nidj) && nidj.ValueKind == JsonValueKind.Number){
+                                    sn.responses.Add(new ResponseNode(rtj.GetString(), nidj.GetInt32()));
+                                    statements[ij.GetInt32()] = sn;
+                                } else { return false; }
+                            }
+                        } else { return false; }
+                    } else { //no responses to this statement
+                        statements[ij.GetInt32()] = sn;
+                    }
+                } else { return false; }
+            } else { return false; }
+        }
+        return true;
+    }
+
+    //using the spec format i came up with. see doc for formatting. 
+    private bool ParseDialogueOld(string dstr){ //TODO add error handling
+        //JSON version:
+        /*
+            for each element (which is a statementnode), get the id, statement, responses, & optional properties. 
+                some have multiple statements that display sequentially.
+                for each response, get the response text, id of the next statement, and optional properties
+        */
         int pid = -1; //parent dialoguenode id. "parent" of any player responses in subsequent lines
         foreach (string l in dstr.Split('\n')){
-            if (l.StartsWith("###")){ //end
+            if (l.StartsWith("###")){ //endf
                 break;
             }
             if (l.StartsWith("#") || l.Trim() == ""){ //comment or blank

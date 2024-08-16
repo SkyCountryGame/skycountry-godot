@@ -177,7 +177,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			case InteractionType.Dialogue:
 				pm.UpdateState(State.DIALOGUE);
-				Global.HUD.ShowDialogue(i as Talker);
+				Global.HUD.ShowDialogue(((Talker)i).GetDialogue());
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
