@@ -1,7 +1,0 @@
-model proposals:
-
-NPC {
-    
-}
-
-Enemy {}
