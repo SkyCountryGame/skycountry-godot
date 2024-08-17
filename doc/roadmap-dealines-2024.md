@@ -1,30 +1,25 @@
-Sky County Dev Roadmap 7/22 - 10/21 2024
+Sky County Dev Approximate Roadmap 7/22 - 10/21 2024
 
-week 0, 7/21 - 7/27:
-- dialogue v1 done 
-- player movement v1 (PR soon)
-- raycasting for aiming done
-- level switching done 
-week 1, -8/3:
+8/17:
+- dialogue
+- spawn points
+    - plants and mining nodes
 - basic items or resources in the world (rock pickups, iron pickups, placeholder pickups, etc) (
 - player inventory 
-- level restart
-- pickup items, open chests
+- level restart (spawnpoints)
+- open chests
+    - set inventory of something from editor
 - equip items and change model? (change model might be a bit large scope at the moment)
-Would require either linking new model to hand of player, or whole new model, will discuss with art boys
-8/10:
 - simple combat (swinging sword/shooting gun (placeholder effects will do for now))
 - basic functionality for rocks/scenery (health, collision, interaction maybe?)
 - start enemies and NPCs
+    - NPC idle states
 - mining and prop destruction
 - have viewport, target resolution, stuff like that etc. established 
-8/17:
 - enemies and NPCs v1
 - weather system, world event scheduling system
 - controller calibration
-8/24:
-- home upgrade system? (thinking akin to stardew valley town hall, pay resources and model change your house, ask zach and mitch about it)
-- start on building repair/(de)construction
+
 
 8/31:
 
@@ -39,8 +34,9 @@ Would require either linking new model to hand of player, or whole new model, wi
 10/5:
 
 10/12:
-
+- start on building repair/(de)construction
 10/19:
+- home upgrade system? (thinking akin to stardew valley town hall, pay resources and model change your house, ask zach and mitch about it)
 
 10/26:
 - functional and enjoyable game demo complete

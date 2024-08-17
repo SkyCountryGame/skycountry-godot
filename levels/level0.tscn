@@ -86,6 +86,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
 [node name="Player" parent="." instance=ExtResource("8_ywuup")]
 process_mode = 1
+transform = Transform3D(0.999997, 0.00217363, -0.00133211, -0.00217382, 0.999998, -0.00014493, 0.0013318, 0.000147822, 0.999999, 0, 0, 0)
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)

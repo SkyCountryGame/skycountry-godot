@@ -1,0 +1,14 @@
+how to specify the attributes of various resources of which there will be many in the game. 
+
+InventoryItem:
+
+Inventory (of an NPC or Chest):
+
+NPC:
+
+Dialogue of an NPC: 
+
+Weapon: 
+
+Tool:
+

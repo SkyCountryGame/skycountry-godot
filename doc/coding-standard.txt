@@ -1,0 +1,5 @@
+Coding Standard:
+
+variable naming:
+    - mapThingaThingb //a mapping of Thinga to Thingb
+    - 
