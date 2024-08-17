@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://br20useqsu0ey"]
+
+[ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="1_nw60a"]
+[ext_resource type="PackedScene" uid="uid://ch71o3dqfjp1s" path="res://assets/objects/TestPickaxe.glb" id="1_wp6rj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4blto"]
+radius = 0.49267
+height = 0.985454
+
+[node name="StaticBody3D" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_nw60a")
+
+[node name="TestPickaxe" parent="." instance=ExtResource("1_wp6rj")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.280394, 0)
+shape = SubResource("CapsuleShape3D_4blto")

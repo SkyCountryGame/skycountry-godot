@@ -14,7 +14,8 @@ public class InventoryItem : System.ICloneable {
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
-    private bool equippable;
+    public string equipPath {get;}
+    public bool equippable {get;}
 
     public bool inited = false;
     //mass? volume? other properties
@@ -25,12 +26,27 @@ public class InventoryItem : System.ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, string name, bool equippable) : base()
+    public InventoryItem(ItemType t, string name, string equipPath, bool equippable = false) : base()
     {
         itemType = t;
         this.name = name;
         id = nextId++;
-        
+        this.equippable = equippable;
+        this.equipPath = equipPath;
+        //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
+        if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
+            packedScenePath = $"res://gameobjects/{this.name}.tscn";
+        } else {
+            packedScene = SceneManager._.prefabs["ERROR"];
+        }
+    }
+
+    public InventoryItem(ItemType t, string name) : base()
+    {
+        itemType = t;
+        this.name = name;
+        id = nextId++;
+        this.equippable = false;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";

@@ -154,6 +154,7 @@ public partial class SceneManager : Node {
                 activeLevelScenesSet.Add(scene);
             }
             currentLevelScene = scene;
+            currentLevelScene.GetNode("Player").ReplaceBy(Global.PlayerNode);
         }
     }
 

@@ -2,14 +2,14 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
+public partial class Pickaxe : StaticBody3D, Interactable {
     public InteractionType interactionType => InteractionType.Pickup;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
 
-    private InventoryItem rockItem;
+    private InventoryItem pickaxeItem;
 
-    public Rock()
+    public Pickaxe()
     {
     }
 
@@ -17,7 +17,7 @@ public partial class Rock : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "rock");
+        pickaxeItem = new InventoryItem(InventoryItem.ItemType.Weapon, "pickaxe", "TestPickaxe", true);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -28,13 +28,13 @@ public partial class Rock : RigidBody3D, Interactable {
 
     public string Info()
     {
-        return "Rock";
+        return "Pickaxe";
     }
 
     //PAYLOAD 
     public dynamic Interact()
     {
-        return rockItem;
+        return pickaxeItem;
     }
 
     public void Retain()

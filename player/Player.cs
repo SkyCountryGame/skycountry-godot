@@ -8,9 +8,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 
 	//MOVEMENT 
-	public double gravity = -.3f;
-	public const float JumpVelocity = 200;
+	public double gravity = .3f;
+	public const float JumpVelocity = 20;
 	private bool jump = false;
+	private double jumpBuffer = .16; //what percentage of a second you want the buffer to be
+	private double currentJumpTiming = 0;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
@@ -19,6 +21,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	private const float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camera
 	public AnimationTree animationTree;
+	private Node3D rightHand;
 
 	//INTERACTION STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
@@ -39,6 +42,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 		animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree");
+		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -50,25 +54,27 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		/*controlDir = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("forward", "backward")).Normalized()
 							.Rotated(Vector3.Down, angleToCam);*/
 		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
-		
-		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+		Vector3 velocity = controlDir * velMagnitudeMax * (float)delta * 50; //goal velocity based on user input
+		velocity.Y = Velocity.Y;
+		//Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+		/**
 		if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
 			velocity = Vector3.Zero;
-			accel = Vector3.Zero;
+			//accel = Vector3.Zero;
 		} else if (Velocity.Length() > gv.Length()) {
 			velocity = gv;
-		}
+		}**/
 		if (Velocity.Length() < velMagnitudeMax){
-			velocity += accel * (float)delta;
+			velocity += controlDir * (float)delta * 50;
 		}
-		if (jump){
-			velocity.Y += JumpVelocity;
+
+		if (jump && IsOnFloor()){
+			velocity.Y += JumpVelocity ;
 			jump = false;
 		} else if (IsOnFloor()) {
 			velocity.Y = 0; 
 		} else {
-			velocity.Y += (float) (gravity * delta) * 300 - 20;
+			velocity.Y -= (float) (gravity * delta) * 300;
 		}
 		Velocity = velocity;
 		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
@@ -86,7 +92,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
 		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,1));
+		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
 		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
 			Vector3 pos = (Vector3)intersection["position"];
 			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
@@ -96,6 +102,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		//HUD stuff
 		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
 			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+		}
+
+		if(currentJumpTiming>jumpBuffer){
+			jump = false;
+		}
+		else {
+			currentJumpTiming+=delta;
 		}
 	}
 
@@ -119,8 +132,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			inputDir.Z = Input.GetAxis("forward", "backward");
 			if (Input.IsActionJustPressed("player_action2")){
 
-			} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
+			} else if (Input.IsActionJustPressed("player_jump")) //TODO implement charge-up later
 			{
+				currentJumpTiming=0;
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
 				switch (pm.activityState){
@@ -235,5 +249,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
+	}
+
+	public void EquipRightHand(InventoryItem item){
+		Node equippedItem = item.GetPackedScene().Instantiate().GetNode(item.equipPath);
+		rightHand.AddChild(equippedItem.Duplicate());
+		Global.PlayerNode = this;
+	}
+
+	public void UnequipRightHand(){
+		rightHand.RemoveChild(rightHand.GetChild(0));
+		Global.PlayerNode = this;
 	}
 }

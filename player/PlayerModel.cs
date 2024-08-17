@@ -103,13 +103,17 @@ public class PlayerModel {
 
 	/** by default equip the primary item, or give an item to equip */
 	public bool EquipItem(InventoryItem item = null){
-		if (inv.IsEmpty()) return false;
+		if (inv.IsEmpty() || !item.equippable) return false;
 		if (item == null){ //or maybe dequip?
 			equipped = inv.GetItemByIndex(0);
 			Global.HUD.ShowEquipped(equipped.name);
 		} else {
 			if (inv.Contains(item)){
+				if(equipped != null) {
+					Global.PlayerNode.UnequipRightHand();
+				}
 				equipped = item;
+				Global.PlayerNode.EquipRightHand(item);
 			}
 		}
 		return equipped != null;
@@ -127,6 +131,7 @@ public class PlayerModel {
 			((Node3D) gameObject).Position = Global.PlayerNode.Position + new Vector3(0,1,1);
 
 			if (item == equipped){
+				Global.PlayerNode.UnequipRightHand();
 				equipped = null;
 			}
 			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
