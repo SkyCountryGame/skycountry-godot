@@ -8,8 +8,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 {
 
 	//MOVEMENT 
-	public double gravity = 20f;
-	public float JumpVelocity = 200;
+	public double gravity = 3f;
+	public float JumpVelocity = 30;
 	private bool jump = false;
 	private double jumpBuffer = .16; //what percentage of a second you want the buffer to be
 	private double currentJumpTiming = 0;
@@ -169,7 +169,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				velocity += accel * (float)delta;
 			}
 		}
-		if (jump){
+		if (jump && IsOnFloor()){
 			velocity.Y += JumpVelocity;
 			jump = false;
 		} else if (IsOnFloor()) {
