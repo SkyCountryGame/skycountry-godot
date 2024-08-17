@@ -4,7 +4,7 @@ using Godot;
 /**
     this is an explicit implementation of an interactable lamppost
 */
-public partial class LampPost : Node, Interactable {
+public partial class LampPost : StaticBody3D, Interactable {
 
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
