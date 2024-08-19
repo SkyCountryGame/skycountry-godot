@@ -1,14 +1,25 @@
 using Godot;
 using System;
-using System.ComponentModel;
 
-public partial class Pickaxe : StaticBody3D, Interactable {
+public partial class Pickaxe : StaticBody3D, Interactable, IBaseMelee {
+    private InventoryItem pickaxeItem;
+
+
+    public string name => "pickaxe";
+
+
+    public string equipPath => "TestPickaxe";
+
+    public int durability => 1;
+    public int damage => 1;
+    public int arcLength => arcLength; 
+    public int range=> 1; 
+    public int reswingSpeed  => reswingSpeed; 
+    public string swingAnimation => "Mining02"; 
+
     public InteractionType interactionType => InteractionType.Pickup;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
-
-    private InventoryItem pickaxeItem;
-
     public Pickaxe()
     {
     }
@@ -17,7 +28,7 @@ public partial class Pickaxe : StaticBody3D, Interactable {
     public override void _Ready()
 	{
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        pickaxeItem = new InventoryItem(InventoryItem.ItemType.Weapon, "pickaxe", "TestPickaxe", true);
+        pickaxeItem = new InventoryItem(InventoryItem.ItemType.Weapon, this, true);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -51,4 +62,10 @@ public partial class Pickaxe : StaticBody3D, Interactable {
     {
         throw new NotImplementedException();
     }
+
+    public Animation Swing(AnimationTree animationTree)
+    {
+        throw new NotImplementedException();
+    }
+
 }

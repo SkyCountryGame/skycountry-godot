@@ -140,18 +140,15 @@ bones/55/rotation = Quaternion(3.89741e-08, -3.44012e-09, -0.278599, 0.960408)
 bones/56/rotation = Quaternion(-0.0313892, 0.00158089, 0.558584, 0.828852)
 bones/57/position = Vector3(0.00843115, 3.58273, 0.309092)
 bones/58/position = Vector3(1.00727, 0.321459, -0.33062)
-bones/58/rotation = Quaternion(0.636107, 0.411867, 0.557582, 0.338874)
 bones/62/position = Vector3(1.8141, 1.34122, 0.475627)
 bones/62/rotation = Quaternion(-0.0479286, -0.191648, -0.975448, 0.0973367)
 bones/65/position = Vector3(-1.03299, 0.0732576, 0.294055)
-bones/65/rotation = Quaternion(0.556845, -0.555448, -0.43724, 0.436144)
 bones/66/rotation = Quaternion(-1.39825e-07, -8.38106e-08, 0.707994, 0.706218)
-bones/68/position = Vector3(-2.52129, 2.60542, -1.04017)
 bones/69/position = Vector3(-1.82072, 1.42519, -0.581182)
 bones/69/rotation = Quaternion(-0.039015, -0.171993, 0.980927, 0.0817168)
 
 [node name="HandAttachment" parent="Player/RollinDudeMk5/Armature/Skeleton3D" index="5"]
-transform = Transform3D(-0.978018, -0.204729, -0.0395884, 0.207389, -0.935261, -0.286839, 0.0216986, -0.288744, 0.95716, -1.98067, 1.39001, -0.54614)
+transform = Transform3D(-0.988759, -0.14304, -0.0435363, 0.149494, -0.95106, -0.270438, -0.00272223, -0.273906, 0.961752, -1.90721, 1.31178, -0.549864)
 
 [editable path="Player"]
 [editable path="Player/RollinDudeMk5"]

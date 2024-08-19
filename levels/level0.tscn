@@ -175,7 +175,7 @@ bones/69/rotation = Quaternion(-0.120161, 0.0616127, 0.983563, 0.11987)
 bones/70/position = Vector3(-1.36338, 1.21787, 1.25592)
 
 [node name="HandAttachment" parent="Player/RollinDudeMk5/Armature/Skeleton3D" index="5"]
-transform = Transform3D(-0.947335, -0.233913, -0.218726, 0.210897, -0.969666, 0.12357, -0.240996, 0.0709335, 0.96793, -1.84701, 1.2988, 0.0830355)
+transform = Transform3D(-0.953387, -0.175188, -0.245687, 0.149596, -0.981515, 0.119367, -0.262057, 0.0770496, 0.961972, -1.77141, 1.23258, 0.0742569)
 
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)

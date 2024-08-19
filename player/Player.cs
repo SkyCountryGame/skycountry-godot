@@ -11,14 +11,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public double gravity = 3f;
 	public float JumpVelocity = 30;
 	private bool jump = false;
+	private bool attacked = false;
 	private double jumpBuffer = .16; //what percentage of a second you want the buffer to be
 	private double currentJumpTiming = 0;
 	private Vector3 velocity = Vector3.Zero;
-	private AnimationPlayer rollcurve; //function that defines vel during roll
+	[Export]
+	private AnimationPlayer animationPlayer; 
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
-	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
+	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
@@ -52,7 +54,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		DoMotion(delta); 
+		if(!attacked){
+			DoMotion(delta); 
+		}
 		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
 	}
 	public override void _Process(double delta)
@@ -62,17 +66,20 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 
 		//RayCast Stuff
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Camera3D camera =  Global.Cam;
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
-		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
-		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
-			Vector3 pos = (Vector3)intersection["position"];
-			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
-			LookAt(viewAngle);
-		}
+		if(!attacked){
+			Vector2 mousePosition = GetViewport().GetMousePosition();
+			Camera3D camera =  Global.Cam;
+			Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+			Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
+			PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+			Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
+			if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+				Vector3 pos = (Vector3)intersection["position"];
+				Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+				LookAt(viewAngle);
+			}
+		}	
+		
 
 		//HUD stuff
 		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
@@ -105,7 +112,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		} else {
 			inputDir.X = Input.GetAxis("left", "right");
 			inputDir.Z = Input.GetAxis("forward", "backward");
-			if (Input.IsActionJustPressed("player_action2")){
+			if(Input.IsActionJustPressed("player_action1") && !attacked){
+				if(pm.equipped != null && pm.equipped.equippable ){ //hmmmmmmmmmmmmmmm has to be a better way
+					attacked = true;
+					((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(pm.equipped.baseMelee.swingAnimation);
+					animationTree.AnimationFinished += (value) => 
+					{
+						attacked = false;
+					};	
+				}		
+			}
+			else if (Input.IsActionJustPressed("player_action2")){
 
 			} else if (Input.IsActionJustPressed("player_jump")) //TODO implement charge-up later
 			{
@@ -267,7 +284,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 
 	public void EquipRightHand(InventoryItem item){
-		Node equippedItem = item.GetPackedScene().Instantiate().GetNode(item.equipPath);
+		Node equippedItem = item.GetPackedScene().Instantiate().GetNode(item.baseMelee.equipPath);
 		rightHand.AddChild(equippedItem.Duplicate());
 		Global.PlayerNode = this;
 	}

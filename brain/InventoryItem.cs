@@ -14,6 +14,7 @@ public class InventoryItem : System.ICloneable {
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
+    public IBaseMelee baseMelee;
     public string equipPath {get;}
     public bool equippable {get;}
 
@@ -26,13 +27,13 @@ public class InventoryItem : System.ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, string name, string equipPath, bool equippable = false) : base()
+    public InventoryItem(ItemType t, IBaseMelee baseMelee, bool equippable = false) : base()
     {
         itemType = t;
-        this.name = name;
+        name = baseMelee.name;
         id = nextId++;
         this.equippable = equippable;
-        this.equipPath = equipPath;
+        this.baseMelee = baseMelee;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
