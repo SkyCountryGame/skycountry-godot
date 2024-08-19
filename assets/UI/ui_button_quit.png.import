@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://scu67rd41576"
-path="res://.godot/imported/background1.jpg-e8123a437698690be47657fe4635c3c0.ctex"
+uid="uid://dw2bi5gw7c4aa"
+path="res://.godot/imported/ui_button_quit.png-d6409efa211071bddd92c3f9a01c404e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/texture/background1.jpg"
-dest_files=["res://.godot/imported/background1.jpg-e8123a437698690be47657fe4635c3c0.ctex"]
+source_file="res://assets/UI/ui_button_quit.png"
+dest_files=["res://.godot/imported/ui_button_quit.png-d6409efa211071bddd92c3f9a01c404e.ctex"]
 
 [params]
 
