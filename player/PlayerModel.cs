@@ -7,8 +7,6 @@ public class PlayerModel {
     public State activityState = State.DEFAULT;
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
-
-	Dictionary<Talker, List<Dialogue>> dialogues; //the player holds a list of his active dialogues with other characters
 	
 	[System.Flags]
 	public enum State //maybe activity state? 
@@ -43,7 +41,6 @@ public class PlayerModel {
 		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 		inv = new Inventory(4);
-		dialogues = new Dictionary<Talker, List<Dialogue>>();
 	}
 
 	/**

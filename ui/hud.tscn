@@ -75,6 +75,22 @@ offset_top = 300.0
 offset_right = 1260.0
 offset_bottom = 700.0
 
+[node name="InfoPanel" type="HBoxContainer" parent="DialoguePanel"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="DialogueTitle" type="Label" parent="DialoguePanel/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title of this dialogue"
+
+[node name="ButtonContinue" type="Button" parent="DialoguePanel/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_direction = 2
+layout_mode = 2
+text = "Continue"
+
 [node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
 custom_minimum_size = Vector2(960, 80)
 layout_direction = 2

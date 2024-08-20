@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -23,12 +24,16 @@ public partial class Dialogue
     private string filepath {get; set;} //the file that contains the dialogue tree
     public Dictionary<int, StatementNode> statements; //map statement id to statement
     public StatementNode currentStatement;
+
     public struct StatementNode { //NOTE dont know if should also store id
         public string statement; //NOTE should be "statementText"?
         public List<ResponseNode> responses;
+        public int nextStatementID = -1; //when there's no responses but a continuation to another statement. -1 means to exit dialogue
+        public EventType eventType; //when the next thing that happens is some in game action
         public StatementNode(string statement){
             this.statement = statement;
             responses = new List<ResponseNode>();
+            eventType = EventType.None;
         }
     }
     public struct ResponseNode {
@@ -56,14 +61,15 @@ public partial class Dialogue
         }
     }
 
-    //parse file contents as json and populate this object
+    //parse file contents as json and populate this object. local variables here are named with 'j' suffix if a json thing. 'd' obviously stands for dialogue. 
+    //return false if any of the json values do not follow the dialogue format spec
     private bool ParseDialogue(string dstr){
         JsonDocument dj = JsonDocument.Parse(dstr); //dialogue as json
         if (dj.RootElement.ValueKind != JsonValueKind.Array){
             return false;
         }
-        foreach (JsonElement s in dj.RootElement.EnumerateArray()){ //iterate through each statement
-            if (s.TryGetProperty("text", out JsonElement tj)){ //statement text
+        foreach (JsonElement sj in dj.RootElement.EnumerateArray()){ //iterate through each statement
+            if (sj.TryGetProperty("text", out JsonElement tj)){ //statement text
                 StatementNode sn;
                 if (tj.ValueKind == JsonValueKind.String){
                     sn = new StatementNode(tj.GetString());
@@ -76,65 +82,28 @@ public partial class Dialogue
                     sn = new StatementNode(tmp);
                 } else { return false; }
                 
-                if (s.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement
-                    if ( s.TryGetProperty("responses", out JsonElement rj)){ //responses
+                if (sj.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement
+                    if (sj.TryGetProperty("event", out JsonElement ej)) { //this statement triggers an in game event
+                        if (ej.ValueKind == JsonValueKind.String){ //for now action is an int, to be mapped to an enum probably. might end up being a string
+                            sn.eventType = Enum.Parse<EventType>(ej.GetString()); //not worrying about payload for dialogue-triggered events
+                        } else { return false; } //event json not string
+                    }
+                    if ( sj.TryGetProperty("responses", out JsonElement rj)){ //responses
                         if (rj.ValueKind == JsonValueKind.Array){
                             foreach (JsonElement r in rj.EnumerateArray()){
                                 if (r.TryGetProperty("text", out JsonElement rtj) && r.TryGetProperty("next", out JsonElement nidj) && nidj.ValueKind == JsonValueKind.Number){
                                     sn.responses.Add(new ResponseNode(rtj.GetString(), nidj.GetInt32()));
-                                    statements[ij.GetInt32()] = sn;
                                 } else { return false; }
                             }
                         } else { return false; }
-                    } else { //no responses to this statement
-                        statements[ij.GetInt32()] = sn;
+                    } else if (sj.TryGetProperty("next", out JsonElement nj) && nj.ValueKind == JsonValueKind.Number){ //goes to another statement before player can respond
+                        sn.nextStatementID = nj.GetInt32();
                     }
+                    statements[ij.GetInt32()] = sn;
+                    return true;
+                     
                 } else { return false; }
             } else { return false; }
-        }
-        return true;
-    }
-
-    //using the spec format i came up with. see doc for formatting. 
-    private bool ParseDialogueOld(string dstr){ //TODO add error handling
-        //JSON version:
-        /*
-            for each element (which is a statementnode), get the id, statement, responses, & optional properties. 
-                some have multiple statements that display sequentially.
-                for each response, get the response text, id of the next statement, and optional properties
-        */
-        int pid = -1; //parent dialoguenode id. "parent" of any player responses in subsequent lines
-        foreach (string l in dstr.Split('\n')){
-            if (l.StartsWith("###")){ //endf
-                break;
-            }
-            if (l.StartsWith("#") || l.Trim() == ""){ //comment or blank
-                continue;
-            }
-            string[] parts = l.Split(':', StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries);
-            if (int.TryParse(parts[0], out int id)){ //this is said by npc
-                pid = id; //set parent id for the subsequent player responses
-                //there can by multiple statements that can be selected at random. get each string that's between quotes
-                //TODO read through and get in between quotes
-                if (parts.Length > 2){ //there happen to be colons in the text of the statement
-                    string statementsStr = string.Join(":", parts[1..^1]);
-                    //TODO handle multiple statements. separated by commas https://learn.microsoft.com/en-us/dotnet/api/system.string?view=net-8.0
-                    statements.Add(id, new StatementNode(statementsStr));
-                } else {
-                    statements.Add(id, new StatementNode(parts[1]));
-                }
-            } else if (int.TryParse(parts[^1], out id)){ //this is a player response, and the id points to the NPC statement that would follow after this response
-                //TODO read through and get in between quotes
-                if (parts.Length > 2){ //there happen to be colons in the text of the response
-                    string responseStr = string.Join(":", parts[0..^2]);
-                    //TODO handle multiple responses. separated by commas
-                    statements[pid].responses.Add(new ResponseNode(responseStr, id));
-                } else {
-                    statements[pid].responses.Add(new ResponseNode(parts[0], id));
-                }
-            } else {
-                return false;
-            }
         }
         return true;
     }

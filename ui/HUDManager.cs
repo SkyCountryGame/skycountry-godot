@@ -15,6 +15,11 @@ public partial class HUDManager : Node {
     public VBoxContainer dialoguePanel;
     private RichTextLabel dialogueText;
     private ItemList dialogueChoices;
+    private Label dialogueTitle; //title of dialogue. probably NPC name
+    private Button buttonNext; //continue dialogue button
+    private Button buttonExit; //exit dialogue
+    private Dialogue currentDialogue; //currently active dialogue, if any
+
 
     //inventory stuff    
     private ItemList inventoryMenu;
@@ -26,7 +31,7 @@ public partial class HUDManager : Node {
 
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
-    private Dialogue currentDialogue; //currently active dialogue, if any
+    
 
     enum State { //TODO hud might not need its own state because can just look at player
         DEFAULT,
@@ -131,6 +136,7 @@ public partial class HUDManager : Node {
             idx = dialogueChoices.AddItem(r.response);
             dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
         }
+
     }
     public void Back(){
         switch (state){

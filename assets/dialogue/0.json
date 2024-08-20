@@ -58,6 +58,7 @@
         ],
         "speed": [2,1],
         "fontSize": 1,
-        "emotion": -1
+        "emotion": 0,
+        "event": "SomeGameActionOrEventOrFunction"
     }
 ]
