@@ -18,8 +18,9 @@ public partial class HUDManager : Node {
     private Label dialogueTitle; //title of dialogue. probably NPC name
     private Button buttonNext; //continue dialogue button
     private Button buttonExit; //exit dialogue
+    
     private Dialogue currentDialogue; //currently active dialogue, if any
-
+    private Event dialogueEvent = null; //event to be triggered when current statement node is done
 
     //inventory stuff    
     private ItemList inventoryMenu;
@@ -27,7 +28,6 @@ public partial class HUDManager : Node {
     private Label equippedLabel;
     
     private Label hpLabel;
-
 
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
@@ -116,6 +116,10 @@ public partial class HUDManager : Node {
     public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
         if (mouseButton == 1){ //left click
             int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
+            if (dialogueEvent != null){ //invoke event if one is associated with the statement
+                dialogueEvent.Invoke();
+                dialogueEvent = null;
+            }
             if (id == -1){
                 HideDialogue();
                 Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT);
@@ -132,11 +136,25 @@ public partial class HUDManager : Node {
         dialogueChoices.Clear();
         dialogueText.Text = sn.statement;
         int idx = -1; //index of response just added to list
-        foreach (Dialogue.ResponseNode r in sn.responses){
-            idx = dialogueChoices.AddItem(r.response);
-            dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
+        if (sn.responses.Count > 0){
+            foreach (Dialogue.ResponseNode r in sn.responses){
+                idx = dialogueChoices.AddItem(r.response);
+                dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
+            }
+            idx = dialogueChoices.AddItem("Exit");
+            dialogueChoices.SetItemMetadata(idx, -1);
+        } else {
+            if (sn.nextStatementID == -1){
+                idx = dialogueChoices.AddItem("Exit");    
+            } else {
+                idx = dialogueChoices.AddItem("Continue");
+            }
+            dialogueChoices.SetItemMetadata(idx, sn.nextStatementID);
+        } 
+        
+        if (sn.eventType != EventType.None){
+            dialogueEvent = new Event(sn.eventType);
         }
-
     }
     public void Back(){
         switch (state){

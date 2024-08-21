@@ -7,9 +7,13 @@ using System.Diagnostics.Tracing;
 //we could make an EventPayload abstract class if needed
 
 public enum EventType {
-    GameOver, QuestReceived, QuestComplete, QuestFailed, Death, //just some ideas for now
-    WeatherChange, 
+    GameOver, QuestReceived, QuestComplete, QuestFailed, Death, //just some ideas for now. would be a good to define payload in comment of each event type. and probably its intended use
+    WeatherChange,  
+    SpawnParticles, //payload = Vector3 (location)
+    PlaySound, //payload = Tuple<string, int> (sound file path, volume)
+    SetMusic, 
     CustomScene1, //for example some little scene plays out after a dialogue
+    BeginTradeUI,
     None //default
 }
 
@@ -19,6 +23,10 @@ public enum EventType {
 public class Event {
     public EventType eventType;
     public dynamic payload;
+    public Event(EventType t = EventType.None, dynamic p = null){
+        eventType = t;
+        payload = p;
+    }
     public bool Invoke(){
         EventManager.Invoke(this);
         return true;

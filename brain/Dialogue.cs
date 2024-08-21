@@ -100,7 +100,6 @@ public partial class Dialogue
                         sn.nextStatementID = nj.GetInt32();
                     }
                     statements[ij.GetInt32()] = sn;
-                    return true;
                      
                 } else { return false; }
             } else { return false; }

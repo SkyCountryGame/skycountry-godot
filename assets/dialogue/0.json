@@ -47,6 +47,7 @@
             }
         ],
         "speed": 2,
+        "event": "SpawnParticles",
         "fontSize": 1,
         "emotion": 0
     },
@@ -59,6 +60,6 @@
         "speed": [2,1],
         "fontSize": 1,
         "emotion": 0,
-        "event": "SomeGameActionOrEventOrFunction"
+        "event": "CustomScene1"
     }
 ]
