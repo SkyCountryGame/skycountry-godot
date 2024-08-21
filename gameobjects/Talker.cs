@@ -11,7 +11,7 @@ public partial class Talker : Node, Interactable {
 
     //[Export(PropertyHint.None, "dialogue")]
     [Export(PropertyHint.File, "dialogue-for-dude.json")]
-    public String dialogueFilename = "assets/dialogue/0.txt";
+    public String dialogueFilename = "assets/dialogue/0.json";
     
     public Dialogue dialogue;
     public List<Dialogue> dialogues; //each character has his own set of dialogues
