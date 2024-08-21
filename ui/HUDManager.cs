@@ -49,6 +49,7 @@ public partial class HUDManager : Node {
         dialoguePanel = GetNode<VBoxContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("PanelContainerMessage/MessageLabel"); //this is the text node that is the current message of dialogue
         dialogueChoices = dialoguePanel.GetNode<ItemList>("ResponsesList");
+        dialogueTitle = dialoguePanel.GetNode<Label>("PanelContainerTop/InfoPanel/DialogueTitle");
         buttonContinue = dialoguePanel.GetNode<Button>("PanelContainerTop/InfoPanel/ButtonContinue");
         buttonContinue.Visible = false;
         messages = new ConcurrentQueue<string>();
@@ -78,9 +79,10 @@ public partial class HUDManager : Node {
             case State.DIALOGUE:
                 if (payload != null && payload is Dialogue){
                     currentDialogue = (Dialogue)payload;
+                    dialoguePanel.Visible = true;
+                    dialogueTitle.Text = currentDialogue.title;
+                    state = s;
                 }
-                dialoguePanel.Visible = true;
-                state = s;
                 break;
         }
     }
@@ -102,7 +104,7 @@ public partial class HUDManager : Node {
         UpdateState(State.DIALOGUE, d);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
         if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
-            UpdateDialoguePanel(currentDialogue.currentStatement); //not necessarily the first statement
+            UpdateDialoguePanel(currentDialogue.Start()); //not necessarily the first statement
             return;
         } else {
 

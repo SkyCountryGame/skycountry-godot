@@ -24,6 +24,7 @@ public partial class Dialogue
     private string filepath {get; set;} //the file that contains the dialogue tree
     public Dictionary<int, StatementNode> statements; //map statement id to statement
     public StatementNode currentStatement;
+    public string title = "";
 
     public struct StatementNode { //NOTE dont know if should also store id
         public string statement; //NOTE should be "statementText"?
@@ -74,10 +75,10 @@ public partial class Dialogue
                 if (tj.ValueKind == JsonValueKind.String){
                     sn = new StatementNode(tj.GetString());
                 } else if (tj.ValueKind == JsonValueKind.Array){
-                    //TODO handle multiple statements in some way
-                    string tmp = ""; //temporary
+                    //NOTE: originally i was thinking that an array of strings can be used for multiple consecutive statements. leaving unimplemented for now. would need to generate an id for each statement text. 
+                    string tmp = ""; //just concatenate the strings for now
                     foreach (JsonElement stj in tj.EnumerateArray()){
-                            tmp += stj.GetString();
+                            tmp += stj.GetString() + "\n";
                     }
                     sn = new StatementNode(tmp);
                 } else { return false; }
@@ -123,6 +124,12 @@ public partial class Dialogue
             return currentStatement; //this shouldn't have been called with incorrect index
         }
         currentStatement = statements[currentStatement.responses[idx].nextStatementID];
+        return currentStatement;
+    }
+
+    //restarts dialogue to beginning and returns that statement node. in the future probably will have checkpoints in a dialogue
+    public StatementNode Start(){
+        currentStatement = statements.First().Value;
         return currentStatement;
     }
 

@@ -25,11 +25,15 @@ public partial class Talker : Node, Interactable {
     //start dialogue when player interacts
     public dynamic Interact()
     {
-        return dialogue.Next();
+        if (dialogue != null){
+            return dialogue.Next();
+        }
+        return null;
     }
 
     //get the appropriate dialogue based on the state of things
     public Dialogue GetDialogue(){
+        dialogue.title = "Talking to " + Name; //TODO how do dialogue title? is it ever dynamic depending on game state, or can be defined in json? 
         return dialogue; //TODO logic to get the correct dialogue
     }
 

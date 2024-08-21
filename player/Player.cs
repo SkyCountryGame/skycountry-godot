@@ -114,7 +114,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 						}
 						break;
 					case State.DIALOGUE:
-						Global.HUD.ContinueDialogue();
+						Global.HUD.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
 			} else if (Input.IsActionJustPressed("pause"))
