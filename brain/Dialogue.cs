@@ -107,20 +107,23 @@ public partial class Dialogue
         return true;
     }
 
-    //return next thing to say when player says nothing
-    public string Next()
-    { 
-        return currentStatement.statement;
+    //increments the dialogue to the next statement and return that statement, unless the next statement is -1 (end of dialogue), and this function is only intended to be called when we think there's a next statement
+    public StatementNode Next()
+    {
+        if (currentStatement.nextStatementID != -1){
+            currentStatement = statements[currentStatement.nextStatementID];
+        }
+        return currentStatement;
     }
 
-    //return next thing to say based on what player says
-    public string Next(int i)
+    //increments the dialogue to the next statement given the player response choice (index of the response) and returns that StatementNode
+    public StatementNode Next(int idx)
     {
-        if (i >= currentStatement.responses.Count){
-            return ""; //this shouldn't have been called with incorrect index anyway
+        if (idx >= currentStatement.responses.Count){
+            return currentStatement; //this shouldn't have been called with incorrect index
         }
-        currentStatement = statements[currentStatement.responses[i].nextStatementID];
-        return currentStatement.statement;
+        currentStatement = statements[currentStatement.responses[idx].nextStatementID];
+        return currentStatement;
     }
 
     public List<string> GetResponsesAsString(){

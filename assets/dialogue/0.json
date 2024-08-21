@@ -54,12 +54,21 @@
     {
         "id": 4,
         "text": [
-            "Quiet! You mustn't be so careless when speaking of such a one. ",
-            "The whereabouts are not known."
+            "Quiet! You mustn't be so careless when speaking of such a one. "
         ],
+        "next": 5,
         "speed": [2,1],
         "fontSize": 1,
         "emotion": 0,
         "event": "CustomScene1"
+    },
+    {
+        "id": 5,
+        "text": [
+            "The whereabouts are not known."
+        ],
+        "speed": [2,1],
+        "fontSize": 1,
+        "emotion": 0
     }
 ]
