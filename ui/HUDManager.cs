@@ -51,7 +51,8 @@ public partial class HUDManager : Node {
         dialogueChoices = dialoguePanel.GetNode<ItemList>("ResponsesList");
         dialogueTitle = dialoguePanel.GetNode<Label>("PanelContainerTop/InfoPanel/DialogueTitle");
         buttonContinue = dialoguePanel.GetNode<Button>("PanelContainerTop/InfoPanel/ButtonContinue");
-        buttonContinue.Visible = false;
+        //buttonContinue.Visible = false;
+        buttonContinue.Text = "Exit"; //this button is used for either continuing or exiting depending on context
         messages = new ConcurrentQueue<string>();
         dialoguePanel.Visible = false;
         inventoryMenu = GetNode<ItemList>("InventoryMenu");
@@ -111,8 +112,10 @@ public partial class HUDManager : Node {
         }
     }
     //NOTE might move dialogue stuff into DialogueManager
-    public void HideDialogue(){
+    public void ExitDialogue(){
         UpdateState(State.DEFAULT);
+        Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
+        //but also there might be other things that want to know that a dialogue has ended. TODO revisit if necessary
     }
     public void ContinueDialogue(){
 
@@ -125,8 +128,7 @@ public partial class HUDManager : Node {
                 dialogueEvent = null;
             }
             if (id == -1){
-                HideDialogue();
-                Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT);
+                ExitDialogue();
                 return;
             }
             Dialogue.StatementNode sn = currentDialogue.statements[id];
@@ -134,12 +136,15 @@ public partial class HUDManager : Node {
             UpdateDialoguePanel(sn);
         }
     }
-    public void OnButtonContinuePressed(){ //yes it does feel wrong to be messing with internal structure of dialogue object from the hud
-        //continue button is only visible when there is a direct continuation to another statement
-        Dialogue.StatementNode sn = currentDialogue.Next(); //.statements[currentDialogue.currentStatement.nextStatementID];
-        //TODO just call currentDialogue.Next()
-        //currentDialogue.currentStatement = sn;
-        UpdateDialoguePanel(sn);
+    public void OnButtonContinuePressed(){
+        //continue button is only visible when there is a direct continuation to another statement, otherwise it is an exit button
+        if (currentDialogue.HasNext()){
+            Dialogue.StatementNode sn = currentDialogue.Next();
+            UpdateDialoguePanel(sn);
+        } else {
+            ExitDialogue();
+        }
+        
     }
     //update the dialogue panel. display a statement and its responses
     private void UpdateDialoguePanel(Dialogue.StatementNode sn){
@@ -154,13 +159,15 @@ public partial class HUDManager : Node {
             }
             idx = dialogueChoices.AddItem("Exit");
             dialogueChoices.SetItemMetadata(idx, -1);
-            buttonContinue.Visible = false;
+            //buttonContinue.Visible = false;
         } else {
             if (sn.nextStatementID == -1){
                 idx = dialogueChoices.AddItem("Exit");
-                buttonContinue.Visible = false;
+                buttonContinue.Text = "Exit";
+                buttonContinue.Visible = true;
             } else {
                 idx = dialogueChoices.AddItem("Continue");
+                buttonContinue.Text = "Continue";
                 buttonContinue.Visible = true;
             }
             dialogueChoices.SetItemMetadata(idx, sn.nextStatementID);

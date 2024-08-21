@@ -132,6 +132,10 @@ public partial class Dialogue
         currentStatement = statements.First().Value;
         return currentStatement;
     }
+    //does the current statement have a next default statement?
+    public bool HasNext(){
+        return currentStatement.nextStatementID != -1;
+    }
 
     public List<string> GetResponsesAsString(){
         List<string> responses = new List<string>();
