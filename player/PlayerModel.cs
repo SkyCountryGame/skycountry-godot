@@ -52,6 +52,11 @@ public class PlayerModel {
 			activityState = ps;
 			switch (activityState){
 				case State.DEFAULT:
+					if (prev == State.INVENTORY){
+						Global.HUD.HideInventory();
+					} else if (prev == State.DIALOGUE) {
+						Global.HUD.ExitDialogue();
+					}
 					break;
 				case State.CHARGING:
 					break;

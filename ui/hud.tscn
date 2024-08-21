@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bantfsh2sxy0v"]
+[gd_scene load_steps=3 format=3 uid="uid://bantfsh2sxy0v"]
 
 [ext_resource type="Script" path="res://ui/HUDManager.cs" id="1_qxbrm"]
+
+[sub_resource type="Theme" id="Theme_3at7c"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -9,18 +11,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("1_qxbrm")
-
-[node name="DialoguePanel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 435.0
-offset_top = 424.0
-offset_right = 1116.0
-offset_bottom = 548.0
-
-[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel"]
-custom_minimum_size = Vector2(16, 32)
-layout_direction = 2
-layout_mode = 2
 
 [node name="InventoryMenu" type="ItemList" parent="."]
 layout_mode = 0
@@ -79,4 +69,51 @@ layout_direction = 1
 layout_mode = 2
 autowrap_mode = 2
 
+[node name="DialoguePanel" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 0
+offset_left = 300.0
+offset_top = 300.0
+offset_right = 1260.0
+offset_bottom = 700.0
+theme = SubResource("Theme_3at7c")
+
+[node name="PanelContainerTop" type="PanelContainer" parent="DialoguePanel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="InfoPanel" type="HBoxContainer" parent="DialoguePanel/PanelContainerTop"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="DialogueTitle" type="Label" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title of this dialogue"
+
+[node name="ButtonContinue" type="Button" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_direction = 2
+layout_mode = 2
+text = "Continue"
+
+[node name="PanelContainerMessage" type="PanelContainer" parent="DialoguePanel"]
+layout_mode = 2
+
+[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel/PanelContainerMessage"]
+custom_minimum_size = Vector2(960, 80)
+layout_mode = 2
+
+[node name="ResponsesList" type="ItemList" parent="DialoguePanel"]
+custom_minimum_size = Vector2(700, 400)
+layout_direction = 2
+layout_mode = 2
+max_text_lines = 6
+text_overrun_behavior = 0
+item_count = 1
+item_0/text = ""
+
 [connection signal="item_clicked" from="InventoryMenu" to="." method="OnInventoryMenuItemClicked"]
+[connection signal="pressed" from="DialoguePanel/PanelContainerTop/InfoPanel/ButtonContinue" to="." method="OnButtonContinuePressed"]
+[connection signal="item_clicked" from="DialoguePanel/ResponsesList" to="." method="OnDialogueResponseItemClicked"]

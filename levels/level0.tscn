@@ -90,6 +90,7 @@ process_mode = 1
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
 script = ExtResource("9_80eq6")
+dialogueFilename = "assets/dialogue/0.json"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Clerk"]
 
