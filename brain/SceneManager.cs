@@ -87,6 +87,7 @@ public partial class SceneManager : Node, EventListener {
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
+        prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
 
         activeNodes = new HashSet<Node>();
 

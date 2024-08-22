@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 //base class for levels
-public partial class Level : Node
+public partial class Level : Node3D
 {
 	private DirectionalLight3D sunlight;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
@@ -23,10 +23,9 @@ public partial class Level : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		float r = (float)Math.Sin(.3f*Time.GetTicksMsec() / 1000f);
-		float g = (float)Math.Sin(.8f*Time.GetTicksMsec() / 1000f);
-		float b = (float)Math.Cos(-.5f*Time.GetTicksMsec() / 1000f);
-		//sunlight.LightColor = new Color(r, g, b, .8f);
+		//TODO where change lighting for time of day? maybe a timer that repeats every several minutes to slightly change the color.
+		
+		
 	}
 	
 	public override void _UnhandledInput(InputEvent @event){
