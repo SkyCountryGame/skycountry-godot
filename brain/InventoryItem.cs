@@ -32,14 +32,14 @@ public class InventoryItem : System.ICloneable {
         id = nextId++;
         
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){
-            packedScene = SceneManager._.prefabs[this.name];
+        if (Global.prefabs.ContainsKey(this.name) && Global.prefabs[this.name] != null){
+            packedScene = Global.prefabs[this.name];
         }
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
         }
         if (packedScene == null && packedScenePath == null) {
-            packedScene = SceneManager._.prefabs["ERROR"];
+            packedScene = Global.prefabs["ERROR"];
         }
     }
 
@@ -70,7 +70,7 @@ public class InventoryItem : System.ICloneable {
     public PackedScene GetPackedScene(){
         if (packedScene == null){
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
-            SceneManager._.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
+            Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }
         return packedScene;
     }

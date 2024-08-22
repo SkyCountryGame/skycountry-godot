@@ -30,6 +30,7 @@ public class AtmosphereManager : EventListener {
             case EventType.SpawnParticles:
                 if (e.payload is Vector3){
                     Vector3 loc = e.payload; //TODO
+
                 }
                 break;
             case EventType.PlaySound:

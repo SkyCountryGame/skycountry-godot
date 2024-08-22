@@ -33,7 +33,7 @@ public partial class LampPost : Node, Interactable {
     public dynamic Interact()
     {
         if (n > 4){ //it's a magic lamp
-            SceneManager._.ChangeLevel("l2");
+            Global.sceneManager.ChangeLevel("l2");
         }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;

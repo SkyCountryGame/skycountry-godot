@@ -32,18 +32,21 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Ready()
 	{
 		base._Ready();
-		if (Global.PlayerModel == null){
-			pm = new PlayerModel(this); //TODO what parameters to give here
-			Global.PlayerModel = pm;
+		if (Global.playerModel == null){
+			//TODO this is where we would load savedata (or maybe SceneManager does that?)
+			pm = new PlayerModel(this);
+			Global.playerModel = pm;
 		} else {
-			pm = Global.PlayerModel;
+			pm = Global.playerModel;
 		}
-		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
+		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
+		SceneTree st = Global.sceneTree; //testing
+		GD.Print(st.ToString());
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -54,13 +57,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
-		if (SceneManager._ != null && SceneManager._.currentLevelScene != GetTree().CurrentScene){
-			SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		if (Global.sceneManager != null && Global.sceneManager.currentLevelScene != GetTree().CurrentScene){
+			Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
 		}
 
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Camera3D camera =  Global.Cam;
+		Camera3D camera =  Global.cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
 		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
@@ -72,8 +75,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 
 		//HUD stuff
-		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
-			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+		if (!Global.hud.actionLabel.Visible && availableInteractables.Count > 0){
+			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
 
@@ -110,11 +113,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 								HandleInteract(i, (Node)i);
 							}
 						} else {
-							Global.HUD.LogEvent("there is nothing with which to interact");
+							Global.hud.LogEvent("there is nothing with which to interact");
 						}
 						break;
 					case State.DIALOGUE:
-						Global.HUD.ContinueDialogue(); //NOTE this does nothing currently. 
+						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
 			} else if (Input.IsActionJustPressed("pause"))
@@ -123,7 +126,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.HUD.ToggleInventory(pm.inv);
+				Global.hud.ToggleInventory(pm.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
 				pm.EquipItem();
 			}
@@ -177,7 +180,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			case InteractionType.Dialogue:
 				pm.UpdateState(State.DIALOGUE);
-				Global.HUD.ShowDialogue(((Talker)i).GetDialogue());
+				Global.hud.ShowDialogue(((Talker)i).GetDialogue());
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
@@ -186,16 +189,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				pm.AddToInventory(item);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				//interactionObj.QueueFree();
-				Global.HUD.UpdateInventoryMenu(pm.inv);
+				Global.hud.UpdateInventoryMenu(pm.inv);
 				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
-				Global.HUD.LogEvent($" + {item.name}");
+				Global.hud.LogEvent($" + {item.name}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
-				Global.HUD.LogEvent($"{i.Info()}");
+				Global.hud.LogEvent($"{i.Info()}");
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				payload(this); //TODO what return? 
 				break;
@@ -222,7 +225,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				{
 					if (i.interactionMethod == InteractionMethod.Use){
 						availableInteractables.Add(i);
-						Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 					} else if (i.interactionMethod == InteractionMethod.Contact){
 						HandleInteract(i, other);
 					}
@@ -243,9 +246,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			availableInteractables.Remove(i);
 			if (availableInteractables.Count > 0){
-				Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
-				Global.HUD.HideAction();
+				Global.hud.HideAction();
 			}
 		}
 	}

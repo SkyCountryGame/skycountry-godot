@@ -8,7 +8,6 @@ public partial class Level0 : Level
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Global.SceneTree = GetTree();
 		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 	}
 

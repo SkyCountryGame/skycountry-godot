@@ -12,21 +12,14 @@ using System.Collections.Generic;
  * you can also use a config file to map what levels point to which other levels (TODO).
  * we use ChangeSceneToPacked() for scene switching. performance seems to be fine. we only load PackedScenes from disk on level start, not on each scene start. each scene just instantiates that PackedScene (which is in RAM) into a Node3D.  
     */
-public partial class SceneManager : Node, EventListener {
-
-    public static SceneManager Instance {get; private set; } //the instance
-
+public partial class SceneManager : EventListener {
     public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1};
 
-
-    public static SceneManager _; //shorhand for the instance 
-    
     //LEVEL STUFF
     //experimenting with how to deal with this. 
     public Dictionary<string, PackedScene> levelScenesPacked;
     public Dictionary<string, Node> activeLevelScenes; //scenes that have been instantiated during this session. 
     
-    [Export]
     public string levelname; //this is the folder path in which to scan for level scenes
     public List<PackedScene> levelScenesList; //this is populated by scanning the scene files in the folder
 
@@ -38,8 +31,6 @@ public partial class SceneManager : Node, EventListener {
     public HashSet<Node>activeNodes; //game object nodes that have been instantiated during this session and are currently active in the scene
     public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
-    public AtmosphereManager atmosphereManager; //NOTE: putting this here for now. in another branch i will be reorganization Global, SceneManager, etc. 
-
     //associate each godot node with its "sky country game object" 
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
     public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
@@ -47,16 +38,7 @@ public partial class SceneManager : Node, EventListener {
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
     private static List<StaticBody3D> floor;
 
-    public override void _Ready()
-    {
-        if (Instance == null){ //only preload the stuff once on level start (not scene start)
-            init();
-            Instance = this;
-            _ = Instance;
-        }
-    }
-
-    public void init(){
+    public SceneManager(){
         EventManager.RegisterListener(this);
         //load the level scenes from somewhere
         levelScenesPacked = new Dictionary<string, PackedScene>(){ //this would also be the place to load from save file instead of default scene definition
@@ -90,10 +72,7 @@ public partial class SceneManager : Node, EventListener {
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
 
         activeNodes = new HashSet<Node>();
-
-        atmosphereManager = new AtmosphereManager();
     }
-
     
     public static void RegisterGameObject(Node node, GameObjectType type){
         RegisterGameObject(node, node.Name, type);
@@ -124,9 +103,9 @@ public partial class SceneManager : Node, EventListener {
         if (levelScenesPacked.ContainsKey(levelname)){
             currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
             activeNodes.Clear();
-            currentLevelScene = GetTree().CurrentScene;
+            currentLevelScene = Global.sceneTree.CurrentScene;
             SetActiveLevelScene(currentLevelScene);
-            Global.SceneTree = GetTree();
+            //Global.SceneTree = GetTree();
         }
         /*
         Node nextScene;
@@ -171,7 +150,7 @@ public partial class SceneManager : Node, EventListener {
             Node3D node = (Node3D) prefabs[obj].Instantiate();
             node.Position = position;
             node.Name = obj;
-            Global.SceneTree.Root.AddChild(node);
+            //Global.SceneTree.Root.AddChild(node);
             prefabs[obj].Instantiate();
         }
     }

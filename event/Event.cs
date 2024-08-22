@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 //Event System: each event just has a type and a payload. listeners know how to handle the events they listen for and what type of payload to expect.
 //we could make an EventPayload abstract class if needed. or define specific Event classes (e.g. QuestReceivedEvent extends Event) with members for its specific payload
@@ -52,7 +53,11 @@ public class EventManager {
     public static void Invoke(Event e){
         if (eventListeners.ContainsKey(e.eventType)){
             foreach (EventListener l in eventListeners[e.eventType]){
-                l.HandleEvent(e);
+                try {
+                    Task.Run(() => l.HandleEvent(e));
+                } catch (System.Exception ex){
+                    Godot.GD.Print($"Error invoking event {e.eventType.ToString()} for listener {l.ToString()}: {ex.Message}");
+                }
             }
         }
     }

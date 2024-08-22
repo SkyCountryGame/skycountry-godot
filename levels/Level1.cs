@@ -22,9 +22,9 @@ public partial class Level1 : Level
 			System.Threading.Thread.Sleep(2000);
 			GD.Print("spawn soon");
 			System.Threading.Thread.Sleep(1000);
-			Player p = SceneManager._.prefabs["Player"].Instantiate() as Player;
+			Player p = Global.prefabs["Player"].Instantiate() as Player;
 			GetTree().Root.CallDeferred("add_child", p);
-			Global.Cam.target = p;	
+			Global.cam.target = p;	
 		});
 		addPlayerTask.Start();
 	}

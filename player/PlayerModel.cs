@@ -53,9 +53,9 @@ public class PlayerModel {
 			switch (activityState){
 				case State.DEFAULT:
 					if (prev == State.INVENTORY){
-						Global.HUD.HideInventory();
+						Global.hud.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						Global.HUD.ExitDialogue();
+						Global.hud.ExitDialogue();
 					}
 					break;
 				case State.CHARGING:
@@ -75,7 +75,7 @@ public class PlayerModel {
 				case State.AIMING:
 					break;
 				case State.INVENTORY:
-					//Global.HUD.ShowInventory();
+					//Global.hud.ShowInventory();
 					GD.Print("show inventory");
 					break;
 				case State.DIALOGUE:
@@ -111,7 +111,7 @@ public class PlayerModel {
 		if (inv.IsEmpty()) return false;
 		if (item == null){ //or maybe dequip?
 			equipped = inv.GetItemByIndex(0);
-			Global.HUD.ShowEquipped(equipped.name);
+			Global.hud.ShowEquipped(equipped.name);
 		} else {
 			if (inv.Contains(item)){
 				equipped = item;
@@ -128,13 +128,13 @@ public class PlayerModel {
 		}
 		if (inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
-			SceneManager._.currentLevelScene.AddChild(gameObject);
-			((Node3D) gameObject).Position = Global.PlayerNode.Position + new Vector3(0,1,1);
+			Global.sceneManager.currentLevelScene.AddChild(gameObject);
+			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == equipped){
 				equipped = null;
 			}
-			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
+			Global.hud.ShowEquipped(); //TODO should not have to call this. fix
 			return true;
 		}
 		return false;
