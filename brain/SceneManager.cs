@@ -28,7 +28,6 @@ public partial class SceneManager : EventListener {
     
     //GAME OBJECT STUFF
     public Dictionary<string, PackedScene> prefabs; //prefabs are just PackedScenes that are used to instantiate game objects
-    public HashSet<Node>activeNodes; //game object nodes that have been instantiated during this session and are currently active in the scene
     public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
     //associate each godot node with its "sky country game object" 
@@ -70,8 +69,6 @@ public partial class SceneManager : EventListener {
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
-
-        activeNodes = new HashSet<Node>();
     }
     
     public static void RegisterGameObject(Node node, GameObjectType type){
@@ -99,38 +96,10 @@ public partial class SceneManager : EventListener {
     }
 
     public void ChangeLevel(string levelname){
-        activeLevelScenesSet.Clear();
+        activeLevelScenesSet.Clear(); //TODO this set is not being used
         if (levelScenesPacked.ContainsKey(levelname)){
             currentLevelScene.GetTree().ChangeSceneToPacked(levelScenesPacked[levelname]);
-            activeNodes.Clear();
-            currentLevelScene = Global.sceneTree.CurrentScene;
-            SetActiveLevelScene(currentLevelScene);
-            //Global.SceneTree = GetTree();
-        }
-        /*
-        Node nextScene;
-        if (activeLevelScenes.ContainsKey(levelname)){
-            nextScene = activeLevelScenes[levelname];
-        } else if (levelScenesPacked.ContainsKey(levelname)){ 
-            nextScene = levelScenesPacked[levelname].Instantiate();
-        } else {
-            GD.Print("something went wrong while loading level " + levelname);
-            return;
-        }
-        currentLevelScene.RemoveChild(player);
-        Node levelParent = currentLevelScene.GetParent();
-        GetTree().Root.RemoveChild(currentLevelScene);
-        //player.GetParent().RemoveChild(player);
-        //levelParent.AddChild(player);
-        GetTree().Root.AddChild(currentLevelScene);
-        nextScene.AddChild(player);
-        //Global.Cam = nextScene.GetNode<Camera3D>("Camera3D") as Camera;
-        
-        //GetTree().Root.AddChild(nextScene);
-        //((Node3D)currentLevelScene).Visible = false;
-
-        SetActiveLevelScene(nextScene);
-        */    
+        }  
     }
 
     /**

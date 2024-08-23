@@ -11,7 +11,8 @@ public partial class Level : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		//Global.SceneTree = GetTree(); //TODO remove if not use
+		SceneTree old = Global.sceneTree; //testing
+		Global.sceneTree = GetTree(); //TODO remove if not use
 		
 		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 		//dynamically spawn things

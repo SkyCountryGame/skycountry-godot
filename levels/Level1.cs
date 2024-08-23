@@ -10,6 +10,7 @@ public partial class Level1 : Level
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
 		//for this level, we need to spawn the player after loading. for example maybe there's a cutscene
 		CallDeferred("IntroTask");
 	}

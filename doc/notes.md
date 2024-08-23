@@ -8,7 +8,7 @@ some random notes that are not yet categorized into specific doc files.
     - each level registers itself with the SceneManager upon _Ready()
     - the SceneManager listens for some events broadcasted from anywhere within the gameplay logic, such as EnteredRoom, QuestReceived, DialogueInitiated, EntityAttacked, EntityDamaged, ItemPickedUp, TimeSet, WeatherBegin
     - for example, the AtmosphereManager might broadcast that a storm is beginning in some location, so it calls EventManager.Invoke(WeatherBegin, event parameters). then any object can listen for
-    - 
+    - what things in SceneManager need to be keeped? what are we planning on using activeLevelScenes etc. for? 
 
 - NPCNode can have a specific type of NodeModel depending on if it's an enemy, shopkeeper, random person, questgiver, etc. 
 
@@ -25,3 +25,6 @@ some random notes that are not yet categorized into specific doc files.
 
 - camera
     there's a possibility we would have multiple cameras, and switch between them based on events and gameplay happenings, so would need something like a CameraManager to set the correct camera. OR, just have a bunch of "camera locations" (similar to spawnpoints) that the camera would jump to upon the appropriate events. 
+
+- idea for generating floors https://docs.godotengine.org/en/3.1/classes/class_surfacetool.html#class-surfacetool
+                https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/arraymesh.html

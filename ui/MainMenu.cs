@@ -16,6 +16,7 @@ public partial class MainMenu : Control
 		buttonStart.Pressed += OnButtonStartPressed;
 		buttonLoad.Pressed += OnButtonLoadPressed;
 		buttonQuit.Pressed += OnButtonQuitPressed;
+		Global.sceneTree = GetTree();
 		Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
 	}
 

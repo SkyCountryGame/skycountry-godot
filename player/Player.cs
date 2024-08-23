@@ -45,8 +45,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
-		SceneTree st = Global.sceneTree; //testing
-		GD.Print(st.ToString());
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -59,6 +57,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		if (Global.sceneManager != null && Global.sceneManager.currentLevelScene != GetTree().CurrentScene){
 			Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+			SceneTree st = GetTree(); //testing
+			SceneTree gst = Global.sceneTree; //testing
 		}
 
 		//RayCast Stuff
@@ -220,6 +220,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
+				//what have we collided with? an interactable, enemy, wall, door, water, a dog?
 				Interactable i = SceneManager.GetInteractable(other);
 				if (i != null)
 				{

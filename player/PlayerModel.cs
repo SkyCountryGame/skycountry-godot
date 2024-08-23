@@ -129,6 +129,7 @@ public class PlayerModel {
 		if (inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
 			Global.sceneManager.currentLevelScene.AddChild(gameObject);
+			SceneTree gst = Global.sceneTree;
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == equipped){

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Data;
 //using System.Numerics;
 //using System.Numerics;
 
@@ -7,9 +8,9 @@ public partial class Camera : Camera3D
 {
 
 	[Export]
-	public Node3D target; //thing to follow and look at
+	public Node3D target; //thing to follow and look at. this can be changed. 
 
-	private Player plyr;
+	private Player plyr; //just the target cast as player, which is the default target 
 	private Vector3 posDest; //current destination of camera
 	private Vector3 vel = new Vector3(0, 0, 0); //current velocity of camera
 	private float accelCoeff = 2f; //acceleration magnitude
@@ -20,9 +21,15 @@ public partial class Camera : Camera3D
 	private float offsetPhi = 45; //about x (target's x)
 	private float camRotateIncrement = (float) (Math.PI / 72.0d);
 	private bool isRotating = false;
+	private CameraState state = CameraState.DEFAULT;
 
 	[Export]
 	private HUDManager HUD;
+
+	private enum CameraState {
+		DEFAULT, 
+		LOCKON, 
+	}
 
 
 	public override void _Ready()
@@ -35,6 +42,14 @@ public partial class Camera : Camera3D
 		}
 
 		Global.cam = this;
+	}
+
+	//currently doesn't need to be as complicated as player statemachine, but might need to be later
+	private bool UpdateState(CameraState s){
+		//check if can switch to the state
+		//for now we can always. but will change later
+		state = s;
+		return true;
 	}
 
 	public override void _Process(double delta)
@@ -77,11 +92,31 @@ public partial class Camera : Camera3D
 		{
 			//offset = new Vector3(0, offset.Y + .2f, offset.Z + .2f);
 			offset *= 1.1f;
+		} else if (@event is InputEventMouseButton mouseEvent){
+			//TODO pass raycast to appropriate object. this is to handle overlapping zones
+			if (mouseEvent.ButtonIndex == MouseButton.Right && !mouseEvent.Pressed && state == CameraState.LOCKON) {
+				LockOff();
+			}
 		}
 		else
 		{
 			//if (!isRotating && Input.IsActionPressed("cam_rotate"))
 			isRotating = Input.IsActionPressed("cam_rotate");
+		}
+
+	}
+
+	//move camera to focus on some other object
+	public void LockOn(Node3D target){
+		//TODO move to look at some point-of-interest. 
+		//LookAt(target.Origin);
+		if (UpdateState(CameraState.LOCKON)){
+			this.target = target;
+		}
+	}
+	public void LockOff(){
+		if (state == CameraState.LOCKON && UpdateState(CameraState.DEFAULT)){
+			this.target = plyr;
 		}
 	}
 }
