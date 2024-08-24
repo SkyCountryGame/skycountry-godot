@@ -74,14 +74,7 @@ public partial class Dialogue
                 StatementNode sn;
                 if (tj.ValueKind == JsonValueKind.String){
                     sn = new StatementNode(tj.GetString());
-                } else if (tj.ValueKind == JsonValueKind.Array){
-                    //NOTE: originally i was thinking that an array of strings can be used for multiple consecutive statements. leaving unimplemented for now. would need to generate an id for each statement text. 
-                    string tmp = ""; //just concatenate the strings for now
-                    foreach (JsonElement stj in tj.EnumerateArray()){
-                            tmp += stj.GetString() + "\n";
-                    }
-                    sn = new StatementNode(tmp);
-                } else { return false; }
+                } else { return false; } //NOTE possible future: use array of strings and construct a statement for each one, generating the appropriate ids
                 
                 if (sj.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement
                     if (sj.TryGetProperty("event", out JsonElement ej)) { //this statement triggers an in game event
