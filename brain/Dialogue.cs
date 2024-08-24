@@ -69,32 +69,33 @@ public partial class Dialogue
         if (dj.RootElement.ValueKind != JsonValueKind.Array){
             return false;
         }
-        foreach (JsonElement sj in dj.RootElement.EnumerateArray()){ //iterate through each statement
-            if (sj.TryGetProperty("text", out JsonElement tj)){ //statement text
+        foreach (JsonElement sj in dj.RootElement.EnumerateArray()){ //iterate through each statement. sj = statementjson
+            if (sj.TryGetProperty("text", out JsonElement tj)){ //statement text. tj = text json
                 StatementNode sn;
-                if (tj.ValueKind == JsonValueKind.String){
+                if (tj.ValueKind == JsonValueKind.String){ 
                     sn = new StatementNode(tj.GetString());
                 } else { return false; } //NOTE possible future: use array of strings and construct a statement for each one, generating the appropriate ids
                 
-                if (sj.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement
-                    if (sj.TryGetProperty("event", out JsonElement ej)) { //this statement triggers an in game event
+                if (sj.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement. ij = id json
+                    if (sj.TryGetProperty("event", out JsonElement ej)) { //this statement triggers an in game event. ej = event json
                         if (ej.ValueKind == JsonValueKind.String){ //for now action is an int, to be mapped to an enum probably. might end up being a string
                             sn.eventType = Enum.Parse<EventType>(ej.GetString()); //not worrying about payload for dialogue-triggered events
                         } else { return false; } //event json not string
                     }
-                    if ( sj.TryGetProperty("responses", out JsonElement rj)){ //responses
+                    if ( sj.TryGetProperty("responses", out JsonElement rj)){ //responses. rj = responses json
                         if (rj.ValueKind == JsonValueKind.Array){
                             foreach (JsonElement r in rj.EnumerateArray()){
-                                if (r.TryGetProperty("text", out JsonElement rtj) && r.TryGetProperty("next", out JsonElement nidj) && nidj.ValueKind == JsonValueKind.Number){
-                                    sn.responses.Add(new ResponseNode(rtj.GetString(), nidj.GetInt32()));
+                                if (r.TryGetProperty("text", out JsonElement rtj) && r.TryGetProperty("next", out JsonElement nij) && nij.ValueKind == JsonValueKind.Number){
+                                    //rtj = response text json, nij = next id json
+                                    sn.responses.Add(new ResponseNode(rtj.GetString(), nij.GetInt32()));
                                 } else { return false; }
                             }
                         } else { return false; }
                     } else if (sj.TryGetProperty("next", out JsonElement nj) && nj.ValueKind == JsonValueKind.Number){ //goes to another statement before player can respond
+                        //nj = next id json
                         sn.nextStatementID = nj.GetInt32();
                     }
                     statements[ij.GetInt32()] = sn;
-                     
                 } else { return false; }
             } else { return false; }
         }
