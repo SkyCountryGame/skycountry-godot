@@ -45,7 +45,6 @@ public partial class SceneManager : Node, EventListener {
     public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
     //public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();  //TODO how to set this stuff up. see GameObjectType in GameObject.cs
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
-    private static List<StaticBody3D> floor;
 
     public override void _Ready()
     {
@@ -83,7 +82,6 @@ public partial class SceneManager : Node, EventListener {
 
         //GameObject Stuff
         prefabs = new Dictionary<string, PackedScene>();
-        floor = new List<StaticBody3D>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
@@ -172,13 +170,6 @@ public partial class SceneManager : Node, EventListener {
             node.Name = obj;
             Global.SceneTree.Root.AddChild(node);
             prefabs[obj].Instantiate();
-        }
-    }
-
-    public static void SetFloor(List<StaticBody3D> floors){
-        floor.Clear();
-        foreach (var f in floors){
-            floor.Add(f);
         }
     }
 

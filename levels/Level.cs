@@ -12,8 +12,6 @@ public partial class Level : Node
 	public override void _Ready()
 	{
 		Global.SceneTree = GetTree();
-		
-		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 		//dynamically spawn things
 		//health pickups
 		//enemies

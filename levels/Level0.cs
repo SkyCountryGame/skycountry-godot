@@ -17,8 +17,6 @@ public partial class Level0 : Node3D
 		//sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
 		HUD = GetNode<HUDManager>("HUD");
 		Global.SceneTree = GetTree();
-		
-		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 		//dynamically spawn things
 		//health pickups
 		//enemies
