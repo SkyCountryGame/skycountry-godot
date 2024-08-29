@@ -1,6 +1,4 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
@@ -173,12 +171,12 @@ public partial class HUDManager : Node {
         InventoryItem item = Global.PlayerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                if (Global.PlayerModel.EquipItem(item)){
+                if (Global.PlayerNode.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
-                if (Global.PlayerModel.DropItem(item)){
+                if (Global.PlayerNode.DropItem(item)){
                     inventoryMenu.RemoveItem(index);
                 }
             }

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MeleeItemProperties" load_steps=2 format=3 uid="uid://bn2jch2ka7heq"]
+
+[ext_resource type="Script" path="res://gameobjects/MeleeItemProperties.cs" id="1_vgqes"]
+
+[resource]
+script = ExtResource("1_vgqes")
+equipPath = "TestPickaxe"
+swingAnimation = "Mining02"
+durability = 1
+damage = 1
+arcLength = 1
+range = 1
+reswingSpeed = 1
+name = "pickaxe"

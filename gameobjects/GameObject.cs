@@ -38,7 +38,7 @@ public abstract partial class GameObjectConnector : Node
 	public string devinfo {get; set;}
 }
 
-public enum GameObjectType {SpawnPoint, Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light};
+public enum GameObjectType {SpawnPoint, Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light, Mineable};
 //NOTE: currently experimenting with different ways to represent this stuff
 public struct WorldObjectInfo{
     public GameObjectType type;

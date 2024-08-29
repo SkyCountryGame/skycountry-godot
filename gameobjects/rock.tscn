@@ -9,12 +9,14 @@
 [sub_resource type="Skin" id="Skin_qnpgq"]
 
 [node name="Rock" type="RigidBody3D"]
+collision_mask = 5
 freeze_mode = 1
 script = ExtResource("1_4q8ih")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Minebox" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_1pd73")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Minebox"]
+layers = 4
 mesh = SubResource("SphereMesh_wycwp")
 skin = SubResource("Skin_qnpgq")

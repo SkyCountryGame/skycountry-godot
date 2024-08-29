@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Godot;
 
 public class PlayerModel {
@@ -8,7 +8,7 @@ public class PlayerModel {
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	
-	[System.Flags]
+	[Flags]
 	public enum State //maybe activity state? 
 	{
 		DEFAULT = 1 << 0,
@@ -25,7 +25,8 @@ public class PlayerModel {
 	}
 
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
-	public InventoryItem equipped; 
+	public InventoryItem equipped;
+    public Node3D rightHandEquipped;
 
     public PlayerModel(CharacterBody3D playerNode){
 		this.playerNode = playerNode;
@@ -100,45 +101,6 @@ public class PlayerModel {
     {
         return inv.IsFull();
     }
-
-	/** by default equip the primary item, or give an item to equip */
-	public bool EquipItem(InventoryItem item = null){
-		if (inv.IsEmpty() || !item.equippable) return false;
-		if (item == null){ //or maybe dequip?
-			equipped = inv.GetItemByIndex(0);
-			Global.HUD.ShowEquipped(equipped.name);
-		} else {
-			if (inv.Contains(item)){
-				if(equipped != null) {
-					Global.PlayerNode.UnequipRightHand();
-				}
-				equipped = item;
-				Global.PlayerNode.EquipRightHand(item);
-			}
-		}
-		return equipped != null;
-	}
-
-	/** drop the equipped item, or a specific item */
-	public bool DropItem(InventoryItem item = null){
-		if (inv.IsEmpty()) return false;
-		if (item == null){
-			item = equipped;
-		}
-		if (inv.RemoveItem(item)){
-			Node gameObject = item.GetPackedScene().Instantiate();
-			SceneManager._.currentLevelScene.AddChild(gameObject);
-			((Node3D) gameObject).Position = Global.PlayerNode.Position + new Vector3(0,1,1);
-
-			if (item == equipped){
-				Global.PlayerNode.UnequipRightHand();
-				equipped = null;
-			}
-			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
-			return true;
-		}
-		return false;
-	}
 
 	/*public List<Wearable> GetActiveArmor()
     {

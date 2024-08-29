@@ -1,22 +1,28 @@
 using System;
 using Godot;
-
-public class InventoryItem : System.ICloneable {
+public partial class InventoryItem : ICloneable {
+    public enum ItemType {
+        Weapon = 1<<0,
+        Aid = 1<<1,
+        Ammo = 1<<2, 
+        Apparel = 1<<3,
+        Shield = 1<<4, 
+        Semantic = 1<<5, 
+        Quest = 1<<6, 
+        Junk = 1<<7,
+        Mineral = 1<<8
+    };
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
     public string name; 
-    public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
+    public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
     public ItemType itemType;
+    public bool equippable;
 
     //TODO establish all the properties than inventory items can have
-
-    public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
-
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
-
-    public IBaseMelee baseMelee;
-    public string equipPath {get;}
-    public bool equippable {get;}
+    [Export]
+    public ItemProperties itemProperties;
 
     public bool inited = false;
     //mass? volume? other properties
@@ -27,13 +33,13 @@ public class InventoryItem : System.ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, IBaseMelee baseMelee, bool equippable = false) : base()
+    public InventoryItem(ItemType t, ItemProperties itemProperties, bool equippable = false) : base()
     {
         itemType = t;
-        name = baseMelee.name;
+        name = itemProperties.name;
         id = nextId++;
         this.equippable = equippable;
-        this.baseMelee = baseMelee;
+        this.itemProperties = itemProperties;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
@@ -42,22 +48,31 @@ public class InventoryItem : System.ICloneable {
         }
     }
 
-    public InventoryItem(ItemType t, string name) : base()
-    {
+    public InventoryItem(ItemType t, string name){
+
         itemType = t;
         this.name = name;
-        id = nextId++;
-        this.equippable = false;
+        equippable = false;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){
+        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){ //should we remove this? theres not a ton of reason to do this i think as of now.
             packedScene = SceneManager._.prefabs[this.name];
-        }
+        } 
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
         }
         if (packedScene == null && packedScenePath == null) {
             packedScene = SceneManager._.prefabs["ERROR"];
         }
+
+    }
+
+     public InventoryItem(ItemType t, string name, PackedScene packedScene) : base()
+    {
+        itemType = t;
+        this.name = name;
+        id = nextId++;
+        equippable = (t & (ItemType.Weapon | ItemType.Apparel | ItemType.Shield)) != 0; 
+        this.packedScene = packedScene;
     }
 
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up

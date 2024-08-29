@@ -1,22 +1,8 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : StaticBody3D, Interactable, IBaseMelee {
-    private InventoryItem pickaxeItem;
-
-
-    public string name => "pickaxe";
-
-
-    public string equipPath => "TestPickaxe";
-
-    public int durability => 1;
-    public int damage => 1;
-    public int arcLength => arcLength; 
-    public int range=> 1; 
-    public int reswingSpeed  => reswingSpeed; 
-    public string swingAnimation => "Mining02"; 
-
+public partial class Pickaxe : StaticBody3D, Interactable {
+    private InventoryItem pickaxeItem; 
     public InteractionType interactionType => InteractionType.Pickup;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
@@ -27,8 +13,9 @@ public partial class Pickaxe : StaticBody3D, Interactable, IBaseMelee {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+        MeleeItemProperties meleeItemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        pickaxeItem = new InventoryItem(InventoryItem.ItemType.Weapon, this, true);
+        pickaxeItem = new InventoryItem(InventoryItem.ItemType.Weapon, meleeItemProperties, true);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -62,10 +49,4 @@ public partial class Pickaxe : StaticBody3D, Interactable, IBaseMelee {
     {
         throw new NotImplementedException();
     }
-
-    public Animation Swing(AnimationTree animationTree)
-    {
-        throw new NotImplementedException();
-    }
-
 }

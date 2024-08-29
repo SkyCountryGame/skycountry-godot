@@ -143,6 +143,7 @@ devmode={
 [layer_names]
 
 3d_physics/layer_2="Equippables"
+3d_physics/layer_3="Mining"
 3d_physics/layer_14="Floors"
 
 [rendering]
