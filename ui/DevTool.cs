@@ -16,6 +16,8 @@ public partial class DevTool : Node2D
 	//private VSlider slider4; //gravity accel
 	private TextEdit textEdit4; //gravity accel
 	private Label labelValue4; 
+
+	private Button button1; //save resource test
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -52,6 +54,8 @@ public partial class DevTool : Node2D
 		slider2.Value = Global.playerNode.velMagnitudeMax;
 		slider3.Value = Global.playerNode.JumpVelocity;
 		//slider4.Value = Global.playerNode.gravity;
+
+		button1 = GetNode<Button>("DevPanel/HBoxContainer/Button1");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -103,5 +107,10 @@ public partial class DevTool : Node2D
 		} catch (FormatException e){
 			GD.Print("gravity must be a number");
 		}
+	}
+
+	private void OnButton1Pressed()
+	{
+		ResourceSaver.Save(Global.playerModel, "res://player/PlayerModel.tres");
 	}
 }

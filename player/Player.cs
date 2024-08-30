@@ -24,6 +24,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//UI stuff
 	
 	//PLAYER STATE
+	[Export]
 	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
 	[Export]
 	public AnimationTree animationTree;
@@ -83,7 +84,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if ((pm.activityState & (State.DIALOGUE | State.INVENTORY)) != 0){ 
+		if ((pm.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
 				pm.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
@@ -104,7 +105,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			{
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
-				switch (pm.activityState){
+				switch (pm.GetState()){
 					case State.DEFAULT: //attempt to interact with something in the world
 						Interactable i = GetFirstInteractable();
 						if (i != null)
@@ -128,7 +129,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				//GD.Print(_.inv);
 				Global.hud.ToggleInventory(pm.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
-				pm.EquipItem();
+				EquipItem();
 			}
 		}
 	}
@@ -179,8 +180,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				pm.UpdateState(State.DIALOGUE);
-				Global.hud.ShowDialogue(((Talker)i).GetDialogue());
+				if (pm.UpdateState(State.DIALOGUE)){
+					Global.hud.ShowDialogue(((Talker)i).GetDialogue());
+				}
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
@@ -188,10 +190,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				InventoryItem item = payload;
 				pm.AddToInventory(item);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-				//interactionObj.QueueFree();
-				Global.hud.UpdateInventoryMenu(pm.inv);
-				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
-				Global.hud.LogEvent($" + {item.name}");
+				Global.hud.LogEvent($" + {item}");
 				break;
 			case InteractionType.General:
 				break;
@@ -199,7 +198,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				break;
 			case InteractionType.Function:
 				Global.hud.LogEvent($"{i.Info()}");
-				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				payload(this); //TODO what return? 
 				break;
 			default:
@@ -257,5 +255,40 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
+	}
+
+	/** by default equip the primary item, or give an item to equip */
+	public bool EquipItem(InventoryItem item = null){
+		if (pm.inv.IsEmpty()) return false;
+		if (item == null){ //equip the primary item
+			pm.equipped = pm.inv.GetItemByIndex(0);
+			Global.hud.ShowEquipped(pm.equipped.name);
+		} else {
+			if (pm.inv.Contains(item)){
+				pm.equipped = item;
+			}
+		}
+		return pm.equipped != null;
+	}
+
+	/** drop the equipped item, or a specific item */
+	public bool DropItem(InventoryItem item = null){
+		if (pm.inv.IsEmpty()) return false;
+		if (item == null){
+			item = pm.equipped;
+		}
+		if (pm.inv.RemoveItem(item)){
+			Node gameObject = item.GetPackedScene().Instantiate();
+			Global.sceneManager.currentLevelScene.AddChild(gameObject);
+			SceneTree gst = Global.sceneTree;
+			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
+
+			if (item == pm.equipped){
+				pm.equipped = null;
+			}
+			Global.hud.ShowEquipped(); //TODO should not have to call this. fix
+			return true;
+		}
+		return false;
 	}
 }

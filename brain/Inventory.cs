@@ -5,12 +5,13 @@ using Godot;
 /**
 * an inventory of items for any entity that can hold items
 */
-public class Inventory : System.ICloneable
+public partial class Inventory : Resource, System.ICloneable
 {
     public List<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda    
     //TODO "favorite" items. able to be equipped with some hotkey? 
     //public Dictionary<int, InventoryItem> stockIndexed; //for quick access //TODO will only need this if we decide to use a select-anything inv instead of cycle-through
 
+    [Export]
     public int capacity; //max # items can be wwww
 
     public Inventory(int capacity)
@@ -44,7 +45,7 @@ public class Inventory : System.ICloneable
         string res = stock.Count + "/" + capacity + "\n";
         foreach (InventoryItem i in stock)
         {
-                res += i.name + "(" + i.itemType + ") \n";
+                res += i.name + "(" + i.GetItemType() + ") \n";
         }
         return res;
     }

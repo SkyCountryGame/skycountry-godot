@@ -104,7 +104,7 @@ public partial class HUDManager : Node {
         //first get the current state of dialogue with the thing to which you are talking 
         UpdateState(State.DIALOGUE, d);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
-        if (Global.playerModel.activityState == PlayerModel.State.DIALOGUE){
+        if (Global.playerModel.GetState() == PlayerModel.State.DIALOGUE){
             UpdateDialoguePanel(currentDialogue.Start()); //not necessarily the first statement
             return;
         } else {
@@ -257,12 +257,12 @@ public partial class HUDManager : Node {
         InventoryItem item = Global.playerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                if (Global.playerModel.EquipItem(item)){
+                if (Global.playerNode.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
-                if (Global.playerModel.DropItem(item)){
+                if (Global.playerNode.DropItem(item)){
                     inventoryMenu.RemoveItem(index);
                 }
             }

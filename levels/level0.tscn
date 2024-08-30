@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=42 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
+[ext_resource type="Texture2D" uid="uid://cnn04u47vtxyn" path="res://assets/texture/Environment/Grass/Grass1k.png" id="10_g2nbi"]
+[ext_resource type="Texture2D" uid="uid://bumxgi4cbps7w" path="res://assets/texture/Environment/Grass/GrassFlowers1k.png" id="11_owix8"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
@@ -37,7 +39,12 @@ tonemap_mode = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
 
+[sub_resource type="MeshTexture" id="MeshTexture_luta6"]
+base_texture = ExtResource("10_g2nbi")
+image_size = Vector2(64, 64)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4q33"]
+albedo_texture = SubResource("MeshTexture_luta6")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
@@ -51,8 +58,18 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_72h3h")
 size = Vector2(50, 50)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_14u58"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_kteei"]
+mesh = SubResource("PlaneMesh_14u58")
+base_texture = ExtResource("11_owix8")
+image_size = Vector2(64, 64)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbxqd"]
-albedo_color = Color(0.332881, 0.332881, 0.332881, 1)
+render_priority = 1
+albedo_color = Color(0.699653, 0.699654, 0.699653, 1)
+albedo_texture = SubResource("MeshTexture_kteei")
+normal_enabled = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]
 

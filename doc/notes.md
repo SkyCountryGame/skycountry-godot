@@ -1,14 +1,7 @@
 some random notes that are not yet categorized into specific doc files.
 
 - establish sensible separation between PlayerModel and Player
-- need to organize Global and SceneManager. should we have 1 autoload singleton Global, which holds things like SceneManager, AtmosphereManager, 
-    - Global class holds references to globally-accessible data.
-    - SceneManager
-    - AtmosphereManager
-    - each level registers itself with the SceneManager upon _Ready()
-    - the SceneManager listens for some events broadcasted from anywhere within the gameplay logic, such as EnteredRoom, QuestReceived, DialogueInitiated, EntityAttacked, EntityDamaged, ItemPickedUp, TimeSet, WeatherBegin
-    - for example, the AtmosphereManager might broadcast that a storm is beginning in some location, so it calls EventManager.Invoke(WeatherBegin, event parameters). then any object can listen for
-    - what things in SceneManager need to be keeped? what are we planning on using activeLevelScenes etc. for? 
+
 
 - NPCNode can have a specific type of NodeModel depending on if it's an enemy, shopkeeper, random person, questgiver, etc. 
 

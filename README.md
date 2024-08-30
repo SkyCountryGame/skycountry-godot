@@ -2,6 +2,7 @@ this is the sky country unity game converted to a godot game.
 --
 current focuses:
 	
+* integrate/fix some of adam's code this weekend and make a new PR
 * dialogue
 * initial combat implementation
 * saving/loading games

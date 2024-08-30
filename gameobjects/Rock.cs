@@ -17,7 +17,7 @@ public partial class Rock : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "rock", false);
+        rockItem = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "rock", false);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
