@@ -80,7 +80,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if (pm.activityState == (State.DIALOGUE | State.INVENTORY)){
+		if ((pm.activityState & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
 				pm.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
@@ -102,7 +102,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
 				switch (pm.activityState){
-					case State.DEFAULT:
+					case State.DEFAULT: //attempt to interact with something in the world
 						Interactable i = GetFirstInteractable();
 						if (i != null)
 						{
@@ -114,7 +114,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 						}
 						break;
 					case State.DIALOGUE:
-						//TODO continue dialogue. get the next words from the current talker, whether it be from him or a request for response from player
+						Global.HUD.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
 			} else if (Input.IsActionJustPressed("pause"))
@@ -177,7 +177,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		{
 			case InteractionType.Dialogue:
 				pm.UpdateState(State.DIALOGUE);
-				Global.HUD.ShowDialogue($"{payload}"); //TODO name of talker
+				Global.HUD.ShowDialogue(((Talker)i).GetDialogue());
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
@@ -213,7 +213,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node other)
+	public void HandleCollide(ColliderZone zone, Node3D other)
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
@@ -235,7 +235,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node other)
+	public void HandleDecollide(ColliderZone zone, Node3D other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
 		Interactable i = SceneManager.GetInteractable(other);

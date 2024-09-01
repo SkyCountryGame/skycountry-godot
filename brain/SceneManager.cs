@@ -12,9 +12,13 @@ using System.Collections.Generic;
  * you can also use a config file to map what levels point to which other levels (TODO).
  * we use ChangeSceneToPacked() for scene switching. performance seems to be fine. we only load PackedScenes from disk on level start, not on each scene start. each scene just instantiates that PackedScene (which is in RAM) into a Node3D.  
     */
-public partial class SceneManager : Node {
+public partial class SceneManager : Node, EventListener {
 
     public static SceneManager Instance {get; private set; } //the instance
+
+    public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1};
+
+
     public static SceneManager _; //shorhand for the instance 
     
     //LEVEL STUFF
@@ -34,13 +38,13 @@ public partial class SceneManager : Node {
     public HashSet<Node>activeNodes; //game object nodes that have been instantiated during this session and are currently active in the scene
     public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
+    public AtmosphereManager atmosphereManager; //NOTE: putting this here for now. in another branch i will be reorganization Global, SceneManager, etc. 
+
     //associate each godot node with its "sky country game object" 
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
     public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
     //public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();  //TODO how to set this stuff up. see GameObjectType in GameObject.cs
     public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
-
-    private static List<StaticBody3D> floor;
 
     public override void _Ready()
     {
@@ -52,6 +56,7 @@ public partial class SceneManager : Node {
     }
 
     public void init(){
+        EventManager.RegisterListener(this);
         //load the level scenes from somewhere
         levelScenesPacked = new Dictionary<string, PackedScene>(){ //this would also be the place to load from save file instead of default scene definition
             {"l0", ResourceLoader.Load<PackedScene>("res://levels/level0.tscn")},
@@ -77,12 +82,13 @@ public partial class SceneManager : Node {
 
         //GameObject Stuff
         prefabs = new Dictionary<string, PackedScene>();
-        floor = new List<StaticBody3D>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
 
         activeNodes = new HashSet<Node>();
+
+        atmosphereManager = new AtmosphereManager();
     }
 
     
@@ -167,13 +173,6 @@ public partial class SceneManager : Node {
         }
     }
 
-    public static void SetFloor(List<StaticBody3D> floors){
-        floor.Clear();
-        foreach (var f in floors){
-            floor.Add(f);
-        }
-    }
-
     //traverse up the node tree to see if this is an interactable. TODO might need to make sure to stop at some point if the node tree goes all the way up to level
     public static Interactable GetInteractable(Node n){
         GameObject go = GetGameObject(n);
@@ -195,4 +194,10 @@ public partial class SceneManager : Node {
 		}
         return null;
     }
+
+    public void HandleEvent(Event e)
+    {
+        GD.Print($"SceneManager handling event {e.eventType.ToString()}");
+    }
+
 }

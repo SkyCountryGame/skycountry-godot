@@ -11,10 +11,16 @@ public partial class HUDManager : Node {
 
     public Label actionLabel; //pops up when there is an interaction available or other action
 
-    //dialogue stuff
-    public PanelContainer dialoguePanel;
+    //dialogue stuff. TODO move into DialogueUI class cause this is getting a little messy
+    public VBoxContainer dialoguePanel;
     private RichTextLabel dialogueText;
     private ItemList dialogueChoices;
+    private Label dialogueTitle; //title of dialogue. probably NPC name
+    private Button buttonContinue; //continue dialogue button
+    private Button buttonExit; //exit dialogue
+    
+    private Dialogue currentDialogue; //currently active dialogue, if any
+    private Event dialogueEvent = null; //event to be triggered when current statement node is done
 
     //inventory stuff    
     private ItemList inventoryMenu;
@@ -23,11 +29,11 @@ public partial class HUDManager : Node {
     
     private Label hpLabel;
 
-
     public ConcurrentQueue<string> messages; //the messages currently displayed
     private bool needsUpdate = false;
+    
 
-    enum State {
+    enum State { //TODO hud might not need its own state because can just look at player
         DEFAULT,
         DIALOGUE,
         INVENTORY,
@@ -40,8 +46,13 @@ public partial class HUDManager : Node {
     public override void _Ready(){
         Global.HUD = this;
         eventLog = GetNode("MarginContainer/EventLog");
-        dialoguePanel = GetNode<PanelContainer>("DialoguePanel");
-        dialogueText = dialoguePanel.GetNode<RichTextLabel>("MessageLabel"); //this is the text node that is the current message of dialogue
+        dialoguePanel = GetNode<VBoxContainer>("DialoguePanel");
+        dialogueText = dialoguePanel.GetNode<RichTextLabel>("PanelContainerMessage/MessageLabel"); //this is the text node that is the current message of dialogue
+        dialogueChoices = dialoguePanel.GetNode<ItemList>("ResponsesList");
+        dialogueTitle = dialoguePanel.GetNode<Label>("PanelContainerTop/InfoPanel/DialogueTitle");
+        buttonContinue = dialoguePanel.GetNode<Button>("PanelContainerTop/InfoPanel/ButtonContinue");
+        //buttonContinue.Visible = false;
+        buttonContinue.Text = "Exit"; //this button is used for either continuing or exiting depending on context
         messages = new ConcurrentQueue<string>();
         dialoguePanel.Visible = false;
         inventoryMenu = GetNode<ItemList>("InventoryMenu");
@@ -60,15 +71,19 @@ public partial class HUDManager : Node {
     }
 
     //NOTE does hud actually need a state system?
-    private void UpdateState(State s){
+    private void UpdateState(State s, dynamic payload = null){
         switch (s){
             case State.DEFAULT:
                 dialoguePanel.Visible = false;
                 state = s;
                 break;
             case State.DIALOGUE:
-                dialoguePanel.Visible = true;
-                state = s;
+                if (payload != null && payload is Dialogue){
+                    currentDialogue = (Dialogue)payload;
+                    dialoguePanel.Visible = true;
+                    dialogueTitle.Text = currentDialogue.title;
+                    state = s;
+                }
                 break;
         }
     }
@@ -84,16 +99,85 @@ public partial class HUDManager : Node {
         eventLog.GetNode<Label>("Label").Text = eventLogText;
     }
 
-    public void ShowDialogue(string msg){
+    public void ShowDialogue(Dialogue d){
         //show the dialogue without text disappearing
-        UpdateState(State.DIALOGUE);
-        dialogueText.Text = msg;
-    }
+        //first get the current state of dialogue with the thing to which you are talking 
+        UpdateState(State.DIALOGUE, d);
+        //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
+        if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
+            UpdateDialoguePanel(currentDialogue.Start()); //not necessarily the first statement
+            return;
+        } else {
 
-    public void HideDialogue(){
+        }
+    }
+    //NOTE might move dialogue stuff into DialogueManager
+    public void ExitDialogue(){
         UpdateState(State.DEFAULT);
+        Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
+        //but also there might be other things that want to know that a dialogue has ended. TODO revisit if necessary
     }
+    public void ContinueDialogue(){
 
+    }
+    public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
+        if (mouseButton == 1){ //left click
+            int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
+            if (dialogueEvent != null){ //invoke event if one is associated with the statement
+                dialogueEvent.Invoke();
+                dialogueEvent = null;
+            }
+            if (id == -1){
+                ExitDialogue();
+                return;
+            }
+            Dialogue.StatementNode sn = currentDialogue.statements[id];
+            currentDialogue.currentStatement = sn;
+            UpdateDialoguePanel(sn);
+        }
+    }
+    public void OnButtonContinuePressed(){
+        //continue button is only visible when there is a direct continuation to another statement, otherwise it is an exit button
+        if (currentDialogue.HasNext()){
+            Dialogue.StatementNode sn = currentDialogue.Next();
+            UpdateDialoguePanel(sn);
+        } else {
+            ExitDialogue();
+        }
+        
+    }
+    //update the dialogue panel. display a statement and its responses
+    private void UpdateDialoguePanel(Dialogue.StatementNode sn){
+        //dialogueText.Clear();
+        dialogueChoices.Clear();
+        dialogueText.Text = sn.statement;
+        int idx = -1; //index of response just added to list
+        if (sn.responses.Count > 0){
+            foreach (Dialogue.ResponseNode r in sn.responses){
+                idx = dialogueChoices.AddItem(r.response);
+                dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
+            }
+            idx = dialogueChoices.AddItem("Exit");
+            dialogueChoices.SetItemMetadata(idx, -1);
+            //buttonContinue.Visible = false;
+        } else {
+            if (sn.nextStatementID == -1){
+                idx = dialogueChoices.AddItem("Exit");
+                buttonContinue.Text = "Exit";
+                buttonContinue.Visible = true;
+            } else {
+                idx = dialogueChoices.AddItem("Continue");
+                buttonContinue.Text = "Continue";
+                buttonContinue.Visible = true;
+            }
+            dialogueChoices.SetItemMetadata(idx, sn.nextStatementID);
+        } 
+        
+        if (sn.eventType != EventType.None){
+            dialogueEvent = new Event(sn.eventType);
+        }
+    }
+    
     public void Back(){
         switch (state){
 
