@@ -2,23 +2,16 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-//NOTE: do we want to make our own custom level class?
-public partial class Level0 : Node3D
+//base class for levels
+public partial class Level : Node
 {
-	private Player player; //so that we can tell it to walk somewhere. TODO this should probably be done through some event handler
 	private DirectionalLight3D sunlight;
-	private HUDManager HUD;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
 		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		player =  GetNode<Player>("Player");
-		//sunlight = GetNode<DirectionalLight3D>("DirectionalLight3D");
-		HUD = GetNode<HUDManager>("HUD");
 		Global.SceneTree = GetTree();
-		
-		SceneManager.SetFloor(new List<StaticBody3D>(){GetNode<StaticBody3D>("Floor")});
 		//dynamically spawn things
 		//health pickups
 		//enemies

@@ -10,11 +10,11 @@ public class InventoryItem : System.ICloneable {
 
     //TODO establish all the properties than inventory items can have
 
-    public Node3D gameObject; //godot node for the world object. this was either picked up off ground or is instantiated elsewhere if this inv item wasn't ever in the world
-    
     public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
+
+    private bool equippable;
 
     public bool inited = false;
     //mass? volume? other properties
@@ -25,21 +25,20 @@ public class InventoryItem : System.ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, string name, Node3D gameObject = null) : base()
+    public InventoryItem(ItemType t, string name, bool equippable = false) : base()
     {
         itemType = t;
         this.name = name;
         id = nextId++;
-        this.gameObject = gameObject;
         
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(name)){
-            packedScene = SceneManager._.prefabs[name];
-        } else if (ResourceLoader.Exists($"res://prefabs/{name}.tscn")){
-            packedScenePath = $"res://prefabs/{name}.tscn";
-        } else if (ResourceLoader.Exists($"res://gameobjects/{name}.tscn")){
-            packedScenePath = $"res://gameobjects/{name}.tscn";
-        } else {
+        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){
+            packedScene = SceneManager._.prefabs[this.name];
+        }
+        if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
+            packedScenePath = $"res://gameobjects/{this.name}.tscn";
+        }
+        if (packedScene == null && packedScenePath == null) {
             packedScene = SceneManager._.prefabs["ERROR"];
         }
     }
@@ -69,16 +68,13 @@ public class InventoryItem : System.ICloneable {
     }
 
     public PackedScene GetPackedScene(){
-        if (packedScene != null){
-            return packedScene;
-        } else {
-            return ResourceLoader.Load<PackedScene>(packedScenePath);
+        if (packedScene == null){
+            packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
+            SceneManager._.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }
+        return packedScene;
     }
 
-    public void SetGameObject(Node3D obj){
-        gameObject = obj;
-    }
 
     /**
      * how effective the given entity is with this item
