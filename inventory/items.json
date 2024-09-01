@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Pickaxe",
+        "type": "Tool",
+        "scenefile": "/items/pickaxe.tscn",
+        "icon": "/items/pickaxe.png",
+        "magnitude": 2
+    },
+    {
+        "name": "Sword",
+        "type": "Melee",
+        "scenefile": "/items/sword.tscn",
+        "icon": "/items/sword.png",
+        "magnitude": 5
+    },
+    {
+        "name": "Necklace",
+        "type": "Apparel",
+        "scenefile": "/items/pickaxe.tscn",
+        "icon": "/items/pickaxe.png",
+        "magnitude": 2
+    },
+    {
+        
+    }
+]

@@ -4,7 +4,8 @@ using static InventoryItemProperties;
 
 
 //TODO there is still some sorting out to do with the Node vs Model situation
-public partial class InventoryItem : System.ICloneable {
+[GlobalClass]
+public partial class InventoryItem : Resource, System.ICloneable {
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
     public string name;    

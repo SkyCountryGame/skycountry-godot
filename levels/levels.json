@@ -1,0 +1,84 @@
+[
+    {
+        "id": 1,
+        "name": "The Town",
+        "description": "An island.",
+        "scene_file": "levels/thetown/main.tscn",
+        "sublevels": [
+            {
+                "name": "House",
+                "description": "Your home.",
+                "scene_file": "levels/thetown/house.tscn"
+            },
+            {
+                "name": "Shop",
+                "description": "Your home.",
+                "scene_file": "levels/thetown/shop.tscn"
+            }
+        ],
+        "accessible_levels?": [],
+        "caracters?": []
+    },
+    {
+        "id": 2,
+        "name": "Sky Country",
+        "description": "The reef - big ocean.",
+        "scene_file": "levels/skycountry/main.tscn",
+        "sublevels": [
+            {
+                "name": "Submarine",
+                "description": "",
+                "scene_file": "levels/skycountry/submarine.tscn"
+            },
+            {
+                "name": "Mountain Cove",
+                "description": "",
+                "scene_file": "levels/skycountry/mountaincove.tscn"
+            },
+            {
+                "name": "Mystery Balloon",
+                "description": "A giant hot air balloon",
+                "scene_file": "levels/skycountry/hotairballoon.tscn"
+            }
+        ],
+        "accessible_levels": []
+    },
+    {
+        "id": 3,
+        "name": "Dust Country",
+        "description": "The deep ocean.",
+        "scene_file": "levels/dustcountry/main.tscn",
+        "sublevels": [
+            {
+                "name": "The temple",
+                "description": "A temple, probably constructed by some ancient master. A safe-haven, or only ruins?",
+                "scene_file": "levels/dustcountry/temple.tscn"
+            },
+            {
+                "name": "The Deep Tunnels",
+                "description": "Where do they lead, or what are they hiding from?",
+                "scene_file": "levels/dustcountry/tunnels.tscn"
+            }
+        ],
+        "accessible_levels": []
+    },
+    {
+        "id": 4,
+        "name": "The forest",
+        "description": "",
+        "scene_file": "levels/forest/main.tscn",
+        "sublevels": [
+            {
+                "name": "Treehouse",
+                "description": "Home for forest creatures.",
+                "scene_file": "levels/forest/treehouse.tscn"
+            },
+            {
+                "name": "Beast Lair",
+                "description": "A cursed place.",
+                "scene_file": "levels/forest/lair.tscn"
+            }
+        ],
+        "accessible_levels": []
+    }   
+]
