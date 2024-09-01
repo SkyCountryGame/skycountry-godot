@@ -53,9 +53,7 @@
     },
     {
         "id": 4,
-        "text": [
-            "Quiet! You mustn't be so careless when speaking of such a one. "
-        ],
+        "text": "Quiet! You mustn't be so careless when speaking of such a one. ",
         "next": 5,
         "speed": [2,1],
         "fontSize": 1,
@@ -64,9 +62,7 @@
     },
     {
         "id": 5,
-        "text": [
-            "The whereabouts are not known."
-        ],
+        "text": "The whereabouts are not known.",
         "speed": [2,1],
         "fontSize": 1,
         "emotion": 0
