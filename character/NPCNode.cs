@@ -5,12 +5,17 @@ public partial class NPCNode : CharacterBody3D {
 	[Export] public NPCModel m;
 
 	private Vector3 goalPosition; //a world position where the npc is currently trying to go 
-
+	private NavigationAgent3D nav;
+	private bool navReady = false;
 	public override void _Ready(){
 
 		m = new NPCModel("Bob", "A friendly NPC");
 		m.state = NPCModel.State.IDLE;
 		Velocity = new Vector3(1, 0, -2);
+		nav = GetNode<NavigationAgent3D>("NavAgent");
+		//TODO setup some repeating process for getting the next pos
+		nav.TargetPosition = new Vector3(-20, 0, -20);
+		NavigationServer3D.MapChanged += (arg) => { navReady = true; };
 	}
 
 	public override void _Process(double delta){
@@ -41,7 +46,11 @@ public partial class NPCNode : CharacterBody3D {
 				//if at goal position, stay here for a bit, then update the position
 				//else keep moving towards the goal position
 				//make sure velocity is such that going to goal, accounting for obstacles etc. 
-				MoveAndSlide();
+				if (!nav.IsNavigationFinished() && navReady){
+					nav.Velocity = nav.GetNextPathPosition() * .4f;
+					Velocity = nav.Velocity;
+					MoveAndSlide();
+				}
 				break;
 		}
 	}

@@ -21,9 +21,9 @@ public partial class Level1 : Level
 		Task addPlayerTask = new Task(()=>{
 			System.Threading.Thread.Sleep(300);
 			GD.Print("welcome to cutscene");
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(800);
 			GD.Print("spawn soon");
-			System.Threading.Thread.Sleep(1000);
+			System.Threading.Thread.Sleep(600);
 			Player p = Global.prefabs["Player"].Instantiate() as Player;
 			GetTree().Root.CallDeferred("add_child", p);
 			Global.cam.target = p;	

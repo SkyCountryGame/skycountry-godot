@@ -1,8 +1,8 @@
-this is the sky country unity game converted to a godot game. 
+﻿this is the sky country unity game converted to a godot game. 
 --
 current focuses:
 
-* NPC movement	
+* NPC movement. make navagent thing for staticbody too 
 * dialogue
 * initial combat implementation
 * saving/loading games

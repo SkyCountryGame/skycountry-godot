@@ -42,5 +42,5 @@ shape = SubResource("CylinderShape3D_l1emw")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D2"]
 script = ExtResource("2_qxskq")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
 path_max_distance = 15.41

@@ -141,7 +141,6 @@ process_mode = 1
 [node name="Clerk" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
 script = ExtResource("9_80eq6")
-dialogueFilename = null
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Clerk"]
 
@@ -194,8 +193,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
 
 [node name="Node3D" parent="." instance=ExtResource("13_bvu8j")]
-_interactionType = null
-_interactionMethod = null
 
 [node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
@@ -219,8 +216,6 @@ script = ExtResource("15_m6ir7")
 
 [node name="Awareness0" type="Area3D" parent="GlowStick"]
 script = ExtResource("16_p6gv0")
-zone = null
-devinfo = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness0"]
 shape = SubResource("SphereShape3D_h53f8")
@@ -228,7 +223,6 @@ shape = SubResource("SphereShape3D_h53f8")
 [node name="Awareness1" type="Area3D" parent="GlowStick"]
 script = ExtResource("16_p6gv0")
 zone = 1
-devinfo = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness1"]
 shape = SubResource("CapsuleShape3D_fwpd7")
