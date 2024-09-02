@@ -7,6 +7,7 @@ using System.Runtime;
 //an example sky country level. don't know if we need to have an abstract base class yet. 
 public partial class Level1 : Level
 {		
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

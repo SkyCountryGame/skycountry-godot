@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://8qof26j4jd18"]
+[gd_scene load_steps=7 format=3 uid="uid://8qof26j4jd18"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
+[ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_wxw3l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
@@ -20,6 +21,7 @@ ambient_light_source = 1
 tonemap_mode = 2
 
 [node name="Wod" type="Node3D"]
+script = ExtResource("1_ypbtj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jq7mq")
