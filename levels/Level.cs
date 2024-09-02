@@ -16,7 +16,7 @@ public partial class Level : Node3D
 	public List<NPCNode> npcs;
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
-	public int DURATION_DAY = 1; //in seconds
+	public int DURATION_DAY = 12; //in seconds
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -32,8 +32,8 @@ public partial class Level : Node3D
 		//update sunlight position
 		float sunlightRadius = sunlight.Position.DistanceTo(WORLD_ORIGIN);
 		sunlightTheta = Mathf.Acos(sunlight.Position.X / sunlightRadius); 
-		float sunlightAngleDelta = .0349f; //2 degrees
-		float sunlightAngularVelocity = 2*MathF.PI / DURATION_DAY;
+		float sunlightAngleDelta = .01745f; //1 degrees
+		float sunlightAngularVelocity = 2*MathF.PI / (float) DURATION_DAY;
 		float sunlightAngleUpdateInterval = sunlightAngleDelta / sunlightAngularVelocity; //how long to wait between each update such that the sun rotates around in DURATION_DAY seconds
 		Timer sunlightUpdateTimer = new Timer();
 		sunlightUpdateTimer.Timeout += ()=> {
@@ -43,7 +43,7 @@ public partial class Level : Node3D
 			GD.Print($"updated sunlight position: {sunlightRadius} {sunlight.Position}");
 		};
 		AddChild(sunlightUpdateTimer);
-		sunlightUpdateTimer.Start();
+		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
 		//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 
 	/*
