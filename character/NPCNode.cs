@@ -8,20 +8,24 @@ public partial class NPCNode : CharacterBody3D {
 	private NavigationAgent3D nav;
 	private bool navReady = false;
 	public override void _Ready(){
-
 		m = new NPCModel("Bob", "A friendly NPC");
 		m.state = NPCModel.State.IDLE;
 		Velocity = new Vector3(1, 0, -2);
 		nav = GetNode<NavigationAgent3D>("NavAgent");
+		
+		
 		//TODO setup some repeating process for getting the next pos
-		nav.TargetPosition = new Vector3(-20, 0, -20);
-		NavigationServer3D.MapChanged += (arg) => { navReady = true; };
+		
+
+		NavigationServer3D.MapChanged += (arg) => { 
+			nav.TargetPosition = Global.level.GetRandomNavPoint();
+			navReady = true; 
+		};
 	}
 
 	public override void _Process(double delta){
 		switch (m.state){ //what is the npc doing in each different case of his state of being? 
 			case NPCModel.State.IDLE:
-
 				break;
 			case NPCModel.State.TALKING:
 				break;
@@ -46,10 +50,17 @@ public partial class NPCNode : CharacterBody3D {
 				//if at goal position, stay here for a bit, then update the position
 				//else keep moving towards the goal position
 				//make sure velocity is such that going to goal, accounting for obstacles etc. 
-				if (!nav.IsNavigationFinished() && navReady){
-					nav.Velocity = nav.GetNextPathPosition() * .4f;
-					Velocity = nav.Velocity;
-					MoveAndSlide();
+				if (navReady){
+					if (!nav.IsNavigationFinished()){
+						GD.Print("navigating");
+						nav.Velocity = nav.GetNextPathPosition() * 2f;
+						Velocity = nav.Velocity;
+						MoveAndSlide();
+					} else {
+						nav.TargetPosition = Global.level.GetRandomNavPoint();
+					}
+				} else {
+					GD.Print("nav not ready");
 				}
 				break;
 		}

@@ -12,8 +12,10 @@ public partial class Level : Node3D
 	[Export] public DirectionalLight3D sunlight;
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit
 
+	[Export] public NavigationRegion3D navRegion;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
 	public List<NPCNode> npcs;
+	public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
 	public int DURATION_DAY = 12; //in seconds
@@ -22,7 +24,13 @@ public partial class Level : Node3D
 	public override void _Ready()
 	{
 		SceneTree old = Global.sceneTree; //testing
-		Global.sceneTree = GetTree(); //TODO remove if not use
+		Global.level = this; //TODO remove if not use
+		
+		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
+			Global.navRegion = navRegion;
+		}
+
+		worldBounds = GetWorldBounds();
 		
 		//dynamically spawn things
 		//health pickups
@@ -40,7 +48,6 @@ public partial class Level : Node3D
 			sunlightTheta += sunlightAngleDelta;
 			sunlight.Position = new Vector3(sunlightRadius*MathF.Cos(sunlightTheta),sunlightRadius*MathF.Sin(sunlightTheta),0);
 			sunlight.LookAt(WORLD_ORIGIN);
-			GD.Print($"updated sunlight position: {sunlightRadius} {sunlight.Position}");
 		};
 		AddChild(sunlightUpdateTimer);
 		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
@@ -61,11 +68,51 @@ public partial class Level : Node3D
 	public override void _Process(double delta)
 	{
 		//TODO where change lighting for time of day? maybe a timer that repeats every several minutes to slightly change the color.
-		
-		
+				
 	}
 	
 	public override void _UnhandledInput(InputEvent @event){
 
 	}
+
+	//gets some random point within the world bounds
+	public Vector3 GetRandomPoint(){
+		return new Vector3(
+			(float)GD.RandRange(worldBounds.Position.X, worldBounds.Size.X),
+			(float)GD.RandRange(worldBounds.Position.Y, worldBounds.Size.Y),
+			(float)GD.RandRange(worldBounds.Position.Z, worldBounds.Size.Z)
+		);
+	}
+	//gets some random point that can be navigated to
+	public Vector3 GetRandomNavPoint(){
+		Rid navMapID = Global.navRegion.GetNavigationMap();
+		Vector3 res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
+		GD.Print("random nav point:" + res);
+		return res;
+	}
+
+	//gets the bounds of all the meshes in the world by combining all their axis-aligned bounding boxes
+	public Aabb GetWorldBounds()
+    {
+        worldBounds = new Aabb();
+        bool firstMesh = true;
+        foreach (Node node in GetTree().GetNodesInGroup("MeshInstances"))
+        {
+            if (node is MeshInstance3D mesh)
+            {
+                Aabb meshBounds = mesh.GetAabb();
+
+                if (firstMesh)
+                {
+                    worldBounds = meshBounds;
+                    firstMesh = false;
+                }
+                else
+                {
+                    worldBounds = worldBounds.Merge(meshBounds);
+                }
+            }
+        }
+        return worldBounds;
+    }
 }

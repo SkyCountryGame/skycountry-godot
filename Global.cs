@@ -15,6 +15,8 @@ public partial class Global : Node
 	public static Camera cam; //set by Camera on ready
 	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
 	public static HUDManager hud; // set by HUDManager on ready
+	public static NavigationRegion3D navRegion; // set by each level
+	public static Level level; // the current "level", set by each level on ready
 	
 	//GAME LOGIC MANAGER THINGS
 	public static SceneManager sceneManager; // constructed here in init()
