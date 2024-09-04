@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class NPCNode : CharacterBody3D {
@@ -6,6 +7,7 @@ public partial class NPCNode : CharacterBody3D {
 
 	private Vector3 goalPosition; //a world position where the npc is currently trying to go 
 	private NavigationAgent3D nav;
+	private Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
 	private bool navReady = false;
 	public override void _Ready(){
 		m = new NPCModel("Bob", "A friendly NPC");
@@ -22,7 +24,8 @@ public partial class NPCNode : CharacterBody3D {
 
 	public override void _Process(double delta){
 		switch (m.state){ //what is the npc doing in each different case of his state of being? 
-			case NPCModel.State.IDLE:
+			case NPCModel.State.IDLE: //
+
 				break;
 			case NPCModel.State.TALKING:
 				break;
@@ -37,6 +40,8 @@ public partial class NPCNode : CharacterBody3D {
 			case NPCModel.State.DEAD:
 				break;
 		}
+
+		Rotation = Velocity.Normalized();
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -44,19 +49,20 @@ public partial class NPCNode : CharacterBody3D {
 		base._PhysicsProcess(delta);
 		switch (m.state) {
 			case NPCModel.State.IDLE:
-				//if at goal position, stay here for a bit, then update the position
-				//else keep moving towards the goal position
-				//make sure velocity is such that going to goal, accounting for obstacles etc. 
 				if (navReady){
 					if (!nav.IsNavigationFinished()){
 						nav.Velocity = (nav.GetNextPathPosition() - Position) * .5f;
 						Velocity = nav.Velocity;
 						MoveAndSlide();
 					} else {
-						nav.TargetPosition = Global.level.GetRandomNavPoint();
+						nav.TargetPosition = NextNavPoint();
 					}
 				}
 				break;
 		}
+	}
+
+	public Vector3 NextNavPoint(){
+		return navPoints.Pop();
 	}
 }
