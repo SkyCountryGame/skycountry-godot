@@ -8,6 +8,8 @@ using Timer = Godot.Timer;
 //base class for levels
 public partial class Level : Node3D
 {
+	    public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
+
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit

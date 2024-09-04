@@ -14,7 +14,7 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
     private Material material;
 
     public override void _Ready(){
-        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
+        PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
         //material = new StandardMaterial3D();
         //material.Set("albedo", new Color(1,0,0));
         material = GetNode<MeshInstance3D>("Awareness1/CollisionShape3D/MeshInstance3D").GetActiveMaterial(0);

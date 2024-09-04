@@ -16,7 +16,7 @@ public partial class Clickable : RigidBody3D, Interactable, Collideable {
 	private Random rand = new Random();
 
 	public override void _Ready(){
-		SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
+		PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
 		InputEvent += OnInputEvent;
 		
 		Task.Run(()=>{ 

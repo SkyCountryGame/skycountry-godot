@@ -12,43 +12,13 @@ using System.Collections.Generic;
  * you can also use a config file to map what levels point to which other levels (TODO).
  * we use ChangeSceneToPacked() for scene switching. performance seems to be fine. we only load PackedScenes from disk on level start, not on each scene start. each scene just instantiates that PackedScene (which is in RAM) into a Node3D.  
     */
-public partial class SceneManager : EventListener {
-    public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1};
-
-    //LEVEL STUFF
-    //experimenting with how to deal with this. 
-    public Dictionary<string, PackedScene> levelScenesPacked;
-    public Dictionary<string, Node> activeLevelScenes; //scenes that have been instantiated during this session. 
+public partial class PrefabManager {
     
-    public string levelname; //this is the folder path in which to scan for level scenes
-    public List<PackedScene> levelScenesList; //this is populated by scanning the scene files in the folder
-
-    public Node currentLevelScene; //level that the player is in
-    public HashSet<Node> activeLevelScenesSet; 
-    
-    //GAME OBJECT STUFF
     public Dictionary<string, PackedScene> prefabs; //prefabs are just PackedScenes that are used to instantiate game objects
     public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
-
-    //associate each godot node with its "sky country game object" 
     public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
-    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game
-    //public static HashSet<SpawnPoint> spawnPoints = new HashSet<SpawnPoint>();  //TODO how to set this stuff up. see GameObjectType in GameObject.cs
-    public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
-
-    public SceneManager(){
-        EventManager.RegisterListener(this);
-        //load the level scenes from somewhere
-        levelScenesPacked = new Dictionary<string, PackedScene>(){ //this would also be the place to load from save file instead of default scene definition
-            {"l0", ResourceLoader.Load<PackedScene>("res://levels/level0.tscn")},
-            //{"l0-1", ResourceLoader.Load<PackedScene>("res://levels/level0-1.tscn")},
-            //{"l0-2", ResourceLoader.Load<PackedScene>("res://levels/level0-2.tscn")},
-            //{"l0-3", ResourceLoader.Load<PackedScene>("res://levels/level0-3.tscn")},
-            {"l2", ResourceLoader.Load<PackedScene>("res://levels/level2.tscn")},
-        }; //this is manually defined, which we probably wont use, but leaving it here for now for example
-        activeLevelScenes = new Dictionary<string, Node>();
-        activeLevelScenesSet = new HashSet<Node>();
-
+    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game TODO might not be in this class?
+    public PrefabManager(){
         //Option 1: iterate through the scene files in the folder for the level
         //string[] scenefilepaths = System.IO.Directory.GetFiles(levelname);
         //foreach (string filename in scenefilepaths){
@@ -61,7 +31,6 @@ public partial class SceneManager : EventListener {
         //Option 2: iterate through the lines of a config textfile to build the map of accessible levels
         //TODO
 
-        //GameObject Stuff
         prefabs = new Dictionary<string, PackedScene>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));

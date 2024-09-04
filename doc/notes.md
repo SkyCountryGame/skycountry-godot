@@ -21,3 +21,6 @@ some random notes that are not yet categorized into specific doc files.
 
 - idea for generating floors https://docs.godotengine.org/en/3.1/classes/class_surfacetool.html#class-surfacetool
                 https://docs.godotengine.org/en/stable/tutorials/3d/procedural_geometry/arraymesh.html
+
+
+20240904: looks like scenemanager isnt acctually needed now that i've worked on Level more. will change to PrefabManager and keep RegisterGabeObject(). 

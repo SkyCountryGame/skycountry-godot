@@ -25,7 +25,7 @@ public abstract partial class GameObjectConnector : Node
 {
 
     public override void _Ready(){
-        SceneManager.RegisterGameObject((Node)this, Name, type);
+        PrefabManager.RegisterGameObject((Node)this, Name, type);
     }
 
     [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]

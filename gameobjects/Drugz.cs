@@ -19,7 +19,7 @@ public partial class Drugz : StaticBody3D, Interactable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
+        PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
