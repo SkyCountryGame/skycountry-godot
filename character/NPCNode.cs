@@ -19,6 +19,7 @@ public partial class NPCNode : CharacterBody3D {
 
 		NavigationServer3D.MapChanged += (arg) => { 
 			nav.TargetPosition = Global.level.GetRandomNavPoint();
+			GD.Print("navpoint:" + nav.TargetPosition);
 			navReady = true; 
 		};
 	}
@@ -52,12 +53,12 @@ public partial class NPCNode : CharacterBody3D {
 				//make sure velocity is such that going to goal, accounting for obstacles etc. 
 				if (navReady){
 					if (!nav.IsNavigationFinished()){
-						GD.Print("navigating");
-						nav.Velocity = nav.GetNextPathPosition() * 2f;
+						nav.Velocity = (nav.GetNextPathPosition() - Position) * .5f;
 						Velocity = nav.Velocity;
 						MoveAndSlide();
 					} else {
 						nav.TargetPosition = Global.level.GetRandomNavPoint();
+						GD.Print("navpoint:" + nav.TargetPosition);
 					}
 				} else {
 					GD.Print("nav not ready");

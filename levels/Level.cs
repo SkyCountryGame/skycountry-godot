@@ -18,7 +18,7 @@ public partial class Level : Node3D
 	public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
-	public int DURATION_DAY = 12; //in seconds
+	public int DURATION_DAY = 48; //in seconds
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -30,7 +30,7 @@ public partial class Level : Node3D
 			Global.navRegion = navRegion;
 		}
 
-		worldBounds = GetWorldBounds();
+		
 		
 		//dynamically spawn things
 		//health pickups
@@ -50,9 +50,9 @@ public partial class Level : Node3D
 			sunlight.LookAt(WORLD_ORIGIN);
 		};
 		AddChild(sunlightUpdateTimer);
-		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
-		//GetTree().CreateTimer(sunlightAngleUpdateInterval);
-
+		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);	
+		worldBounds = GetWorldBounds();
+	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
 		Task.Run(()=>{
 			int timerSleepDuration = 10000; //placeholder. TODO calculate time so that we do 1-3 degrees of rotation
@@ -77,9 +77,10 @@ public partial class Level : Node3D
 
 	//gets some random point within the world bounds
 	public Vector3 GetRandomPoint(){
+		//worldBounds = GetWorldBounds();
 		return new Vector3(
 			(float)GD.RandRange(worldBounds.Position.X, worldBounds.Size.X),
-			(float)GD.RandRange(worldBounds.Position.Y, worldBounds.Size.Y),
+			0,
 			(float)GD.RandRange(worldBounds.Position.Z, worldBounds.Size.Z)
 		);
 	}
@@ -87,6 +88,9 @@ public partial class Level : Node3D
 	public Vector3 GetRandomNavPoint(){
 		Rid navMapID = Global.navRegion.GetNavigationMap();
 		Vector3 res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
+		while (res.X == 0 && res.Z == 0){
+			res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
+		}
 		GD.Print("random nav point:" + res);
 		return res;
 	}
@@ -96,7 +100,7 @@ public partial class Level : Node3D
     {
         worldBounds = new Aabb();
         bool firstMesh = true;
-        foreach (Node node in GetTree().GetNodesInGroup("MeshInstances"))
+        foreach (Node node in GetTree().GetNodesInGroup("mesh"))
         {
             if (node is MeshInstance3D mesh)
             {

@@ -27,6 +27,10 @@ public partial class AutomaticMeshFromMeshInstance : MeshInstance3D
 
 		Rotation = c.Rotation;
 		GlobalRotation = c.GlobalRotation;
+
+		if (!IsInGroup("mesh")){
+			AddToGroup("mesh");
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

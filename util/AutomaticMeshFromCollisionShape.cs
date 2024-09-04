@@ -10,6 +10,7 @@ public partial class AutomaticMeshFromCollisionShape : CollisionShape3D
 		//get the shape of the parent collidable
 
         MeshInstance3D mi = new MeshInstance3D();
+		mi.AddToGroup("mesh");
 		if (Shape is BoxShape3D boxshp){
 			BoxMesh m = new BoxMesh();
 			m.Size = boxshp.Size;
