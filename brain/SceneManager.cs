@@ -117,7 +117,6 @@ public partial class SceneManager : EventListener {
             Node3D node = (Node3D) prefabs[obj].Instantiate();
             node.Position = position;
             node.Name = obj;
-            //Global.SceneTree.Root.AddChild(node);
             prefabs[obj].Instantiate();
         }
     }

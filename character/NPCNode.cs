@@ -13,13 +13,9 @@ public partial class NPCNode : CharacterBody3D {
 		Velocity = new Vector3(1, 0, -2);
 		nav = GetNode<NavigationAgent3D>("NavAgent");
 		
-		
-		//TODO setup some repeating process for getting the next pos
-		
 
 		NavigationServer3D.MapChanged += (arg) => { 
 			nav.TargetPosition = Global.level.GetRandomNavPoint();
-			GD.Print("navpoint:" + nav.TargetPosition);
 			navReady = true; 
 		};
 	}
@@ -58,10 +54,7 @@ public partial class NPCNode : CharacterBody3D {
 						MoveAndSlide();
 					} else {
 						nav.TargetPosition = Global.level.GetRandomNavPoint();
-						GD.Print("navpoint:" + nav.TargetPosition);
 					}
-				} else {
-					GD.Print("nav not ready");
 				}
 				break;
 		}

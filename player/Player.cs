@@ -60,7 +60,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (Global.sceneManager != null && Global.sceneManager.currentLevelScene != GetTree().CurrentScene){
 			Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
 			SceneTree st = GetTree(); //testing
-			SceneTree gst = Global.sceneTree; //testing
 		}
 
 		//RayCast Stuff
@@ -281,7 +280,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		if (pm.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
 			Global.sceneManager.currentLevelScene.AddChild(gameObject);
-			SceneTree gst = Global.sceneTree;
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == pm.equipped){

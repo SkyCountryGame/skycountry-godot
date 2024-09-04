@@ -23,8 +23,7 @@ public partial class Level : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		SceneTree old = Global.sceneTree; //testing
-		Global.level = this; //TODO remove if not use
+		Global.level = this;
 		
 		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
 			Global.navRegion = navRegion;
@@ -51,6 +50,7 @@ public partial class Level : Node3D
 		};
 		AddChild(sunlightUpdateTimer);
 		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);	
+		navRegion.BakeNavigationMesh();
 		worldBounds = GetWorldBounds();
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
