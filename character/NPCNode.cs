@@ -41,7 +41,7 @@ public partial class NPCNode : CharacterBody3D {
 				break;
 		}
 
-		Rotation = Velocity.Normalized();
+		LookAt(nav.TargetPosition);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -63,6 +63,6 @@ public partial class NPCNode : CharacterBody3D {
 	}
 
 	public Vector3 NextNavPoint(){
-		return navPoints.Pop();
+		return Global.level.GetRandomNavPoint(); //navPoints.Pop();
 	}
 }
