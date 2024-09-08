@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
 {
 
 	//MOVEMENT 
@@ -214,7 +214,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
@@ -237,7 +237,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node3D other)
+	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
 		Interactable i = SceneManager.GetInteractable(other);
@@ -289,5 +289,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			return true;
 		}
 		return false;
+	}
+
+	public void ApplyDamage(int d)
+	{
+		pm.hp -= d; //TODO take into account armor, skills, etc.
+		if (pm.hp < 0){
+			EventManager.Invoke(EventType.GameOver);
+		}
 	}
 }

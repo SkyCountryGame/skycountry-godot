@@ -1,7 +1,6 @@
 some random notes that are not yet categorized into specific doc files.
 
-- establish sensible separation between PlayerModel and Player
-
+- do we need a "world time" that cycles to represent the repeating daily happenings
 
 - NPCNode can have a specific type of NodeModel depending on if it's an enemy, shopkeeper, random person, questgiver, etc. 
 

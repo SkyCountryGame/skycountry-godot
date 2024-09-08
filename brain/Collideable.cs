@@ -13,6 +13,6 @@ public enum ColliderZone
 
 public interface Collideable
 {
-    void HandleCollide(ColliderZone zone, Node3D other);
-    void HandleDecollide(ColliderZone zone, Node3D other);
+    void HandleCollide(ColliderZone zone, Node other);
+    void HandleDecollide(ColliderZone zone, Node other);
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-public partial class NPCNode : CharacterBody3D {
+public partial class NPCNode : CharacterBody3D, Collideable {
 
 	[Export] public NPCModel m;
 
@@ -64,5 +64,15 @@ public partial class NPCNode : CharacterBody3D {
 
 	public Vector3 NextNavPoint(){
 		return Global.level.GetRandomNavPoint(); //navPoints.Pop();
+	}
+
+	public void HandleCollide(ColliderZone zone, Node other)
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public void HandleDecollide(ColliderZone zone, Node other)
+	{
+		throw new System.NotImplementedException();
 	}
 }

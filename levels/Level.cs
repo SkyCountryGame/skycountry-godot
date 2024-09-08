@@ -97,26 +97,26 @@ public partial class Level : Node3D
 
 	//gets the bounds of all the meshes in the world by combining all their axis-aligned bounding boxes
 	public Aabb GetWorldBounds()
-    {
-        worldBounds = new Aabb();
-        bool firstMesh = true;
-        foreach (Node node in GetTree().GetNodesInGroup("mesh"))
-        {
-            if (node is MeshInstance3D mesh)
-            {
-                Aabb meshBounds = mesh.GetAabb();
+	{
+		worldBounds = new Aabb();
+		bool firstMesh = true;
+		foreach (Node node in GetTree().GetNodesInGroup("mesh"))
+		{
+			if (node is MeshInstance3D mesh)
+			{
+				Aabb meshBounds = mesh.GetAabb();
 
-                if (firstMesh)
-                {
-                    worldBounds = meshBounds;
-                    firstMesh = false;
-                }
-                else
-                {
-                    worldBounds = worldBounds.Merge(meshBounds);
-                }
-            }
-        }
-        return worldBounds;
-    }
+				if (firstMesh)
+				{
+					worldBounds = meshBounds;
+					firstMesh = false;
+				}
+				else
+				{
+					worldBounds = worldBounds.Merge(meshBounds);
+				}
+			}
+		}
+		return worldBounds;
+	}
 }

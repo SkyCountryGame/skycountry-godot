@@ -7,59 +7,59 @@ using System.Text.Json;
 //a thing that talks (has dialogue)
 public partial class Talker : Node, Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
-    public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
+	public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 
-    //[Export(PropertyHint.None, "dialogue")]
-    [Export(PropertyHint.File, "dialogue-for-dude.json")]
-    public String dialogueFilename = "assets/dialogue/0.json";
-    
-    public Dialogue dialogue;
-    public List<Dialogue> dialogues; //each character has his own set of dialogues
+	//[Export(PropertyHint.None, "dialogue")]
+	[Export(PropertyHint.File, "dialogue-for-dude.json")]
+	public String dialogueFilename = "assets/dialogue/0.json";
 
-    public override void _Ready(){
-        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-        //dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
-        dialogue = new Dialogue(dialogueFilename);
-    }
+	public Dialogue dialogue;
+	public List<Dialogue> dialogues; //each character has his own set of dialogues
 
-    //start dialogue when player interacts
-    public dynamic Interact()
-    {
-        if (dialogue != null){
-            return dialogue.Next();
-        }
-        return null;
-    }
+	public override void _Ready(){
+		SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
+		//dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
+		dialogue = new Dialogue(dialogueFilename);
+	}
 
-    //get the appropriate dialogue based on the state of things
-    public Dialogue GetDialogue(){
-        dialogue.title = "Talking to " + Name; //TODO how do dialogue title? is it ever dynamic depending on game state, or can be defined in json? 
-        return dialogue; //TODO logic to get the correct dialogue
-    }
+	//start dialogue when player interacts
+	public dynamic Interact()
+	{
+		if (dialogue != null){
+			return dialogue.Next();
+		}
+		return null;
+	}
 
-    public void Retain()
-    {
-        //wat do?
-    }
+	//get the appropriate dialogue based on the state of things
+	public Dialogue GetDialogue(){
+		dialogue.title = "Talking to " + Name; //TODO how do dialogue title? is it ever dynamic depending on game state, or can be defined in json? 
+		return dialogue; //TODO logic to get the correct dialogue
+	}
 
-    public string Info()
-    {
-       return "A talking thing. ";
-    }
+	public void Retain()
+	{
+		//wat do?
+	}
 
-    public bool IsInteractionValid(GameObject interactor)
-    {
-        return true;
-    }
+	public string Info()
+	{
+		return "A talking thing. ";
+	}
 
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
+	public bool IsInteractionValid(GameObject interactor)
+	{
+		return true;
+	}
 
-    public bool IsInteractionValid(Interactor interactor)
-    {
-        throw new NotImplementedException();
-    }
+	public void Clear()
+	{
+		throw new NotImplementedException();
+	}
+
+	public bool IsInteractionValid(Interactor interactor)
+	{
+		throw new NotImplementedException();
+	}
 
 }

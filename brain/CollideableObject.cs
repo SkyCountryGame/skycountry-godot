@@ -9,6 +9,7 @@ public partial class CollideableObject : Area3D
 {
 	public Node parent;
 	private Collideable parentCollideable;
+    private List<Area3D> collisionAreas;
 	
 	[Export(PropertyHint.Enum, "Awareness0,Awareness1,Body")]
 	public ColliderZone zone {get; set;}
@@ -25,7 +26,7 @@ public partial class CollideableObject : Area3D
 			parent = GetParent();
 		}
 		parentCollideable = parent as Collideable;
-		BodyEntered += (body) => OnBodyEnter(body);
+        BodyEntered += (body) => OnBodyEnter(body);
 		BodyExited += (body) => OnBodyExit(body);
 	}
 

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm7rei4k5uvif"]
+
+[ext_resource type="Script" path="res://util/AutomaticMeshFromCollisionShape.cs" id="1_yaonx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tcnd4"]
+size = Vector3(20, 3, 0.2)
+
+[node name="DeathWall" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_tcnd4")
+script = ExtResource("1_yaonx")
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
