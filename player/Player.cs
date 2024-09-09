@@ -213,7 +213,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
@@ -235,7 +235,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node3D other)
+	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
 		Interactable i = SceneManager.GetInteractable(other);
