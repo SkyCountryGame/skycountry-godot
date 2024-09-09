@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
 {
 
 	//MOVEMENT 
@@ -253,5 +253,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
+	}
+
+	public void ApplyDamage(int d)
+	{
+		pm.hp -= d; //TODO take into account armor, skills, etc.
+		if (pm.hp < 0){
+			//EventManager.Invoke(EventType.GameOver); //TODO this depends on changes from another branch 
+		}
 	}
 }
