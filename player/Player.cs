@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
 {
 
 	//MOVEMENT 
@@ -213,29 +213,32 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
+		
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable i = SceneManager.GetInteractable(other);
-				if (i != null)
+				Interactable interactable = SceneManager.GetInteractable(other);
+				if (interactable != null)
 				{
-					if (i.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(i);
+					if (interactable.interactionMethod == InteractionMethod.Use){
+						availableInteractables.Add(interactable);
 						Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
-					} else if (i.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(i, other);
 					}
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
+					interactable = SceneManager.GetInteractable(other);
+					if (interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(interactable, other);
+					}
 				break;
 		}
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node3D other)
+	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
 		Interactable i = SceneManager.GetInteractable(other);
@@ -253,5 +256,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
+	}
+
+	public void ApplyDamage(int d)
+	{
+		pm.hp -= d; //TODO take into account armor, skills, etc.
+		if (pm.hp < 0){
+			//EventManager.Invoke(EventType.GameOver); //TODO this depends on changes from another branch 
+		}
 	}
 }
