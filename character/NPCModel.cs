@@ -25,6 +25,10 @@ public partial class NPCModel : Resource{
 
 	public Dictionary<State, Animation> mapStateAnimation; //which animation for which state 
 
+    public NPCModel(){
+
+    }
+
 	public NPCModel(string name, string description){
 		this.name = name;
 		this.description = description;

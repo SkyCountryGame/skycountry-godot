@@ -1,18 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm7rei4k5uvif"]
+[gd_scene load_steps=6 format=3 uid="uid://buydkmv2qkxpr"]
 
-[ext_resource type="Script" path="res://util/AutomaticMeshFromCollisionShape.cs" id="1_yaonx"]
+[ext_resource type="Shape3D" uid="uid://rh1ksajqx8le" path="res://gameobjects/death_wall_shape.tres" id="2_7bqmc"]
+[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_m7ddr"]
+[ext_resource type="Script" path="res://gameobjects/DeathWall.cs" id="4_5rmvv"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tcnd4"]
-size = Vector3(20, 3, 0.2)
+[sub_resource type="BoxMesh" id="BoxMesh_p6km4"]
+size = Vector3(10, 3, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ayka8"]
+size = Vector3(14, 4, 3)
 
 [node name="DeathWall" type="Node3D"]
+script = ExtResource("4_5rmvv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_tcnd4")
-script = ExtResource("1_yaonx")
+shape = ExtResource("2_7bqmc")
 
-[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_p6km4")
+
+[node name="WarningZone" type="Area3D" parent="StaticBody3D"]
+monitorable = false
+script = ExtResource("3_m7ddr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/WarningZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_ayka8")
+
+[node name="BodyZone" type="Area3D" parent="StaticBody3D"]
+monitorable = false
+script = ExtResource("3_m7ddr")
+zone = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/BodyZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = ExtResource("2_7bqmc")

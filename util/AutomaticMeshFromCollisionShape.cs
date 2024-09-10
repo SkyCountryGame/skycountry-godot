@@ -7,8 +7,6 @@ public partial class AutomaticMeshFromCollisionShape : CollisionShape3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		//get the shape of the parent collidable
-
         MeshInstance3D mi = new MeshInstance3D();
 		mi.AddToGroup("mesh");
 		if (Shape is BoxShape3D boxshp){

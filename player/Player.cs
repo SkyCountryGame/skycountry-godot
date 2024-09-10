@@ -41,7 +41,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			pm = Global.playerModel;
 		}
 		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
-		Global.cam.target = this;
 		ApplyFloorSnap();
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)

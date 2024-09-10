@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=27 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -9,17 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
-[ext_resource type="Texture2D" uid="uid://cnn04u47vtxyn" path="res://assets/texture/Environment/Grass/Grass1k.png" id="10_g2nbi"]
-[ext_resource type="Texture2D" uid="uid://bumxgi4cbps7w" path="res://assets/texture/Environment/Grass/GrassFlowers1k.png" id="11_owix8"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
 [ext_resource type="PackedScene" uid="uid://baxb55hiiyj8j" path="res://gameobjects/interactable_node.tscn" id="13_bvu8j"]
-[ext_resource type="Script" path="res://gameobjects/Clickable.cs" id="14_yk8hg"]
-[ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
-[ext_resource type="Script" path="res://brain/CollideableObject.cs" id="16_p6gv0"]
-[ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
-[ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
+[ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -41,12 +35,7 @@ tonemap_mode = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
 
-[sub_resource type="MeshTexture" id="MeshTexture_luta6"]
-base_texture = ExtResource("10_g2nbi")
-image_size = Vector2(64, 64)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4q33"]
-albedo_texture = SubResource("MeshTexture_luta6")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
@@ -60,53 +49,15 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_72h3h")
 size = Vector2(50, 50)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_14u58"]
-
-[sub_resource type="MeshTexture" id="MeshTexture_kteei"]
-mesh = SubResource("PlaneMesh_14u58")
-base_texture = ExtResource("11_owix8")
-image_size = Vector2(64, 64)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbxqd"]
-render_priority = 1
-albedo_color = Color(0.699653, 0.699654, 0.699653, 1)
-albedo_texture = SubResource("MeshTexture_kteei")
-normal_enabled = true
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_j76bu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_gbdax"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_2i0b2"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_h53f8"]
-margin = 0.0
-radius = 10.862
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fwpd7"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sin67"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vxpf4"]
-albedo_color = Color(1.58831e-06, 0.616792, 0.524772, 1)
-metallic = 0.11
-metallic_specular = 0.16
-emission_enabled = true
-emission = Color(0.908911, 0.866702, 0.900103, 1)
-emission_energy_multiplier = 0.0
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jn6"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j3cbx"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
-
-[node name="Wod" type="Node3D"]
+[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_iiogu")
+sunlight = NodePath("DirectionalLight3D")
 
 [node name="HUD" parent="." instance=ExtResource("2_fsd0o")]
 
@@ -116,17 +67,17 @@ environment = SubResource("Environment_mck8e")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
-light_energy = 0.501
-light_indirect_energy = 0.0
+light_energy = 0.92
+light_indirect_energy = 0.16
 light_angular_distance = 4.05
 shadow_enabled = true
 shadow_bias = 0.0
 shadow_normal_bias = 1.0
-shadow_transmittance_bias = -5.51
-shadow_opacity = 0.94
+shadow_opacity = 0.85
 shadow_blur = 0.5
 directional_shadow_fade_start = 0.74
 directional_shadow_pancake_size = 17.4
+sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, -11.578)
@@ -169,7 +120,6 @@ cast_shadow = 0
 gi_mode = 2
 mesh = SubResource("PlaneMesh_q726u")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_mbxqd")
 
 [node name="Drugz" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.52858)
@@ -200,47 +150,5 @@ mass = 0.27
 
 [node name="Devtool" parent="." instance=ExtResource("13_3aiva")]
 
-[node name="SignPost" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72674, 2, 10.6561)
-script = ExtResource("14_yk8hg")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SignPost"]
-shape = SubResource("CylinderShape3D_gbdax")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SignPost/CollisionShape3D"]
-mesh = SubResource("CylinderMesh_2i0b2")
-
-[node name="GlowStick" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6201, 0.568651, -0.728118)
-script = ExtResource("15_m6ir7")
-
-[node name="Awareness0" type="Area3D" parent="GlowStick"]
-script = ExtResource("16_p6gv0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness0"]
-shape = SubResource("SphereShape3D_h53f8")
-
-[node name="Awareness1" type="Area3D" parent="GlowStick"]
-script = ExtResource("16_p6gv0")
-zone = 1
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness1"]
-shape = SubResource("CapsuleShape3D_fwpd7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GlowStick/Awareness1/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_sin67")
-surface_material_override/0 = SubResource("StandardMaterial3D_vxpf4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick"]
-shape = SubResource("CapsuleShape3D_s4jn6")
-
-[node name="WandererGuy" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4937, 0.6, 17.685)
-script = ExtResource("19_jnosp")
-m = ExtResource("20_menxn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WandererGuy"]
-shape = SubResource("BoxShape3D_j3cbx")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WandererGuy"]
-mesh = SubResource("BoxMesh_ok0df")
+[node name="DeathWall" parent="." instance=ExtResource("14_hhq11")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 0, 8.72595)

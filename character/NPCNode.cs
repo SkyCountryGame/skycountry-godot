@@ -10,8 +10,10 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 	private Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
 	private bool navReady = false;
 	public override void _Ready(){
-		m = new NPCModel("Bob", "A friendly NPC");
-		m.state = NPCModel.State.IDLE;
+        if (m == null){
+            m = new NPCModel("Bob", "A friendly NPC"); //TODO placeholder 
+		    m.state = NPCModel.State.IDLE;
+        }
 		Velocity = new Vector3(1, 0, -2);
 		nav = GetNode<NavigationAgent3D>("NavAgent");
 		

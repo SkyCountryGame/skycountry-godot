@@ -29,8 +29,6 @@ public partial class Level : Node3D
 			Global.navRegion = navRegion;
 		}
 
-		
-		
 		//dynamically spawn things
 		//health pickups
 		//enemies
@@ -49,8 +47,10 @@ public partial class Level : Node3D
 			sunlight.LookAt(WORLD_ORIGIN);
 		};
 		AddChild(sunlightUpdateTimer);
-		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);	
-		navRegion.BakeNavigationMesh();
+		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
+        if (navRegion != null){
+		    navRegion.BakeNavigationMesh();
+        }
 		worldBounds = GetWorldBounds();
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
