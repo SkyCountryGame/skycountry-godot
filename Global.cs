@@ -35,8 +35,6 @@ public partial class Global : Node
             init();
             Instance = this;
             _ = Instance;
-			SceneTree st = this.GetTree(); //testing
-			GD.Print(st.ToString());
         }
 	}
 

@@ -48,9 +48,9 @@ public partial class Level : Node3D
 		};
 		AddChild(sunlightUpdateTimer);
 		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
-        if (navRegion != null){
-		    navRegion.BakeNavigationMesh();
-        }
+		if (navRegion != null){
+			navRegion.BakeNavigationMesh();
+		}
 		worldBounds = GetWorldBounds();
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
