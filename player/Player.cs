@@ -215,23 +215,25 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
+		
 		switch (zone){
 			case ColliderZone.Awareness0:
-				//what have we collided with? an interactable, enemy, wall, door, water, a dog?
-				Interactable i = SceneManager.GetInteractable(other);
-				if (i != null)
+				Interactable interactable = SceneManager.GetInteractable(other);
+				if (interactable != null)
 				{
-					if (i.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(i);
+					if (interactable.interactionMethod == InteractionMethod.Use){
+						availableInteractables.Add(interactable);
 						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-					} else if (i.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(i, other);
 					}
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
+					interactable = SceneManager.GetInteractable(other);
+					if (interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(interactable, other);
+					}
 				break;
 		}
 	}

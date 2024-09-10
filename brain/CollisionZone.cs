@@ -20,14 +20,14 @@ public partial class CollisionZone : Area3D
 		if (parent == null){
 			parent = GetParent();
 		}
-        //traverse up the tree until we find the node that implements Collideable, because maybe this zone is deep down in some hierarchy
-        while (parent is not Collideable && parent != GetTree().Root){
-            parent = parent.GetParent();
-        }
+		//traverse up the tree until we find the node that implements Collideable, because maybe this zone is deep down in some hierarchy
+		while (parent is not Collideable && parent != GetTree().Root){
+			parent = parent.GetParent();
+		}
 		parentCollideable = parent as Collideable;
 		BodyEntered += (body) => OnBodyEnter(body);
 		BodyExited += (body) => OnBodyExit(body);
-        //only handling bodies, not other Area3Ds. will implement that later if we need it
+		//only handling bodies, not other Area3Ds. will implement that later if we need it
 	}
 
 	private void OnBodyEnter(Node other)
