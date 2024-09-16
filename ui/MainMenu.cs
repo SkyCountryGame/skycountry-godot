@@ -16,7 +16,7 @@ public partial class MainMenu : Control
 		buttonStart.Pressed += OnButtonStartPressed;
 		buttonLoad.Pressed += OnButtonLoadPressed;
 		buttonQuit.Pressed += OnButtonQuitPressed;
-		Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		// = GetTree().CurrentScene; //tell the level manager what scene we are in
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,7 +26,8 @@ public partial class MainMenu : Control
 
 	private void OnButtonStartPressed()
 	{
-		Global.sceneManager.ChangeLevel("l0");
+		PackedScene level0 = ResourceLoader.Load<PackedScene>("res://levels/level0.tscn"); //TODO
+		GetTree().ChangeSceneToPacked(level0);
 	}
 	private void OnButtonLoadPressed()
 	{

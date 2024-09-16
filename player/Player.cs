@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
 {
 
 	//MOVEMENT 
@@ -41,7 +41,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			pm = Global.playerModel;
 		}
 		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
-		Global.cam.target = this;
 		ApplyFloorSnap();
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
@@ -57,11 +56,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
-		if (Global.sceneManager != null && Global.sceneManager.currentLevelScene != GetTree().CurrentScene){
-			Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
-			SceneTree st = GetTree(); //testing
-		}
-
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global.cam;
@@ -214,36 +208,37 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
+		//will be null if not an interactable
+		Interactable interactable = Global.GetInteractable(other);
 		switch (zone){
 			case ColliderZone.Awareness0:
-				//what have we collided with? an interactable, enemy, wall, door, water, a dog?
-				Interactable i = SceneManager.GetInteractable(other);
-				if (i != null)
+				if (interactable != null)
 				{
-					if (i.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(i);
+					if (interactable.interactionMethod == InteractionMethod.Use){
+						availableInteractables.Add(interactable);
 						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-					} else if (i.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(i, other);
 					}
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
+					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract((Interactable)other, other);
+					}
 				break;
 		}
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node3D other)
+	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = SceneManager.GetInteractable(other);
-		if (availableInteractables.Contains(i))
+		Interactable interactable = Global.GetInteractable(other);
+		if (availableInteractables.Contains(interactable))
 		{
-			availableInteractables.Remove(i);
+			availableInteractables.Remove(interactable);
 			if (availableInteractables.Count > 0){
 				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
@@ -279,7 +274,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 		if (pm.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
-			Global.sceneManager.currentLevelScene.AddChild(gameObject);
+			Global.level.AddChild(gameObject);
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == pm.equipped){
@@ -289,5 +284,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			return true;
 		}
 		return false;
+	}
+
+	public void ApplyDamage(int d)
+	{
+		pm.hp -= d; //TODO take into account armor, skills, etc.
+		if (pm.hp < 0){
+			EventManager.Invoke(EventType.GameOver); 
+		}
 	}
 }

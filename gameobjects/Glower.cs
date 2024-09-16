@@ -14,7 +14,7 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
     private Material material;
 
     public override void _Ready(){
-        PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
         //material = new StandardMaterial3D();
         //material.Set("albedo", new Color(1,0,0));
         material = GetNode<MeshInstance3D>("Awareness1/CollisionShape3D/MeshInstance3D").GetActiveMaterial(0);
@@ -58,12 +58,12 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
         return true;
     }
 
-    public void HandleCollide(ColliderZone zone, Node3D other)
+    public void HandleCollide(ColliderZone zone, Node other)
     {
         switch (zone){
             case ColliderZone.Awareness0:
                 GD.Print("glower zone 0");
-                target = other;
+                target = (Node3D) other;
                 active = true;
                 break;
             case ColliderZone.Awareness1:
@@ -74,7 +74,7 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
         }
     }
 
-    public void HandleDecollide(ColliderZone zone, Node3D other)
+    public void HandleDecollide(ColliderZone zone, Node other)
     {
         switch (zone){
             case ColliderZone.Awareness0:

@@ -36,10 +36,10 @@ public partial class Camera : Camera3D
 
 	public override void _Ready()
 	{
-		if (target == null){ //target wasn't set in editor
-			target = (Node3D)GetNode("../Player");
-		}
 		Global.cam = this;
+		if (target == null){ //target wasn't set in editor
+			target = Global.playerNode;
+		}
 	}
 
 	//currently doesn't need to be as complicated as player statemachine, but might need to be later
@@ -52,6 +52,7 @@ public partial class Camera : Camera3D
 
 	public override void _Process(double delta)
 	{
+		
 	}
 
 	public override void _PhysicsProcess(double delta)

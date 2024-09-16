@@ -16,7 +16,7 @@ public partial class LampPost : Node, Interactable {
 
     public override void _Ready()
 	{
-        PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
         lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
     }
 
@@ -33,7 +33,7 @@ public partial class LampPost : Node, Interactable {
     public dynamic Interact()
     {
         if (n > 4){ //it's a magic lamp
-            Global.sceneManager.ChangeLevel("l2");
+            Global.level.ChangeLevel("l2");
         }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;

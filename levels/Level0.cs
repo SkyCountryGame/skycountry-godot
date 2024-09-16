@@ -15,7 +15,4 @@ public partial class Level0 : Level
 	public override void _UnhandledInput(InputEvent @event){
 
 	}
-
-	//TODO ?? thinking about moving this here
-	public void ChangeLevel(){}
 }

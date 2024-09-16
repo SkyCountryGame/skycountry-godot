@@ -6,20 +6,25 @@ public partial class NPCNode : CharacterBody3D {
 	[Export] public NPCModel m;
 
 	private Vector3 goalPosition; //a world position where the npc is currently trying to go 
-	private NavigationAgent3D nav;
+	[Export] private NavigationAgent3D nav;
 	private Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
 	private bool navReady = false;
 	public override void _Ready(){
 		m = new NPCModel("Bob", "A friendly NPC");
 		m.state = NPCModel.State.IDLE;
 		Velocity = new Vector3(1, 0, -2);
-		nav = GetNode<NavigationAgent3D>("NavAgent");
-		
 
-		NavigationServer3D.MapChanged += (arg) => { 
-			nav.TargetPosition = Global.level.GetRandomNavPoint();
-			navReady = true; 
-		};
+		if (nav == null) {
+			try {
+				nav = GetNode<NavigationAgent3D>("NavAgent");
+				NavigationServer3D.MapChanged += (arg) => { 
+					nav.TargetPosition = Global.level.GetRandomNavPoint();
+					navReady = true; 
+				};
+			} catch {
+				GD.Print($"NPCNode: No NavigationAgent3D found for {this}");
+			}
+		}
 	}
 
 	public override void _Process(double delta){
@@ -63,6 +68,7 @@ public partial class NPCNode : CharacterBody3D {
 	}
 
 	public Vector3 NextNavPoint(){
+		return Global.level.GetRandomNavPoint();
 		return navPoints.Pop();
 	}
 }

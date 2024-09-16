@@ -17,7 +17,7 @@ public partial class Twig : RigidBody3D, Interactable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
         invItem = new InventoryItem(InventoryItemProperties.ItemType.Quest, "Twig", true);
     }
 

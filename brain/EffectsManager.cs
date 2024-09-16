@@ -15,7 +15,7 @@ public class EffectsManager {
         if (floatingTextNodes[obj].ContainsKey(key)){
             floatingTextNodes[obj][key].Text = text;
         } else {
-            Label3D textObj = (Label3D) Global.prefabs["FloatingText"].Instantiate();
+            Label3D textObj = (Label3D) Global.prefabMgr.prefabs["FloatingText"].Instantiate();
             textObj.Text = text;
             textObj.Position = offset;
             obj.AddChild(textObj);

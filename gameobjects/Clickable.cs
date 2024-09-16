@@ -16,7 +16,7 @@ public partial class Clickable : RigidBody3D, Interactable, Collideable {
 	private Random rand = new Random();
 
 	public override void _Ready(){
-		PrefabManager.RegisterGameObject(this, GameObjectType.Interactable);
+		Global.RegisterGameObject(this, GameObjectType.Interactable);
 		InputEvent += OnInputEvent;
 		
 		Task.Run(()=>{ 
@@ -75,12 +75,12 @@ public partial class Clickable : RigidBody3D, Interactable, Collideable {
 		throw new NotImplementedException();
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
 		throw new NotImplementedException();
 	}
 
-	public void HandleDecollide(ColliderZone zone, Node3D other)
+	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		throw new NotImplementedException();
 	}

@@ -20,7 +20,7 @@ public partial class GenericInteractable : Node, Interactable {
 
     public override void _Ready()
 	{
-        SceneManager.interactables.Add(this);
+        
     }
 
     public void Clear()

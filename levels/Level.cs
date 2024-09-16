@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 using Timer = Godot.Timer;
 
 //base class for levels
-public partial class Level : Node3D
+public partial class Level : Node
 {
-	    public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
+	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
+
+	//TODO actually gonna store the levels in Global, because need to load and access before Level node loaded
+	[Export] public Godot.Collections.Dictionary<string, string> levelSceneFilenames = new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
+	private Dictionary<string, PackedScene> levelScenes = new Dictionary<string, PackedScene>(); //subsequent levels that can be accessed from this level
 
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
@@ -31,7 +35,9 @@ public partial class Level : Node3D
 			Global.navRegion = navRegion;
 		}
 
-		
+		foreach (KeyValuePair<string, string> level in levelSceneFilenames){
+			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://levels/" + level.Value);
+        }
 		
 		//dynamically spawn things
 		//health pickups
@@ -121,4 +127,10 @@ public partial class Level : Node3D
         }
         return worldBounds;
     }
+
+	public void ChangeLevel(string levelName){
+		if (levelScenes.ContainsKey(levelName)){
+			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
+        }
+	}
 }
