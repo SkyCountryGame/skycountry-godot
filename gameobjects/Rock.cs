@@ -12,8 +12,8 @@ public partial class Rock : RigidBody3D, Collideable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        SceneManager.RegisterGameObject(this, Name, GameObjectType.Mineable);
-        metalBar = new InventoryItem(ItemProperties.ItemType.Mineral, "metalbar");
+        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
+        metalBar = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "metalbar");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

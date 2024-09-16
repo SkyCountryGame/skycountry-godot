@@ -1,7 +1,7 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class MeleeItemProperties: ItemProperties {
+public partial class MeleeItemProperties: InventoryItemProperties {
 
     [Export]
     public string equipPath;

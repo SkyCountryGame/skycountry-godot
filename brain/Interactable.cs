@@ -16,7 +16,8 @@ public enum InteractionMethod
 {
 	Contact, //walk onto object
 	Select, //click mouse or "selection" action
-	Use //execute main "use" action, may require some prerequisite item to be equipped, within some distance, etc.
+	Use, //execute main "use" action, may require some prerequisite item to be equipped, within some distance, etc.
+	ClickRight
 }
 
 // -- ALL IMPLEMENTING CLASSES SHOULD SPECIFY THE PAYLOAD DATATYPE IN A COMMENT --

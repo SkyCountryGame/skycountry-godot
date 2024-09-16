@@ -60,12 +60,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 	public override void _Process(double delta)
 	{
-		if (SceneManager._ != null && SceneManager._.currentLevelScene != GetTree().CurrentScene){
-			SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
-		}
-
-
-
 		//RayCast Stuff
 		if(playerModel.activityState==State.DEFAULT){
 			Vector2 mousePosition = GetViewport().GetMousePosition();
@@ -246,26 +240,23 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		
+		//will be null if not an interactable
+		Interactable interactable = Global.GetInteractable(other);
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable interactable = SceneManager.GetInteractable(other);
 				if (interactable != null)
 				{
 					if (interactable.interactionMethod == InteractionMethod.Use){
 						availableInteractables.Add(interactable);
 						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-					} else if (interactable.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(interactable, other);
 					}
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
-					interactable = SceneManager.GetInteractable(other);
-					if (interactable.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(interactable, other);
+					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract((Interactable)other, other);
 					}
 				break;
 		}
@@ -274,10 +265,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = SceneManager.GetInteractable(other);
-		if (availableInteractables.Contains(i))
+		Interactable interactable = Global.GetInteractable(other);
+		if (availableInteractables.Contains(interactable))
 		{
-			availableInteractables.Remove(i);
+			availableInteractables.Remove(interactable);
 			if (availableInteractables.Count > 0){
 				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
@@ -335,8 +326,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		// } commenting out because im not sure why this would be the case
 		if (playerModel.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
-			SceneManager._.currentLevelScene.AddChild(gameObject);
-			((Node3D) gameObject).Position = Position + new Vector3(0,1,1);
+			Global.level.AddChild(gameObject);
+			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == playerModel.equipped){
 				UnequipRightHand();
@@ -347,16 +338,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		}
 		return false;
 	}
+
 	public void ApplyDamage(int d)
 	{
 		playerModel.hp -= d; //TODO take into account armor, skills, etc.
 		if (playerModel.hp < 0){
-			//EventManager.Invoke(EventType.GameOver); //TODO this depends on changes from another branch 
+			EventManager.Invoke(EventType.GameOver); 
 		}
 	}
 
-	    public void SetPlayerModel(PlayerModel pm)
-    {
+	public void SetPlayerModel(PlayerModel pm) {
         this.playerModel = pm;
     }
 }

@@ -3,7 +3,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class ItemProperties: Resource{
+public partial class InventoryItemProperties: Resource{
 
     public enum ItemType {
         Weapon = 1<<0,

@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using static ItemProperties;
+using static InventoryItemProperties;
 public partial class InventoryItem : Resource, ICloneable {
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
@@ -12,7 +12,7 @@ public partial class InventoryItem : Resource, ICloneable {
     //TODO establish all the properties than inventory items can have
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
     [Export]
-    public ItemProperties itemProperties;
+    public InventoryItemProperties itemProperties;
 
     public bool inited = false;
     //mass? volume? other properties
@@ -23,7 +23,7 @@ public partial class InventoryItem : Resource, ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemProperties itemProperties, bool equippable = false) : base()
+    public InventoryItem(InventoryItemProperties itemProperties, bool equippable = false) : base()
     {
         itemType = itemProperties.itemType;
         name = itemProperties.name;
