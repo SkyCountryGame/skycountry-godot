@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=49 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
 [ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
+[ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -111,6 +112,7 @@ emission_energy_multiplier = 0.0
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+process_mode = 1
 script = ExtResource("1_iiogu")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
@@ -262,3 +264,6 @@ mesh = SubResource("BoxMesh_ok0df")
 
 [node name="DeathWall" parent="." instance=ExtResource("14_hhq11")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 0, 8.72595)
+
+[node name="PauseMenu" parent="." instance=ExtResource("22_744mc")]
+process_mode = 3

@@ -11,7 +11,7 @@ public partial class Level : Node
 	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
 
 	//TODO actually gonna store the levels in Global, because need to load and access before Level node loaded
-	[Export] public Godot.Collections.Dictionary<string, string> levelSceneFilenames = new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
+	[Export(PropertyHint.File, "Without 'res://'")] public Godot.Collections.Dictionary<string, string> levelSceneFilenames = new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
 	private Dictionary<string, PackedScene> levelScenes = new Dictionary<string, PackedScene>(); //subsequent levels that can be accessed from this level
 
 	//the properties that are common to all levels
@@ -35,8 +35,18 @@ public partial class Level : Node
 			Global.navRegion = navRegion;
 		}
 
+		//load the levels that can be accessed from this level
 		foreach (KeyValuePair<string, string> level in levelSceneFilenames){
-			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://levels/" + level.Value);
+			string fn = "";
+			if (level.Value.Substr(0, 5) != "levels/"){
+				fn = "levels/";
+			} 
+			if (level.Value.Substr(level.Value.Length - 5, 5) != ".tscn"){
+				fn += level.Value + ".tscn";
+			} else {
+				fn += level.Value;
+			}
+			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + level.Value); 
         }
 		
 		//dynamically spawn things
@@ -77,10 +87,6 @@ public partial class Level : Node
 	{
 		//TODO where change lighting for time of day? maybe a timer that repeats every several minutes to slightly change the color.
 				
-	}
-	
-	public override void _UnhandledInput(InputEvent @event){
-
 	}
 
 	//gets some random point within the world bounds
@@ -132,5 +138,11 @@ public partial class Level : Node
 		if (levelScenes.ContainsKey(levelName)){
 			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
         }
+	}
+
+	//make sure level has the proper nodes
+	public bool ValidateLevel(){
+		//check hud, pausemenu, camera, light?
+		return true;
 	}
 }

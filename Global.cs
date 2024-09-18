@@ -8,14 +8,17 @@ public partial class Global : Node
 
 	public static Global Instance {get; private set; } //the instance
 	public static Global _; //shorhand for the instance
-	
+
+	public static int saveSlot = -1; //set by MainMenu on game start
+
 	//GAME NODES
 	public static PlayerModel playerModel; //set by Player, persists between scenes
 	public static Player playerNode;  //set by Player 
-	public static Camera cam; //set by Camera on ready
+	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
 	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
 	public static HUDManager hud; // set by HUDManager on ready
-	public static PrefabManager prefabMgr; // set by PrefabManager on ready
+    public static PauseMenu pauseMenu; // set by PauseMenu on ready
+	public static PrefabManager prefabMgr; // constructed here in init()
 	public static Dictionary<string, PackedScene> prefabs;
 	public static NavigationRegion3D navRegion; // set by each level
 	public static Level level; // the current "level", set by each level on ready
@@ -37,25 +40,25 @@ public partial class Global : Node
             init();
             Instance = this;
             _ = Instance;
-			SceneTree st = this.GetTree(); //testing
-			GD.Print(st.ToString());
         }
 	}
 
 	public void init(){
 		sceneTree = GetTree();
 		atmosphereManager = new AtmosphereManager();
-
-		prefabs = new Dictionary<string, PackedScene>();
-        //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
-        prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn"));
-        prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
-        prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
+        prefabMgr = new PrefabManager();
+		prefabs = prefabMgr.prefabs; //for shorthand
+        ProcessMode = ProcessModeEnum.Always;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+    public override void _Input(InputEvent @event){
+		if (Input.IsActionJustPressed("pause")){
+			TogglePause();
+		}
 	}
 
 	public static void RegisterGameObject(Node node, string name, GameObjectType type){
@@ -102,4 +105,13 @@ public partial class Global : Node
         }
         return null;
 	}
+
+	public static void TogglePause(){
+        _.GetTree().Paused = !_.GetTree().Paused;
+        pauseMenu.Visible = _.GetTree().Paused;
+	}
+    public static void ResumeGame(){
+        _.GetTree().Paused = false;
+        pauseMenu.Visible = false;
+    }
 }

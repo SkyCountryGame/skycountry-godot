@@ -115,10 +115,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
-			} else if (Input.IsActionJustPressed("pause"))
+			} /*else if (Input.IsActionJustPressed("pause"))
 			{
-				//TODO pause
-			} else if (Input.IsActionJustPressed("player_inv")){
+				Global.TogglePause();
+			}*/ else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
 				Global.hud.ToggleInventory(pm.inv);
@@ -292,5 +292,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		if (pm.hp < 0){
 			EventManager.Invoke(EventType.GameOver); 
 		}
+	}
+
+	public void SetPlayerModel(PlayerModel pm)
+	{
+		this.pm = pm;
 	}
 }
