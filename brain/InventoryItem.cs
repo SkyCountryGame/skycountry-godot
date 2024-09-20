@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.NativeInterop;
 using static InventoryItemProperties;
 public partial class InventoryItem : Resource, ICloneable {
     public int id;
@@ -34,7 +35,7 @@ public partial class InventoryItem : Resource, ICloneable {
         if (ResourceLoader.Exists($"res://gameobjects/{name}.tscn")){
             packedScenePath = $"res://gameobjects/{name}.tscn";
         } else {
-            packedScene = SceneManager._.prefabs["ERROR"];
+            packedScene = Global.prefabs["ERROR"];
         }
     }
 
@@ -44,14 +45,14 @@ public partial class InventoryItem : Resource, ICloneable {
         this.name = name;
         equippable = false;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){ //should we remove this? theres not a ton of reason to do this i think as of now.
-            packedScene = SceneManager._.prefabs[this.name];
+        if (Global.prefabs.ContainsKey(this.name) && Global.prefabs[this.name] != null){ //should we remove this? theres not a ton of reason to do this i think as of now.
+            packedScene = Global.prefabs[this.name];
         } 
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
         }
         if (packedScene == null && packedScenePath == null) {
-            packedScene = SceneManager._.prefabs["ERROR"];
+            packedScene = Global.prefabs["ERROR"];
         }
 
     }
@@ -92,9 +93,13 @@ public partial class InventoryItem : Resource, ICloneable {
     public PackedScene GetPackedScene(){
         if (packedScene == null){
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
-            SceneManager._.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
+            Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }
         return packedScene;
+    }
+
+    public ItemType GetItemType(){
+        return itemType;
     }
 
 

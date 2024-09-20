@@ -26,7 +26,6 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
         if (active){
             //material.Set("emission_energy_multiplier", GlobalPosition.DistanceTo(target.GlobalTransform.Origin));
             double val = 1.0 / MathF.Pow(GlobalPosition.DistanceTo(target.GlobalTransform.Origin)-.4f,2);
-            GD.Print(val);
             material.Set("emission_energy_multiplier", val);
         }
     }

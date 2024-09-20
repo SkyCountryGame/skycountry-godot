@@ -113,4 +113,5 @@ public partial class PlayerModel : Resource{
         return armor;
     }*/
 
+	public State GetState() { return activityState;}
 }

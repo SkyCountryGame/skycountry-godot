@@ -32,7 +32,7 @@ public partial class MainMenu : Control
 	}
 	private void OnButtonLoadPressed()
 	{
-		GD.Print("TODO!!");
+		Global.LoadGame();
 	}
 	private void OnButtonQuitPressed()
 	{

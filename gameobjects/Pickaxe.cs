@@ -14,7 +14,7 @@ public partial class Pickaxe : StaticBody3D, Interactable {
     public override void _Ready()
 	{
         MeleeItemProperties meleeItemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
-        SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
+        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
         pickaxeItem = new InventoryItem(meleeItemProperties, true);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }

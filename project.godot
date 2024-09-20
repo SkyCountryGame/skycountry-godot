@@ -16,10 +16,6 @@ config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 boot_splash/minimum_display_time=500
 
-[autoload]
-
-SceneManager="*res://brain/SceneManager.cs"
-
 [display]
 
 window/size/viewport_width=1920
