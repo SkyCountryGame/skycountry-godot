@@ -6,10 +6,9 @@ public partial class DeathWall : Node, Collideable
 	{
 		switch (zone){
 			case ColliderZone.Awareness0:
-				GD.Print("death wall warning"); //TODO
+				//TODO do a cool effect to show the player that the wall knows he is near
 				break;
 			case ColliderZone.Body:
-				GD.Print("death wall damage");
 				if (other is Damageable){
 					((Damageable)other).ApplyDamage(10); //placeholder number
 					//Event.Invoke(DeathWall) TODO

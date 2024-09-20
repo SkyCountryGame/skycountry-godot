@@ -114,6 +114,9 @@ emission_energy_multiplier = 0.0
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
+levelSceneFilenames = {
+"l2": "level2"
+}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 

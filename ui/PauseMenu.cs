@@ -21,6 +21,7 @@ public partial class PauseMenu : Control
 		buttonQuit.Pressed += OnButtonQuitPressed;
 		// = GetTree().CurrentScene; //tell the level manager what scene we are in
 		Global.pauseMenu = this;
+		Visible = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,18 +35,20 @@ public partial class PauseMenu : Control
 	}
 	private void OnButtonLoadPressed()
 	{
-		PackedScene level0 = ResourceLoader.Load<PackedScene>("res://levels/level0.tscn"); //TODO
-		Resource playerModel = ResourceLoader.Load<Resource>($"res://saves/{Global.saveSlot}.playerModel.tres");
-		GetTree().ChangeSceneToPacked(level0);
-		Global.playerModel = playerModel as PlayerModel;
-		Global.playerNode.SetPlayerModel(Global.playerModel);
+		Global.LoadGame();
+		// PackedScene level0 = ResourceLoader.Load<PackedScene>("user://levels/level0.tscn"); //TODO
+		// Resource playerModel = ResourceLoader.Load<Resource>($"user://saves/{Global.saveSlot}.playerModel.tres");
+		// GetTree().ChangeSceneToPacked(level0);
+		// Global.playerModel = playerModel as PlayerModel;
+		// Global.playerNode.SetPlayerModel(Global.playerModel);
 	}
 
 	private void OnButtonSavePressed()
 	{
-		GD.Print("TODO!!");
-		ResourceSaver.Save(Global.playerModel, $"res://saves/{Global.saveSlot}.playerModel.tres");
-		
+		Global.SaveGame();
+		//ResourceSaver.Save(Global.playerModel, $"user://saves/{Global.saveSlot}.playerModel.tres");
+		//PackedScene toSave = new PackedScene();
+		//toSave.Pack(Global.playerNode);
 	}
 	private void OnButtonQuitPressed()
 	{

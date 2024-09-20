@@ -20,7 +20,7 @@ public partial class Level : Node
 
 	[Export] public NavigationRegion3D navRegion;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
-	public List<NPCNode> npcs;
+	//public List<NPCNode> npcs;
 	public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
@@ -46,7 +46,7 @@ public partial class Level : Node
 			} else {
 				fn += level.Value;
 			}
-			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + level.Value); 
+			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
         }
 		
 		//dynamically spawn things
@@ -144,5 +144,12 @@ public partial class Level : Node
 	public bool ValidateLevel(){
 		//check hud, pausemenu, camera, light?
 		return true;
+	}
+
+	public void LoadSaveData(ConfigFile cfg){
+		string levelName = (string) cfg.GetValue("level", "name");
+		ChangeLevel(levelName);
+		//TODO activeScene if in a sublevel
+		//TODO time, npcs, enemies				
 	}
 }

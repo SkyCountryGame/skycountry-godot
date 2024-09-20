@@ -298,4 +298,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	{
 		this.pm = pm;
 	}
+
+	public void LoadSaveData(ConfigFile cfg){
+		Position = (Vector3) cfg.GetValue("player", "position");
+		Transform = (Transform3D) cfg.GetValue("player", "transform");
+		Rotation = (Vector3) cfg.GetValue("player", "rotation");
+		pm = (PlayerModel) cfg.GetValue("player", "model");
+		Global.playerModel = pm; //don't think that is actually necessary
+	}
+
 }
