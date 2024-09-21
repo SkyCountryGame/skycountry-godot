@@ -26,6 +26,7 @@ public partial class MainMenu : Control
 
 	private void OnButtonStartPressed()
 	{
+		Global.saveSlot = 0; //NOTE do we want to instead resume from last played game?
 		PackedScene level0 = ResourceLoader.Load<PackedScene>("res://levels/level0.tscn"); //TODO
 		GetTree().ChangeSceneToPacked(level0);
 	}
