@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpkxfobs7jdt5"]
+[gd_scene load_steps=14 format=3 uid="uid://dpkxfobs7jdt5"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_yy4dy"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="2_y040l"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_pxpml"]
+[ext_resource type="Script" path="res://gameobjects/Talker.cs" id="4_een1g"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
 [ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
+[ext_resource type="Script" path="res://brain/Dialogue.cs" id="6_siwyb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv66b"]
 
@@ -50,6 +52,7 @@ stream = ExtResource("4_jtexw")
 
 [node name="Guy" type="RigidBody3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+script = ExtResource("4_een1g")
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="Guy" index="0"]
 
@@ -64,6 +67,10 @@ skeleton = NodePath("../../../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Guy" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34731, -0.0210724)
 shape = SubResource("BoxShape3D_hi71w")
+
+[node name="Node" type="Node" parent="Guy" index="2"]
+script = ExtResource("6_siwyb")
+testExp = null
 
 [node name="Player" parent="." index="7" instance=ExtResource("2_y040l")]
 

@@ -1,59 +1,117 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using Godot;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
-/* EntityManager? ObjectManager? GameManager? 
-    things that need to be accessible anywhere in the codebase.
-    hashmaps to associate godot stuff with game stuff, and more. 
-*/
-public class Global {
-    public static PackedScene indicator; 
+public partial class Global : Node
+{
 
-    /** ======= GLOBAL STATIC REFERENCES ========
-    * current player data, to persist between scenes
-    * NOTE i want to use a shorter name other than "global", like "G" or "__" 
-    */
-    public static PlayerModel PlayerModel;
-    public static Player PlayerNode;
-    public static Camera Cam;
-    public static SceneTree SceneTree;
-    public static HUDManager HUD; //TODO maybe these should be set via functions so that memory can be freed if prev existed 
+	public static Global Instance {get; private set; } //the instance
+	public static Global _; //shorhand for the instance
 
+	public static int saveSlot = -1; //set by MainMenu on game start
 
-    
-    
-    //key = parent object
-    //value = dict of floating text strings (key -> label3d)
-    public static Dictionary<Node3D, Dictionary<string, Label3D>> floatingTextNodes = new Dictionary<Node3D, Dictionary<string, Label3D>>();
-    //NOTE: possible naming standard for collections of nodes? 
+	//GAME NODES
+	public static PlayerModel playerModel; //set by Player, persists between scenes
+	public static Player playerNode;  //set by Player 
+	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
+	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
+	public static HUDManager hud; // set by HUDManager on ready
+    public static PauseMenu pauseMenu; // set by PauseMenu on ready
+	public static PrefabManager prefabMgr; // constructed here in init()
+	public static Dictionary<string, PackedScene> prefabs;
+	public static NavigationRegion3D navRegion; // set by each level
+	public static Level level; // the current "level", set by each level on ready
+	
+	//GAME LOGIC MANAGER THINGS
+	public static AtmosphereManager atmosphereManager; // constructed here in init()
+	//public static EffectsManager effectsManager; // constructed here in init() //TODO actually might only have static methods 
 
-    public static void SpawnFloatingText(string key, string text, Node3D obj, Vector3 offset, float duration = 2.0f){
+	public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
-        if (!floatingTextNodes.ContainsKey(obj)){
-            floatingTextNodes.Add(obj, new Dictionary<string, Label3D>());
-        } else {
-            offset.Y += floatingTextNodes[obj].Count;
+    public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
+    public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game TODO might not be in this class?
+	public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		if (Instance == null){ //only preload the stuff once on level start (not scene start)
+            init();
+            Instance = this;
+            _ = Instance;
         }
-        if (floatingTextNodes[obj].ContainsKey(key)){
-            floatingTextNodes[obj][key].Text = text;
-        } else {
-            Label3D textObj = (Label3D) SceneManager._.prefabs["FloatingText"].Instantiate();
-            textObj.Text = text;
-            textObj.Position = offset;
-            obj.AddChild(textObj);
-            floatingTextNodes[obj].Add(key, textObj);
-        }
+	}
 
-        //set the timer to remove this floating text after spcified duration
-        Task removeText = new Task(() => {
-            System.Threading.Thread.Sleep(2000);
-            obj.CallDeferred("remove_child", floatingTextNodes[obj][key]);
-            floatingTextNodes[obj][key].QueueFree();
-            floatingTextNodes[obj].Remove(key);
-        });
-        removeText.Start();
+	public void init(){
+		sceneTree = GetTree();
+		atmosphereManager = new AtmosphereManager();
+        prefabMgr = new PrefabManager();
+		prefabs = prefabMgr.prefabs; //for shorthand
+        ProcessMode = ProcessModeEnum.Always;
+    }
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+    public override void _Input(InputEvent @event){
+		if (Input.IsActionJustPressed("pause")){
+			TogglePause();
+		}
+	}
+
+	public static void RegisterGameObject(Node node, string name, GameObjectType type){
+        GameObject go;
+        if (!gameObjects.ContainsKey(node)){
+            go = new GameObject(node);
+            gameObjects.Add(node, go);
+        } else {
+            go = gameObjects[node];
+        }
+        switch(type){
+            case GameObjectType.Interactable:
+                interactables.Add((Interactable)node);
+				mapGameObjectToInteractable.Add(go, (Interactable)node);
+                break;
+            case GameObjectType.SpawnPoint:
+                //spawnPoints.Add((SpawnPoint)node);
+                break;
+            default:
+                break;
+        }
+    }
+	public static void RegisterGameObject(Node node, GameObjectType type){
+        RegisterGameObject(node, node.Name, type);
+    }
+
+	public static GameObject GetGameObject(Node n){
+        if (gameObjects.ContainsKey(n)){
+            return gameObjects[n];
+        }
+        while (n.GetParent() != null){
+			n = n.GetParent();
+            if (gameObjects.ContainsKey(n)){
+                return gameObjects[n];
+            }
+		}
+        return null;
+    }
+
+	public static Interactable GetInteractable(Node n){
+		GameObject go = GetGameObject(n);
+        if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
+            return mapGameObjectToInteractable[go];
+        }
+        return null;
+	}
+
+	public static void TogglePause(){
+        _.GetTree().Paused = !_.GetTree().Paused;
+        pauseMenu.Visible = _.GetTree().Paused;
+	}
+    public static void ResumeGame(){
+        _.GetTree().Paused = false;
+        pauseMenu.Visible = false;
     }
 }

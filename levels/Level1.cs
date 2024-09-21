@@ -34,7 +34,7 @@ public partial class Level1 : Node3D
 			System.Threading.Thread.Sleep(1000);
 			Player p = ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate() as Player;
 			GetTree().Root.CallDeferred("add_child", p);
-			Global.Cam.target = p;	
+			Global.cam.target = p;	
 		});
 		addPlayerTask.Start();
 	}

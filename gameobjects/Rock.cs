@@ -1,10 +1,9 @@
 using Godot;
 using System;
-using System.ComponentModel;
 
-public partial class Rock : RigidBody3D {
-    private InventoryItem metalBar;
-    private int health = 3; 
+public partial class Rock : RigidBody3D, Collideable {
+    private InventoryItem metalBar; //idk bro i know its a rock just roll with it
+    private int health = 30;
 
     public Rock()
     {
@@ -13,10 +12,8 @@ public partial class Rock : RigidBody3D {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        BodyEntered += OnBodyEntered;
         SceneManager.RegisterGameObject(this, Name, GameObjectType.Mineable);
-        metalBar = new InventoryItem(InventoryItem.ItemType.Mineral, "metalbar");
-        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
+        metalBar = new InventoryItem(ItemProperties.ItemType.Mineral, "metalbar");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,16 +21,18 @@ public partial class Rock : RigidBody3D {
 	{
 	}
 
-    private void OnBodyEntered(Node body)
+    public void HandleCollide(ColliderZone zone, Node other)
     {
-        GD.Print("I AM IN THE METHOD");
-        if(body is Area3D){
-            Area3D area = (Area3D)body;
-            if(area.GetCollisionMaskValue(3) && area.FindChild("Hitbox") != null && !((CollisionShape3D)area.FindChild("Hitbox")).Disabled){
-                health -=1;
-                GD.Print("Health is "+health);
-            }
-        }
-        
+        switch (zone){
+			case ColliderZone.ToolZone:
+                SceneTree tree = other.GetTree();
+				other.GetNode<CollisionShape3D>("").Disabled = true;
+                break;
+		}
+    }
+
+    public void HandleDecollide(ColliderZone zone, Node other)
+    {
+        throw new NotImplementedException();
     }
 }

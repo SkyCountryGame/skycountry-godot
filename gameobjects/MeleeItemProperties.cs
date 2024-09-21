@@ -12,6 +12,8 @@ public partial class MeleeItemProperties: ItemProperties {
     [Export]
     public int damage;
     [Export]
+    public int miningDamage;
+    [Export]
     public int arcLength;
     [Export]
     public int range;

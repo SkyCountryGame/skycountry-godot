@@ -43,14 +43,14 @@ public partial class DevTool : Node2D
 		slider3.DragEnded += OnSlider3Changed;
 		//slider4.DragEnded += OnSlider4Changed;
 		textEdit4.TextChanged += OnTextEdit4Changed;
-		labelValue1.Text = Global.PlayerNode.accelScalar.ToString();
-		labelValue2.Text = Global.PlayerNode.velMagnitudeMax.ToString();
-		labelValue3.Text = Global.PlayerNode.JumpVelocity.ToString();
-		labelValue4.Text = Global.PlayerNode.gravity.ToString();
-		textEdit4.Text = Global.PlayerNode.gravity.ToString();
-		slider1.Value = Global.PlayerNode.accelScalar;
-		slider2.Value = Global.PlayerNode.velMagnitudeMax;
-		slider3.Value = Global.PlayerNode.JumpVelocity;
+		labelValue1.Text = Global.playerNode.accelScalar.ToString();
+		labelValue2.Text = Global.playerNode.velMagnitudeMax.ToString();
+		labelValue3.Text = Global.playerNode.JumpVelocity.ToString();
+		labelValue4.Text = Global.playerNode.gravity.ToString();
+		textEdit4.Text = Global.playerNode.gravity.ToString();
+		slider1.Value = Global.playerNode.accelScalar;
+		slider2.Value = Global.playerNode.velMagnitudeMax;
+		slider3.Value = Global.playerNode.JumpVelocity;
 		//slider4.Value = Global.PlayerNode.gravity;
 	}
 
@@ -75,17 +75,17 @@ public partial class DevTool : Node2D
 
 	private void OnSlider1Changed(bool valChanged)
 	{
-		Global.PlayerNode.accelScalar = (float)slider1.Value;
+		Global.playerNode.accelScalar = (float)slider1.Value;
 		slider1.TooltipText = slider1.Value.ToString();
 		labelValue1.Text = slider1.Value.ToString();
 	}
 	private void OnSlider2Changed(bool valChanged){
-		Global.PlayerNode.velMagnitudeMax = (float)slider2.Value;
+		Global.playerNode.velMagnitudeMax = (float)slider2.Value;
 		slider2.TooltipText = slider2.Value.ToString();
 		labelValue2.Text = slider2.Value.ToString();
 	}
 	private void OnSlider3Changed(bool valChanged){
-		Global.PlayerNode.JumpVelocity = (float)slider3.Value;
+		Global.playerNode.JumpVelocity = (float)slider3.Value;
 		slider3.TooltipText = slider3.Value.ToString();
 		labelValue3.Text = slider3.Value.ToString();
 	}
@@ -95,10 +95,10 @@ public partial class DevTool : Node2D
 		labelValue4.Text = slider4.Value.ToString();//Global.PlayerNode.gravity.ToString();
 	}*/
 	private void OnTextEdit4Changed(){
-		double val = Global.PlayerNode.gravity;
+		double val = Global.playerNode.gravity;
 		try {
 			double grav = float.Parse(textEdit4.Text);
-			Global.PlayerNode.gravity = grav;
+			Global.playerNode.gravity = grav;
 			labelValue4.Text = grav.ToString();
 		} catch (FormatException e){
 			GD.Print("gravity must be a number");

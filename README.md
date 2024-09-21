@@ -13,7 +13,7 @@ current focuses:
 other side things:
 * http audio stream
 * start messing around with the 3d assets
-
+* might be a good idea to make PlayerModel a [Resource](https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html), for saving/loading
 
 
 [focalboard](http://belthelziquor.com:8000/) 

@@ -34,7 +34,7 @@ public partial class Camera : Camera3D
 			plyr = (Player)target;
 		}
 
-		Global.Cam = this;	
+		Global.cam = this;	
 	}
 
 	public override void _Process(double delta)

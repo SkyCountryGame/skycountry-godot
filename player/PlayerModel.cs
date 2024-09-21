@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class PlayerModel {
+[GlobalClass]
+public partial class PlayerModel : Resource{
 	public CharacterBody3D playerNode;
     public State activityState = State.DEFAULT;
     public int hp = 0;
@@ -53,6 +54,11 @@ public class PlayerModel {
 			activityState = ps;
 			switch (activityState){
 				case State.DEFAULT:
+					if (prev == State.INVENTORY){
+						Global.hud.HideInventory();
+					} else if (prev == State.DIALOGUE) {
+						Global.hud.ExitDialogue();
+					}
 					break;
 				case State.CHARGING:
 					break;

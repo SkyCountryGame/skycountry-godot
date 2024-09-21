@@ -1,17 +1,7 @@
 using System;
 using Godot;
-public partial class InventoryItem : ICloneable {
-    public enum ItemType {
-        Weapon = 1<<0,
-        Aid = 1<<1,
-        Ammo = 1<<2, 
-        Apparel = 1<<3,
-        Shield = 1<<4, 
-        Semantic = 1<<5, 
-        Quest = 1<<6, 
-        Junk = 1<<7,
-        Mineral = 1<<8
-    };
+using static ItemProperties;
+public partial class InventoryItem : Resource, ICloneable {
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
     public string name; 
@@ -33,16 +23,16 @@ public partial class InventoryItem : ICloneable {
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, ItemProperties itemProperties, bool equippable = false) : base()
+    public InventoryItem(ItemProperties itemProperties, bool equippable = false) : base()
     {
-        itemType = t;
+        itemType = itemProperties.itemType;
         name = itemProperties.name;
         id = nextId++;
         this.equippable = equippable;
         this.itemProperties = itemProperties;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
-            packedScenePath = $"res://gameobjects/{this.name}.tscn";
+        if (ResourceLoader.Exists($"res://gameobjects/{name}.tscn")){
+            packedScenePath = $"res://gameobjects/{name}.tscn";
         } else {
             packedScene = SceneManager._.prefabs["ERROR"];
         }

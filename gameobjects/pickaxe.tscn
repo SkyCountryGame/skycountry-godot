@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://br20useqsu0ey"]
+[gd_scene load_steps=6 format=3 uid="uid://br20useqsu0ey"]
 
 [ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="1_nw60a"]
 [ext_resource type="PackedScene" uid="uid://ch71o3dqfjp1s" path="res://assets/objects/TestPickaxe.glb" id="1_wp6rj"]
+[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_j4hh1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_axul8"]
 radius = 0.15
@@ -19,17 +20,17 @@ script = ExtResource("1_nw60a")
 [node name="TestPickaxe" parent="." instance=ExtResource("1_wp6rj")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 
-[node name="Area3D" type="Area3D" parent="TestPickaxe"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+[node name="InteractionZone" type="Area3D" parent="TestPickaxe"]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("3_j4hh1")
+zone = 3
 
-[node name="Hitbox" type="CollisionShape3D" parent="TestPickaxe/Area3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.0191613, 0.557153, 0.00058195)
+[node name="Hitbox" type="CollisionShape3D" parent="TestPickaxe/InteractionZone"]
+transform = Transform3D(4, 0, 0, 0, -1.74846e-07, -4, 0, 4, -1.74846e-07, -0.0191613, 2.19735, 0.00058195)
 shape = SubResource("CapsuleShape3D_axul8")
 disabled = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.280394, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.223923, 0)
 shape = SubResource("CapsuleShape3D_4blto")
