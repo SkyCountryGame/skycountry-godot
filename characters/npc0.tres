@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="NPCModel" load_steps=2 format=3 uid="uid://bq1tpsxc5ol1m"]
+
+[ext_resource type="Script" path="res://character/NPCModel.cs" id="1_bulgs"]
+
+[resource]
+script = ExtResource("1_bulgs")
+name = ""
+description = ""
+disposition = 0
+state = 0
+emotion = 0

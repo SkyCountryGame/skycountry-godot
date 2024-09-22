@@ -1,7 +1,8 @@
-this is the sky country unity game converted to a godot game. 
+﻿this is the sky country unity game converted to a godot game. 
 --
 current focuses:
-	
+
+* NPC movement. make navagent thing for staticbody too 
 * dialogue
 * initial combat implementation
 * saving/loading games
@@ -13,7 +14,6 @@ current focuses:
 other side things:
 * http audio stream
 * start messing around with the 3d assets
-* might be a good idea to make PlayerModel a [Resource](https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html), for saving/loading
 
 
 [focalboard](http://belthelziquor.com:8000/) 

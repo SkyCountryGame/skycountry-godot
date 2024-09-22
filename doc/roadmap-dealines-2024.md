@@ -25,9 +25,9 @@ Would require either linking new model to hand of player, or whole new model, wi
 8/24:
 - home upgrade system? (thinking akin to stardew valley town hall, pay resources and model change your house, ask zach and mitch about it)
 - start on building repair/(de)construction
-
+- state transition logic of HUDManager and Player
 8/31:
-
+- GUI sizing based on windows size
 9/7:  
 
 9/14:
@@ -37,7 +37,7 @@ Would require either linking new model to hand of player, or whole new model, wi
 9/28:
 
 10/5:
-
+- keyboard-controller UI 
 10/12:
 
 10/19:

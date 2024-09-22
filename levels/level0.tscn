@@ -55,8 +55,9 @@ size = Vector2(50, 50)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
 
-[node name="Wod" type="Node3D"]
+[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_iiogu")
+sunlight = NodePath("DirectionalLight3D")
 
 [node name="HUD" parent="." instance=ExtResource("2_fsd0o")]
 

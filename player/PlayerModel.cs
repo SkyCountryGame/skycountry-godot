@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Godot;
 
-public class PlayerModel {
+[GlobalClass]
+public partial class PlayerModel : Resource {
 	public CharacterBody3D playerNode;
-    public State activityState = State.DEFAULT;
+	[Export]
+    private State activityState = State.DEFAULT;
+	[Export]
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	
@@ -24,7 +27,9 @@ public class PlayerModel {
 		DIALOGUE = 1 << 10
 	}
 
+	[Export]
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
+	//[Export]
 	public InventoryItem equipped; 
 
     public PlayerModel(CharacterBody3D playerNode){
@@ -46,16 +51,16 @@ public class PlayerModel {
 	/**
 	  * logic to perform when switching states
 	  */
-    public bool UpdateState(State ps){
-		State prev = activityState; //some states need to know previous
-		if (dS[activityState].Contains(ps)){
-			activityState = ps;
+    public bool UpdateState(State s){
+		State prev = activityState; //some state transitions need to know previous
+		if (dS[activityState].Contains(s)){
+			activityState = s;
 			switch (activityState){
 				case State.DEFAULT:
 					if (prev == State.INVENTORY){
-						Global.HUD.HideInventory();
+						Global.hud.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						Global.HUD.ExitDialogue();
+						Global.hud.ExitDialogue();
 					}
 					break;
 				case State.CHARGING:
@@ -75,7 +80,7 @@ public class PlayerModel {
 				case State.AIMING:
 					break;
 				case State.INVENTORY:
-					//Global.HUD.ShowInventory();
+					//Global.hud.ShowInventory();
 					GD.Print("show inventory");
 					break;
 				case State.DIALOGUE:
@@ -86,11 +91,13 @@ public class PlayerModel {
 		}
 		return true;
 	}
+	public State GetState() { return activityState;}
 
 	//---INVENTORY---	
 	public void AddToInventory(InventoryItem item)
     {
         inv.Add(item);
+		Global.hud.UpdateInventoryMenu(inv);
     }
 
     public void AddToInventory(Inventory inv)
@@ -105,40 +112,6 @@ public class PlayerModel {
     {
         return inv.IsFull();
     }
-
-	/** by default equip the primary item, or give an item to equip */
-	public bool EquipItem(InventoryItem item = null){
-		if (inv.IsEmpty()) return false;
-		if (item == null){ //or maybe dequip?
-			equipped = inv.GetItemByIndex(0);
-			Global.HUD.ShowEquipped(equipped.name);
-		} else {
-			if (inv.Contains(item)){
-				equipped = item;
-			}
-		}
-		return equipped != null;
-	}
-
-	/** drop the equipped item, or a specific item */
-	public bool DropItem(InventoryItem item = null){
-		if (inv.IsEmpty()) return false;
-		if (item == null){
-			item = equipped;
-		}
-		if (inv.RemoveItem(item)){
-			Node gameObject = item.GetPackedScene().Instantiate();
-			SceneManager._.currentLevelScene.AddChild(gameObject);
-			((Node3D) gameObject).Position = Global.PlayerNode.Position + new Vector3(0,1,1);
-
-			if (item == equipped){
-				equipped = null;
-			}
-			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
-			return true;
-		}
-		return false;
-	}
 
 	/*public List<Wearable> GetActiveArmor()
     {

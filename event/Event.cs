@@ -1,14 +1,13 @@
 
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
+using System.Threading.Tasks;
 
 //Event System: each event just has a type and a payload. listeners know how to handle the events they listen for and what type of payload to expect.
-//we could make an EventPayload abstract class if needed
+//we could make an EventPayload abstract class if needed. or define specific Event classes (e.g. QuestReceivedEvent extends Event) with members for its specific payload
 
 public enum EventType {
     GameOver, QuestReceived, QuestComplete, QuestFailed, Death, //just some ideas for now. would be a good to define payload in comment of each event type. and probably its intended use
-    WeatherChange,  
+    WeatherChange, DialogueInitiated, EntityAttacked, EntityDamaged,
     SpawnParticles, //payload = Vector3 (location)
     PlaySound, //payload = Tuple<string, int> (sound file path, volume)
     SetMusic, 
@@ -42,7 +41,6 @@ public interface EventListener {
 
 public class EventManager {
     private static Dictionary<EventType, List<EventListener>> eventListeners = new Dictionary<EventType, List<EventListener>>();
-
     public static void RegisterListener(EventListener listener){
         foreach (EventType t in listener.eventTypes){
             if (!eventListeners.ContainsKey(t)){
@@ -55,8 +53,17 @@ public class EventManager {
     public static void Invoke(Event e){
         if (eventListeners.ContainsKey(e.eventType)){
             foreach (EventListener l in eventListeners[e.eventType]){
-                l.HandleEvent(e);
+                try {
+                    Task.Run(() => l.HandleEvent(e));
+                } catch (System.Exception ex){
+                    Godot.GD.Print($"Error invoking event {e.eventType.ToString()} for listener {l.ToString()}: {ex.Message}");
+                }
             }
         }
     }
-}
+    //a convenience method that will construct the event object for you
+    public static void Invoke(EventType t, dynamic payload = null){
+        Event e = new Event(t, payload);
+        Invoke(e);
+    }
+}   

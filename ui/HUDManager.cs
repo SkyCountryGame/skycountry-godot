@@ -44,7 +44,7 @@ public partial class HUDManager : Node {
     private State state = State.DEFAULT;
 
     public override void _Ready(){
-        Global.HUD = this;
+        Global.hud = this;
         eventLog = GetNode("MarginContainer/EventLog");
         dialoguePanel = GetNode<VBoxContainer>("DialoguePanel");
         dialogueText = dialoguePanel.GetNode<RichTextLabel>("PanelContainerMessage/MessageLabel"); //this is the text node that is the current message of dialogue
@@ -104,7 +104,7 @@ public partial class HUDManager : Node {
         //first get the current state of dialogue with the thing to which you are talking 
         UpdateState(State.DIALOGUE, d);
         //if (state == State.DIALOGUE){ //we're already in dialogue, so continue
-        if (Global.PlayerModel.activityState == PlayerModel.State.DIALOGUE){
+        if (Global.playerModel.GetState() == PlayerModel.State.DIALOGUE){
             UpdateDialoguePanel(currentDialogue.Start()); //not necessarily the first statement
             return;
         } else {
@@ -114,7 +114,7 @@ public partial class HUDManager : Node {
     //NOTE might move dialogue stuff into DialogueManager
     public void ExitDialogue(){
         UpdateState(State.DEFAULT);
-        Global.PlayerModel.UpdateState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
+        Global.playerModel.UpdateState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
         //but also there might be other things that want to know that a dialogue has ended. TODO revisit if necessary
     }
     public void ContinueDialogue(){
@@ -218,7 +218,7 @@ public partial class HUDManager : Node {
         //inventoryMenu.SetItemCustomBgColor(idx, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         foreach (InventoryItem item in inv.GetItems()){
             int idx = -1;
-            if (item == Global.PlayerModel.equipped){
+            if (item == Global.playerModel.equipped){
                 idx = inventoryMenu.AddItem($" - {item.name} - ");
             } else {
                 idx = inventoryMenu.AddItem(item.name);
@@ -254,19 +254,19 @@ public partial class HUDManager : Node {
 
     public void OnInventoryMenuItemClicked(int index, Vector2 pos, int mouseButton){
         GD.Print($"clicked {index}");
-        InventoryItem item = Global.PlayerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
+        InventoryItem item = Global.playerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                if (Global.PlayerModel.EquipItem(item)){
+                if (Global.playerNode.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }
             } else if (mouseButton == 2){
-                if (Global.PlayerModel.DropItem(item)){
+                if (Global.playerNode.DropItem(item)){
                     inventoryMenu.RemoveItem(index);
                 }
             }
-        }       
+        }
     }
 
     /* might have to use this later when HUD elements are focused (taking input priority)

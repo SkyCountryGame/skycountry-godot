@@ -86,3 +86,11 @@ max_value = 0.0
 
 [node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox4"]
 layout_mode = 2
+
+[node name="Button1" type="Button" parent="DevPanel/HBoxContainer"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "Test resource save"
+
+[connection signal="pressed" from="DevPanel/HBoxContainer/Button1" to="." method="OnButton1Pressed"]

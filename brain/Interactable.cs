@@ -16,6 +16,7 @@ public enum InteractionMethod
 {
 	Contact, //walk onto object
 	Select, //click mouse or "selection" action
+	ClickRight, 
 	Use //execute main "use" action, may require some prerequisite item to be equipped, within some distance, etc.
 }
 
