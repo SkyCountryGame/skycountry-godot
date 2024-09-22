@@ -7,10 +7,12 @@ is always in one of the following states:
     - showing a currently active dialogue, which includes a statement said by the NPC, along with one of the following:
         - nothing else, just the close/continue buttons
         - some response choices for the player to choose from
-        - 
+        -
 
 Player:
 is always in one of the following states:
     - default. normal gameplay. can walk around and interact with the world
-    - 
+    -
 
+________________________________________________________________________________________________
+state changes COULD have payloads associated with them.

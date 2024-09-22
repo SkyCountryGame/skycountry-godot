@@ -7,11 +7,11 @@ using System.Text.Json;
 //a thing that glows when something gets close
 public partial class Glower : RigidBody3D, Interactable, Collideable {
 	public InteractionType interactionType { get => InteractionType.General; }
-    public InteractionMethod interactionMethod { get => InteractionMethod.Contact; }
+	public InteractionMethod interactionMethod { get => InteractionMethod.Contact; }
 
-    private bool active = false;
-    private Node3D target; //the thing that entered the collision zone
-    private Material material;
+	private bool active = false;
+	private Node3D target; //the thing that entered the collision zone
+	private Material material;
 
     public override void _Ready(){
         Global.RegisterGameObject(this, GameObjectType.Interactable);
@@ -30,32 +30,32 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
         }
     }
 
-    //start dialogue when player interacts
-    public dynamic Interact()
-    {
-        //TODO set intensity of glow
-        return null;
-    }
+	//start dialogue when player interacts
+	public dynamic Interact()
+	{
+		//TODO set intensity of glow
+		return null;
+	}
 
-    public void Retain()
-    {
-        //wat do?
-    }
+	public void Retain()
+	{
+		//wat do?
+	}
 
-    public string Info()
-    {
-       return ".";
-    }
+	public string Info()
+	{
+	   return ".";
+	}
 
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
+	public void Clear()
+	{
+		throw new NotImplementedException();
+	}
 
-    public bool IsInteractionValid(Interactor interactor)
-    {
-        return true;
-    }
+	public bool IsInteractionValid(Interactor interactor)
+	{
+		return true;
+	}
 
     public void HandleCollide(ColliderZone zone, Node other)
     {

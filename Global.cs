@@ -37,10 +37,10 @@ public partial class Global : Node
 	public override void _Ready()
 	{
 		if (Instance == null){ //only preload the stuff once on level start (not scene start)
-			init();
-			Instance = this;
-			_ = Instance;
-		}
+            init();
+            Instance = this;
+            _ = Instance;
+        }
 	}
 
 	public void init(){

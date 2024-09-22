@@ -1,0 +1,61 @@
+to portray how the collision system works, here is an implementation of a wall that does damage to the player when he touches it, and gives a warning when he within a certain distance of it.
+
+attributes of the gameobject model that are relevant to each state that the model can be in:
+    duration in state (or inf)
+    animition of state (if changed)
+    physics attributes of rigidbody if applicable
+    material attributes of mesh if applicable
+    geometrical representation attributes of transform is application
+
+using events:
+
+DeathWall  {
+    oncollide(Player p){
+        zone_warn: Event.Invoke(DeathWall.warn, position, p)
+        zone_body: Event.Invoke(DeathWall.touch, position, p)
+
+    }
+}
+
+event responses:
+    DeathWall.warn:
+        applyVisualEffects()
+        playSound()
+
+
+OR just call on the objects directly:
+DeathWall  {
+    oncollide(Player p){
+        zone_warn:
+            applyEffects() //sound, screen shake,
+            SetState(2)
+        zone_body:
+            p.damage(10)
+            applyEffects()
+            //or if we wanted to repeated damage the player if he continues to touch the wall: setState(3)
+    }
+
+    ondecollide(Player p){
+        zone_warn:
+            setState(1)
+        zone_body:
+            setState(2)
+    }
+
+    onstatechange(payload == null){ //some state changes need some associated data related to the event that triggered the state change.
+        state 1:
+            cancel background task of damaging player
+            setAnimation()
+        state 2:
+            setAnimation()
+            cancel background task of damaging player if coming from state 3
+            onAnimationEnd = setState(1)
+        state 3: //takes payload of player
+            Thread.loop({
+                p.damage(10)
+                sleep(3)
+            })
+    }
+}
+
+

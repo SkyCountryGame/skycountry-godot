@@ -9,8 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
-[ext_resource type="Texture2D" uid="uid://cnn04u47vtxyn" path="res://assets/texture/Environment/Grass/Grass1k.png" id="10_g2nbi"]
-[ext_resource type="Texture2D" uid="uid://bumxgi4cbps7w" path="res://assets/texture/Environment/Grass/GrassFlowers1k.png" id="11_owix8"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
@@ -52,7 +50,6 @@ base_texture = ExtResource("10_g2nbi")
 image_size = Vector2(64, 64)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4q33"]
-albedo_texture = SubResource("MeshTexture_luta6")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
@@ -65,19 +62,6 @@ refraction_texture_channel = 4
 [sub_resource type="PlaneMesh" id="PlaneMesh_q726u"]
 material = SubResource("StandardMaterial3D_72h3h")
 size = Vector2(50, 50)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_14u58"]
-
-[sub_resource type="MeshTexture" id="MeshTexture_kteei"]
-mesh = SubResource("PlaneMesh_14u58")
-base_texture = ExtResource("11_owix8")
-image_size = Vector2(64, 64)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbxqd"]
-render_priority = 1
-albedo_color = Color(0.699653, 0.699654, 0.699653, 1)
-albedo_texture = SubResource("MeshTexture_kteei")
-normal_enabled = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]
 
@@ -128,17 +112,17 @@ environment = SubResource("Environment_mck8e")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
-light_energy = 0.501
-light_indirect_energy = 0.0
+light_energy = 0.92
+light_indirect_energy = 0.16
 light_angular_distance = 4.05
 shadow_enabled = true
 shadow_bias = 0.0
 shadow_normal_bias = 1.0
-shadow_transmittance_bias = -5.51
-shadow_opacity = 0.94
+shadow_opacity = 0.85
 shadow_blur = 0.5
 directional_shadow_fade_start = 0.74
 directional_shadow_pancake_size = 17.4
+sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("8_87jf0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.218, 0, -11.578)
@@ -186,7 +170,6 @@ cast_shadow = 0
 gi_mode = 2
 mesh = SubResource("PlaneMesh_q726u")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_mbxqd")
 
 [node name="Drugz" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.52858)

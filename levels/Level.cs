@@ -67,8 +67,10 @@ public partial class Level : Node
 			sunlight.LookAt(WORLD_ORIGIN);
 		};
 		AddChild(sunlightUpdateTimer);
-		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);	
-		navRegion.BakeNavigationMesh();
+		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
+		if (navRegion != null){
+			navRegion.BakeNavigationMesh();
+		}
 		worldBounds = GetWorldBounds();
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
@@ -111,14 +113,14 @@ public partial class Level : Node
 
 	//gets the bounds of all the meshes in the world by combining all their axis-aligned bounding boxes
 	public Aabb GetWorldBounds()
-    {
-        worldBounds = new Aabb();
-        bool firstMesh = true;
-        foreach (Node node in GetTree().GetNodesInGroup("mesh"))
-        {
-            if (node is MeshInstance3D mesh)
-            {
-                Aabb meshBounds = mesh.GetAabb();
+	{
+		worldBounds = new Aabb();
+		bool firstMesh = true;
+		foreach (Node node in GetTree().GetNodesInGroup("mesh"))
+		{
+			if (node is MeshInstance3D mesh)
+			{
+				Aabb meshBounds = mesh.GetAabb();
 
                 if (firstMesh)
                 {
