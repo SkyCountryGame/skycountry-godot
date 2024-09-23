@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://w0yqou02tgux"]
+[gd_scene load_steps=26 format=3 uid="uid://w0yqou02tgux"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_im1ok"]
 [ext_resource type="Script" path="res://levels/Level1.cs" id="2_om4ml"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://character/NPCModel.cs" id="8_lvc6t"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
 [ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
+[ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="12_8mb05"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6nils"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
@@ -139,3 +141,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.965, 0, 0)
 
 [node name="CursedOrb" parent="." index="9" instance=ExtResource("10_2j46k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27986, 3.24299, 5.84783)
+
+[node name="Devtool" parent="." index="10" instance=ExtResource("12_8mb05")]
+
+[node name="PauseMenu" parent="." index="11" instance=ExtResource("11_ccbhd")]

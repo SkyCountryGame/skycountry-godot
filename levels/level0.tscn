@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=32 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -14,12 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
 [ext_resource type="Script" path="res://gameobjects/Clickable.cs" id="14_yk8hg"]
-[ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
-[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
-[ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
-[ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
-[ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
-[ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
+[ext_resource type="PackedScene" uid="uid://beyvdk42f85ri" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -68,28 +64,6 @@ size = Vector2(50, 50)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_gbdax"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_2i0b2"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_h53f8"]
-margin = 0.0
-radius = 10.862
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fwpd7"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sin67"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vxpf4"]
-albedo_color = Color(1.58831e-06, 0.616792, 0.524772, 1)
-metallic = 0.11
-metallic_specular = 0.16
-emission_enabled = true
-emission = Color(0.908911, 0.866702, 0.900103, 1)
-emission_energy_multiplier = 0.0
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jn6"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j3cbx"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
@@ -206,44 +180,6 @@ shape = SubResource("CylinderShape3D_gbdax")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SignPost/CollisionShape3D"]
 mesh = SubResource("CylinderMesh_2i0b2")
-
-[node name="GlowStick" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6201, 0.568651, -0.728118)
-script = ExtResource("15_m6ir7")
-
-[node name="Awareness0" type="Area3D" parent="GlowStick"]
-script = ExtResource("16_p6gv0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness0"]
-shape = SubResource("SphereShape3D_h53f8")
-
-[node name="Awareness1" type="Area3D" parent="GlowStick"]
-script = ExtResource("16_p6gv0")
-zone = 1
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick/Awareness1"]
-shape = SubResource("CapsuleShape3D_fwpd7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GlowStick/Awareness1/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_sin67")
-surface_material_override/0 = SubResource("StandardMaterial3D_vxpf4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick"]
-shape = SubResource("CapsuleShape3D_s4jn6")
-
-[node name="WandererGuy" type="CharacterBody3D" parent="." node_paths=PackedStringArray("nav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4937, 0.6, 17.685)
-script = ExtResource("19_jnosp")
-m = ExtResource("20_menxn")
-nav = NodePath("NavAgent")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WandererGuy"]
-shape = SubResource("BoxShape3D_j3cbx")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WandererGuy"]
-mesh = SubResource("BoxMesh_ok0df")
-
-[node name="NavAgent" type="NavigationAgent3D" parent="WandererGuy"]
 
 [node name="DeathWall" parent="." instance=ExtResource("14_hhq11")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 0, 8.72595)
