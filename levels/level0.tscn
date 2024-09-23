@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
 [ext_resource type="Script" path="res://gameobjects/Clickable.cs" id="14_yk8hg"]
 [ext_resource type="PackedScene" uid="uid://beyvdk42f85ri" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
-[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="22_744mc"]
+[ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)

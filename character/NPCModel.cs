@@ -13,29 +13,35 @@ public partial class NPCModel : Resource{
 
 	[Export] public int disposition = 0; //level of hostility/friendliness. more negative is more hostile, positive friendly, 0 neutral
 	
-	public enum State { IDLE, TALKING, ROAMING, ATTACKING, SLEEPING, ACTION, DEAD } //cycles through these states, changes based on environment and TBD functions
+	public enum State { IDLE, ALERT, TALKING, ROAMING, ATTACKING, SLEEPING, ACTION, DEAD } //cycles through these states, changes based on environment and TBD functions
 	public enum Emotion { HAPPY, SAD, ANGRY, SCARED, SURPRISED, DISGUSTED, NEUTRAL }
 	public enum HomeostaticPressure {NONE, HUNGER, SOCIAL, RESTORE, REDPRODUCE, SLEEP }; //dictates object of pursual
 
 	[Export] public State state;
 	[Export] public Emotion emotion;
 	//[Export] public List<Quest> quests; //
-	public State defaultState; //this is what the npc will begin its exist with
+	[Export] public State defaultState = State.IDLE; //this is what the npc will begin its exist with
 	//public Dictionary<TimeRange, State> dailyRoutine; //NOT should probably actually be "actions" or something
+    
+    [Export(PropertyHint.None,"average duration (s) to remain in each state unless interrupted")] 
+    public int stateTransitionInterval;
 
 	public Dictionary<State, Animation> mapStateAnimation; //which animation for which state 
 
+    //should never have to call default constructor because always loaded from '.tres' file
     public NPCModel(){
-
+        name = "Bob";
+        description = "A friendly guy";
+        inv = new Inventory();
+        state = defaultState;
+        stateTransitionInterval = 10;
     }
 
-	public NPCModel(string name, string description){
-		this.name = name;
-		this.description = description;
-		//quests = new List<Quest>();
+	public NPCModel(string resourcePath){
+		
 	}
 
-	public void UpdateState(State s){
+	public bool UpdateState(State s){
 		switch (s){
 			case State.IDLE:
 				break;
@@ -52,6 +58,7 @@ public partial class NPCModel : Resource{
 			case State.DEAD:
 				break;
 		}
+        return true;
 	}
 
 	public void GetCurrentActivity(double time){

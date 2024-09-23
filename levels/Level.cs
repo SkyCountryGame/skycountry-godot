@@ -20,8 +20,9 @@ public partial class Level : Node
 
 	[Export] public NavigationRegion3D navRegion;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
-	//public List<NPCNode> npcs;
-	public Aabb worldBounds; //the current bounds of all the meshes in the world
+	//private List<NPCNode> npcs;
+
+    public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
 	public int DURATION_DAY = 48; //in seconds
@@ -47,7 +48,7 @@ public partial class Level : Node
 				fn += level.Value;
 			}
 			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
-        }
+		}
 		
 		//dynamically spawn things
 		//health pickups
@@ -122,24 +123,24 @@ public partial class Level : Node
 			{
 				Aabb meshBounds = mesh.GetAabb();
 
-                if (firstMesh)
-                {
-                    worldBounds = meshBounds;
-                    firstMesh = false;
-                }
-                else
-                {
-                    worldBounds = worldBounds.Merge(meshBounds);
-                }
-            }
-        }
-        return worldBounds;
-    }
+				if (firstMesh)
+				{
+					worldBounds = meshBounds;
+					firstMesh = false;
+				}
+				else
+				{
+					worldBounds = worldBounds.Merge(meshBounds);
+				}
+			}
+		}
+		return worldBounds;
+	}
 
 	public void ChangeLevel(string levelName){
 		if (levelScenes.ContainsKey(levelName)){
 			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
-        }
+		}
 	}
 	public void ChangeLevel(PackedScene level){
 		GetTree().ChangeSceneToPacked(level);

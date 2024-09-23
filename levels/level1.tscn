@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://character/NPCModel.cs" id="8_lvc6t"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
 [ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
-[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
+[ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="12_8mb05"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6nils"]

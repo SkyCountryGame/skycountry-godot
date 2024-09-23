@@ -18,8 +18,7 @@ public partial class Camera : Camera3D
 	private float offsetDist = 10; 
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
-	private float camRotateIncrement = (float) (Math.PI / 72.0d);
-	private bool isRotating = false;
+	private float camRotateIncrement = (float) (Math.PI / 64.0d);
 	private CameraState state = CameraState.DEFAULT;
 
 	[Export]
@@ -58,16 +57,9 @@ public partial class Camera : Camera3D
 	{
 		base._PhysicsProcess(delta);
 		if (target != null){
-			if (isRotating && Input.GetLastMouseVelocity().Length() > 0){
-				float theta = Input.GetLastMouseVelocity().X > 0 ? -camRotateIncrement : camRotateIncrement;
-				offset = offset.Rotated(Vector3.Up, theta);
-				if (target is Player){
-					Global.playerNode.SetForward(-new Vector3(offset.X, 0, offset.Z));
-				}
-			}	
 			posDest = target.GlobalPosition + offset;
 			//NOTE maybe use interpolation instead? 
-			if (posDest != Position){// && !isRotating){
+			if (posDest != Position){
 				Vector3 dir = (posDest - Position).Normalized(); 
 				float d = (posDest - Position).Length(); //displacement
 				
@@ -98,11 +90,20 @@ public partial class Camera : Camera3D
 				LockOff();
 			}
 		}
-		else
+		else if (Input.IsActionPressed("cam_rotate_cw"))
 		{
-			//if (!isRotating && Input.IsActionPressed("cam_rotate"))
-			isRotating = Input.IsActionPressed("cam_rotate");
-		}
+			float theta = -camRotateIncrement;
+            offset = offset.Rotated(Vector3.Up, theta);
+            if (target is Player){
+                Global.playerNode.SetForward(-new Vector3(offset.X, 0, offset.Z));
+            }
+		} else if (Input.IsActionPressed("cam_rotate_ccw")){
+            float theta = camRotateIncrement;
+            offset = offset.Rotated(Vector3.Up, theta);
+            if (target is Player){
+                Global.playerNode.SetForward(-new Vector3(offset.X, 0, offset.Z));
+            }
+        }
 	}
 
 	//move camera to focus on some other object

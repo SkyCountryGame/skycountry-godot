@@ -11,7 +11,7 @@ public partial class CollisionZone : Area3D
 	public Node parent;
 	private Collideable parentCollideable;
 	
-	[Export(PropertyHint.Enum, "Awareness0,Awareness1,Body")]
+	[Export(PropertyHint.Enum, "simple identifier of this collision zone, such as 'line-of-sight' or 'hand'")]
 	public ColliderZone zone {get; set;} //this is a label for zone, so that the parent Collideable knows what zone was collided with when the function is triggered. defined in Collideable.cs
 	
 	public override void _Ready ()  
