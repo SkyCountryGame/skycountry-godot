@@ -71,7 +71,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 		//HUD stuff
 		if (!Global.hud.actionLabel.Visible && availableInteractables.Count > 0){
-			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");						
 		}
 	}
 
@@ -231,7 +231,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				break;
 			case ColliderZone.Body:
 					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
-						HandleInteract((Interactable)other, other);
+						HandleInteract(interactable, other);
 					}
 				break;
 		}

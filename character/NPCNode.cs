@@ -53,6 +53,16 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 		LookAt(nav.TargetPosition);
 	}
 
+	/*
+		npc pathfinding:
+		- get a navpoint based on some parameters and the current desire of the npc
+		- what conditions cause travel to be interrupted? and then how is the dest navpoint updated?
+		- how to detect when the npc gets stuck? 
+		- how to prevent getting stuck?
+		- how to be able to go around obstacles to reach destination?
+		- when to decide to stop and remain idle?
+	*/
+
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);

@@ -141,6 +141,9 @@ public partial class Level : Node
 			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
         }
 	}
+	public void ChangeLevel(PackedScene level){
+		GetTree().ChangeSceneToPacked(level);
+	}
 
 	//make sure level has the proper nodes
 	public bool ValidateLevel(){

@@ -99,9 +99,14 @@ public partial class Global : Node
 	}
 
 	public static Interactable GetInteractable(Node n){
-		GameObject go = GetGameObject(n);
-		if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
-			return mapGameObjectToInteractable[go];
+		GameObject go; //NOTE keep in mind that using this SkyCountryGameObject abstraction might not be necessary. 
+		while (n != sceneTree.Root){
+			//go = GetGameObject(n);
+			//if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
+			if (n is Interactable){
+				return (Interactable)n;
+			}
+			n = n.GetParent();
 		}
 		return null;
 	}
