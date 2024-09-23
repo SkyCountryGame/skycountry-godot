@@ -13,23 +13,22 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
 	private Node3D target; //the thing that entered the collision zone
 	private Material material;
 
-	public override void _Ready(){
-		SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-		//material = new StandardMaterial3D();
-		//material.Set("albedo", new Color(1,0,0));
-		material = GetNode<MeshInstance3D>("Awareness1/CollisionShape3D/MeshInstance3D").GetActiveMaterial(0);
-	}
+    public override void _Ready(){
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        //material = new StandardMaterial3D();
+        //material.Set("albedo", new Color(1,0,0));
+        material = GetNode<MeshInstance3D>("Awareness1/CollisionShape3D/MeshInstance3D").GetActiveMaterial(0);
+    }
 
-	public override void _Process(double delta)
-	{
-		base._Process(delta);
-		if (active){
-			//material.Set("emission_energy_multiplier", GlobalPosition.DistanceTo(target.GlobalTransform.Origin));
-			double val = 1.0 / MathF.Pow(GlobalPosition.DistanceTo(target.GlobalTransform.Origin)-.4f,2);
-			GD.Print(val);
-			material.Set("emission_energy_multiplier", val);
-		}
-	}
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (active){
+            //material.Set("emission_energy_multiplier", GlobalPosition.DistanceTo(target.GlobalTransform.Origin));
+            double val = 1.0 / MathF.Pow(GlobalPosition.DistanceTo(target.GlobalTransform.Origin)-.4f,2);
+            material.Set("emission_energy_multiplier", val);
+        }
+    }
 
 	//start dialogue when player interacts
 	public dynamic Interact()
@@ -58,31 +57,31 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
 		return true;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node other)
-	{
-		switch (zone){
-			case ColliderZone.Awareness0:
-				GD.Print("glower zone 0");
-				target = other as Node3D;
-				active = true;
-				break;
-			case ColliderZone.Awareness1:
-				GD.Print("glower zone 1");
-				break;
-			default:
-				break;
-		}
-	}
+    public void HandleCollide(ColliderZone zone, Node other)
+    {
+        switch (zone){
+            case ColliderZone.Awareness0:
+                GD.Print("glower zone 0");
+                target = (Node3D) other;
+                active = true;
+                break;
+            case ColliderZone.Awareness1:
+                GD.Print("glower zone 1");
+                break;
+            default:
+                break;
+        }
+    }
 
-	public void HandleDecollide(ColliderZone zone, Node other)
-	{
-		switch (zone){
-			case ColliderZone.Awareness0:
-				active = false;
-				target = null;
-				break;
-			default:
-				break;
-		}
-	}
+    public void HandleDecollide(ColliderZone zone, Node other)
+    {
+        switch (zone){
+            case ColliderZone.Awareness0:
+                active = false;
+                target = null;
+                break;
+            default:
+                break;
+        }
+    }
 }

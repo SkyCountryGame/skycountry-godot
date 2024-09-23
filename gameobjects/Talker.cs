@@ -15,12 +15,13 @@ public partial class Talker : Node, Interactable {
 
 	public Dialogue dialogue;
 	public List<Dialogue> dialogues; //each character has his own set of dialogues
-
+    
 	public override void _Ready(){
-		SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-		//dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
-		dialogue = new Dialogue(dialogueFilename);
-	}
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        //dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
+        dialogue = new Dialogue(dialogueFilename);
+    }
+	
 
 	//start dialogue when player interacts
 	public dynamic Interact()

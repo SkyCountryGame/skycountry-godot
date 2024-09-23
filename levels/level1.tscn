@@ -58,7 +58,7 @@ emotion = 0
 [sub_resource type="BoxShape3D" id="BoxShape3D_o4pgg"]
 size = Vector3(1, 2, 1)
 
-[node name="Wod2" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_im1ok")]
+[node name="Wod3" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_im1ok")]
 script = ExtResource("2_om4ml")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")

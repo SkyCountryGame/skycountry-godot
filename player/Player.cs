@@ -56,11 +56,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 	public override void _Process(double delta)
 	{
-		if (Global.sceneManager != null && Global.sceneManager.currentLevelScene != GetTree().CurrentScene){
-			Global.sceneManager.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
-			SceneTree st = GetTree(); //testing
-		}
-
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global.cam;
@@ -120,9 +115,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
-			} else if (Input.IsActionJustPressed("pause"))
-			{
-				//TODO pause
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
@@ -173,6 +165,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		MoveAndSlide();
 	}
 
+	//
 	public void HandleInteract(Interactable i, Node interactionObj)
 	{
 		dynamic payload = i.Interact();
@@ -213,26 +206,32 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		return null;
 	}
 
+	//called by other systems
+	public void AttemptInteract(Interactable interactable){
+		if (availableInteractables.Contains(interactable)){
+			HandleInteract(interactable, (Node)interactable);
+		}
+	}
+
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
-		
+		//will be null if not an interactable
+		Interactable interactable = Global.GetInteractable(other);
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable interactable = SceneManager.GetInteractable(other);
 				if (interactable != null)
 				{
-					if (interactable.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(interactable);
-						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-					}
+					//add to available no matter the interaction method
+					availableInteractables.Add(interactable);
+					Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+				
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
-					interactable = SceneManager.GetInteractable(other);
-					if (interactable.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(interactable, other);
+					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract((Interactable)other, other);
 					}
 				break;
 		}
@@ -241,10 +240,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public void HandleDecollide(ColliderZone zone, Node other)
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = SceneManager.GetInteractable(other);
-		if (availableInteractables.Contains(i))
+		Interactable interactable = Global.GetInteractable(other);
+		if (availableInteractables.Contains(interactable))
 		{
-			availableInteractables.Remove(i);
+			availableInteractables.Remove(interactable);
 			if (availableInteractables.Count > 0){
 				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
@@ -280,7 +279,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		}
 		if (pm.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
-			Global.sceneManager.currentLevelScene.AddChild(gameObject);
+			Global.level.AddChild(gameObject);
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == pm.equipped){
@@ -296,7 +295,21 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	{
 		pm.hp -= d; //TODO take into account armor, skills, etc.
 		if (pm.hp < 0){
-			EventManager.Invoke(EventType.GameOver);
+			EventManager.Invoke(EventType.GameOver); 
 		}
 	}
+
+	public void SetPlayerModel(PlayerModel pm)
+	{
+		this.pm = pm;
+	}
+
+	public void LoadSaveData(ConfigFile cfg){
+		Position = (Vector3) cfg.GetValue("player", "position");
+		Transform = (Transform3D) cfg.GetValue("player", "transform");
+		Rotation = (Vector3) cfg.GetValue("player", "rotation");
+		pm = (PlayerModel) cfg.GetValue("player", "model");
+		Global.playerModel = pm; //don't think that is actually necessary
+	}
+
 }
