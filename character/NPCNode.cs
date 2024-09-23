@@ -7,6 +7,8 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 
 	private Vector3 goalPosition; //a world position where the npc is currently trying to go 
 	private NavigationAgent3D nav;
+	private AnimationTree animTree; //npcs gotta have animations
+
 	private Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
 	private bool navReady = false;
 	public override void _Ready(){
@@ -58,6 +60,7 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 						MoveAndSlide();
 					} else {
 						nav.TargetPosition = NextNavPoint();
+						EffectsManager.MarkerPoint("navpoint", nav.TargetPosition);
 					}
 				}
 				break;

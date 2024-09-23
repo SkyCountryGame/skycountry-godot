@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 public class EffectsManager {
     public static Dictionary<Node3D, Dictionary<string, Label3D>> floatingTextNodes = new Dictionary<Node3D, Dictionary<string, Label3D>>();
 
-    public static void SpawnFloatingText(string key, string text, Node3D obj, Vector3 offset, float duration = 2.0f){
+    public static void SpawnFloatingText(string key, string text, Node3D obj, Vector3 offset, int duration = 2000){
 
         if (!floatingTextNodes.ContainsKey(obj)){
             floatingTextNodes.Add(obj, new Dictionary<string, Label3D>());
@@ -24,10 +24,23 @@ public class EffectsManager {
 
         //set the timer to remove this floating text after spcified duration
         Task.Run(() => {
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(duration);
             obj.CallDeferred("remove_child", floatingTextNodes[obj][key]);
             floatingTextNodes[obj][key].QueueFree();
             floatingTextNodes[obj].Remove(key);
+        });
+    }
+
+    public static void MarkerPoint(string key, Vector3 pos, int duration = 2000){
+        Node3D markerNode = (Node3D) Global.prefabs["MarkerPoint"].Instantiate();
+        markerNode.Position = pos;
+        Global.level.AddChild(markerNode);
+
+        //set the timer to remove this floating text after spcified duration
+        Task.Run(() => {
+            System.Threading.Thread.Sleep(duration);
+            Global.level.CallDeferred("remove_child", markerNode);
+            markerNode.QueueFree();
         });
     }
 

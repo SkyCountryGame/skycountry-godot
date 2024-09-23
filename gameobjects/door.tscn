@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://grlpnraydgu2"]
+
+[ext_resource type="Texture2D" uid="uid://bkgdv2r27wvmb" path="res://assets/texture/door_texture.png" id="1_16q25"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7d5d8"]
+size = Vector3(1, 2.4, 0.05)
+
+[node name="Door" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_7d5d8")
+
+[node name="Sprite3D" type="Sprite3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34, 0)
+texture = ExtResource("1_16q25")

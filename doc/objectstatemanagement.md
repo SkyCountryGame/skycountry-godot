@@ -14,5 +14,7 @@ is always in one of the following states:
     - default. normal gameplay. can walk around and interact with the world
     -
 
+I now think that state change function (UpdateState()) should actually go in the node classes, because it needs to update animation
+
 ________________________________________________________________________________________________
 state changes COULD have payloads associated with them.

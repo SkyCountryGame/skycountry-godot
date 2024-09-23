@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://beyvdk42f85ri"]
+
+[ext_resource type="Script" path="res://gameobjects/LampPost.cs" id="1_l34fk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3c5x8"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_283kt"]
+
+[node name="LampPost" type="Node3D" node_paths=PackedStringArray("lamplight")]
+script = ExtResource("1_l34fk")
+lamplight = NodePath("StaticBody3D/OmniLight3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("SphereShape3D_3c5x8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_283kt")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="StaticBody3D"]
+light_color = Color(0.545098, 1, 1, 1)
+light_energy = 0.713
+light_indirect_energy = 1.383
+omni_range = 6.102
+omni_attenuation = 2.37841

@@ -46,7 +46,8 @@ public partial class Global : Node
         {
             { "FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/floatingtext.tscn") },
             { "ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn") },
-            { "Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn") }
+            { "Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn") },
+			{ "MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/markerpoint.tscn") },
         };
     }
 
