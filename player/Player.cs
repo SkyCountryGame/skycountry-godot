@@ -115,10 +115,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
-			} /*else if (Input.IsActionJustPressed("pause"))
-			{
-				Global.TogglePause();
-			}*/ else if (Input.IsActionJustPressed("player_inv")){
+			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
 				Global.hud.ToggleInventory(pm.inv);
@@ -168,6 +165,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		MoveAndSlide();
 	}
 
+	//
 	public void HandleInteract(Interactable i, Node interactionObj)
 	{
 		dynamic payload = i.Interact();
@@ -208,6 +206,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		return null;
 	}
 
+	//called by other systems
+	public void AttemptInteract(Interactable interactable){
+		if (availableInteractables.Contains(interactable)){
+			HandleInteract(interactable, (Node)interactable);
+		}
+	}
+
 	public void HandleCollide(ColliderZone zone, Node other)
 	{
 		//will be null if not an interactable
@@ -216,10 +221,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case ColliderZone.Awareness0:
 				if (interactable != null)
 				{
-					if (interactable.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(interactable);
-						Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-					}
+					//add to available no matter the interaction method
+					availableInteractables.Add(interactable);
+					Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+				
 				}
 				break;
 			case ColliderZone.Awareness1:
