@@ -6,17 +6,19 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 
 	[Export] public NPCModel m;
 
-	private Vector3 goalPosition; //a world position where the npc is currently trying to go 
-	private AnimationTree animTree; //npcs gotta have animations
+	protected Vector3 goalPosition; //a world position where the npc is currently trying to go 
+	protected AnimationTree animTree; //npcs gotta have animations
 
-	[Export] private NavigationAgent3D nav;
-	private Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
-	private bool navReady = false;
+	[Export] protected NavigationAgent3D nav;
+	protected Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
+	protected bool navReady = false;
+
+	protected Node3D target; //a node of interest to the npc
 
     //timers: periodic timer could be useful, https://learn.microsoft.com/en-us/dotnet/api/system.timers.timer?view=net-8.0 
     //private System.Timers.Timer periodicTimer = new System.Timers.Timer(); //period timer used to switch activities. 
     //but Godot.Timer is countdown which works better here for remaining in a state for some time, then doing something, then resetting the timer with a new duration
-    private SceneTreeTimer stateTimer; //used to count down to state change (unless interupted by event)
+    protected SceneTreeTimer stateTimer; //used to count down to state change (unless interupted by event)
 
 	public override void _Ready(){
         if (m == null){
@@ -42,11 +44,15 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 	public override void _Process(double delta){
 		switch (m.state){ //what is the npc doing in each different case of his state of being? 
 			case NPCModel.State.IDLE: //
-
+				LookAt(nav.TargetPosition);
 				break;
 			case NPCModel.State.TALKING:
 				break;
+			case NPCModel.State.ALERT:
+				LookAt(target.Position);
+				break;
 			case NPCModel.State.ROAMING:
+				LookAt(nav.TargetPosition);
 				break;
 			case NPCModel.State.ATTACKING:
 				break;
@@ -58,7 +64,7 @@ public partial class NPCNode : CharacterBody3D, Collideable {
 				break;
 		}
 
-		LookAt(nav.TargetPosition);
+		
 	}
 
 	/*
@@ -116,6 +122,7 @@ public partial class NPCNode : CharacterBody3D, Collideable {
     public bool UpdateState(State s, dynamic payload = null){
         if (m.UpdateState(s)){
             //animation change and anything else that needs to be handled in node
+			target = payload;
             return true;
         } else {
             return false;

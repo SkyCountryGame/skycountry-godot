@@ -1,8 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://mkrti0jlvpeu"]
+[gd_scene load_steps=12 format=3 uid="uid://mkrti0jlvpeu"]
 
 [ext_resource type="Shape3D" uid="uid://dcy4l7dkbay83" path="res://levels/testbox.tres" id="1_cncyu"]
 [ext_resource type="Script" path="res://character/NPCNode.cs" id="1_gh3j8"]
+[ext_resource type="Script" path="res://character/NPCModel.cs" id="2_f270f"]
 [ext_resource type="Script" path="res://util/AutomaticMeshFromMeshInstance.cs" id="2_yc0er"]
+[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="4_5xkna"]
+
+[sub_resource type="Resource" id="Resource_hdtfb"]
+script = ExtResource("2_f270f")
+name = "BirdHunter"
+description = ""
+disposition = 0
+state = 0
+emotion = 0
+defaultState = 0
+stateTransitionInterval = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_arnjd"]
 size = Vector3(0.2, 1, 0.2)
@@ -13,9 +25,19 @@ size = Vector3(0.2, 1, 0.2)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vfbe4"]
 radius = 0.3
 
-[node name="TheBirdHunter" type="CharacterBody3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xmfa0"]
+height = 2.5
+radius = 7.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_exar4"]
+height = 2.5
+radius = 3.0
+
+[node name="TheBirdHunter" type="CharacterBody3D" node_paths=PackedStringArray("nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36798, 0.1, 0)
 script = ExtResource("1_gh3j8")
+m = SubResource("Resource_hdtfb")
+nav = NodePath("NavAgent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -47,3 +69,18 @@ script = ExtResource("2_yc0er")
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 path_max_distance = 15.41
+
+[node name="Awareness" type="Area3D" parent="."]
+script = ExtResource("4_5xkna")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Awareness"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CylinderShape3D_xmfa0")
+
+[node name="Interact" type="Area3D" parent="."]
+script = ExtResource("4_5xkna")
+zone = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interact"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CylinderShape3D_exar4")

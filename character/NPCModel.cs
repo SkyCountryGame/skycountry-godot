@@ -9,7 +9,7 @@ public partial class NPCModel : Resource{
 	
 	//inventory, quests, tribe, ? 
 	// 
-	[Export] Inventory inv;
+	[Export] public Inventory inv;
 
 	[Export] public int disposition = 0; //level of hostility/friendliness. more negative is more hostile, positive friendly, 0 neutral
 	
@@ -26,6 +26,7 @@ public partial class NPCModel : Resource{
     [Export(PropertyHint.None,"average duration (s) to remain in each state unless interrupted")] 
     public int stateTransitionInterval;
 
+	//
 	public Dictionary<State, Animation> mapStateAnimation; //which animation for which state 
 
     //should never have to call default constructor because always loaded from '.tres' file
@@ -58,6 +59,7 @@ public partial class NPCModel : Resource{
 			case State.DEAD:
 				break;
 		}
+		state = s; //TODO
         return true;
 	}
 
