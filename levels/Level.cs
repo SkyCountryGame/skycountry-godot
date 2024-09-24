@@ -22,7 +22,7 @@ public partial class Level : Node
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
 	//private List<NPCNode> npcs;
 
-    public Aabb worldBounds; //the current bounds of all the meshes in the world
+	public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
 	public int DURATION_DAY = 48; //in seconds

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://w0yqou02tgux"]
+[gd_scene load_steps=28 format=3 uid="uid://w0yqou02tgux"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_im1ok"]
 [ext_resource type="Script" path="res://levels/Level1.cs" id="2_om4ml"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://mkrti0jlvpeu" path="res://characters/the_bird_hunter.tscn" id="8_leco6"]
 [ext_resource type="Script" path="res://character/NPCModel.cs" id="8_lvc6t"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
+[ext_resource type="Script" path="res://characters/BirdHunter.cs" id="9_gpyqt"]
 [ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="12_8mb05"]
@@ -141,6 +142,8 @@ target_desired_distance = 1.55
 path_max_distance = 12.81
 
 [node name="TheBirdHunter" parent="." index="7" instance=ExtResource("8_leco6")]
+script = ExtResource("9_gpyqt")
+m = null
 
 [node name="DeathWall" parent="." index="8" instance=ExtResource("9_bfuf4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.965, 0, 0)
