@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://be7o4l780fu6a"]
+
+[ext_resource type="Script" path="res://inventory/Inventory.cs" id="1_nm2ak"]
+[ext_resource type="Script" path="res://character/NPCModel.cs" id="2_p0n5n"]
+
+[sub_resource type="Resource" id="Resource_u6ply"]
+script = ExtResource("1_nm2ak")
+capacity = 0
+
+[resource]
+script = ExtResource("2_p0n5n")
+name = "The Bird Hunter"
+description = ""
+inv = SubResource("Resource_u6ply")
+disposition = 0
+state = 0
+emotion = 6
+defaultState = 0
+stateTransitionInterval = 4

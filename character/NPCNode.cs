@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Timers;
 using Godot;
 using State = NPCModel.State;
 
@@ -17,35 +19,26 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 	protected Node3D target; //a node of interest to the npc. 
 
 	//timers: periodic timer could be useful, https://learn.microsoft.com/en-us/dotnet/api/system.timers.timer?view=net-8.0 
-	//private System.Timers.Timer periodicTimer = new System.Timers.Timer(); //period timer used to switch activities. 
+	protected System.Timers.Timer stateTimer; //periodic timer used to switch activities. 
 	//but Godot.Timer is countdown which works better here for remaining in a state for some time, then doing something, then resetting the timer with a new duration
-	protected SceneTreeTimer stateTimer; //used to count down to state change (unless interupted by event)
+	//protected SceneTreeTimer stateTimer; //used to count down to state change (unless interupted by event)
+	protected List<State> cycleStates; //states that will be automatically cycled through via timer
+	protected int cycleStateIdx = 0; //curent index of cycle state
+	protected System.Timers.Timer checkTimer; //timer for checking position to see if got stuck
 
 	public override void _Ready(){
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
 		}
-		stateTimer = GetTree().CreateTimer(m.stateTransitionInterval);
-		stateTimer.Timeout += OnStateTimeout;
-		Velocity = new Vector3(1, 0, -2);
-
-		if (nav == null) {
-			try {
-				nav = GetNode<NavigationAgent3D>("NavAgent");
-				NavigationServer3D.MapChanged += (arg) => { 
-					nav.TargetPosition = Global.level.GetRandomNavPoint();
-					navReady = true; 
-				};
-			} catch {
-				GD.Print($"NPCNode: No NavigationAgent3D found for {this}");
-			}
-		}
+		stateTimer = new System.Timers.Timer((m.stateTransitionInterval + GD.RandRange(-1, 1))*1000);//GetTree().CreateTimer(m.stateTransitionInterval);
+		stateTimer.AutoReset = true; //Timeout += OnStateTimeout;
+		stateTimer.Elapsed += OnStateTimeout;
+		stateTimer.Start();
 	}
 
 	public override void _Process(double delta){
 		switch (m.state){ //what is the npc doing in each different case of his state of being? 
 			case NPCModel.State.IDLE: //
-				LookAt(nav.TargetPosition);
 				break;
 			case NPCModel.State.TALKING:
 				break;
@@ -53,7 +46,9 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 				LookAt(target.Position);
 				break;
 			case NPCModel.State.ROAMING:
-				LookAt(nav.TargetPosition);
+				if (nav != null){
+					LookAt(nav.TargetPosition);
+				}
 				break;
 			case NPCModel.State.ATTACKING:
 				break;
@@ -117,7 +112,14 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 	}*/
 
 	//called by the state transition timer. attempt to change state according to some logic. reset the timer 
-	private void OnStateTimeout(){
+	private void OnStateTimeout(object sender, ElapsedEventArgs e){
+		cycleStateIdx += 1;
+		if (cycleStateIdx >= cycleStates.Count){
+			cycleStateIdx = 0;
+		}
+		GD.Print("state timer");
+		UpdateState(cycleStates[cycleStateIdx]);
+		stateTimer.Interval = ((m.stateTransitionInterval + GD.RandRange(-3, 3))*1000);
 		
 	}
 }
