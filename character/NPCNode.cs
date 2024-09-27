@@ -76,20 +76,6 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		switch (m.state) {
-			case NPCModel.State.IDLE:
-				if (navReady){
-					if (!nav.IsNavigationFinished()){
-						nav.Velocity = (nav.GetNextPathPosition() - Position) * .5f;
-						Velocity = nav.Velocity;
-						MoveAndSlide();
-					} else {
-						nav.TargetPosition = NextNavPoint();
-						EffectsManager.MarkerPoint("navpoint", nav.TargetPosition);
-					}
-				}
-				break;
-		}
 	}
 
 	//has default functionality but obviously can be overriden
@@ -117,9 +103,8 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 		if (cycleStateIdx >= cycleStates.Count){
 			cycleStateIdx = 0;
 		}
-		GD.Print("state timer");
 		UpdateState(cycleStates[cycleStateIdx]);
 		stateTimer.Interval = ((m.stateTransitionInterval + GD.RandRange(-3, 3))*1000);
-		
+		GD.Print($"state {m.state}; interval {stateTimer.Interval}");
 	}
 }

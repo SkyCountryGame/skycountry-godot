@@ -103,7 +103,13 @@ public partial class Camera : Camera3D
             if (target is Player){
                 Global.playerNode.SetForward(-new Vector3(offset.X, 0, offset.Z));
             }
-        }
+        } else if (Input.IsActionPressed("cam_rotate_up")){
+			float theta = camRotateIncrement;
+			offset = offset.Rotated(Vector3.Right, theta);
+		} else if (Input.IsActionPressed("cam_rotate_down")){
+			float theta = -camRotateIncrement;
+			offset = offset.Rotated(Vector3.Right, theta);
+		}
 	}
 
 	//move camera to focus on some other object

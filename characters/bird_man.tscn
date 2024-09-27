@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr1wgiphvwm5j"]
+[gd_scene load_steps=4 format=3 uid="uid://cr1wgiphvwm5j"]
 
 [ext_resource type="Script" path="res://util/ConvexPolygonGenerator.cs" id="1_o10yi"]
-[ext_resource type="Texture2D" uid="uid://4mnj65dyn1d" path="res://assets/texture/birdmanface.png" id="2_ebxft"]
 
 [sub_resource type="PointMesh" id="PointMesh_nphu7"]
 
@@ -21,4 +20,3 @@ script = ExtResource("1_o10yi")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-texture = ExtResource("2_ebxft")

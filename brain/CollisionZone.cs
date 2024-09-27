@@ -32,11 +32,25 @@ public partial class CollisionZone : Area3D
 
 	private void OnBodyEnter(Node other)
 	{	
+		Node checkIfSelf = other; //first check to make sure not colliding with part of self
+		while (checkIfSelf != null){
+			if (checkIfSelf == parentCollideable){ 
+				return;
+			}
+			checkIfSelf = checkIfSelf.GetParent();
+		}
 		parentCollideable.HandleCollide(zone, other); //tell the parent that other collided with zone zone
 	}
 
 	private void OnBodyExit(Node other)
 	{
+		Node checkIfSelf = other; //first check to make sure not colliding with part of self
+		while (checkIfSelf != null){
+			if (checkIfSelf == parentCollideable){ 
+				return;
+			}
+			checkIfSelf = checkIfSelf.GetParent();
+		}
 		parentCollideable.HandleDecollide(zone, other); //tell the parent that something collided with zone zone
 	}
 }

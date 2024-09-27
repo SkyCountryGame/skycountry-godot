@@ -142,7 +142,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27986, 3.24299, 5.84783)
 [node name="PauseMenu" parent="." index="10" instance=ExtResource("11_ccbhd")]
 
 [node name="TheBirdHunter" parent="." index="11" instance=ExtResource("8_leco6")]
-m = null
 
 [node name="BirdMan" parent="." index="12" instance=ExtResource("13_61ty6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49853, 0.0999999, 0)

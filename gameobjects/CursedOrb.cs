@@ -22,7 +22,8 @@ public partial class CursedOrb : Node3D
 		body.Rotate(Vector3.Up, MathF.PI/32.0f);
 		Position = new Vector3(Position.X, 2*(1+(float) Math.Sin(delta % (2*Math.PI))), Position.Z);
 
-		if (Global.playerNode != null){
+		//TODO remove. this is just for prototyping/testing
+		if (Global.playerNode != null && IsInstanceValid(Global.playerNode)){
 			nav.TargetPosition = Global.playerNode.Position;
 		}
 		

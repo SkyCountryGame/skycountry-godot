@@ -23,10 +23,11 @@ radius = 7.0
 height = 2.5
 radius = 3.0
 
-[node name="TheBirdHunter" type="CharacterBody3D"]
+[node name="TheBirdHunter" type="CharacterBody3D" node_paths=PackedStringArray("nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36798, 0.1, 0)
 script = ExtResource("1_75boj")
 m = ExtResource("2_r0wc2")
+nav = NodePath("NavAgent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

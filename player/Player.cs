@@ -142,7 +142,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			velocity.Y = Velocity.Y; //thank you adam
 		} else {
 			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+			if (controlDir.Length() == 0 && Velocity.Length() < 0.08f){
 				velocity = Vector3.Zero;
 				accel = Vector3.Zero;
 			} else if (Velocity.Length() > gv.Length()) {
