@@ -30,7 +30,6 @@ public partial class Global : Node
 	public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
 	public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
-	public static HashSet<Interactable> interactables = new HashSet<Interactable>(); //interactable objects in the game TODO might not be in this class?
 	public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
 
 	// Called when the node enters the scene tree for the first time.
@@ -71,7 +70,6 @@ public partial class Global : Node
 		}
 		switch(type){
 			case GameObjectType.Interactable:
-				interactables.Add((Interactable)node);
 				mapGameObjectToInteractable.Add(go, (Interactable)node);
 				break;
 			case GameObjectType.SpawnPoint:
