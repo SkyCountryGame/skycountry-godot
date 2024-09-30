@@ -16,7 +16,7 @@ using System.Xml.Schema;
     - parses a file that contains the spec for a tree of dialogue
     - turns that into a dialogue which is then used by the game
  **/
-public partial class Dialogue
+public partial class Dialogue : Resource
 {
     //TODO add functionaliy for removing/adding/altering responses etc. after something already said or other event
 

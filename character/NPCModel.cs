@@ -13,6 +13,8 @@ public partial class NPCModel : Resource{
 
 	[Export] public int disposition = 0; //level of hostility/friendliness. more negative is more hostile, positive friendly, 0 neutral
 	
+    [Export] public Dialogue dialogue; //NPCs can have dialogue, often many, each associated with a level or other conditions
+
 	public enum State { 
         IDLE, //standing still
         ALERT, //something nearby happened, like somebody entered awareness zone, maybe watching or pursuing
