@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Godot;
 
 [GlobalClass]
@@ -11,7 +11,7 @@ public partial class PlayerModel : Resource {
     public int hp = 0;
 	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	
-	[System.Flags]
+	[Flags]
 	public enum State //maybe activity state? 
 	{
 		DEFAULT = 1 << 0,
@@ -31,6 +31,7 @@ public partial class PlayerModel : Resource {
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
 	//[Export]
 	public InventoryItem equipped; 
+	public Node3D rightHandEquipped;
 
     public PlayerModel(CharacterBody3D playerNode){
 		this.playerNode = playerNode;
@@ -51,16 +52,16 @@ public partial class PlayerModel : Resource {
 	/**
 	  * logic to perform when switching states
 	  */
-    public bool UpdateState(State s){
+    public bool SetState(State s){
 		State prev = activityState; //some state transitions need to know previous
 		if (dS[activityState].Contains(s)){
 			activityState = s;
 			switch (activityState){
 				case State.DEFAULT:
 					if (prev == State.INVENTORY){
-						Global.hud.HideInventory();
+						Global.HUD.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						Global.hud.ExitDialogue();
+						Global.HUD.ExitDialogue();
 					}
 					break;
 				case State.CHARGING:
@@ -97,7 +98,7 @@ public partial class PlayerModel : Resource {
 	public void AddToInventory(InventoryItem item)
     {
         inv.Add(item);
-		Global.hud.UpdateInventoryMenu(inv);
+		Global.HUD.UpdateInventoryMenu(inv);
     }
 
     public void AddToInventory(Inventory inv)

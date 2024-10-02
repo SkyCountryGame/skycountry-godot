@@ -16,7 +16,7 @@ public partial class Global : Node
 	public static Player playerNode;  //set by Player 
 	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
 	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
-	public static HUDManager hud; // set by HUDManager on ready
+	public static HUDManager HUD; // set by HUDManager on ready
 	public static PauseMenu pauseMenu; // set by PauseMenu on ready
 	public static PrefabManager prefabMgr; // constructed here in init()
 	public static Dictionary<string, PackedScene> prefabs;

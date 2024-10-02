@@ -20,7 +20,7 @@ sky = SubResource("Sky_esjiq")
 ambient_light_source = 1
 tonemap_mode = 2
 
-[node name="Wod" type="Node3D"]
+[node name="World" type="Node3D"]
 script = ExtResource("1_ypbtj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

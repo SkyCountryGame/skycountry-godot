@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=42 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -14,10 +14,11 @@
 [ext_resource type="Script" path="res://gameobjects/Clickable.cs" id="14_yk8hg"]
 [ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
+[ext_resource type="PackedScene" uid="uid://cpgtgprmalggl" path="res://gameobjects/test_pickaxe.tscn" id="19_ci1ek"]
 [ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
-[ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
-[ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
+[ext_resource type="PackedScene" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -89,7 +90,7 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
 levelSceneFilenames = {
@@ -244,3 +245,6 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 
 [node name="PauseMenu" parent="." instance=ExtResource("22_744mc")]
 process_mode = 3
+
+[node name="TestPickaxe" parent="." instance=ExtResource("19_ci1ek")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.50515, 0.121619, -1.83762)

@@ -32,7 +32,7 @@ size = Vector2(50, 50)
 [sub_resource type="BoxShape3D" id="BoxShape3D_hi71w"]
 size = Vector3(1, 2.73619, 1.02371)
 
-[node name="Wod2" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_yy4dy")]
+[node name="World2" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_yy4dy")]
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 

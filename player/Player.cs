@@ -8,14 +8,15 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 {
 
 	//MOVEMENT 
-	public double gravity = -20f;
-	public float JumpVelocity = 200;
+	public double gravity = -3f;
+	public float JumpVelocity = 30;
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
-	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
+	private Node3D rightHand;
+	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
@@ -46,6 +47,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
+		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -56,22 +58,24 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 	public override void _Process(double delta)
 	{
-		//RayCast Stuff
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Camera3D camera =  Global.cam;
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
-		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,1));
-		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
-			Vector3 pos = (Vector3)intersection["position"];
-			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
-			LookAt(viewAngle);
+		if(playerModel.GetState() == State.DEFAULT){
+			//RayCast Stuff
+			Vector2 mousePosition = GetViewport().GetMousePosition();
+			Camera3D camera =  Global.cam;
+			Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+			Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*10000;
+			PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+			Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
+			if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+				Vector3 pos = (Vector3)intersection["position"];
+				Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+				LookAt(viewAngle);
+			}
 		}
 
 		//HUD stuff
-		if (!Global.hud.actionLabel.Visible && availableInteractables.Count > 0){
-			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
+			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 		}
 	}
 
@@ -80,7 +84,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		//do appropriate thing whether we are in inventory or not
 		if ((playerModel.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
-				playerModel.UpdateState(State.DEFAULT);
+				playerModel.SetState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
 				//TODO inv left
 			} else if (Input.IsActionJustPressed("right")){
@@ -93,10 +97,20 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		} else {
 			inputDir.X = Input.GetAxis("left", "right");
 			inputDir.Z = Input.GetAxis("forward", "backward");
-			if (Input.IsActionJustPressed("player_action2")){
+			if(Input.IsActionJustPressed("player_action1") && (playerModel.GetState() & (State.DEFAULT | State.AIMING)) != 0){
+				if(playerModel.equipped != null ){ //hmmmmmmmmmmmmmmm has to be a better way
+					playerModel.SetState(State.ATTACKING);
+					playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=false;
+					((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties) playerModel.equipped.GetItemProperties()).swingAnimation);
+					animationTree.AnimationFinished += (value) => 
+					{
+						playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=true;
+						playerModel.SetState(State.DEFAULT);
+					};	
+				}
+			} else if (Input.IsActionJustPressed("player_action2")){
 
-			} else if (Input.IsActionJustReleased("player_jump")) //TODO implement charge-up later
-			{
+			} else if (Input.IsActionJustPressed("player_jump")) { //TODO implement charge-up later
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
 				switch (playerModel.GetState()){
@@ -108,17 +122,17 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 								HandleInteract(i, (Node)i);
 							}
 						} else {
-							Global.hud.LogEvent("there is nothing with which to interact");
+							Global.HUD.LogEvent("there is nothing with which to interact");
 						}
 						break;
 					case State.DIALOGUE:
-						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
+						Global.HUD.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.hud.ToggleInventory(playerModel.inv);
+				Global.HUD.ToggleInventory(playerModel.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
 				EquipItem();
 			}
@@ -153,7 +167,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				velocity += accel * (float)delta;
 			}
 		}
-		if (jump){
+		if (jump && IsOnFloor()){
 			velocity.Y += JumpVelocity;
 			jump = false;
 		} else if (IsOnFloor()) {
@@ -172,8 +186,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				if (playerModel.UpdateState(State.DIALOGUE)){
-					Global.hud.ShowDialogue(((Talker)i).GetDialogue());
+				if (playerModel.SetState(State.DIALOGUE)){
+					Global.HUD.ShowDialogue(((Talker)i).GetDialogue());
 				}
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
@@ -182,14 +196,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				InventoryItem item = payload;
 				playerModel.AddToInventory(item);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-				Global.hud.LogEvent($" + {item}");
+				Global.HUD.LogEvent($" + {item}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
-				Global.hud.LogEvent($"{i.Info()}");
+				Global.HUD.LogEvent($"{i.Info()}");
 				payload(this); //TODO what return? 
 				break;
 			default:
@@ -223,7 +237,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				{
 					//add to available no matter the interaction method
 					availableInteractables.Add(interactable);
-					Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+					Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 				
 				}
 				break;
@@ -245,9 +259,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		{
 			availableInteractables.Remove(interactable);
 			if (availableInteractables.Count > 0){
-				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+				Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
 			} else {
-				Global.hud.HideAction();
+				Global.HUD.HideAction();
 			}
 		}
 	}
@@ -257,15 +271,39 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		camForward = f.Normalized();	
 	}
 
+	public void EquipRightHand(InventoryItem item){
+		string equipPath = "";
+		switch(item.GetItemProperties()){
+			case MeleeItemProperties i:
+				equipPath = i.equipPath;
+				break;
+			case RangedItemProperties i:
+				equipPath = i.equipPath;
+				break;
+			default:
+
+				break;
+		}
+		playerModel.rightHandEquipped = (Node3D)item.GetPackedScene().Instantiate().GetNode(equipPath).Duplicate();
+		rightHand.AddChild(playerModel.rightHandEquipped);
+	}
+
+	public void UnequipRightHand(){
+		if(rightHand.GetChildCount()>0){
+			rightHand.RemoveChild(rightHand.GetChild(0));
+		}
+	}
+
 	/** by default equip the primary item, or give an item to equip */
 	public bool EquipItem(InventoryItem item = null){
 		if (playerModel.inv.IsEmpty()) return false;
 		if (item == null){ //equip the primary item
 			playerModel.equipped = playerModel.inv.GetItemByIndex(0);
-			Global.hud.ShowEquipped(playerModel.equipped.name);
+			Global.HUD.ShowEquipped(playerModel.equipped.name);
 		} else {
 			if (playerModel.inv.Contains(item)){
 				playerModel.equipped = item;
+				EquipRightHand(item);
 			}
 		}
 		return playerModel.equipped != null;
@@ -285,7 +323,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			if (item == playerModel.equipped){
 				playerModel.equipped = null;
 			}
-			Global.hud.ShowEquipped(); //TODO should not have to call this. fix
+			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
 			return true;
 		}
 		return false;

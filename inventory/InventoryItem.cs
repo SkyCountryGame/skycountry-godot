@@ -12,16 +12,34 @@ public partial class InventoryItem : Resource, System.ICloneable {
     public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
+    public bool equippable;
 
     public bool inited = false;
-    [Export] private InventoryItemProperties properties = new InventoryItemProperties();
+    [Export] private InventoryItemProperties itemProperties = new InventoryItemProperties();
 
     public InventoryItem() : base() { }
+
+    public InventoryItem(InventoryItemProperties itemProperties, bool equippable = false) : base()
+    {
+        this.itemProperties.itemType = itemProperties.itemType;
+        name = itemProperties.name;
+        id = nextId++;
+        this.equippable = equippable;
+        this.itemProperties = itemProperties;
+        //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
+        if(itemProperties.scenePath!=null){
+            packedScenePath = itemProperties.scenePath;
+        } else if (ResourceLoader.Exists($"res://gameobjects/{name}.tscn")){
+            packedScenePath = $"res://gameobjects/{name}.tscn";
+        } else {
+            packedScene = Global.prefabs["ERROR"];
+        }
+    }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
     public InventoryItem(ItemType t, string name, bool equippable = false) : base()
     {
-        properties.itemType = t;
+        itemProperties.itemType = t;
         this.name = name;
         id = nextId++;
         
@@ -48,7 +66,7 @@ public partial class InventoryItem : Resource, System.ICloneable {
     override
     public string ToString()
     {
-        return properties.itemType.ToString() + ": " + name;
+        return itemProperties.itemType.ToString() + ": " + name;
     }
 
     public override int GetHashCode()
@@ -69,8 +87,12 @@ public partial class InventoryItem : Resource, System.ICloneable {
         return packedScene;
     }
 
+
+    public InventoryItemProperties GetItemProperties(){
+        return itemProperties;
+    }
     public ItemType GetItemType(){
-        return properties.itemType;
+        return itemProperties.itemType;
     }
 
     /**
