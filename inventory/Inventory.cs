@@ -15,10 +15,10 @@ public partial class Inventory : Resource, System.ICloneable
 	[Export]
 	public int capacity; //max # items can be wwww
 
-	public Inventory(int capacity)
+	public Inventory(int capacity = 1)
 	{
 		this.capacity = capacity;
-		stock = new List<InventoryItem>(4);
+		stock = new List<InventoryItem>(capacity);
 	}
 
 	public bool Add(InventoryItem item)

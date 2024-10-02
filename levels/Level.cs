@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 using Timer = Godot.Timer;
 
 //base class for levels
-public partial class Level : Node3D
+public partial class Level : Node
 {
+	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
+
+	//TODO actually gonna store the levels in Global, because need to load and access before Level node loaded
+	[Export(PropertyHint.File, "Without 'res://'")] public Godot.Collections.Dictionary<string, string> levelSceneFilenames = new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
+	private Dictionary<string, PackedScene> levelScenes = new Dictionary<string, PackedScene>(); //subsequent levels that can be accessed from this level
+
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit
 
 	[Export] public NavigationRegion3D navRegion;
 	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
-	public List<NPCNode> npcs;
+	//public List<NPCNode> npcs;
 	public Aabb worldBounds; //the current bounds of all the meshes in the world
 	
 	public Vector3 WORLD_ORIGIN = new Vector3(0,0,0); //sunlight will always point here
@@ -29,6 +35,20 @@ public partial class Level : Node3D
 			Global.navRegion = navRegion;
 		}
 
+		//load the levels that can be accessed from this level
+		foreach (KeyValuePair<string, string> level in levelSceneFilenames){
+			string fn = "";
+			if (level.Value.Substr(0, 5) != "levels/"){
+				fn = "levels/";
+			} 
+			if (level.Value.Substr(level.Value.Length - 5, 5) != ".tscn"){
+				fn += level.Value + ".tscn";
+			} else {
+				fn += level.Value;
+			}
+			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
+        }
+		
 		//dynamically spawn things
 		//health pickups
 		//enemies
@@ -70,10 +90,6 @@ public partial class Level : Node3D
 		//TODO where change lighting for time of day? maybe a timer that repeats every several minutes to slightly change the color.
 				
 	}
-	
-	public override void _UnhandledInput(InputEvent @event){
-
-	}
 
 	//gets some random point within the world bounds
 	public Vector3 GetRandomPoint(){
@@ -106,17 +122,36 @@ public partial class Level : Node3D
 			{
 				Aabb meshBounds = mesh.GetAabb();
 
-				if (firstMesh)
-				{
-					worldBounds = meshBounds;
-					firstMesh = false;
-				}
-				else
-				{
-					worldBounds = worldBounds.Merge(meshBounds);
-				}
-			}
-		}
-		return worldBounds;
+                if (firstMesh)
+                {
+                    worldBounds = meshBounds;
+                    firstMesh = false;
+                }
+                else
+                {
+                    worldBounds = worldBounds.Merge(meshBounds);
+                }
+            }
+        }
+        return worldBounds;
+    }
+
+	public void ChangeLevel(string levelName){
+		if (levelScenes.ContainsKey(levelName)){
+			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
+        }
+	}
+
+	//make sure level has the proper nodes
+	public bool ValidateLevel(){
+		//check hud, pausemenu, camera, light?
+		return true;
+	}
+
+	public void LoadSaveData(ConfigFile cfg){
+		string levelName = (string) cfg.GetValue("level", "name");
+		ChangeLevel(levelName);
+		//TODO activeScene if in a sublevel
+		//TODO time, npcs, enemies				
 	}
 }

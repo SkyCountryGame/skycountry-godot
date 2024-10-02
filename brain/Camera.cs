@@ -36,9 +36,6 @@ public partial class Camera : Camera3D
 
 	public override void _Ready()
 	{
-		if (target == null){ //target wasn't set in editor
-			target = (Node3D)GetNode("../Player");
-		}
 		Global.cam = this;
 	}
 
@@ -52,6 +49,9 @@ public partial class Camera : Camera3D
 
 	public override void _Process(double delta)
 	{
+		if (target == null){ //set here because player node might not be ready when cam ready 
+			target = Global.playerNode;
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
