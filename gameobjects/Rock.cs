@@ -1,13 +1,17 @@
 using Godot;
 using System;
-using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
-    public InteractionType interactionType => InteractionType.Pickup;
+public partial class Rock : RigidBody3D, Interactable, Destroyable {
+    public InteractionType interactionType => InteractionType.Mineable;
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
 
+    int Destroyable.health { get => health; set => health = value; }
+
+    private int health = 3;
+
     private InventoryItem rockItem;
+
 
     public Rock()
     {

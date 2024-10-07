@@ -34,6 +34,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public override void _Ready()
 	{
 		base._Ready();
+		animationTree.AnimationFinished += AttackFinished;
 		if (Global.playerModel == null){
 			//TODO this is where we would load savedata (or maybe SceneManager does that?)
 			playerModel = new PlayerModel(this);
@@ -50,11 +51,20 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
 	}
 
+    private void AttackFinished(StringName animName)
+    {
+        playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=true;
+		playerModel.SetState(State.DEFAULT);
+    }
+
+
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		if(playerModel.GetState() == State.DEFAULT)
 		DoMotion(delta); 
 		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
+		jump = false;
 	}
 	public override void _Process(double delta)
 	{
@@ -102,15 +112,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 					playerModel.SetState(State.ATTACKING);
 					playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=false;
 					((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties) playerModel.equipped.GetItemProperties()).swingAnimation);
-					animationTree.AnimationFinished += (value) => 
-					{
-						playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=true;
-						playerModel.SetState(State.DEFAULT);
-					};	
 				}
 			} else if (Input.IsActionJustPressed("player_action2")){
 
-			} else if (Input.IsActionJustPressed("player_jump")) { //TODO implement charge-up later
+			} else if (Input.IsActionJustPressed("player_jump")) { 
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
 				switch (playerModel.GetState()){
@@ -284,7 +289,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 				break;
 		}
-		playerModel.rightHandEquipped = (Node3D)item.GetPackedScene().Instantiate().GetNode(equipPath).Duplicate();
+		playerModel.rightHandEquipped = (Node3D)item.GetPackedScene().Instantiate().Duplicate();
+		playerModel.rightHandEquipped.GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
 		rightHand.AddChild(playerModel.rightHandEquipped);
 	}
 

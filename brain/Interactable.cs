@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 public enum InteractionType
 { //more than anything, this specifies the datatype of the payload
 	Dialogue, 

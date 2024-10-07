@@ -36,11 +36,11 @@ public partial class PlayerModel : Resource {
     public PlayerModel(CharacterBody3D playerNode){
 		this.playerNode = playerNode;
         dS = new Dictionary<State, HashSet<State>>();
-		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
+		dS.Add(State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE });
 		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
 		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
-		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT });
 		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
 		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
 		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });

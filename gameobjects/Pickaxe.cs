@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : StaticBody3D, Interactable {
+public partial class Pickaxe : StaticBody3D, Interactable, Collideable {
     private InventoryItem pickaxeItem; 
     public InteractionType interactionType => InteractionType.Pickup;
 
@@ -48,5 +48,29 @@ public partial class Pickaxe : StaticBody3D, Interactable {
     public bool IsInteractionValid(Interactor interactor)
     {
         return true;
+    }
+
+    public void HandleCollide(ColliderZone zone, Node other)
+    {
+        if(!GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled){
+            switch (zone){
+                case ColliderZone.Body:
+                    GD.Print("inside Body");
+                    if(other is Interactable && ((Interactable) other).interactionType == InteractionType.Mineable){
+                        if(other is Destroyable){
+                            GD.Print("health is " + ((Destroyable)other).health);
+                            ((Destroyable)other).health-=((MeleeItemProperties)pickaxeItem.GetItemProperties()).damage;
+                            GD.Print("health is now" + ((Destroyable)other).health);
+                            GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled = true;
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void HandleDecollide(ColliderZone zone, Node other)
+    {
+        
     }
 }
