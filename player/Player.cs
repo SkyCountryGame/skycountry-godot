@@ -203,6 +203,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	public Interactable GetFirstInteractable()
 	{
+		//TODO sort by distance
 		if (availableInteractables.Count > 0)
 		{
 			return availableInteractables.First();
@@ -243,10 +244,19 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	{
 		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
 		Interactable interactable = Global.GetInteractable(other);
-		if (availableInteractables.Contains(interactable))
-		{
-			availableInteractables.Remove(interactable);
+		switch (zone) {
+			case ColliderZone.Awareness0:
+				if (interactable != null && availableInteractables.Contains(interactable))
+				{
+					availableInteractables.Remove(interactable);
+				}
+				break;
+			case ColliderZone.Awareness1:
+				break;
+			case ColliderZone.Body:
+				break;
 		}
+		
 	}
 
 	//set the forward vector to adjust movement control direction
