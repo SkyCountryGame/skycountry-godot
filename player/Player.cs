@@ -25,7 +25,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	
 	//PLAYER STATE
 	[Export]
-	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
+	private PlayerModel playerModel; //this is the player data that should be persisted between scenes. '_M' because shorthand
 	[Export]
 	public AnimationTree animationTree;
 
@@ -35,10 +35,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		base._Ready();
 		if (Global.playerModel == null){
 			//TODO this is where we would load savedata (or maybe SceneManager does that?)
-			pm = new PlayerModel(this);
-			Global.playerModel = pm;
+			playerModel = new PlayerModel(this);
+			Global.playerModel = playerModel;
 		} else {
-			pm = Global.playerModel;
+			playerModel = Global.playerModel;
 		}
 		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
@@ -78,9 +78,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if ((pm.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
+		if ((playerModel.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
-				pm.UpdateState(State.DEFAULT);
+				playerModel.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
 				//TODO inv left
 			} else if (Input.IsActionJustPressed("right")){
@@ -99,7 +99,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			{
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
-				switch (pm.GetState()){
+				switch (playerModel.GetState()){
 					case State.DEFAULT: //attempt to interact with something in the world
 						Interactable i = GetFirstInteractable();
 						if (i != null)
@@ -118,7 +118,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.hud.ToggleInventory(pm.inv);
+				Global.hud.ToggleInventory(playerModel.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
 				EquipItem();
 			}
@@ -172,7 +172,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		switch (i.interactionType)
 		{
 			case InteractionType.Dialogue:
-				if (pm.UpdateState(State.DIALOGUE)){
+				if (playerModel.UpdateState(State.DIALOGUE)){
 					Global.hud.ShowDialogue(((Talker)i).GetDialogue());
 				}
 				break;
@@ -180,7 +180,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				break;
 			case InteractionType.Pickup: 
 				InventoryItem item = payload;
-				pm.AddToInventory(item);
+				playerModel.AddToInventory(item);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				Global.hud.LogEvent($" + {item}");
 				break;
@@ -259,31 +259,31 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	/** by default equip the primary item, or give an item to equip */
 	public bool EquipItem(InventoryItem item = null){
-		if (pm.inv.IsEmpty()) return false;
+		if (playerModel.inv.IsEmpty()) return false;
 		if (item == null){ //equip the primary item
-			pm.equipped = pm.inv.GetItemByIndex(0);
-			Global.hud.ShowEquipped(pm.equipped.name);
+			playerModel.equipped = playerModel.inv.GetItemByIndex(0);
+			Global.hud.ShowEquipped(playerModel.equipped.name);
 		} else {
-			if (pm.inv.Contains(item)){
-				pm.equipped = item;
+			if (playerModel.inv.Contains(item)){
+				playerModel.equipped = item;
 			}
 		}
-		return pm.equipped != null;
+		return playerModel.equipped != null;
 	}
 
 	/** drop the equipped item, or a specific item */
 	public bool DropItem(InventoryItem item = null){
-		if (pm.inv.IsEmpty()) return false;
+		if (playerModel.inv.IsEmpty()) return false;
 		if (item == null){
-			item = pm.equipped;
+			item = playerModel.equipped;
 		}
-		if (pm.inv.RemoveItem(item)){
+		if (playerModel.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedScene().Instantiate();
 			Global.level.AddChild(gameObject);
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
-			if (item == pm.equipped){
-				pm.equipped = null;
+			if (item == playerModel.equipped){
+				playerModel.equipped = null;
 			}
 			Global.hud.ShowEquipped(); //TODO should not have to call this. fix
 			return true;
@@ -293,23 +293,23 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	public void ApplyDamage(int d)
 	{
-		pm.hp -= d; //TODO take into account armor, skills, etc.
-		if (pm.hp < 0){
+		playerModel.hp -= d; //TODO take into account armor, skills, etc.
+		if (playerModel.hp < 0){
 			EventManager.Invoke(EventType.GameOver); 
 		}
 	}
 
-	public void SetPlayerModel(PlayerModel pm)
+	public void SetPlayerModel(PlayerModel m)
 	{
-		this.pm = pm;
+		this.playerModel = m;
 	}
 
 	public void LoadSaveData(ConfigFile cfg){
 		Position = (Vector3) cfg.GetValue("player", "position");
 		Transform = (Transform3D) cfg.GetValue("player", "transform");
 		Rotation = (Vector3) cfg.GetValue("player", "rotation");
-		pm = (PlayerModel) cfg.GetValue("player", "model");
-		Global.playerModel = pm; //don't think that is actually necessary
+		playerModel = (PlayerModel) cfg.GetValue("player", "model");
+		Global.playerModel = playerModel; //don't think that is actually necessary
 	}
 
 }
