@@ -139,11 +139,11 @@ public partial class Level : Node
 
 	public void ChangeLevel(string levelName){
 		if (levelScenes.ContainsKey(levelName)){
-			GetTree().ChangeSceneToPacked(levelScenes[levelName]);
+			GetTree().CallDeferred("change_scene_to_packed", levelScenes[levelName]);
 		}
 	}
 	public void ChangeLevel(PackedScene level){
-		GetTree().ChangeSceneToPacked(level);
+		GetTree().CallDeferred("change_scene_to_packed", level);
 	}
 
 	//make sure level has the proper nodes
