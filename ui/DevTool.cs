@@ -64,13 +64,13 @@ public partial class DevTool : Node2D
 		
 	}
 
-    public override void _Input(InputEvent @event)
-    {
-        if (Input.IsActionJustPressed("devmode")){
+	public override void _Input(InputEvent @event)
+	{
+		if (Input.IsActionJustPressed("devmode")){
 			GD.Print("devmode");
 			ToggleDevPanel();
 		}
-    }
+	}
 
 	private void ToggleDevPanel()
 	{
