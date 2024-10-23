@@ -25,7 +25,6 @@ public partial class AutomaticMeshFromCollisionShape : CollisionShape3D
 		if (Shape is SphereShape3D){}
 
 		mi.Rotation = Rotation;
-		mi.GlobalRotation = GlobalRotation;
 
         AddChild(mi);
         
