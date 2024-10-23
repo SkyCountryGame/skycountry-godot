@@ -70,8 +70,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		}
 
 		//HUD stuff
-		if (!Global.hud.actionLabel.Visible && availableInteractables.Count > 0){
-			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
+		if (availableInteractables.Count > 0){
+			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");					
+		} else {
+			Global.hud.HideAction();
 		}
 	}
 
@@ -101,11 +103,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			} else if (Input.IsActionJustPressed("player_use")){
 				switch (playerModel.GetState()){
 					case State.DEFAULT: //attempt to interact with something in the world
-						Interactable i = GetFirstInteractable();
-						if (i != null)
+						Interactable interactable = GetFirstInteractable();
+						if (interactable != null)
 						{
-							if (i.interactionMethod == InteractionMethod.Use){
-								HandleInteract(i, (Node)i);
+							if (interactable.interactionMethod == InteractionMethod.Use){
+								HandleInteract(interactable);
 							}
 						} else {
 							Global.hud.LogEvent("there is nothing with which to interact");
@@ -166,21 +168,23 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 
 	//
-	public void HandleInteract(Interactable i, Node interactionObj)
+	public void HandleInteract(Interactable interactable)
 	{
-		dynamic payload = i.Interact();
-		switch (i.interactionType)
+		Node interactionObj = (Node)interactable;
+		dynamic payload = interactable.Interact();
+		switch (interactable.interactionType)
 		{
 			case InteractionType.Dialogue:
 				if (playerModel.UpdateState(State.DIALOGUE)){
-					Global.hud.ShowDialogue(((Talker)i).GetDialogue());
+					Global.hud.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				InventoryItem item = payload;
+				InventoryItem item = payload; //NOTE here we are assuming that Pickupeable items are inventory items... is this always to be the case? 
 				playerModel.AddToInventory(item);
+				availableInteractables.Remove(interactable);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
 				Global.hud.LogEvent($" + {item}");
 				break;
@@ -189,7 +193,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
-				Global.hud.LogEvent($"{i.Info()}");
+				Global.hud.LogEvent($"{interactable.Info()}");
 				payload(this); //TODO what return? 
 				break;
 			default:
@@ -209,7 +213,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	//called by other systems
 	public void AttemptInteract(Interactable interactable){
 		if (availableInteractables.Contains(interactable)){
-			HandleInteract(interactable, (Node)interactable);
+			HandleInteract(interactable);
 		}
 	}
 
@@ -223,15 +227,13 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				{
 					//add to available no matter the interaction method
 					availableInteractables.Add(interactable);
-					Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-				
 				}
 				break;
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
 					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
-						HandleInteract((Interactable)other, other);
+						HandleInteract(interactable);
 					}
 				break;
 		}
@@ -244,11 +246,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		if (availableInteractables.Contains(interactable))
 		{
 			availableInteractables.Remove(interactable);
-			if (availableInteractables.Count > 0){
-				Global.hud.ShowAction($"{GetFirstInteractable().Info()}");
-			} else {
-				Global.hud.HideAction();
-			}
 		}
 	}
 
