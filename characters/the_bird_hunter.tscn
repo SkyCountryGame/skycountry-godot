@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://characters/BirdHunter.cs" id="1_75boj"]
 [ext_resource type="Shape3D" uid="uid://dcy4l7dkbay83" path="res://levels/testbox.tres" id="1_cncyu"]
-[ext_resource type="Resource" uid="uid://be7o4l780fu6a" path="res://characters/birdhunter.tres" id="2_r0wc2"]
+[ext_resource type="Resource" uid="uid://bbtvl6ho1h14d" path="res://characters/birdhunter.tres" id="2_r0wc2"]
 [ext_resource type="Script" path="res://util/AutomaticMeshFromMeshInstance.cs" id="2_yc0er"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="4_5xkna"]
 

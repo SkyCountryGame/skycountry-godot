@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://cigb283il82k3" path="res://assets/texture/face2.png" id="6_kajyc"]
 [ext_resource type="PackedScene" uid="uid://mkrti0jlvpeu" path="res://characters/the_bird_hunter.tscn" id="8_leco6"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
-[ext_resource type="PackedScene" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
+[ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="12_8mb05"]
-[ext_resource type="PackedScene" path="res://characters/bird_man.tscn" id="13_61ty6"]
+[ext_resource type="PackedScene" uid="uid://cr1wgiphvwm5j" path="res://characters/bird_man.tscn" id="13_61ty6"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6nils"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
