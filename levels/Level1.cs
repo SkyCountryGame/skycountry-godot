@@ -7,13 +7,12 @@ using System.Runtime;
 //an example sky country level. don't know if we need to have an abstract base class yet. 
 public partial class Level1 : Level
 {		
-	
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
-		//for this level, we need to spawn the player after loading. for example maybe there's a cutscene
-		CallDeferred("IntroTask");
+		IntroTask();
 	}
 
 
@@ -24,11 +23,16 @@ public partial class Level1 : Level
 			System.Threading.Thread.Sleep(800);
 			GD.Print("spawn soon");
 			System.Threading.Thread.Sleep(600);
-			Player p = Global.prefabs["Player"].Instantiate() as Player;
-			GetTree().Root.CallDeferred("add_child", p);
-			Global.cam.target = p;	
+			CallDeferred("InstantiatePlayer");
 		});
 		addPlayerTask.Start();
+	}
+
+	private void InstantiatePlayer(){
+		Player p = Global.prefabs["Player"].Instantiate() as Player;
+		Global.playerNode = p;
+		Global.cam.target = p;
+		AddChild(p); //already in a deferred call
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
