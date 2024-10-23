@@ -33,7 +33,7 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 		stateTimer = new System.Timers.Timer((m.stateTransitionInterval + GD.RandRange(-1, 1))*1000);//GetTree().CreateTimer(m.stateTransitionInterval);
 		stateTimer.AutoReset = true; //Timeout += OnStateTimeout;
 		stateTimer.Elapsed += OnStateTimeout;
-		//stateTimer.Start();
+		stateTimer.Start();
 	}
 
 	public override void _Process(double delta){

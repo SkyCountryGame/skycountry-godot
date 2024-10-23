@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://bbtvl6ho1h14d"]
+[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://ce4gswp3rqlof"]
 
 [ext_resource type="Script" path="res://inventory/Inventory.cs" id="1_nm2ak"]
 [ext_resource type="Script" path="res://character/NPCModel.cs" id="2_p0n5n"]
@@ -15,5 +15,3 @@ inv = SubResource("Resource_u6ply")
 disposition = 0
 state = 0
 emotion = 6
-defaultState = 0
-stateTransitionInterval = 4

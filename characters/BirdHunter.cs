@@ -119,7 +119,7 @@ public partial class BirdHunter : NPCNode {
 			case State.TALKING:
 				break;
 			case State.ROAMING:
-                nav.TargetPosition = NextNavPoint();
+                nav.TargetPosition = (Vector3) CallDeferred("NextNavPoint");
 				break;
 			case State.ATTACKING:
 				break;
