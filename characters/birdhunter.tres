@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://be7o4l780fu6a"]
+[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://bbtvl6ho1h14d"]
 
 [ext_resource type="Script" path="res://inventory/Inventory.cs" id="1_nm2ak"]
 [ext_resource type="Script" path="res://character/NPCModel.cs" id="2_p0n5n"]
