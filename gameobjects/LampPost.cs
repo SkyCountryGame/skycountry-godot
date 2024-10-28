@@ -11,13 +11,14 @@ public partial class LampPost : Node, Interactable {
 
   	//[Export(PropertyHint.Enum, "interactionType")]
     public InteractionType interactionType => InteractionType.General;
-    private OmniLight3D lamplight;
+    [Export] private OmniLight3D lamplight;
     private int n = 0;
 
     public override void _Ready()
 	{
-        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-        lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        //lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
+        
     }
 
     public void Clear()
@@ -33,7 +34,7 @@ public partial class LampPost : Node, Interactable {
     public dynamic Interact()
     {
         if (n > 4){ //it's a magic lamp
-            SceneManager._.ChangeLevel("l2");
+            Global.level.ChangeLevel("l2");
         }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;

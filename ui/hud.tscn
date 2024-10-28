@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bantfsh2sxy0v"]
+[gd_scene load_steps=4 format=3 uid="uid://bantfsh2sxy0v"]
 
 [ext_resource type="Script" path="res://ui/HUDManager.cs" id="1_qxbrm"]
+[ext_resource type="Texture2D" uid="uid://dqfex83ed4s0j" path="res://assets/texture/portraittest.png" id="2_547rq"]
 
 [sub_resource type="Theme" id="Theme_3at7c"]
 
@@ -91,6 +92,11 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Title of this dialogue"
+
+[node name="TexturePortrait" type="TextureRect" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
+layout_mode = 2
+texture = ExtResource("2_547rq")
+expand_mode = 2
 
 [node name="ButtonContinue" type="Button" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
 custom_minimum_size = Vector2(100, 0)

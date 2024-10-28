@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
 {
 
 	//MOVEMENT 
@@ -24,7 +24,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	//UI stuff
 	
 	//PLAYER STATE
-	private PlayerModel pm; //this is the player data that should be persisted between scenes. '_M' because shorthand
+	[Export]
+	private PlayerModel playerModel; //this is the player data that should be persisted between scenes. '_M' because shorthand
 	[Export]
 	public AnimationTree animationTree;
 
@@ -32,13 +33,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	public override void _Ready()
 	{
 		base._Ready();
-		if (Global.PlayerModel == null){
-			pm = new PlayerModel(this); //TODO what parameters to give here
-			Global.PlayerModel = pm;
+		if (Global.playerModel == null){
+			//TODO this is where we would load savedata (or maybe SceneManager does that?)
+			playerModel = new PlayerModel(this);
+			Global.playerModel = playerModel;
 		} else {
-			pm = Global.PlayerModel;
+			playerModel = Global.playerModel;
 		}
-		Global.PlayerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
+		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
@@ -54,13 +56,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 	}
 	public override void _Process(double delta)
 	{
-		if (SceneManager._ != null && SceneManager._.currentLevelScene != GetTree().CurrentScene){
-			SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
-		}
-
 		//RayCast Stuff
 		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Camera3D camera =  Global.Cam;
+		Camera3D camera =  Global.cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
 		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
@@ -72,17 +70,19 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		}
 
 		//HUD stuff
-		if (!Global.HUD.actionLabel.Visible && availableInteractables.Count > 0){
-			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
+		if (availableInteractables.Count > 0){
+			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");					
+		} else {
+			Global.hud.HideAction();
 		}
 	}
 
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
-		if ((pm.activityState & (State.DIALOGUE | State.INVENTORY)) != 0){ 
+		if ((playerModel.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
-				pm.UpdateState(State.DEFAULT);
+				playerModel.UpdateState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
 				//TODO inv left
 			} else if (Input.IsActionJustPressed("right")){
@@ -101,31 +101,28 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			{
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
-				switch (pm.activityState){
+				switch (playerModel.GetState()){
 					case State.DEFAULT: //attempt to interact with something in the world
-						Interactable i = GetFirstInteractable();
-						if (i != null)
+						Interactable interactable = GetFirstInteractable();
+						if (interactable != null)
 						{
-							if (i.interactionMethod == InteractionMethod.Use){
-								HandleInteract(i, (Node)i);
+							if (interactable.interactionMethod == InteractionMethod.Use){
+								HandleInteract(interactable);
 							}
 						} else {
-							Global.HUD.LogEvent("there is nothing with which to interact");
+							Global.hud.LogEvent("there is nothing with which to interact");
 						}
 						break;
 					case State.DIALOGUE:
-						Global.HUD.ContinueDialogue(); //NOTE this does nothing currently. 
+						Global.hud.ContinueDialogue(); //NOTE this does nothing currently. 
 						break;
 				}
-			} else if (Input.IsActionJustPressed("pause"))
-			{
-				//TODO pause
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.HUD.ToggleInventory(pm.inv);
+				Global.hud.ToggleInventory(playerModel.inv);
 			} else if (Input.IsActionJustPressed("player_equip")){
-				pm.EquipItem();
+				EquipItem();
 			}
 		}
 	}
@@ -170,33 +167,33 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		MoveAndSlide();
 	}
 
-	public void HandleInteract(Interactable i, Node interactionObj)
+	//
+	public void HandleInteract(Interactable interactable)
 	{
-		dynamic payload = i.Interact();
-		switch (i.interactionType)
+		Node interactionObj = (Node)interactable;
+		dynamic payload = interactable.Interact();
+		switch (interactable.interactionType)
 		{
 			case InteractionType.Dialogue:
-				pm.UpdateState(State.DIALOGUE);
-				Global.HUD.ShowDialogue(((Talker)i).GetDialogue());
+				if (playerModel.UpdateState(State.DIALOGUE)){
+					Global.hud.ShowDialogue(((Talker)interactable).GetDialogue());
+				}
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				InventoryItem item = payload;
-				pm.AddToInventory(item);
+				InventoryItem item = payload; //NOTE here we are assuming that Pickupeable items are inventory items... is this always to be the case? 
+				playerModel.AddToInventory(item);
+				availableInteractables.Remove(interactable);
 				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-				//interactionObj.QueueFree();
-				Global.HUD.UpdateInventoryMenu(pm.inv);
-				//TODO update inv view if visible. actually, this should automatically be done. so fix the system by which inventory updates its listview
-				Global.HUD.LogEvent($" + {item.name}");
+				Global.hud.LogEvent($" + {item}");
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
 				break;
 			case InteractionType.Function:
-				Global.HUD.LogEvent($"{i.Info()}");
-				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+				Global.hud.LogEvent($"{interactable.Info()}");
 				payload(this); //TODO what return? 
 				break;
 			default:
@@ -206,6 +203,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 
 	public Interactable GetFirstInteractable()
 	{
+		//TODO sort by distance
 		if (availableInteractables.Count > 0)
 		{
 			return availableInteractables.First();
@@ -213,19 +211,44 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 		return null;
 	}
 
-	public void HandleCollide(ColliderZone zone, Node3D other)
+	//called by other systems
+	public void AttemptInteract(Interactable interactable){
+		if (availableInteractables.Contains(interactable)){
+			HandleInteract(interactable);
+		}
+	}
+
+	public void HandleCollide(ColliderZone zone, Node other)
 	{
+		//will be null if not an interactable
+		Interactable interactable = Global.GetInteractable(other);
 		switch (zone){
 			case ColliderZone.Awareness0:
-				Interactable i = SceneManager.GetInteractable(other);
-				if (i != null)
+				if (interactable != null)
 				{
-					if (i.interactionMethod == InteractionMethod.Use){
-						availableInteractables.Add(i);
-						Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
-					} else if (i.interactionMethod == InteractionMethod.Contact){
-						HandleInteract(i, other);
+					//add to available no matter the interaction method
+					availableInteractables.Add(interactable);
+				}
+				break;
+			case ColliderZone.Awareness1:
+				break;
+			case ColliderZone.Body:
+					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(interactable);
 					}
+				break;
+		}
+	}
+
+	public void HandleDecollide(ColliderZone zone, Node other)
+	{
+		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
+		Interactable interactable = Global.GetInteractable(other);
+		switch (zone) {
+			case ColliderZone.Awareness0:
+				if (interactable != null && availableInteractables.Contains(interactable))
+				{
+					availableInteractables.Remove(interactable);
 				}
 				break;
 			case ColliderZone.Awareness1:
@@ -233,25 +256,67 @@ public partial class Player : CharacterBody3D, Collideable, Interactor
 			case ColliderZone.Body:
 				break;
 		}
-	}
-
-	public void HandleDecollide(ColliderZone zone, Node3D other)
-	{
-		//TODO figure out a better way to handle collision zones of interactables instead of allows traversing up tree
-		Interactable i = SceneManager.GetInteractable(other);
-		if (availableInteractables.Contains(i))
-		{
-			availableInteractables.Remove(i);
-			if (availableInteractables.Count > 0){
-				Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");
-			} else {
-				Global.HUD.HideAction();
-			}
-		}
+		
 	}
 
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
 	}
+
+	/** by default equip the primary item, or give an item to equip */
+	public bool EquipItem(InventoryItem item = null){
+		if (playerModel.inv.IsEmpty()) return false;
+		if (item == null){ //equip the primary item
+			playerModel.equipped = playerModel.inv.GetItemByIndex(0);
+			Global.hud.ShowEquipped(playerModel.equipped.name);
+		} else {
+			if (playerModel.inv.Contains(item)){
+				playerModel.equipped = item;
+			}
+		}
+		return playerModel.equipped != null;
+	}
+
+	/** drop the equipped item, or a specific item */
+	public bool DropItem(InventoryItem item = null){
+		if (playerModel.inv.IsEmpty()) return false;
+		if (item == null){
+			item = playerModel.equipped;
+		}
+		if (playerModel.inv.RemoveItem(item)){
+			Node gameObject = item.GetPackedScene().Instantiate();
+			Global.level.AddChild(gameObject);
+			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
+
+			if (item == playerModel.equipped){
+				playerModel.equipped = null;
+			}
+			Global.hud.ShowEquipped(); //TODO should not have to call this. fix
+			return true;
+		}
+		return false;
+	}
+
+	public void ApplyDamage(int d)
+	{
+		playerModel.hp -= d; //TODO take into account armor, skills, etc.
+		if (playerModel.hp < 0){
+			EventManager.Invoke(EventType.GameOver); 
+		}
+	}
+
+	public void SetPlayerModel(PlayerModel m)
+	{
+		this.playerModel = m;
+	}
+
+	public void LoadSaveData(ConfigFile cfg){
+		Position = (Vector3) cfg.GetValue("player", "position");
+		Transform = (Transform3D) cfg.GetValue("player", "transform");
+		Rotation = (Vector3) cfg.GetValue("player", "rotation");
+		playerModel = (PlayerModel) cfg.GetValue("player", "model");
+		Global.playerModel = playerModel; //don't think that is actually necessary
+	}
+
 }

@@ -17,8 +17,8 @@ public partial class Twig : RigidBody3D, Interactable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        SceneManager.RegisterGameObject(this, GameObjectType.Interactable);
-        invItem = new InventoryItem(InventoryItem.ItemType.Quest, "Twig", true);
+        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        invItem = new InventoryItem(InventoryItemProperties.ItemType.Quest, "Twig", true);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,45 +1,39 @@
 using System;
 using Godot;
+using static InventoryItemProperties;
 
-public class InventoryItem : System.ICloneable {
+
+//TODO there is still some sorting out to do with the Node vs Model situation
+[GlobalClass]
+public partial class InventoryItem : Resource, System.ICloneable {
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
-    public string name; 
-    public enum ItemType {Weapon, Aid, Ammo, Apparel, Shield, Semantic, Quest, Junk, Mineral};
-    public ItemType itemType;
-
-    //TODO establish all the properties than inventory items can have
-
+    public string name;    
     public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
-    private bool equippable;
-
     public bool inited = false;
-    //mass? volume? other properties
-
-    //from old unity code. part of the skill system
-    //public Dictionary<EntityTypes.Skill, int> EffectivenessMap; //each skill's weight on an entities effectiveness with this item
+    [Export] private InventoryItemProperties properties = new InventoryItemProperties();
 
     public InventoryItem() : base() { }
 
     //name is the same as the key in the GameObjectManager.gameObjectsPacked
     public InventoryItem(ItemType t, string name, bool equippable = false) : base()
     {
-        itemType = t;
+        properties.itemType = t;
         this.name = name;
         id = nextId++;
         
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (SceneManager._.prefabs.ContainsKey(this.name) && SceneManager._.prefabs[this.name] != null){
-            packedScene = SceneManager._.prefabs[this.name];
+        if (Global.prefabs.ContainsKey(this.name) && Global.prefabs[this.name] != null){
+            packedScene = Global.prefabs[this.name];
         }
         if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
             packedScenePath = $"res://gameobjects/{this.name}.tscn";
         }
         if (packedScene == null && packedScenePath == null) {
-            packedScene = SceneManager._.prefabs["ERROR"];
+            packedScene = Global.prefabs["ERROR"];
         }
     }
 
@@ -54,7 +48,7 @@ public class InventoryItem : System.ICloneable {
     override
     public string ToString()
     {
-        return itemType.ToString() + ": " + name;
+        return properties.itemType.ToString() + ": " + name;
     }
 
     public override int GetHashCode()
@@ -70,11 +64,14 @@ public class InventoryItem : System.ICloneable {
     public PackedScene GetPackedScene(){
         if (packedScene == null){
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
-            SceneManager._.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
+            Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }
         return packedScene;
     }
 
+    public ItemType GetItemType(){
+        return properties.itemType;
+    }
 
     /**
      * how effective the given entity is with this item

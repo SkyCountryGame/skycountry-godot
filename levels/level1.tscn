@@ -1,9 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://w0yqou02tgux"]
+[gd_scene load_steps=24 format=3 uid="uid://w0yqou02tgux"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_im1ok"]
 [ext_resource type="Script" path="res://levels/Level1.cs" id="2_om4ml"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_oi5pg"]
 [ext_resource type="AudioStream" uid="uid://cyx40bgjug8hp" path="res://assets/aud/mu_bg.ogg" id="4_26u06"]
+[ext_resource type="Script" path="res://util/AutomaticMeshFromCollisionShape.cs" id="5_6lov6"]
+[ext_resource type="Script" path="res://character/NPCNode.cs" id="7_u6ynm"]
+[ext_resource type="PackedScene" uid="uid://mkrti0jlvpeu" path="res://characters/the_bird_hunter.tscn" id="8_leco6"]
+[ext_resource type="Script" path="res://character/NPCModel.cs" id="8_lvc6t"]
+[ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
+[ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6nils"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmtp8"]
 
@@ -19,18 +29,52 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_mcwpa")
 size = Vector2(50, 50)
 
-[node name="Wod2" instance=ExtResource("1_im1ok")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_hvm1m"]
+size = Vector3(30, 3, 0)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_stq1j"]
+height = 8.0
+radius = 3.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4klqa"]
+points = PackedVector3Array(0, 0, 0, 2, 0, 0, 2, 0, 5, 0, 0, 5, 0, 4, 5, 2, 4, 5)
+
+[sub_resource type="PlaceholderMesh" id="PlaceholderMesh_jgcgw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_men6s"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6ovc5"]
+points = PackedVector3Array(0, 0, 0, 2, 0, 0, 2, 0, 5, 0, 0, 5, 0, 2, 5, 2, 2, 5)
+
+[sub_resource type="Resource" id="Resource_gfr3v"]
+script = ExtResource("8_lvc6t")
+name = ""
+description = ""
+disposition = 0
+state = 0
+emotion = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4pgg"]
+size = Vector3(1, 2, 1)
+
+[node name="Wod3" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_im1ok")]
 script = ExtResource("2_om4ml")
+sunlight = NodePath("DirectionalLight3D")
+navRegion = NodePath("NavigationRegion3D")
 
-[node name="Camera3D" parent="." index="3" node_paths=PackedStringArray("target")]
-target = NodePath("../StaticBody3D")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
+stream = ExtResource("4_26u06")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." index="4"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="5"]
+navigation_mesh = SubResource("NavigationMesh_6nils")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" index="0"]
 shape = ExtResource("3_oi5pg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" index="0"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor/CollisionShape3D" index="0" groups=["mesh"]]
 material_override = SubResource("StandardMaterial3D_cmtp8")
 material_overlay = SubResource("StandardMaterial3D_xe6jr")
 cast_shadow = 0
@@ -38,5 +82,60 @@ gi_mode = 2
 mesh = SubResource("PlaneMesh_knto8")
 skeleton = NodePath("../..")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="5"]
-stream = ExtResource("4_26u06")
+[node name="Walls" type="StaticBody3D" parent="NavigationRegion3D" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Walls" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 25)
+shape = SubResource("BoxShape3D_hvm1m")
+script = ExtResource("5_6lov6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 12)
+shape = SubResource("CylinderShape3D_stq1j")
+script = ExtResource("5_6lov6")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D" index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D2" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11, 0, -4)
+shape = SubResource("ConvexPolygonShape3D_4klqa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D2/CollisionShape3D" index="0" groups=["mesh"]]
+mesh = SubResource("PlaceholderMesh_jgcgw")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D" index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, -15)
+shape = SubResource("BoxShape3D_men6s")
+script = ExtResource("5_6lov6")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="NavigationRegion3D" index="5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D4" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11, 0, -2)
+shape = SubResource("ConvexPolygonShape3D_6ovc5")
+
+[node name="TheConjurer" type="CharacterBody3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 3)
+script = ExtResource("7_u6ynm")
+m = SubResource("Resource_gfr3v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TheConjurer" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_o4pgg")
+script = ExtResource("5_6lov6")
+
+[node name="NavAgent" type="NavigationAgent3D" parent="TheConjurer" index="1"]
+target_desired_distance = 1.55
+path_max_distance = 12.81
+
+[node name="TheBirdHunter" parent="." index="7" instance=ExtResource("8_leco6")]
+
+[node name="DeathWall" parent="." index="8" instance=ExtResource("9_bfuf4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.965, 0, 0)
+
+[node name="CursedOrb" parent="." index="9" instance=ExtResource("10_2j46k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27986, 3.24299, 5.84783)

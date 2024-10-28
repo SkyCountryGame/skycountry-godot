@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="NPCModel" load_steps=4 format=3 uid="uid://bq1tpsxc5ol1m"]
+
+[ext_resource type="Script" path="res://character/NPCModel.cs" id="1_bulgs"]
+[ext_resource type="Script" path="res://inventory/Inventory.cs" id="1_rgaoh"]
+
+[sub_resource type="Resource" id="Resource_u6ply"]
+script = ExtResource("1_rgaoh")
+capacity = 0
+
+[resource]
+script = ExtResource("1_bulgs")
+name = "Wanderer"
+description = "where he go"
+inv = SubResource("Resource_u6ply")
+disposition = 0
+state = 0
+emotion = 0

@@ -16,7 +16,7 @@ public partial class MainMenu : Control
 		buttonStart.Pressed += OnButtonStartPressed;
 		buttonLoad.Pressed += OnButtonLoadPressed;
 		buttonQuit.Pressed += OnButtonQuitPressed;
-		SceneManager._.SetActiveLevelScene(GetTree().CurrentScene); //tell the level manager what scene we are in
+		// = GetTree().CurrentScene; //tell the level manager what scene we are in
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,11 +26,13 @@ public partial class MainMenu : Control
 
 	private void OnButtonStartPressed()
 	{
-		SceneManager._.ChangeLevel("l0");
+		Global.saveSlot = 0; //NOTE do we want to instead resume from last played game?
+		PackedScene level0 = ResourceLoader.Load<PackedScene>("res://levels/level0.tscn"); //TODO
+		GetTree().ChangeSceneToPacked(level0);
 	}
 	private void OnButtonLoadPressed()
 	{
-		GD.Print("TODO!!");
+		Global.LoadGame();
 	}
 	private void OnButtonQuitPressed()
 	{

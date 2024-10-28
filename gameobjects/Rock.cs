@@ -16,8 +16,8 @@ public partial class Rock : RigidBody3D, Interactable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        SceneManager.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItem.ItemType.Mineral, "rock", false);
+        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
+        rockItem = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "rock", false);
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 

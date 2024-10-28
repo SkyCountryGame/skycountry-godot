@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://mkrti0jlvpeu"]
+
+[ext_resource type="Shape3D" uid="uid://dcy4l7dkbay83" path="res://levels/testbox.tres" id="1_cncyu"]
+[ext_resource type="Script" path="res://character/NPCNode.cs" id="1_gh3j8"]
+[ext_resource type="Script" path="res://util/AutomaticMeshFromMeshInstance.cs" id="2_yc0er"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_arnjd"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ifkvo"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vfbe4"]
+radius = 0.3
+
+[node name="TheBirdHunter" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36798, 0.1, 0)
+script = ExtResource("1_gh3j8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = ExtResource("1_cncyu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+script = ExtResource("2_yc0er")
+
+[node name="Leg1" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0)
+shape = SubResource("BoxShape3D_arnjd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Leg1"]
+script = ExtResource("2_yc0er")
+
+[node name="Leg2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0)
+shape = SubResource("BoxShape3D_ifkvo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Leg2"]
+script = ExtResource("2_yc0er")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 3.2, 0)
+shape = SubResource("CylinderShape3D_vfbe4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D2"]
+script = ExtResource("2_yc0er")
+
+[node name="NavAgent" type="NavigationAgent3D" parent="."]
+path_max_distance = 15.41
