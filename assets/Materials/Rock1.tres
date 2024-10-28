@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://ce2yd1f7minsj"]
+
+[ext_resource type="Shader" path="res://assets/shaders/rock_shader.gdshader" id="1_4auv0"]
+[ext_resource type="Texture2D" uid="uid://b1w4bvt7qr8q0" path="res://assets/texture/Environment/Rocks/Rock 1/Rock_Large_1_BaseColor.png" id="2_6xunf"]
+[ext_resource type="Texture2D" uid="uid://b4ufpreyudkhb" path="res://assets/texture/Environment/Grass/lp_DefaultMaterial_BaseColor.png" id="3_yewt7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_4auv0")
+shader_parameter/base_albedo_tex = ExtResource("2_6xunf")
+shader_parameter/blend_albedo_tex = ExtResource("3_yewt7")

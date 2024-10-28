@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://dehxd4n3snivh"
+path.s3tc="res://.godot/imported/RockExtraSmall_1_BaseColor.png-c163e3c42ec64cb1ed1bc2eeb6adbe0c.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://assets/texture/Environment/Rocks/Rock 1/RockExtraSmall_1_BaseColor.png"
+dest_files=["res://.godot/imported/RockExtraSmall_1_BaseColor.png-c163e3c42ec64cb1ed1bc2eeb6adbe0c.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
