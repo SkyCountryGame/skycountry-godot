@@ -1,0 +1,93 @@
+[gd_scene load_steps=15 format=3 uid="uid://8qof26j4jd18"]
+
+[ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
+[ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
+[ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_wxw3l"]
+[ext_resource type="PackedScene" uid="uid://ly5vgkkgks06" path="res://tools/out/dodecahedron.gltf" id="5_qupg2"]
+[ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="6_qp83n"]
+[ext_resource type="PackedScene" uid="uid://xtrqf4k7f4q6" path="res://tools/out/cylinder.gltf" id="7_qk172"]
+[ext_resource type="PackedScene" uid="uid://ktgf2u7332nf" path="res://tools/out/cylinder_lowpoly.gltf" id="8_mjmtk"]
+[ext_resource type="PackedScene" uid="uid://ct7xwmdaubk8h" path="res://levels/BirdHaven/room.tscn" id="9_esogl"]
+[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="9_jhn33"]
+[ext_resource type="PackedScene" uid="uid://bro53vhk1gvdu" path="res://levels/BirdHaven/floor.tscn" id="9_ujf7l"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
+sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
+sky_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+sky_energy_multiplier = 1.5
+ground_bottom_color = Color(0.164706, 0.176471, 0.168627, 1)
+ground_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+
+[sub_resource type="Sky" id="Sky_esjiq"]
+sky_material = SubResource("ProceduralSkyMaterial_mu5b3")
+
+[sub_resource type="Environment" id="Environment_jq7mq"]
+background_mode = 2
+sky = SubResource("Sky_esjiq")
+ambient_light_source = 1
+tonemap_mode = 2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6pqde"]
+vertices = PackedVector3Array(-99.5, 0.45, -249.5, -99.5, 0.45, 249.5, 99.5, 0.45, 249.5, 99.5, 0.45, -249.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight")]
+script = ExtResource("1_ypbtj")
+sunlight = NodePath("DirectionalLight3D")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jq7mq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
+light_color = Color(0.796172, 0.801828, 0.649819, 1)
+light_energy = 0.92
+light_indirect_energy = 0.16
+light_angular_distance = 4.05
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 1.0
+shadow_opacity = 0.85
+shadow_blur = 0.5
+directional_shadow_fade_start = 0.74
+directional_shadow_pancake_size = 17.4
+sky_mode = 1
+
+[node name="HUD" parent="." instance=ExtResource("2_wxw3l")]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9998, 15.8228, 0)
+script = ExtResource("1_f6jas")
+target = NodePath("../Player")
+HUD = NodePath("../HUD")
+
+[node name="Cube" type="Node3D" parent="."]
+
+[node name="Dodecahedron" type="Node3D" parent="."]
+
+[node name="dodecahedron2" parent="Dodecahedron" instance=ExtResource("5_qupg2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.592, 1.06466, 3.95461)
+
+[node name="BlockHead" type="Node3D" parent="."]
+
+[node name="BlockheadTest1" parent="BlockHead" instance=ExtResource("6_qp83n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.61011, 0, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.84357, 1.73722, 2.10481)
+navigation_mesh = SubResource("NavigationMesh_6pqde")
+
+[node name="cylinder2" parent="NavigationRegion3D" instance=ExtResource("7_qk172")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8883, 2.07721, 1.6754)
+
+[node name="cylinder_lowpoly" parent="NavigationRegion3D" instance=ExtResource("8_mjmtk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8759, 1.13451, 8.55592)
+
+[node name="room" parent="NavigationRegion3D" instance=ExtResource("9_esogl")]
+transform = Transform3D(0.677826, 0, 0.735222, 0, 1, 0, -0.735222, 0, 0.677826, 0, 2.88049, 0)
+
+[node name="floor" parent="NavigationRegion3D" instance=ExtResource("9_ujf7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49711, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("9_jhn33")]
+transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -26.6971, 11.272, 1)

@@ -1,0 +1,283 @@
+[gd_scene load_steps=58 format=3 uid="uid://de2xm0xxwmcag"]
+
+[ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_4tfcl"]
+[ext_resource type="Shader" path="res://levels/ArtScene/ArtScene_SkyShader.gdshader" id="1_vr5cb"]
+[ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky hdri/Sky_Anime_01_Day_a.png" id="2_gocnc"]
+[ext_resource type="Script" path="res://player/PlayerModel.cs" id="4_2lia5"]
+[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="10_lymhc"]
+[ext_resource type="PackedScene" uid="uid://br5e48dbjqngp" path="res://gameobjects/wood/chest_01.tscn" id="26_6bcsg"]
+[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://gameobjects/rocks/rock_2.tscn" id="39_ojci4"]
+[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/rocks/rock_1.tscn" id="39_wspli"]
+[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://gameobjects/rocks/rock_3.tscn" id="40_2vrv0"]
+[ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/rocks/rock_5.tscn" id="42_1fwfs"]
+[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://gameobjects/rocks/rock_7.tscn" id="44_fiubg"]
+[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/rocks/rock_9.tscn" id="46_7ay1s"]
+[ext_resource type="Script" path="res://brain/Camera.cs" id="46_idspx"]
+[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="47_80xa4"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/rocks/rock_11.tscn" id="48_e7w23"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/rocks/rock_12.tscn" id="49_5tlat"]
+[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/rocks/rock_4.tscn" id="49_agnpt"]
+[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/rocks/rock_6.tscn" id="49_mntnu"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/rocks/rock_10.tscn" id="49_qp6dk"]
+[ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/rocks/rock_8.tscn" id="49_teqx0"]
+[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/buildings/lodging_building_demo.tscn" id="50_1t2dt"]
+[ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://gameobjects/wood/signpost_03.tscn" id="50_5grrp"]
+[ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://gameobjects/wood/signpost_02.tscn" id="50_ycb6y"]
+[ext_resource type="PackedScene" uid="uid://chx682h4loact" path="res://gameobjects/wood/basket_02.tscn" id="51_8jt4r"]
+[ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://gameobjects/wood/picket_fence_long.tscn" id="51_gvybs"]
+[ext_resource type="PackedScene" uid="uid://btya54x3f3b0k" path="res://gameobjects/wood/table_01.tscn" id="51_nqgwc"]
+[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/buildings/market_building_demo.tscn" id="51_xc2xa"]
+[ext_resource type="PackedScene" uid="uid://kwntyvs5xig7" path="res://gameobjects/wood/signpost_01.tscn" id="52_0g3lu"]
+[ext_resource type="PackedScene" uid="uid://ela77477tuep" path="res://gameobjects/wood/wagon_01.tscn" id="52_3qnu7"]
+[ext_resource type="PackedScene" uid="uid://doavcw4e63t8i" path="res://gameobjects/wood/chest_04.tscn" id="52_5mqk4"]
+[ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/Models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
+[ext_resource type="PackedScene" uid="uid://cl7upijqjmaql" path="res://gameobjects/wood/chest_02.tscn" id="52_eblwg"]
+[ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://gameobjects/wood/fence_short.tscn" id="52_g3n1k"]
+[ext_resource type="PackedScene" uid="uid://dfu4b1k6j7wq6" path="res://gameobjects/wood/bridge_01.tscn" id="52_hkjrn"]
+[ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://gameobjects/wood/keg.tscn" id="52_r2bme"]
+[ext_resource type="PackedScene" uid="uid://dgx5oij6th1p" path="res://gameobjects/wood/bucket.tscn" id="52_vmlb5"]
+[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/wood/barrel_01.tscn" id="52_x1nth"]
+[ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://gameobjects/wood/picket_fence_connector.tscn" id="52_xs2tf"]
+[ext_resource type="PackedScene" uid="uid://jk3ldkc354nb" path="res://gameobjects/wood/crate_01.tscn" id="53_1a8b3"]
+[ext_resource type="PackedScene" uid="uid://tp3frmjj1lcd" path="res://gameobjects/wood/fence_gate.tscn" id="53_io3yt"]
+[ext_resource type="PackedScene" uid="uid://bdgjtwcqmxaxp" path="res://gameobjects/wood/chest_03.tscn" id="53_ipkoa"]
+[ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://gameobjects/wood/fence_connector_long.tscn" id="53_rv2cs"]
+[ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://gameobjects/wood/fence_connector_short.tscn" id="53_s5x3j"]
+[ext_resource type="PackedScene" uid="uid://bvj8kg0gj76y" path="res://gameobjects/wood/wagon_02.tscn" id="53_sj5br"]
+[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/wood/barrel_02.tscn" id="54_6wbe3"]
+[ext_resource type="PackedScene" uid="uid://cx7lk5ruc2c83" path="res://gameobjects/wood/barrel_03.tscn" id="55_u2xv6"]
+[ext_resource type="PackedScene" uid="uid://dapm341ydolv1" path="res://gameobjects/wood/basket_01.tscn" id="56_d4sc7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_njwei"]
+shader = ExtResource("1_vr5cb")
+shader_parameter/skyColor = Color(0.457979, 0.692624, 0.97811, 1)
+shader_parameter/horizonColor = Color(0.0608772, 0.0756887, 0.0827273, 1)
+shader_parameter/skyTexture = ExtResource("2_gocnc")
+
+[sub_resource type="Sky" id="Sky_1i00l"]
+sky_material = SubResource("ShaderMaterial_njwei")
+
+[sub_resource type="Environment" id="Environment_bs5ti"]
+background_mode = 2
+background_energy_multiplier = 0.85
+sky = SubResource("Sky_1i00l")
+sky_custom_fov = 57.4
+sky_rotation = Vector3(0, -3.26551, 0)
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_read_sky_light = false
+
+[sub_resource type="Resource" id="Resource_sohc0"]
+script = ExtResource("4_2lia5")
+activityState = 1
+hp = 0
+
+[sub_resource type="Resource" id="Resource_bakux"]
+metadata/__load_path__ = "res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg"
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7y5qx"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oeuuc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ixkv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72h3h"]
+specular_mode = 1
+metallic_specular = 0.34
+roughness_texture_channel = 1
+refraction_texture_channel = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u4ila"]
+material = SubResource("StandardMaterial3D_72h3h")
+size = Vector2(50, 50)
+
+[node name="World" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3015, 0)
+
+[node name="HUD" parent="." instance=ExtResource("1_4tfcl")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bs5ti")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.993373, 0.114937, -2.25373e-07, -0.0487563, -0.421388, 0.905569, 0.104083, 0.899567, 0.424199, 0, 0, 0)
+shadow_enabled = true
+sky_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("10_lymhc")]
+process_mode = 1
+transform = Transform3D(0.000836852, -0.000332152, 1, 0.00225944, 0.999998, 0.000330276, -0.999998, 0.00225917, 0.000837594, 60.157, -0.031395, 124.208)
+playerModel = SubResource("Resource_sohc0")
+
+[node name="HTerrain" type="Node3D" parent="."]
+
+[node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
+metadata/_editor_icon = SubResource("Resource_bakux")
+
+[node name="Wood Props" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.6684, 0, 133.836)
+
+[node name="Chest01" parent="Wood Props" instance=ExtResource("26_6bcsg")]
+transform = Transform3D(0.00211205, -0.00140706, -0.999997, 0.00545616, 0.999984, -0.00139549, 0.999983, -0.00545319, 0.00211972, -24.4328, 0.427117, 97.6644)
+
+[node name="Barrel01" parent="Wood Props" instance=ExtResource("52_x1nth")]
+transform = Transform3D(0.874085, -0.000182549, -0.485775, 0.0032237, 0.99998, 0.00542481, 0.485764, -0.00630773, 0.874068, -26.1992, 0.512561, 99.8834)
+
+[node name="Barrel02" parent="Wood Props" instance=ExtResource("54_6wbe3")]
+transform = Transform3D(0.999999, -0.000591235, -0.00130511, 0.000587393, 0.999995, -0.00295224, 0.00130685, 0.00295148, 0.999995, -26.2059, 0.467177, 101.048)
+
+[node name="Barrel033" parent="Wood Props" instance=ExtResource("55_u2xv6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2214, 0.467266, 102.271)
+
+[node name="Basket01" parent="Wood Props" instance=ExtResource("56_d4sc7")]
+transform = Transform3D(0.000276883, 0.000129049, 1, 0.000528958, 1, -0.000129189, -1, 0.000528992, 0.000276818, -26.2062, 0.170011, 103.816)
+
+[node name="Basket02" parent="Wood Props" instance=ExtResource("51_8jt4r")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26.1903, 0.209004, 105.179)
+
+[node name="Bridge01" parent="Wood Props" instance=ExtResource("52_hkjrn")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25.2267, 0.783912, 91.8814)
+
+[node name="Bucket" parent="Wood Props" instance=ExtResource("52_vmlb5")]
+transform = Transform3D(-0.00226503, -7.03862e-05, 0.999997, -0.00263219, 0.999997, 6.44355e-05, -0.999994, -0.00263203, -0.00226521, -26.2191, 0.348704, 106.348)
+
+[node name="Chest02" parent="Wood Props" instance=ExtResource("52_eblwg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.4441, 0.402208, 95.5724)
+
+[node name="Chest03" parent="Wood Props" instance=ExtResource("53_ipkoa")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26.1263, 0.439792, 97.7004)
+
+[node name="Chest04" parent="Wood Props" instance=ExtResource("52_5mqk4")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26.162, 0.409817, 95.5864)
+
+[node name="Crate01" parent="Wood Props" instance=ExtResource("53_1a8b3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.446, 0.43133, 99.4184)
+
+[node name="FenceConnectorLong" parent="Wood Props" instance=ExtResource("53_rv2cs")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.0026, 0.663928, 86.9004)
+
+[node name="FenceConnectorShort" parent="Wood Props" instance=ExtResource("53_s5x3j")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.9271, 0.583593, 94.1264)
+
+[node name="FenceGate" parent="Wood Props" instance=ExtResource("53_io3yt")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.9531, 0.7967, 91.1384)
+
+[node name="FenceShort" parent="Wood Props" instance=ExtResource("52_g3n1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.04, 0.685555, 83.4954)
+
+[node name="FenceShort4" parent="Wood Props" instance=ExtResource("52_g3n1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.04, 0.685555, 111.859)
+
+[node name="FenceShort2" parent="Wood Props" instance=ExtResource("52_g3n1k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20.9629, 0.59364, 97.3264)
+
+[node name="FenceShort3" parent="Wood Props" instance=ExtResource("52_g3n1k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20.9886, 0.60461, 101.695)
+
+[node name="Keg" parent="Wood Props" instance=ExtResource("52_r2bme")]
+transform = Transform3D(0.999999, -0.000159447, 0.001151, 0.00015769, 0.999999, 0.00155024, -0.00115124, -0.00155006, 0.999998, -25.2897, 0.970473, 87.8114)
+
+[node name="PicketFenceConnector" parent="Wood Props" instance=ExtResource("52_xs2tf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.0091, 0.528156, 99.5304)
+
+[node name="PicketFenceConnector2" parent="Wood Props" instance=ExtResource("52_xs2tf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.0091, 0.528156, 103.897)
+
+[node name="PicketFenceConnector3" parent="Wood Props" instance=ExtResource("52_xs2tf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.0091, 0.528156, 110.684)
+
+[node name="PicketFenceLong" parent="Wood Props" instance=ExtResource("51_gvybs")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.0191, 0.545827, 107.318)
+
+[node name="Signpost01" parent="Wood Props" instance=ExtResource("52_0g3lu")]
+transform = Transform3D(0.00282746, -0.000332752, -0.999996, 0.00357881, 0.999994, -0.000322656, 0.99999, -0.00357788, 0.00282863, -19.1306, 1.37785, 93.6724)
+
+[node name="Signpost02" parent="Wood Props" instance=ExtResource("50_ycb6y")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -19.1348, 1.37692, 95.8364)
+
+[node name="Signpost03" parent="Wood Props" instance=ExtResource("50_5grrp")]
+transform = Transform3D(2.98023e-08, 0, -1, 0, 1, 0, 1, 0, 2.98023e-08, -19.061, 1.30799, 97.7884)
+
+[node name="Table01" parent="Wood Props" instance=ExtResource("51_nqgwc")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24.6747, 0.369741, 101.833)
+
+[node name="Wagon01" parent="Wood Props" instance=ExtResource("52_3qnu7")]
+transform = Transform3D(-0.000687665, 0.000153845, 1, -0.000844065, 1, -0.000154417, -0.999999, -0.00084417, -0.000687537, -24.4546, 0.523977, 105.144)
+
+[node name="Wagon02" parent="Wood Props" instance=ExtResource("53_sj5br")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -24.4999, 0.889908, 108.844)
+
+[node name="Rocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88.943, 0, 129.581)
+
+[node name="Rock1" parent="Rocks" instance=ExtResource("39_wspli")]
+transform = Transform3D(1.45597, 0, 0, 0, 1.45597, 0, 0, 0, 1.45597, 3.68374, 1.344, 87.8337)
+
+[node name="Rock2" parent="Rocks" instance=ExtResource("39_ojci4")]
+transform = Transform3D(-1.4058, 6.956e-05, -1.40562, -0.000174195, 1.98797, 0.000272567, 1.40562, 0.000315908, -1.4058, 3.50238, 1.4738, 93.4573)
+
+[node name="Rock3" parent="Rocks" instance=ExtResource("40_2vrv0")]
+transform = Transform3D(0.671336, -5.88814e-05, 2.50804, -0.00081117, 2.59634, 0.000278156, -2.50804, -0.000855512, 0.671336, 3.80077, 1.67475, 99.554)
+
+[node name="Rock4" parent="Rocks" instance=ExtResource("49_agnpt")]
+transform = Transform3D(-3.13724, -1.3261, -0.636572, -1.44797, 3.04817, 0.786182, 0.259115, 0.977838, -3.31402, 4.0705, 1.31038, 106.167)
+
+[node name="Rock5" parent="Rocks" instance=ExtResource("42_1fwfs")]
+transform = Transform3D(-2.22778, 0, 1.22498, 0, 2.54236, 0, -1.22498, 0, -2.22778, 4.04538, 2.1193, 112.134)
+
+[node name="Rock6" parent="Rocks" instance=ExtResource("49_mntnu")]
+transform = Transform3D(0.583339, 0, -2.17705, 0, 2.25385, 0, 2.17705, 0, 0.583339, 3.9227, 0.823578, 118.016)
+
+[node name="Rock7" parent="Rocks" instance=ExtResource("44_fiubg")]
+transform = Transform3D(3.28931, 0, 0, 0, 3.28931, 0, 0, 0, 3.28931, -2.41171, 1.10585, 91.1005)
+
+[node name="Rock8" parent="Rocks" instance=ExtResource("49_teqx0")]
+transform = Transform3D(3.06995, 0, 0, 0, 3.06995, 0, 0, 0, 3.06995, -2.45206, 0.827732, 95.9558)
+
+[node name="Rock9" parent="Rocks" instance=ExtResource("46_7ay1s")]
+transform = Transform3D(3.1276, 0, 0, 0, 3.1276, 0, 0, 0, 3.1276, -2.49626, 0.677348, 100.593)
+
+[node name="Rock10" parent="Rocks" instance=ExtResource("49_qp6dk")]
+transform = Transform3D(0.537777, -1.08633, -3.8005, -0.385251, 3.80285, -1.14152, 3.93389, 0.520923, 0.407752, -2.69273, 0.746971, 105.557)
+
+[node name="Rock11" parent="Rocks" instance=ExtResource("48_e7w23")]
+transform = Transform3D(5.05196, 0, 0, 0, 5.05196, 0, 0, 0, 5.05196, -2.46227, 0.7829, 110.295)
+
+[node name="Rock12" parent="Rocks" instance=ExtResource("49_5tlat")]
+transform = Transform3D(-1.21932, 0, 4.55058, 0, 4.7111, 0, -4.55058, 0, -1.21932, -2.68286, 0.296961, 116.17)
+
+[node name="LodgingBuildingDemo" parent="." instance=ExtResource("50_1t2dt")]
+transform = Transform3D(0.746394, 0, -0.665504, 0, 1, 0, 0.665504, 0, 0.746394, 67.7397, -0.0269661, 110.838)
+
+[node name="MarketBuildingDemo" parent="." instance=ExtResource("51_xc2xa")]
+transform = Transform3D(-0.921192, 0, -0.389108, 0, 1, 0, 0.389108, 0, -0.921192, 61.6521, 0.0264177, 139.371)
+
+[node name="PlayerHouseDemo" parent="." instance=ExtResource("52_8aoug")]
+transform = Transform3D(0.18438, 0, -0.982855, 0, 1, 0, 0.982855, 0, 0.18438, 68.9602, 0.0419693, 123.666)
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+script = ExtResource("46_idspx")
+target = NodePath("../Player")
+HUD = NodePath("../HUD")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_7y5qx")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.6986, 0, 121.428)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+shape = ExtResource("47_80xa4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor/CollisionShape3D"]
+material_override = SubResource("StandardMaterial3D_oeuuc")
+material_overlay = SubResource("StandardMaterial3D_5ixkv")
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_u4ila")
+skeleton = NodePath("../..")

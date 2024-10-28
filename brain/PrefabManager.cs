@@ -35,6 +35,7 @@ public partial class PrefabManager {
         prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/error.tscn"));
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
         prefabs.Add("PauseMenu", ResourceLoader.Load<PackedScene>("res://ui/pause_menu.tscn"));
+        prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/markerpoint.tscn"));
     }
 
     public void SpawnObject(string obj, Vector3 position){

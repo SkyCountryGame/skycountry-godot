@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://w0yqou02tgux"]
+[gd_scene load_steps=23 format=3 uid="uid://w0yqou02tgux"]
 
 [ext_resource type="PackedScene" uid="uid://8qof26j4jd18" path="res://levels/level_template.tscn" id="1_im1ok"]
 [ext_resource type="Script" path="res://levels/Level1.cs" id="2_om4ml"]
@@ -8,14 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://cigb283il82k3" path="res://assets/texture/face2.png" id="6_kajyc"]
 [ext_resource type="PackedScene" uid="uid://mkrti0jlvpeu" path="res://characters/the_bird_hunter.tscn" id="8_leco6"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="9_bfuf4"]
-[ext_resource type="PackedScene" uid="uid://hparur4cdriw" path="res://gameobjects/cursed_orb.tscn" id="10_2j46k"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="11_ccbhd"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="12_8mb05"]
 [ext_resource type="PackedScene" uid="uid://cr1wgiphvwm5j" path="res://characters/bird_man.tscn" id="13_61ty6"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_6nils"]
-vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4pgg"]
+size = Vector3(1, 2, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmtp8"]
 
@@ -49,22 +47,44 @@ size = Vector3(5, 1, 5)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6ovc5"]
 points = PackedVector3Array(0, 0, 0, 2, 0, 0, 2, 0, 5, 0, 0, 5, 0, 2, 5, 2, 2, 5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_o4pgg"]
-size = Vector3(1, 2, 1)
-
 [node name="Wod3" node_paths=PackedStringArray("sunlight", "navRegion") instance=ExtResource("1_im1ok")]
 script = ExtResource("2_om4ml")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
 [node name="Camera3D" parent="." index="3" node_paths=PackedStringArray("target")]
-target = NodePath("../CursedOrb")
+target = NodePath("../TheBirdHunter")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource("4_26u06")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="5"]
-navigation_mesh = SubResource("NavigationMesh_6nils")
+[node name="TheConjurer" type="CharacterBody3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TheConjurer" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_o4pgg")
+script = ExtResource("5_6lov6")
+
+[node name="NavAgent" type="NavigationAgent3D" parent="TheConjurer" index="1"]
+target_desired_distance = 1.55
+path_max_distance = 12.81
+
+[node name="Sprite3D" type="Sprite3D" parent="TheConjurer" index="2"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.4, -0.55)
+texture = ExtResource("6_kajyc")
+
+[node name="DeathWall" parent="." index="6" instance=ExtResource("9_bfuf4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.965, 0, 0)
+
+[node name="Devtool" parent="." index="7" instance=ExtResource("12_8mb05")]
+
+[node name="PauseMenu" parent="." index="8" instance=ExtResource("11_ccbhd")]
+
+[node name="TheBirdHunter" parent="." index="9" instance=ExtResource("8_leco6")]
+
+[node name="BirdMan" parent="." index="10" instance=ExtResource("13_61ty6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49853, 0.0999999, 0)
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0"]
 
@@ -114,34 +134,3 @@ script = ExtResource("5_6lov6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D4" index="0"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11, 0, -2)
 shape = SubResource("ConvexPolygonShape3D_6ovc5")
-
-[node name="TheConjurer" type="CharacterBody3D" parent="." index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 3)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TheConjurer" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_o4pgg")
-script = ExtResource("5_6lov6")
-
-[node name="NavAgent" type="NavigationAgent3D" parent="TheConjurer" index="1"]
-target_desired_distance = 1.55
-path_max_distance = 12.81
-
-[node name="Sprite3D" type="Sprite3D" parent="TheConjurer" index="2"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.4, -0.55)
-texture = ExtResource("6_kajyc")
-
-[node name="DeathWall" parent="." index="7" instance=ExtResource("9_bfuf4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.965, 0, 0)
-
-[node name="CursedOrb" parent="." index="8" instance=ExtResource("10_2j46k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.27986, 3.24299, 5.84783)
-
-[node name="Devtool" parent="." index="9" instance=ExtResource("12_8mb05")]
-
-[node name="PauseMenu" parent="." index="10" instance=ExtResource("11_ccbhd")]
-
-[node name="TheBirdHunter" parent="." index="11" instance=ExtResource("8_leco6")]
-
-[node name="BirdMan" parent="." index="12" instance=ExtResource("13_61ty6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49853, 0.0999999, 0)

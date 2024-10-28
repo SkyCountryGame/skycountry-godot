@@ -96,9 +96,9 @@ public partial class Level : Node
 	public Vector3 GetRandomPoint(){
 		//worldBounds = GetWorldBounds();
 		return new Vector3(
-			(float)GD.RandRange(worldBounds.Position.X, worldBounds.Size.X),
+			(float)GD.RandRange(worldBounds.Position.X, worldBounds.End.X),
 			0,
-			(float)GD.RandRange(worldBounds.Position.Z, worldBounds.Size.Z)
+			(float)GD.RandRange(worldBounds.Position.Z, worldBounds.End.Z)
 		);
 	}
 	//gets some random point that can be navigated to
@@ -108,6 +108,7 @@ public partial class Level : Node
 		while (res.X == 0 && res.Z == 0){
 			res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
 		}
+		res = GetRandomPoint();
 		GD.Print("random nav point:" + res);
 		return res;
 	}

@@ -15,3 +15,5 @@ inv = SubResource("Resource_u6ply")
 disposition = 0
 state = 0
 emotion = 6
+defaultState = 0
+stateTransitionInterval = 0

@@ -57,9 +57,9 @@ public partial class BirdHunter : NPCNode {
 			case State.ROAMING:
 				if (navReady){
 					if (!nav.IsNavigationFinished()){
-						nav.Velocity = (nav.GetNextPathPosition() - Position) * .5f;
+						Vector3 nextPos = nav.GetNextPathPosition();
+						nav.Velocity = (nextPos - Position);
 						Velocity = nav.Velocity;
-						MoveAndSlide();
 					} else {
 						nav.TargetPosition = NextNavPoint();
 						EffectsManager.MarkerPoint("navpoint", nav.TargetPosition);

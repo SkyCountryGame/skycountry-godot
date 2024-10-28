@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://8qof26j4jd18"]
+[gd_scene load_steps=8 format=3 uid="uid://8qof26j4jd18"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
@@ -19,6 +19,8 @@ background_mode = 2
 sky = SubResource("Sky_esjiq")
 ambient_light_source = 1
 tonemap_mode = 2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_ckcui"]
 
 [node name="Wod" type="Node3D"]
 script = ExtResource("1_ypbtj")
@@ -46,3 +48,6 @@ sky_mode = 1
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 script = ExtResource("1_f6jas")
 HUD = NodePath("../HUD")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_ckcui")
