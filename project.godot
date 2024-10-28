@@ -35,7 +35,7 @@ script/search_in_file_extensions=PackedStringArray("gd", "gdshader", "cs")
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
 
 [filesystem]
 
