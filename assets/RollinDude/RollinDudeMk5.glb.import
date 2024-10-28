@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bl36oxkmkwx2"
-path="res://.godot/imported/RollinDudeMk5.glb-381919911b4d19adca60ef5e2e771b31.scn"
+path="res://.godot/imported/RollinDudeMk5.glb-0bb22daf5d80744f88b74638ee696985.scn"
 
 [deps]
 
-source_file="res://assets/rollin dude/RollinDudeMk5.glb"
-dest_files=["res://.godot/imported/RollinDudeMk5.glb-381919911b4d19adca60ef5e2e771b31.scn"]
+source_file="res://assets/RollinDude/RollinDudeMk5.glb"
+dest_files=["res://.godot/imported/RollinDudeMk5.glb-0bb22daf5d80744f88b74638ee696985.scn"]
 
 [params]
 

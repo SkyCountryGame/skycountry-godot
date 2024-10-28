@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdfwixumy7tix"
-path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Arms Texture_Metallic.png-19eb00e856589051a9dc921d82ea35e5.s3tc.ctex"
+uid="uid://bbppe3djxlkym"
+path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Arms Texture_BaseColor.png-000236165505e7cda3b327b8bb000be2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/rollin dude/RollinDudeMk5_RollinDude_FullBody_Arms Texture_Metallic.png"
-dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Arms Texture_Metallic.png-19eb00e856589051a9dc921d82ea35e5.s3tc.ctex"]
+source_file="res://assets/RollinDude/RollinDudeMk5_RollinDude_FullBody_Arms Texture_BaseColor.png"
+dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Arms Texture_BaseColor.png-000236165505e7cda3b327b8bb000be2.s3tc.ctex"]
 
 [params]
 

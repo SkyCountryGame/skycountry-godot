@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_3km67"]
 [ext_resource type="Script" path="res://brain/CollideableObject.cs" id="2_11arr"]
-[ext_resource type="PackedScene" uid="uid://bl36oxkmkwx2" path="res://assets/rollin dude/RollinDudeMk5.glb" id="3_wai1g"]
+[ext_resource type="PackedScene" uid="uid://bl36oxkmkwx2" path="res://assets/RollinDude/RollinDudeMk5.glb" id="3_wai1g"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tlm4b"]
 

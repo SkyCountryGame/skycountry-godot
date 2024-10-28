@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwueqdikgm76e"
-path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Pin_BaseColor.png-1206a3059c107dc113950b42b9c69d53.s3tc.ctex"
+uid="uid://b0ajgl6hsntxc"
+path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Cape_BaseColor.png-4baf266b876388548af8660659ed3ea6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/rollin dude/RollinDudeMk5_RollinDude_FullBody_Pin_BaseColor.png"
-dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Pin_BaseColor.png-1206a3059c107dc113950b42b9c69d53.s3tc.ctex"]
+source_file="res://assets/RollinDude/RollinDudeMk5_RollinDude_FullBody_Cape_BaseColor.png"
+dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Cape_BaseColor.png-4baf266b876388548af8660659ed3ea6.s3tc.ctex"]
 
 [params]
 

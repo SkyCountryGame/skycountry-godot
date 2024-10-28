@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpve440acef45"
-path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png-b224fd7f56a21a95f1bedc725c999d7c.s3tc.ctex"
+path.s3tc="res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png-23e8b93a064aff3509e845a9be5af6b2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/rollin dude/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png"
-dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png-b224fd7f56a21a95f1bedc725c999d7c.s3tc.ctex"]
+source_file="res://assets/RollinDude/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png"
+dest_files=["res://.godot/imported/RollinDudeMk5_RollinDude_FullBody_Head texture_Emissive.png-23e8b93a064aff3509e845a9be5af6b2.s3tc.ctex"]
 
 [params]
 
