@@ -246,7 +246,7 @@ public partial class HUDManager : Node {
 
     public void ShowAction(string text){
         actionLabel.Visible = true;
-        actionLabel.Text = "interact: " + text; //TODO this will have a sprite for key instead of 'interact'
+        actionLabel.Text = "interact: " + text; //TODO use a sprite instead of text
     }
     public void HideAction(){
         actionLabel.Visible = false;
