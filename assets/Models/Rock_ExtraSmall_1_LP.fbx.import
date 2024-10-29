@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://be7r7nchkse70"
-path="res://.godot/imported/Rock8.gltf-57b51423e6a426a0dd9bc019b92c08e7.scn"
+uid="uid://by5c00b2ohl87"
+path="res://.godot/imported/Rock_ExtraSmall_1_LP.fbx-f56b85183dedbc4c6d03c45f7b7e8f54.scn"
 
 [deps]
 
-source_file="res://assets/Models/Rocks/Rock8.gltf"
-dest_files=["res://.godot/imported/Rock8.gltf-57b51423e6a426a0dd9bc019b92c08e7.scn"]
+source_file="res://assets/Models/Rock_ExtraSmall_1_LP.fbx"
+dest_files=["res://.godot/imported/Rock_ExtraSmall_1_LP.fbx-f56b85183dedbc4c6d03c45f7b7e8f54.scn"]
 
 [params]
 
@@ -27,10 +27,11 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=false
+animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
-gltf/embedded_image_handling=1
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1
