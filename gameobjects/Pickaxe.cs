@@ -57,12 +57,8 @@ public partial class Pickaxe : StaticBody3D, Interactable, Collideable {
                 case ColliderZone.Body:
                     GD.Print("inside Body");
                     if(other is Interactable && ((Interactable) other).interactionType == InteractionType.Mineable){
-                        if(other is Destroyable){
-                            GD.Print("health is " + ((Destroyable)other).health);
-                            ((Destroyable)other).health-=((MeleeItemProperties)pickaxeItem.GetItemProperties()).damage;
-                            GD.Print("health is now" + ((Destroyable)other).health);
-                            GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled = true;
-                        }
+                        Global.playerNode.HandleInteract((Interactable)other,pickaxeItem);
+                        GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled = true;
                     }
                     break;
             }

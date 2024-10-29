@@ -257,7 +257,7 @@ public partial class HUDManager : Node {
         InventoryItem item = Global.playerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
             if (mouseButton == 1){ //left click
-                if (Global.playerNode.EquipItem(item)){
+                if (item.equippable && Global.playerNode.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }

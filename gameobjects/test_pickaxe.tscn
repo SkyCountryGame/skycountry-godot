@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cpgtgprmalggl"]
+[gd_scene load_steps=11 format=4 uid="uid://bae368jfutt53"]
 
 [ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="2_0gvdm"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="2_xo0ow"]
@@ -102,6 +102,6 @@ script = ExtResource("2_xo0ow")
 zone = 2
 
 [node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, -8.73873e-08, 8.99141e-08, 8.73873e-08, -0.0284973, -0.999594, 8.99141e-08, 0.999594, -0.0284973, 0, 1.26508, 0)
+transform = Transform3D(1.5, -2.37098e-07, 1.38946e-07, 1.28754e-07, -0.0284978, -1.49939, 3.59463e-07, 0.999594, -0.0427468, 0, 1.26508, 0)
 shape = SubResource("CapsuleShape3D_t3u3i")
 disabled = true

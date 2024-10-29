@@ -85,9 +85,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 		//HUD stuff
 		if (availableInteractables.Count > 0){
-			Global.hud.ShowAction($"{GetFirstInteractable().Info()}");					
+			Global.HUD.ShowAction($"{GetFirstInteractable().Info()}");					
 		} else {
-			Global.hud.HideAction();
+			Global.HUD.HideAction();
 		}
 	}
 
@@ -187,37 +187,49 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 
 	//
-	public void HandleInteract(Interactable interactable)
+	public void HandleInteract(Interactable interactable, InventoryItem interactorItem = null)
 	{
-		Node interactionObj = (Node)interactable;
+		Node interactableObj = (Node)interactable;
 		dynamic payload = interactable.Interact();
 		switch (interactable.interactionType)
 		{
 			case InteractionType.Dialogue:
-				if (playerModel.UpdateState(State.DIALOGUE)){
-					Global.hud.ShowDialogue(((Talker)interactable).GetDialogue());
+				if (playerModel.SetState(State.DIALOGUE)){
+					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				InventoryItem item = payload; //NOTE here we are assuming that Pickupeable items are inventory items... is this always to be the case? 
-				playerModel.AddToInventory(item);
-				availableInteractables.Remove(interactable);
-				interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-				Global.HUD.LogEvent($" + {item}");
+				PickupItem((InventoryItem)payload,interactableObj);
 				break;
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
+				if (interactorItem!=null){
+					if(interactable is Destroyable && interactorItem.GetItemProperties() is MeleeItemProperties){
+						GD.Print("health is " + ((Destroyable)interactable).health);
+						((Destroyable)interactable).health-=((MeleeItemProperties)interactorItem.GetItemProperties()).damage;
+						GD.Print("health is now" + ((Destroyable)interactable).health);
+						if(((Destroyable)interactable).health <= 0){
+							PickupItem((InventoryItem) payload, interactableObj);
+						}
+					}
+				}
 				break;
 			case InteractionType.Function:
-				Global.hud.LogEvent($"{interactable.Info()}");
+				Global.HUD.LogEvent($"{interactable.Info()}");
 				payload(this); //TODO what return? 
 				break;
 			default:
 				break;
 		}
+	}
+
+	private void PickupItem(InventoryItem item, Node interactionObj){
+		playerModel.AddToInventory(item);
+		interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
+		Global.HUD.LogEvent($" + {item}");
 	}
 
 	public Interactable GetFirstInteractable()
@@ -304,22 +316,23 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public void UnequipRightHand(){
 		if(rightHand.GetChildCount()>0){
 			rightHand.RemoveChild(rightHand.GetChild(0));
+			playerModel.rightHandEquipped=null;
 		}
 	}
 
 	/** by default equip the primary item, or give an item to equip */
 	public bool EquipItem(InventoryItem item = null){
 		if (playerModel.inv.IsEmpty()) return false;
-		if (item == null){ //equip the primary item
-			playerModel.equipped = playerModel.inv.GetItemByIndex(0);
-			Global.HUD.ShowEquipped(playerModel.equipped.name);
-		} else {
-			if (playerModel.inv.Contains(item)){
-				playerModel.equipped = item;
-				EquipRightHand(item);
-			}
+		// if (item == null){ //equip the primary item
+		// 	playerModel.equipped = playerModel.inv.GetItemByIndex(0);
+		// 	Global.HUD.ShowEquipped(playerModel.equipped.name);
+		// } else {
+		if (playerModel.inv.Contains(item) && item.equippable){
+			playerModel.equipped = item;
+			EquipRightHand(item);
 		}
-		return playerModel.equipped != null;
+		//}
+		return playerModel.equipped == item;
 	}
 
 	/** drop the equipped item, or a specific item */
@@ -335,6 +348,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 			if (item == playerModel.equipped){
 				playerModel.equipped = null;
+				UnequipRightHand();
 			}
 			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix
 			return true;
