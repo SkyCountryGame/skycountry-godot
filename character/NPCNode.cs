@@ -79,7 +79,7 @@ public abstract partial class NPCNode : CharacterBody3D, Collideable {
 	}
 
 	//has default functionality but obviously can be overriden
-	public Vector3 NextNavPoint(){
+	public virtual Vector3 NextNavPoint(){
 		return Global.level.GetRandomNavPoint(); //navPoints.Pop();
 	}
 

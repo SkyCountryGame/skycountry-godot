@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CursedOrb : Node3D
+public partial class CursedOrb : NPCNode
 {
 	private CharacterBody3D body;
 	private Vector3 scaleVector = new Vector3(1,1,1);
@@ -36,4 +36,20 @@ public partial class CursedOrb : Node3D
 		body.Velocity = nav.Velocity;
 		body.MoveAndSlide();
 	}
+
+    public override void HandleCollide(ColliderZone zone, Node other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void HandleDecollide(ColliderZone zone, Node other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool UpdateState(NPCModel.State s, dynamic payload = null)
+    {
+        throw new NotImplementedException();
+    }
+
 }

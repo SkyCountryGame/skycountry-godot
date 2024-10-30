@@ -66,6 +66,11 @@ public partial class Level : Node
 			sunlightTheta += sunlightAngleDelta;
 			sunlight.Position = new Vector3(sunlightRadius*MathF.Cos(sunlightTheta),sunlightRadius*MathF.Sin(sunlightTheta),0);
 			sunlight.LookAt(WORLD_ORIGIN);
+			if (sunlightTheta > 2*MathF.PI){
+				sunlightTheta = 0;
+				Global.hud.LogEvent("new day!");
+				GD.Print("new day");
+			}
 		};
 		AddChild(sunlightUpdateTimer);
 		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);

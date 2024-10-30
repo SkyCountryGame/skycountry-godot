@@ -1,11 +1,23 @@
-[gd_scene load_steps=58 format=3 uid="uid://de2xm0xxwmcag"]
+[gd_scene load_steps=71 format=3 uid="uid://de2xm0xxwmcag"]
 
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_4tfcl"]
 [ext_resource type="Shader" path="res://levels/ArtScene/ArtScene_SkyShader.gdshader" id="1_vr5cb"]
 [ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky hdri/Sky_Anime_01_Day_a.png" id="2_gocnc"]
 [ext_resource type="Script" path="res://player/PlayerModel.cs" id="4_2lia5"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="6_i4krp"]
+[ext_resource type="Resource" path="res://terrain_directory/data.hterrain" id="7_nek7h"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_nbws0"]
+[ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_albedo_bump.png" id="9_ibf2c"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="10_lymhc"]
-[ext_resource type="PackedScene" uid="uid://br5e48dbjqngp" path="res://gameobjects/wood/chest_01.tscn" id="26_6bcsg"]
+[ext_resource type="Texture2D" uid="uid://ba4msdxu84w83" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_albedo_bump.png" id="10_tif5c"]
+[ext_resource type="Texture2D" uid="uid://dk7ycmhk0e2e6" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_albedo_bump.png" id="11_ni757"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="11_vt0it"]
+[ext_resource type="Texture2D" uid="uid://b4d4s71f1ika2" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_albedo_bump.png" id="12_gccny"]
+[ext_resource type="Texture2D" uid="uid://2fwptdpeya1i" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_normal_roughness.png" id="13_yvb3x"]
+[ext_resource type="Texture2D" uid="uid://b16qrvybrmhv4" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_normal_roughness.png" id="14_oexg6"]
+[ext_resource type="Texture2D" uid="uid://lqsd5xk7b0nm" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_normal_roughness.png" id="15_08lj0"]
+[ext_resource type="Texture2D" uid="uid://dkx6b5tmwu7xb" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_normal_roughness.png" id="16_boqt4"]
+[ext_resource type="PackedScene" uid="uid://br5e48dbjqngp" path="res://gameobjects/Wood Props/chest_01.tscn" id="26_6bcsg"]
 [ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://gameobjects/rocks/rock_2.tscn" id="39_ojci4"]
 [ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/rocks/rock_1.tscn" id="39_wspli"]
 [ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://gameobjects/rocks/rock_3.tscn" id="40_2vrv0"]
@@ -20,33 +32,33 @@
 [ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/rocks/rock_6.tscn" id="49_mntnu"]
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/rocks/rock_10.tscn" id="49_qp6dk"]
 [ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/rocks/rock_8.tscn" id="49_teqx0"]
-[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/buildings/lodging_building_demo.tscn" id="50_1t2dt"]
-[ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://gameobjects/wood/signpost_03.tscn" id="50_5grrp"]
-[ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://gameobjects/wood/signpost_02.tscn" id="50_ycb6y"]
-[ext_resource type="PackedScene" uid="uid://chx682h4loact" path="res://gameobjects/wood/basket_02.tscn" id="51_8jt4r"]
-[ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://gameobjects/wood/picket_fence_long.tscn" id="51_gvybs"]
-[ext_resource type="PackedScene" uid="uid://btya54x3f3b0k" path="res://gameobjects/wood/table_01.tscn" id="51_nqgwc"]
-[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/buildings/market_building_demo.tscn" id="51_xc2xa"]
-[ext_resource type="PackedScene" uid="uid://kwntyvs5xig7" path="res://gameobjects/wood/signpost_01.tscn" id="52_0g3lu"]
-[ext_resource type="PackedScene" uid="uid://ela77477tuep" path="res://gameobjects/wood/wagon_01.tscn" id="52_3qnu7"]
-[ext_resource type="PackedScene" uid="uid://doavcw4e63t8i" path="res://gameobjects/wood/chest_04.tscn" id="52_5mqk4"]
+[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="50_1t2dt"]
+[ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://gameobjects/Wood Props/signpost_03.tscn" id="50_5grrp"]
+[ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://gameobjects/Wood Props/signpost_02.tscn" id="50_ycb6y"]
+[ext_resource type="PackedScene" uid="uid://chx682h4loact" path="res://gameobjects/Wood Props/basket_02.tscn" id="51_8jt4r"]
+[ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://gameobjects/Wood Props/picket_fence_long.tscn" id="51_gvybs"]
+[ext_resource type="PackedScene" uid="uid://btya54x3f3b0k" path="res://gameobjects/Wood Props/table_01.tscn" id="51_nqgwc"]
+[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/DemoBuildings/market_building_demo.tscn" id="51_xc2xa"]
+[ext_resource type="PackedScene" uid="uid://kwntyvs5xig7" path="res://gameobjects/Wood Props/signpost_01.tscn" id="52_0g3lu"]
+[ext_resource type="PackedScene" uid="uid://ela77477tuep" path="res://gameobjects/Wood Props/wagon_01.tscn" id="52_3qnu7"]
+[ext_resource type="PackedScene" uid="uid://doavcw4e63t8i" path="res://gameobjects/Wood Props/chest_04.tscn" id="52_5mqk4"]
 [ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/Models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
-[ext_resource type="PackedScene" uid="uid://cl7upijqjmaql" path="res://gameobjects/wood/chest_02.tscn" id="52_eblwg"]
-[ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://gameobjects/wood/fence_short.tscn" id="52_g3n1k"]
-[ext_resource type="PackedScene" uid="uid://dfu4b1k6j7wq6" path="res://gameobjects/wood/bridge_01.tscn" id="52_hkjrn"]
-[ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://gameobjects/wood/keg.tscn" id="52_r2bme"]
-[ext_resource type="PackedScene" uid="uid://dgx5oij6th1p" path="res://gameobjects/wood/bucket.tscn" id="52_vmlb5"]
-[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/wood/barrel_01.tscn" id="52_x1nth"]
-[ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://gameobjects/wood/picket_fence_connector.tscn" id="52_xs2tf"]
-[ext_resource type="PackedScene" uid="uid://jk3ldkc354nb" path="res://gameobjects/wood/crate_01.tscn" id="53_1a8b3"]
-[ext_resource type="PackedScene" uid="uid://tp3frmjj1lcd" path="res://gameobjects/wood/fence_gate.tscn" id="53_io3yt"]
-[ext_resource type="PackedScene" uid="uid://bdgjtwcqmxaxp" path="res://gameobjects/wood/chest_03.tscn" id="53_ipkoa"]
-[ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://gameobjects/wood/fence_connector_long.tscn" id="53_rv2cs"]
-[ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://gameobjects/wood/fence_connector_short.tscn" id="53_s5x3j"]
-[ext_resource type="PackedScene" uid="uid://bvj8kg0gj76y" path="res://gameobjects/wood/wagon_02.tscn" id="53_sj5br"]
-[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/wood/barrel_02.tscn" id="54_6wbe3"]
-[ext_resource type="PackedScene" uid="uid://cx7lk5ruc2c83" path="res://gameobjects/wood/barrel_03.tscn" id="55_u2xv6"]
-[ext_resource type="PackedScene" uid="uid://dapm341ydolv1" path="res://gameobjects/wood/basket_01.tscn" id="56_d4sc7"]
+[ext_resource type="PackedScene" uid="uid://cl7upijqjmaql" path="res://gameobjects/Wood Props/chest_02.tscn" id="52_eblwg"]
+[ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://gameobjects/Wood Props/fence_short.tscn" id="52_g3n1k"]
+[ext_resource type="PackedScene" uid="uid://dfu4b1k6j7wq6" path="res://gameobjects/Wood Props/bridge_01.tscn" id="52_hkjrn"]
+[ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://gameobjects/Wood Props/keg.tscn" id="52_r2bme"]
+[ext_resource type="PackedScene" uid="uid://dgx5oij6th1p" path="res://gameobjects/Wood Props/bucket.tscn" id="52_vmlb5"]
+[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/Wood Props/barrel_01.tscn" id="52_x1nth"]
+[ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://gameobjects/Wood Props/picket_fence_connector.tscn" id="52_xs2tf"]
+[ext_resource type="PackedScene" uid="uid://jk3ldkc354nb" path="res://gameobjects/Wood Props/crate_01.tscn" id="53_1a8b3"]
+[ext_resource type="PackedScene" uid="uid://tp3frmjj1lcd" path="res://gameobjects/Wood Props/fence_gate.tscn" id="53_io3yt"]
+[ext_resource type="PackedScene" uid="uid://bdgjtwcqmxaxp" path="res://gameobjects/Wood Props/chest_03.tscn" id="53_ipkoa"]
+[ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://gameobjects/Wood Props/fence_connector_long.tscn" id="53_rv2cs"]
+[ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://gameobjects/Wood Props/fence_connector_short.tscn" id="53_s5x3j"]
+[ext_resource type="PackedScene" uid="uid://bvj8kg0gj76y" path="res://gameobjects/Wood Props/wagon_02.tscn" id="53_sj5br"]
+[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/Wood Props/barrel_02.tscn" id="54_6wbe3"]
+[ext_resource type="PackedScene" uid="uid://cx7lk5ruc2c83" path="res://gameobjects/Wood Props/barrel_03.tscn" id="55_u2xv6"]
+[ext_resource type="PackedScene" uid="uid://dapm341ydolv1" path="res://gameobjects/Wood Props/basket_01.tscn" id="56_d4sc7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_njwei"]
 shader = ExtResource("1_vr5cb")
@@ -74,6 +86,11 @@ sdfgi_read_sky_light = false
 script = ExtResource("4_2lia5")
 activityState = 1
 hp = 0
+
+[sub_resource type="Resource" id="Resource_28kg0"]
+script = ExtResource("8_nbws0")
+mode = 0
+textures = [[ExtResource("9_ibf2c"), ExtResource("10_tif5c"), ExtResource("11_ni757"), ExtResource("12_gccny")], [ExtResource("13_yvb3x"), ExtResource("14_oexg6"), ExtResource("15_08lj0"), ExtResource("16_boqt4")]]
 
 [sub_resource type="Resource" id="Resource_bakux"]
 metadata/__load_path__ = "res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg"
@@ -115,8 +132,36 @@ transform = Transform3D(0.000836852, -0.000332152, 1, 0.00225944, 0.999998, 0.00
 playerModel = SubResource("Resource_sohc0")
 
 [node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("6_i4krp")
+map_scale = Vector3(4, 4, 4)
+_terrain_data = ExtResource("7_nek7h")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_28kg0")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale_per_texture = Vector4(2, 1, 6, 2)
+shader_params/u_depth_blending = false
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Vector4(0, 0, 0, 0)
+shader_params/u_globalmap_blend_start = null
+shader_params/u_globalmap_blend_distance = null
+shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
+shader_params/u_specular = 0.5
 
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
+visible = false
+script = ExtResource("11_vt0it")
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = Vector3(1, 1, 1)
+shader_params/u_roughness = 0.9
 metadata/_editor_icon = SubResource("Resource_bakux")
 
 [node name="Wood Props" type="Node3D" parent="."]
@@ -266,15 +311,19 @@ target = NodePath("../Player")
 HUD = NodePath("../HUD")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+visible = false
 navigation_mesh = SubResource("NavigationMesh_7y5qx")
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.6986, 0, 121.428)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+visible = false
 shape = ExtResource("47_80xa4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor/CollisionShape3D"]
+visible = false
 material_override = SubResource("StandardMaterial3D_oeuuc")
 material_overlay = SubResource("StandardMaterial3D_5ixkv")
 cast_shadow = 0

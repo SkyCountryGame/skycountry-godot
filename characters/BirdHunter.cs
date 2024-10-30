@@ -58,8 +58,8 @@ public partial class BirdHunter : NPCNode {
 				if (navReady){
 					if (!nav.IsNavigationFinished()){
 						Vector3 nextPos = nav.GetNextPathPosition();
-						nav.Velocity = (nextPos - Position);
-						Velocity = nav.Velocity;
+						
+						Velocity = (nextPos - GlobalPosition).Normalized() *2;
 					} else {
 						nav.TargetPosition = NextNavPoint();
 						EffectsManager.MarkerPoint("navpoint", nav.TargetPosition);
@@ -132,5 +132,12 @@ public partial class BirdHunter : NPCNode {
 		}
 		m.state = s;
 		return true;
+	}
+
+
+	public override Vector3 NextNavPoint(){
+		float th = (float)GD.RandRange(0, 2*Mathf.Pi);
+		float d = (float)GD.RandRange(0, 10);
+		return new Vector3(d*Mathf.Cos(th), 0, d*Mathf.Sin(th)) + GlobalPosition;
 	}
 }

@@ -16,4 +16,4 @@ disposition = 0
 state = 0
 emotion = 6
 defaultState = 0
-stateTransitionInterval = 0
+stateTransitionInterval = 7000
