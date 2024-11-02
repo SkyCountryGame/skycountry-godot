@@ -15,4 +15,4 @@ reswingSpeed = 1
 name = "pickaxe"
 itemType = 0
 equippable = true
-scenePath = "res://gameobjects/test_pickaxe.tscn"
+scenePath = "res://gameobjects/pickaxe_equip.tscn"

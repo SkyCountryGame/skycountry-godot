@@ -1,12 +1,13 @@
 using Godot;
 using System;
 
-public partial class Rock : RigidBody3D, Interactable, Destroyable {
-    public InteractionType interactionType => InteractionType.Mineable;
+public partial class Rock : RigidBody3D, Interactable,Destroyable {
+    int Destroyable.health { get => health; set => health = value; }
+
+    public InteractionType interactionType => InteractionType.Pickup; //in addition to being able to be mined, you can also pick up rocks. they might be heavy though
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
 
-    int Destroyable.health { get => health; set => health = value; }
 
     private int health = 3;
 
@@ -55,4 +56,19 @@ public partial class Rock : RigidBody3D, Interactable, Destroyable {
     {
         throw new NotImplementedException();
     }
+
+    public void ApplyDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0){
+            Destroy();
+        }
+    }
+
+    public void Destroy()
+    {
+        GD.Print("destroy rock");
+        throw new NotImplementedException();
+    }
+
 }

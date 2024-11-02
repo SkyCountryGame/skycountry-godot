@@ -1,7 +1,12 @@
-[gd_scene load_steps=11 format=4 uid="uid://bae368jfutt53"]
+[gd_scene load_steps=12 format=4 uid="uid://bae368jfutt53"]
 
 [ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="2_0gvdm"]
-[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="2_xo0ow"]
+[ext_resource type="Resource" uid="uid://bp8isajsf3lxu" path="res://gameobjects/resources/pickaxe.tres" id="2_qfpen"]
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_fyolf"]
+
+[sub_resource type="Resource" id="Resource_y0sfm"]
+script = ExtResource("3_fyolf")
+itemProperties = ExtResource("2_qfpen")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e18mv"]
 radius = 0.720012
@@ -75,12 +80,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xhdy3")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t3u3i"]
-radius = 0.437421
-height = 3.49882
-
-[node name="TestPickaxe" type="StaticBody3D"]
+[node name="PickaxePickup" type="StaticBody3D"]
 script = ExtResource("2_0gvdm")
+pickaxeItem = SubResource("Resource_y0sfm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921963, 0)
@@ -95,13 +97,3 @@ skeleton = NodePath("")
 transform = Transform3D(0.303, 0, -2.65765e-08, 0, 0.444, 0, -2.64891e-08, 0, -0.304, 0.00605619, 0, -5.29449e-10)
 mesh = SubResource("ArrayMesh_yxpl4")
 skeleton = NodePath("")
-
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.921963, 0)
-script = ExtResource("2_xo0ow")
-zone = 2
-
-[node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1.5, -2.37098e-07, 1.38946e-07, 1.28754e-07, -0.0284978, -1.49939, 3.59463e-07, 0.999594, -0.0427468, 0, 1.26508, 0)
-shape = SubResource("CapsuleShape3D_t3u3i")
-disabled = true

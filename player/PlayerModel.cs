@@ -6,10 +6,10 @@ using Godot;
 public partial class PlayerModel : Resource {
 	public CharacterBody3D playerNode;
 	[Export]
-    private State activityState = State.DEFAULT;
+    public State activityState = State.DEFAULT;
 	[Export]
     public int hp = 0;
-	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+	public Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	
 	[Flags]
 	public enum State //maybe activity state? 
@@ -31,7 +31,7 @@ public partial class PlayerModel : Resource {
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
 	//[Export]
 	public InventoryItem equipped; 
-	public Node3D rightHandEquipped;
+	
 
     public PlayerModel(CharacterBody3D playerNode){
 		this.playerNode = playerNode;
@@ -49,49 +49,6 @@ public partial class PlayerModel : Resource {
 		inv = new Inventory(4);
 	}
 
-	/**
-	  * logic to perform when switching states
-	  */
-    public bool SetState(State s){
-		State prev = activityState; //some state transitions need to know previous
-		if (dS[activityState].Contains(s)){
-			activityState = s;
-			switch (activityState){
-				case State.DEFAULT:
-					if (prev == State.INVENTORY){
-						Global.HUD.HideInventory();
-					} else if (prev == State.DIALOGUE) {
-						Global.HUD.ExitDialogue();
-					}
-					break;
-				case State.CHARGING:
-					break;
-				case State.ROLLING:
-					break;
-				case State.PREPARING:
-					break;
-				case State.ATTACKING:
-					break;
-				case State.COOLDOWN:
-					break;
-				case State.HEALING:
-					break;
-				case State.RELOADING:
-					break;
-				case State.AIMING:
-					break;
-				case State.INVENTORY:
-					//Global.hud.ShowInventory();
-					GD.Print("show inventory");
-					break;
-				case State.DIALOGUE:
-					break;
-			}
-		} else {
-			return false;
-		}
-		return true;
-	}
 	public State GetState() { return activityState;}
 
 	//---INVENTORY---	

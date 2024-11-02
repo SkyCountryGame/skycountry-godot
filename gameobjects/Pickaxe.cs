@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : StaticBody3D, Interactable, Collideable {
-    private InventoryItem pickaxeItem; 
-    public InteractionType interactionType => InteractionType.Pickup;
+public partial class Pickaxe : Equipable, Interactable, Collideable {
+    [Export] private InventoryItem pickaxeItem;
+    
 
     public InteractionMethod interactionMethod => InteractionMethod.Use;
     public Pickaxe()
@@ -16,6 +16,7 @@ public partial class Pickaxe : StaticBody3D, Interactable, Collideable {
         MeleeItemProperties meleeItemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
         pickaxeItem = new InventoryItem(meleeItemProperties, true);
+        hitbox = GetNode<CollisionShape3D>("Area3D/Hitbox");
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -50,23 +51,26 @@ public partial class Pickaxe : StaticBody3D, Interactable, Collideable {
         return true;
     }
 
+    public override void Use(dynamic obj = null){
+        if (obj != null && obj is Destroyable){
+            ((Destroyable)obj).ApplyDamage(((MeleeItemProperties)pickaxeItem.GetItemProperties()).damage);
+            hitbox.Disabled = true;
+            GD.Print("pick used");
+        }
+    }
+
     public void HandleCollide(ColliderZone zone, Node other)
     {
-        if(!GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled){
-            switch (zone){
-                case ColliderZone.Body:
-                    GD.Print("inside Body");
-                    if(other is Interactable && ((Interactable) other).interactionType == InteractionType.Mineable){
-                        Global.playerNode.HandleInteract((Interactable)other,pickaxeItem);
-                        GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled = true;
-                    }
-                    break;
-            }
+        switch(zone){
+            case ColliderZone.Body:
+                Use(other);
+                break;
         }
     }
 
     public void HandleDecollide(ColliderZone zone, Node other)
     {
-        
+        return; //nothing to do for now
     }
+
 }

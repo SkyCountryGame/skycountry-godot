@@ -114,7 +114,7 @@ public partial class HUDManager : Node {
     //NOTE might move dialogue stuff into DialogueManager
     public void ExitDialogue(){
         UpdateState(State.DEFAULT);
-        Global.playerModel.SetState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
+        Global.playerNode.SetState(PlayerModel.State.DEFAULT); //hmmm. maybe should broadcast a "DialogueExited" event. but if we're exiting dialogue, then obviously the player is always going to go back to default state.
         //but also there might be other things that want to know that a dialogue has ended. TODO revisit if necessary
     }
     public void ContinueDialogue(){

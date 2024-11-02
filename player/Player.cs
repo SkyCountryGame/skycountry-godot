@@ -29,7 +29,16 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	private PlayerModel playerModel; //this is the player data that should be persisted between scenes. '_M' because shorthand
 	[Export]
 	public AnimationTree animationTree;
+	private PlayerModel M; //shorthand
 
+	//EQUIPMENT NODE3D MANAGEMENT
+	public Equipable equippedRightHand; //these nodes are the actual 3d models that are attached to the player (e.g. sword), and are children of the bodypart that "holds" the item. null if nothing equipped there 
+	public Equipable equippedLeftHand; 
+	public Equipable equippedHead;
+	public Equipable equippedBody;
+	public Equipable equippedLegs;
+	public Equipable equippedFeet;
+	//rings, amulets, etc. ?
 
 	public override void _Ready()
 	{
@@ -49,19 +58,18 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
 		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
+		M = playerModel;
 	}
 
     private void AttackFinished(StringName animName)
     {
-        playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=true;
-		playerModel.SetState(State.DEFAULT);
+		SetState(State.DEFAULT);
     }
 
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		if(playerModel.GetState() == State.DEFAULT)
 		DoMotion(delta); 
 		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
 		jump = false;
@@ -96,7 +104,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		//do appropriate thing whether we are in inventory or not
 		if ((playerModel.GetState() & (State.DIALOGUE | State.INVENTORY)) != 0){ 
 			if (Input.IsActionJustPressed("ui_back")){
-				playerModel.SetState(State.DEFAULT);
+				SetState(State.DEFAULT);
 			} else if (Input.IsActionJustPressed("left")){
 				//TODO inv left
 			} else if (Input.IsActionJustPressed("right")){
@@ -105,15 +113,19 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				//TODO inv up
 			} else if (Input.IsActionJustPressed("down")){
 				//TODO inv down
+			} else if (Input.IsActionJustPressed("player_inv")){
+				if (M.activityState == State.INVENTORY){
+					SetState(State.DEFAULT);
+				} else {
+					SetState(State.INVENTORY);
+				}
 			}
 		} else {
 			inputDir.X = Input.GetAxis("left", "right");
 			inputDir.Z = Input.GetAxis("forward", "backward");
-			if(Input.IsActionJustPressed("player_action1") && (playerModel.GetState() & (State.DEFAULT | State.AIMING)) != 0){
-				if(playerModel.equipped != null ){ //hmmmmmmmmmmmmmmm has to be a better way
-					playerModel.SetState(State.ATTACKING);
-					playerModel.rightHandEquipped.GetNode<CollisionShape3D>("Area3D/Hitbox").Disabled=false;
-					((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties) playerModel.equipped.GetItemProperties()).swingAnimation);
+			if(Input.IsActionJustPressed("player_action1")){
+				if (equippedRightHand != null){
+					SetState(State.ATTACKING); //attempt to "attack" (or use a tool)
 				}
 			} else if (Input.IsActionJustPressed("player_action2")){
 
@@ -139,11 +151,67 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				Global.HUD.ToggleInventory(playerModel.inv);
+				if (M.activityState == State.INVENTORY){
+					SetState(State.DEFAULT);
+				} else {
+					SetState(State.INVENTORY);
+				}
 			} else if (Input.IsActionJustPressed("player_equip")){
 				EquipItem();
 			}
 		}
+	}
+
+	/**
+	  * logic to perform when switching states
+	  */
+    public bool SetState(State s){
+		State prev = M.activityState; //some state transitions need to know previous
+		if (M.dS[M.activityState].Contains(s)){ //first make sure that we are allowed to transition to the given state
+			M.activityState = s;
+			switch (M.activityState){
+				case State.DEFAULT:
+					if (prev == State.INVENTORY){
+						Global.HUD.HideInventory();
+					} else if (prev == State.DIALOGUE) {
+						Global.HUD.ExitDialogue();
+					} else if (prev == State.ATTACKING){
+						equippedRightHand.hitbox.Disabled=true;
+					}
+					break;
+				case State.CHARGING:
+					break;
+				case State.ROLLING:
+					break;
+				case State.PREPARING:
+					break;
+				case State.ATTACKING:
+					//make sure we have something from the inventory equipped and that the equippable child node has been set
+					GD.Print("attacking");
+					if (playerModel.equipped != null && equippedRightHand != null) {
+						//swing! strike! cast! etc.
+						equippedRightHand.hitbox.Disabled = false;
+						((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties) playerModel.equipped.GetItemProperties()).swingAnimation);
+					}
+					break;
+				case State.COOLDOWN:
+					break;
+				case State.HEALING:
+					break;
+				case State.RELOADING:
+					break;
+				case State.AIMING:
+					break;
+				case State.INVENTORY:
+					Global.HUD.ToggleInventory(playerModel.inv); //TODO ShowInventory(). in another ticket
+					break;
+				case State.DIALOGUE:
+					break;
+			}
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	//process player movement based on user input and other factors. this is WIP
@@ -187,14 +255,14 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 
 	//
-	public void HandleInteract(Interactable interactable, InventoryItem interactorItem = null)
+	public void HandleInteract(Interactable interactable)
 	{
 		Node interactableObj = (Node)interactable;
 		dynamic payload = interactable.Interact();
 		switch (interactable.interactionType)
 		{
 			case InteractionType.Dialogue:
-				if (playerModel.SetState(State.DIALOGUE)){
+				if (SetState(State.DIALOGUE)){
 					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
@@ -206,7 +274,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case InteractionType.General:
 				break;
 			case InteractionType.Mineable:
-				if (interactorItem!=null){
+				/*if (interactorItem!=null){
 					if(interactable is Destroyable && interactorItem.GetItemProperties() is MeleeItemProperties){
 						GD.Print("health is " + ((Destroyable)interactable).health);
 						((Destroyable)interactable).health-=((MeleeItemProperties)interactorItem.GetItemProperties()).damage;
@@ -215,7 +283,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 							PickupItem((InventoryItem) payload, interactableObj);
 						}
 					}
-				}
+				}*/
 				break;
 			case InteractionType.Function:
 				Global.HUD.LogEvent($"{interactable.Info()}");
@@ -308,15 +376,15 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 				break;
 		}
-		playerModel.rightHandEquipped = (Node3D)item.GetPackedScene().Instantiate().Duplicate();
-		playerModel.rightHandEquipped.GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
-		rightHand.AddChild(playerModel.rightHandEquipped);
+		equippedRightHand = (Equipable)item.GetPackedScene().Instantiate();
+		rightHand.AddChild(equippedRightHand);
+		equippedRightHand.hitbox.Disabled = true;
 	}
 
 	public void UnequipRightHand(){
 		if(rightHand.GetChildCount()>0){
-			rightHand.RemoveChild(rightHand.GetChild(0));
-			playerModel.rightHandEquipped=null;
+			rightHand.RemoveChild(equippedRightHand);
+			equippedRightHand = null;
 		}
 	}
 

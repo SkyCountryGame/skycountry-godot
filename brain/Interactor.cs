@@ -5,7 +5,7 @@ public interface Interactor
 {
 
     //this method will be called somewhere and is where the Interactor will get the payload by calling i.Interact()
-    void HandleInteract(Interactable interactable, InventoryItem interactor = null);
+    void HandleInteract(Interactable interactable);
 
     //returns the highest priority interactable, which is almost always the closest one
     Interactable GetFirstInteractable();
