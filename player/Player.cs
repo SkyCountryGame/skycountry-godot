@@ -8,15 +8,15 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 {
 
 	//MOVEMENT 
-	public double gravity = -20f;
-	public float JumpVelocity = 200;
+	public double gravity = -3f;
+	public float JumpVelocity = 30;
 	private bool jump = false;
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
-	public float accelScalar = 90f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	public float velMagnitudeMax = 24f; //approximate max velocity allowed
+	public float accelScalar = 0f; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
+	public float velMagnitudeMax = 8f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION STUFF
