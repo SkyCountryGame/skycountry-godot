@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
@@ -11,7 +12,8 @@ public partial class Talker : Node, Interactable {
 
 	//[Export(PropertyHint.None, "dialogue")]
 	[Export(PropertyHint.File, "dialogue-for-dude.json")]
-	public String dialogueFilename = "assets/dialogue/0.json";
+	public String dialogueFilename;
+	
 
 	public Dialogue dialogue;
 	public List<Dialogue> dialogues; //each character has his own set of dialogues
@@ -35,7 +37,10 @@ public partial class Talker : Node, Interactable {
 	//get the appropriate dialogue based on the state of things
 	public Dialogue GetDialogue(){
 		dialogue.title = "Talking to " + Name; //TODO how do dialogue title? is it ever dynamic depending on game state, or can be defined in json? 
+		//printing file name
+		GD.Print("dialogue to be referenced: " + dialogueFilename);
 		return dialogue; //TODO logic to get the correct dialogue
+		
 	}
 
 	public void Retain()

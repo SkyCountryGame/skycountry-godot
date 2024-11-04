@@ -222,6 +222,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	{
 		//will be null if not an interactable
 		Interactable interactable = Global.GetInteractable(other);
+		GD.Print(interactable);
 		switch (zone){
 			case ColliderZone.Awareness0:
 				if (interactable != null)
