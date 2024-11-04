@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=5 format=3 uid="uid://b4t17am80pg82"]
+
+[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/Rocks/rock_1.tscn" id="1_rlby4"]
+[ext_resource type="Script" path="res://inventory/InventoryItemProperties.cs" id="2_7wypb"]
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_wkxf5"]
+
+[sub_resource type="Resource" id="Resource_55udj"]
+script = ExtResource("2_7wypb")
+name = "Rock"
+itemType = 256
+equipable = false
+packedSceneWorldItem = ExtResource("1_rlby4")
+
+[resource]
+script = ExtResource("3_wkxf5")
+itemProperties = SubResource("Resource_55udj")

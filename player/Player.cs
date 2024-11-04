@@ -351,7 +351,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				M.AddToInventory(payload);
+				M.AddToInventory((InventoryItem)payload);
 				break;
 			case InteractionType.General:
 				break;
@@ -389,7 +389,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		// 	playerModel.equipped = playerModel.inv.GetItemByIndex(0);
 		// 	Global.HUD.ShowEquipped(playerModel.equipped.name);
 		// } else {
-		if (playerModel.inv.Contains(item) && item.equippable){
+		if (playerModel.inv.Contains(item) && item.equipable){
 			playerModel.equipped = item;
 			EquipRightHand(item);
 		}

@@ -11,19 +11,24 @@ public partial class InventoryItem : Resource, System.ICloneable {
     public string name;
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
-    public bool equippable;
+    public bool equipable;
 
     public bool inited = false;
-    [Export] private InventoryItemProperties itemProperties = new InventoryItemProperties();
+    [Export] private InventoryItemProperties itemProperties;
 
-    public InventoryItem() : base() { }
+    public InventoryItem() : base() { 
+        if (itemProperties != null) {
+            name = itemProperties.name;
+            equipable = itemProperties.equipable;
+        }
+    }
 
     public InventoryItem(InventoryItemProperties itemProperties, bool equippable = false) : base()
     {
         this.itemProperties.itemType = itemProperties.itemType;
         name = itemProperties.name;
         id = nextId++;
-        this.equippable = equippable;
+        this.equipable = equippable;
         this.itemProperties = itemProperties;
         //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
         

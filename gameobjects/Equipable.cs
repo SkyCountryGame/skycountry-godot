@@ -14,7 +14,6 @@ public abstract partial class Equipable : Node3D {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        MeleeItemProperties meleeItemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
         hitbox = GetNode<CollisionShape3D>("Area3D/Hitbox");
     }
