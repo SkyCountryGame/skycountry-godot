@@ -36,10 +36,10 @@ public partial class Global : Node
 	public override void _Ready()
 	{
 		if (Instance == null){ //only preload the stuff once on level start (not scene start)
-			init();
-			Instance = this;
-			_ = Instance;
-		}
+            init();
+            Instance = this;
+            _ = Instance;
+        }
 	}
 
 	public void init(){
@@ -96,21 +96,20 @@ public partial class Global : Node
 		return null;
 	}
 
-	//check if the given node is an interactable or a child of an interactable. set arg strict=true to only check single node
 	public static Interactable GetInteractable(Node n, bool strict = false){
-		if (strict){
-			if (n is Interactable interactable){ return interactable; }
-			else { return null; }
-		}
-		while (n != sceneTree.Root){
-			if (n is Interactable interactable)
-			{
-				return interactable;
-			}
-			n = n.GetParent();
-		}
-		return null;
-	}
+        if (strict){
+            if (n is Interactable interactable){ return interactable; }
+            else { return null; }
+        }
+        while (n != sceneTree.Root){
+            if (n is Interactable interactable)
+            {
+                return interactable;
+            }
+            n = n.GetParent();
+        }
+        return null;
+    }
 
 	public static void TogglePause(){
 		_.GetTree().Paused = !_.GetTree().Paused;
@@ -131,23 +130,23 @@ public partial class Global : Node
 		ConfigFile cfg = new ConfigFile(); //this is editable. use FileAccess for binary encoding to obfuscate
 		cfg.SetValue("player", "position", playerNode.GlobalPosition);
 		cfg.SetValue("player", "transform", playerNode.GlobalTransform);
-		cfg.SetValue("player", "rotation", playerNode.Rotation);
+        cfg.SetValue("player", "rotation", playerNode.Rotation);
 		cfg.SetValue("player", "model", playerModel);
-		cfg.SetValue("level", "name", level.Name);
-		cfg.SetValue("level", "activeScene", playerNode.GetTree().CurrentScene);
-		//cfg.SetValue("level", "time", );
-		//foreach (NPCNode npcn in level.npcs){
-		//    cfg.SetValue("level", "npcs", $"test-{npcn.Name}");
-		//}
-		//TODO enemies
-		//maybe pass the cfg object to Level.PopulateCfg(cfg) to delegate business logic
-		cfg.Save($"user://savegame{saveSlot}.cfg");
-	}
+        cfg.SetValue("level", "name", level.Name);
+        cfg.SetValue("level", "activeScene", playerNode.GetTree().CurrentScene);
+        //cfg.SetValue("level", "time", );
+        //foreach (NPCNode npcn in level.npcs){
+        //    cfg.SetValue("level", "npcs", $"test-{npcn.Name}");
+        //}
+        //TODO enemies
+        //maybe pass the cfg object to Level.PopulateCfg(cfg) to delegate business logic
+        cfg.Save($"user://savegame{saveSlot}.cfg");
+    }
 
-	public static void LoadGame(){
-		ConfigFile cfg = new ConfigFile(); 
-		cfg.Load($"user://savegame{saveSlot}.cfg");
-		playerNode.LoadSaveData(cfg);
-		level.LoadSaveData(cfg);
-	}
+    public static void LoadGame(){
+        ConfigFile cfg = new ConfigFile(); 
+        cfg.Load($"user://savegame{saveSlot}.cfg");
+        playerNode.LoadSaveData(cfg);
+        level.LoadSaveData(cfg);
+    }
 }

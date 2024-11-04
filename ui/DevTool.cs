@@ -44,18 +44,17 @@ public partial class DevTool : Node2D
 		slider2.DragEnded += OnSlider2Changed;
 		slider3.DragEnded += OnSlider3Changed;
 		//slider4.DragEnded += OnSlider4Changed;
-		textEdit4.TextChanged += OnTextEdit4Changed;
-		if (Global.playerNode != null){
-			labelValue1.Text = Global.playerNode.accelScalar.ToString();
-			labelValue2.Text = Global.playerNode.velMagnitudeMax.ToString();
-			labelValue3.Text = Global.playerNode.JumpVelocity.ToString();
-			labelValue4.Text = Global.playerNode.gravity.ToString();
-			textEdit4.Text = Global.playerNode.gravity.ToString();
-			slider1.Value = Global.playerNode.accelScalar;
-			slider2.Value = Global.playerNode.velMagnitudeMax;
-			slider3.Value = Global.playerNode.JumpVelocity;
-			//slider4.Value = Global.playerNode.gravity;
-		}
+		//textEdit4.TextChanged += OnTextEdit4Changed;
+		/*labelValue1.Text = Global.playerNode.accelScalar.ToString();
+		labelValue2.Text = Global.playerNode.velMagnitudeMax.ToString();
+		labelValue3.Text = Global.playerNode.JumpVelocity.ToString();
+		labelValue4.Text = Global.playerNode.gravity.ToString();
+		textEdit4.Text = Global.playerNode.gravity.ToString();
+		slider1.Value = Global.playerNode.accelScalar;
+		slider2.Value = Global.playerNode.velMagnitudeMax;
+		slider3.Value = Global.playerNode.JumpVelocity;
+		//slider4.Value = Global.playerNode.gravity;
+		*/
 		button1 = GetNode<Button>("DevPanel/HBoxContainer/Button1");
 	}
 
@@ -65,13 +64,13 @@ public partial class DevTool : Node2D
 		
 	}
 
-	public override void _Input(InputEvent @event)
-	{
-		if (Input.IsActionJustPressed("devmode")){
+    public override void _Input(InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("devmode")){
 			GD.Print("devmode");
 			ToggleDevPanel();
 		}
-	}
+    }
 
 	private void ToggleDevPanel()
 	{
