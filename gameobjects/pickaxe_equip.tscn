@@ -90,6 +90,8 @@ skeleton = NodePath("")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.921963, 0)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("2_8g053")
 zone = 2
 

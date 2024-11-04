@@ -103,6 +103,12 @@ public partial class Global : Node
 		}
 		return null;
 	}
+	public static Interactable GetInteractable(GameObject go){
+		if (mapGameObjectToInteractable.ContainsKey(go)){
+			return mapGameObjectToInteractable[go];
+		}
+		return null;
+	}
 
 	public static void TogglePause(){
 		_.GetTree().Paused = !_.GetTree().Paused;

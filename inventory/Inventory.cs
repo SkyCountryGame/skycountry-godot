@@ -15,6 +15,7 @@ public partial class Inventory : Resource, System.ICloneable
 	[Export]
 	public int capacity; //max # items can be wwww
 
+	public Inventory(){}
 	public Inventory(int capacity = 1)
 	{
 		this.capacity = capacity;

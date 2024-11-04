@@ -4,27 +4,24 @@ using Godot;
 
 //an item that sits somewhere in the game world that can be picked up and added to inventory or consumed in some way
 //PAYLOAD: Tuple<PickupType, dynamic> where the 2nd element is the pickup object    
-public partial class Pickup : Node, Interactable
+public partial class Pickup : Node3D, Interactable
 {
-    //the pickup type dictates what variable type the thing is, and what will happen with player, e.g. add to inv, gib health, ammo, etc.
-    public enum PickupType { 
-        Item, //InventoryItem 
-        HP, Ammo, //int
-        PlayerEffect, //function that takes player as arg and does something to it
-          /* XP, Money, Energy, ??? */ };
-
-    protected dynamic thing; //the pickup item, whether it be an inventory item or something the player has to carry or just some hp
-    [Export]
-    protected PickupType pickupType;
+    [Export] public InventoryItem invItem; //the pickup item to be added to inventory
+    [Export] public string info; //short description to show when player can pick it up
 
     public InteractionType interactionType => InteractionType.Pickup;
-    public InteractionMethod interactionMethod => InteractionMethod.Contact;
+    public InteractionMethod interactionMethod => InteractionMethod.Use;
 
-    public Pickup(){}
-    public Pickup(PickupType type, dynamic thing = null)
+    public Pickup()
     {
-        this.pickupType = type;
-        this.thing = thing;
+        
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
+        GD.Print($"{GetPath()} pickup");
     }
 
     public void Clear()
@@ -32,10 +29,10 @@ public partial class Pickup : Node, Interactable
         throw new System.NotImplementedException();
     }
 
-    //PAYLOAD: Tuple<PickupType, dynamic> where the 2nd element is the pickup object    
+    //PAYLOAD: the inventory item for this pickupable world item
     public dynamic Interact()
     {
-        return (pickupType, thing);
+        return invItem;
     }
 
     public bool IsInteractionValid(Interactor interactor)
@@ -49,7 +46,7 @@ public partial class Pickup : Node, Interactable
     }
 
     public string Info(){
-        throw new System.NotImplementedException();
+        return info;
     }
 
 }

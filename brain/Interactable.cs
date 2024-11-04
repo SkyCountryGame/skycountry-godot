@@ -1,11 +1,10 @@
 public enum InteractionType
 { //more than anything, this specifies the datatype of the payload
-	Dialogue, 
-	Inventory, 
-	Pickup, //for now will always give InventoryItem,  
-	General, 
-	Mineable,
-	Function //give a function to execute with player as parameter
+	Dialogue, //payload = Dialogue (start talking to a character and see dialogue UI)
+	Inventory, //payload = Inventory (opening a chest to view inventory transfer UI)
+	Pickup, //payload = InventoryItem,  (picking up a box of dandy boy apples)
+	General, //? TODO remove if not use
+	Function //payload = Function (? remove if not use)
 }
 
 public enum InteractionMethod
@@ -34,5 +33,5 @@ public interface Interactable
 	string Info();
 
 	//can an interactor interact with this interactable? 
-	bool IsInteractionValid(Interactor interactor);
+	bool IsInteractionValid(Interactor interactor); //TODO remove if not use
 }

@@ -1,10 +1,10 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class MeleeItemProperties: InventoryItemProperties {
+public partial class MeleeItemProperties : Resource {
 
     [Export]
-    public string equipPath;
+    public string scenePath;
     [Export]
     public string swingAnimation;
     [Export]
@@ -19,7 +19,4 @@ public partial class MeleeItemProperties: InventoryItemProperties {
     public int range;
     [Export]
     public int reswingSpeed;
-    public bool Swing(AnimationTree animationTree){
-        throw new NotImplementedException();
-    }
 }

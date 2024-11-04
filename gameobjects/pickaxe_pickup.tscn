@@ -1,12 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bae368jfutt53"]
-
-[ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="2_0gvdm"]
-[ext_resource type="Resource" uid="uid://bp8isajsf3lxu" path="res://gameobjects/resources/pickaxe.tres" id="2_qfpen"]
-[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_fyolf"]
-
-[sub_resource type="Resource" id="Resource_y0sfm"]
-script = ExtResource("3_fyolf")
-itemProperties = ExtResource("2_qfpen")
+[gd_scene load_steps=8 format=4 uid="uid://bae368jfutt53"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e18mv"]
 radius = 0.720012
@@ -81,8 +73,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xhdy3")
 
 [node name="PickaxePickup" type="StaticBody3D"]
-script = ExtResource("2_0gvdm")
-pickaxeItem = SubResource("Resource_y0sfm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921963, 0)

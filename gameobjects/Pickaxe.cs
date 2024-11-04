@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : Equipable, Interactable, Collideable {
+public partial class Pickaxe : Equipable, Collideable {
     [Export] private InventoryItem pickaxeItem;
-    
 
-    public InteractionMethod interactionMethod => InteractionMethod.Use;
+    [Export] private MeleeItemProperties properties;
+
     public Pickaxe()
     {
     }
@@ -13,10 +13,13 @@ public partial class Pickaxe : Equipable, Interactable, Collideable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        MeleeItemProperties meleeItemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
-        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        pickaxeItem = new InventoryItem(meleeItemProperties, true);
-        hitbox = GetNode<CollisionShape3D>("Area3D/Hitbox");
+        Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
+        if (properties == null){
+            properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
+        }
+        if (pickaxeItem == null){
+            //pickaxeItem = new InventoryItem(, true);
+        }
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -51,9 +54,10 @@ public partial class Pickaxe : Equipable, Interactable, Collideable {
         return true;
     }
 
+    //attempt to use the pickaxe on the object. only works if thing is Destroyable
     public override void Use(dynamic obj = null){
         if (obj != null && obj is Destroyable){
-            ((Destroyable)obj).ApplyDamage(((MeleeItemProperties)pickaxeItem.GetItemProperties()).damage);
+            ((Destroyable)obj).ApplyDamage(properties.damage);
             hitbox.Disabled = true;
             GD.Print("pick used");
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable, EventListener
 {
 
 	//MOVEMENT 
@@ -20,8 +20,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
-	//INTERACTION STUFF
+	//INTERACTION and BEHAVIOR STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
+	public HashSet<EventType> eventTypes => new HashSet<EventType>();
+	//public HashSet<Node3D> nearbyWorldItems = new HashSet<Node3D>(); //things within player's awareness zone. this will help with checking if an event's associated objects are nearby
+
 	//UI stuff
 	
 	//PLAYER STATE
@@ -38,9 +41,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	public Equipable equippedBody;
 	public Equipable equippedLegs;
 	public Equipable equippedFeet;
-	//rings, amulets, etc. ?
 
-	public override void _Ready()
+    
+
+    //rings, amulets, etc. ?
+
+    public override void _Ready()
 	{
 		base._Ready();
 		animationTree.AnimationFinished += AttackFinished;
@@ -191,7 +197,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 					if (playerModel.equipped != null && equippedRightHand != null) {
 						//swing! strike! cast! etc.
 						equippedRightHand.hitbox.Disabled = false;
-						((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties) playerModel.equipped.GetItemProperties()).swingAnimation);
+						((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("Mining02"); //TODO player has an animationmap
 					}
 					break;
 				case State.COOLDOWN:
@@ -254,52 +260,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		MoveAndSlide();
 	}
 
-	//
-	public void HandleInteract(Interactable interactable)
-	{
-		Node interactableObj = (Node)interactable;
-		dynamic payload = interactable.Interact();
-		switch (interactable.interactionType)
-		{
-			case InteractionType.Dialogue:
-				if (SetState(State.DIALOGUE)){
-					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
-				}
-				break;
-			case InteractionType.Inventory: //opening an external inventory, such as chest
-				break;
-			case InteractionType.Pickup: 
-				PickupItem((InventoryItem)payload,interactableObj);
-				break;
-			case InteractionType.General:
-				break;
-			case InteractionType.Mineable:
-				/*if (interactorItem!=null){
-					if(interactable is Destroyable && interactorItem.GetItemProperties() is MeleeItemProperties){
-						GD.Print("health is " + ((Destroyable)interactable).health);
-						((Destroyable)interactable).health-=((MeleeItemProperties)interactorItem.GetItemProperties()).damage;
-						GD.Print("health is now" + ((Destroyable)interactable).health);
-						if(((Destroyable)interactable).health <= 0){
-							PickupItem((InventoryItem) payload, interactableObj);
-						}
-					}
-				}*/
-				break;
-			case InteractionType.Function:
-				Global.HUD.LogEvent($"{interactable.Info()}");
-				payload(this); //TODO what return? 
-				break;
-			default:
-				break;
-		}
-	}
-
-	private void PickupItem(InventoryItem item, Node interactionObj){
-		playerModel.AddToInventory(item);
-		interactionObj.GetParent().CallDeferred("remove_child", interactionObj);
-		Global.HUD.LogEvent($" + {item}");
-	}
-
 	public Interactable GetFirstInteractable()
 	{
 		//TODO sort by distance
@@ -358,25 +318,59 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		
 	}
 
+	public void HandleEvent(Event e)
+    {
+		switch (e.eventType){
+			case EventType.WorldItemDestroyed: //receive the destroyed GameObject
+				GameObject worldItem = e.payload;
+				//check if the destroyed item is an interactable and is nearby
+				Interactable it = Global.GetInteractable(worldItem);
+				if (it != null && availableInteractables.Contains(it)){
+					if (it.interactionType == InteractionType.Pickup){
+						HandleInteract(it);
+					}
+					availableInteractables.Remove(it);
+				}
+				//TODO future: might want to check it it's a nearby object by checking the position of the object
+				break;
+			default:
+				break;
+		}
+    }
+
+	public void HandleInteract(Interactable interactable)
+	{
+		dynamic payload = interactable.Interact();
+		switch (interactable.interactionType)
+		{
+			case InteractionType.Dialogue:
+				if (SetState(State.DIALOGUE)){
+					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
+				}
+				break;
+			case InteractionType.Inventory: //opening an external inventory, such as chest
+				break;
+			case InteractionType.Pickup: 
+				M.AddToInventory(payload);
+				break;
+			case InteractionType.General:
+				break;
+			case InteractionType.Function:
+				Global.HUD.LogEvent($"{interactable.Info()}");
+				payload(this); //TODO what return? 
+				break;
+			default:
+				break;
+		}
+	}
+
 	//set the forward vector to adjust movement control direction
 	public void SetForward(Vector3 f){
 		camForward = f.Normalized();	
 	}
 
 	public void EquipRightHand(InventoryItem item){
-		string equipPath = "";
-		switch(item.GetItemProperties()){
-			case MeleeItemProperties i:
-				equipPath = i.equipPath;
-				break;
-			case RangedItemProperties i:
-				equipPath = i.equipPath;
-				break;
-			default:
-
-				break;
-		}
-		equippedRightHand = (Equipable)item.GetPackedScene().Instantiate();
+		equippedRightHand = (Equipable) item.GetPackedSceneEquipable().Instantiate();
 		rightHand.AddChild(equippedRightHand);
 		equippedRightHand.hitbox.Disabled = true;
 	}
@@ -410,7 +404,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			item = playerModel.equipped;
 		}
 		if (playerModel.inv.RemoveItem(item)){
-			Node gameObject = item.GetPackedScene().Instantiate();
+			Node gameObject = item.GetPackedSceneWorldItem().Instantiate();
 			Global.level.AddChild(gameObject);
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
@@ -444,5 +438,4 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		playerModel = (PlayerModel) cfg.GetValue("player", "model");
 		Global.playerModel = playerModel; //don't think that is actually necessary
 	}
-
 }

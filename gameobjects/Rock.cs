@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Rock : RigidBody3D, Interactable,Destroyable {
+public partial class Rock : RigidBody3D, Interactable, Destroyable {
     int Destroyable.health { get => health; set => health = value; }
 
     public InteractionType interactionType => InteractionType.Pickup; //in addition to being able to be mined, you can also pick up rocks. they might be heavy though
@@ -22,7 +22,7 @@ public partial class Rock : RigidBody3D, Interactable,Destroyable {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "rock", false);
+        rockItem = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "rock", false); //NOTE: this doesn't actually need to be constructed until the player mines/picks-up the rock
         //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
@@ -67,8 +67,10 @@ public partial class Rock : RigidBody3D, Interactable,Destroyable {
 
     public void Destroy()
     {
-        GD.Print("destroy rock");
-        throw new NotImplementedException();
+        //trigger an event to notify that a rock has been destroyed, and pass along the associated GameObject
+        EventManager.Invoke(EventType.WorldItemDestroyed, Global.GetGameObject(this)); 
+        GD.Print("destroy rock!");
+        QueueFree();
     }
 
 }

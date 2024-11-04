@@ -17,5 +17,8 @@ public partial class InventoryItemProperties : Resource {
     [Export] public string name;
     [Export] public ItemType itemType;
     [Export] public bool equippable;
-    [Export] public string scenePath;
+    //[Export] public string scenePathWorldItem;
+    [Export] public PackedScene packedSceneWorldItem;
+    //[Export] public string scenePathEquippedItem;
+    [Export] public PackedScene packedSceneEquipable;
 }
