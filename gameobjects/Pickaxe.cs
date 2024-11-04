@@ -13,6 +13,7 @@ public partial class Pickaxe : Equipable, Collideable {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+        base._Ready();
         Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
         if (properties == null){
             properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
@@ -58,11 +59,14 @@ public partial class Pickaxe : Equipable, Collideable {
     public override void Use(dynamic obj = null){
         if (obj != null && obj is Destroyable){
             ((Destroyable)obj).ApplyDamage(properties.damage);
-            hitbox.Disabled = true;
+            CallDeferred("DisableHitbox");
             GD.Print("pick used");
         }
     }
-
+    private void DisableHitbox(){
+        hitbox.Disabled = true;
+    }
+    
     public void HandleCollide(ColliderZone zone, Node other)
     {
         switch(zone){

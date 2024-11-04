@@ -22,7 +22,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	//INTERACTION and BEHAVIOR STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
-	public HashSet<EventType> eventTypes => new HashSet<EventType>();
+	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.WorldItemDestroyed}; 
 	//public HashSet<Node3D> nearbyWorldItems = new HashSet<Node3D>(); //things within player's awareness zone. this will help with checking if an event's associated objects are nearby
 
 	//UI stuff
@@ -49,6 +49,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
     public override void _Ready()
 	{
 		base._Ready();
+		EventManager.RegisterListener(this);
 		animationTree.AnimationFinished += AttackFinished;
 		if (Global.playerModel == null){
 			//TODO this is where we would load savedata (or maybe SceneManager does that?)
