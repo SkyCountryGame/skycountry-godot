@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=46 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" path="res://gameobjects/Pickup.cs" id="20_1d5f7"]
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
-[ext_resource type="Script" path="res://inventory/InventoryItemProperties.cs" id="21_178ia"]
 [ext_resource type="PackedScene" uid="uid://2185bfgrt6q2" path="res://gameobjects/pickaxe_equip.tscn" id="21_rt7q5"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 [ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="22_qtqld"]
@@ -94,18 +93,14 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
-[sub_resource type="Resource" id="Resource_wym1g"]
-script = ExtResource("21_178ia")
-name = "Pickaxe"
-itemType = 0
-equipable = false
-packedSceneWorldItem = ExtResource("19_qb3p1")
-packedSceneEquipable = ExtResource("21_rt7q5")
-
 [sub_resource type="Resource" id="Resource_ctln5"]
 resource_name = "Pickaxe"
 script = ExtResource("22_qtqld")
-itemProperties = SubResource("Resource_wym1g")
+name = "Pickaxe"
+itemType = 0
+equipable = true
+packedSceneWorldItem = ExtResource("19_qb3p1")
+packedSceneEquipable = ExtResource("21_rt7q5")
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1

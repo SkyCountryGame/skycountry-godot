@@ -2,13 +2,7 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class Twig : RigidBody3D, Interactable {
-    public InteractionType interactionType => InteractionType.Pickup;
-
-    public InteractionMethod interactionMethod => InteractionMethod.Use;
-
-
-    private InventoryItem invItem;
+public partial class Twig : Pickup, Interactable {
 
     public Twig()
     {
@@ -18,7 +12,7 @@ public partial class Twig : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, GameObjectType.Interactable);
-        invItem = new InventoryItem(InventoryItemProperties.ItemType.Quest, "Twig", true);
+        //invItem = new InventoryItem(InventoryItemProperties.ItemType.Quest, "Twig", true);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

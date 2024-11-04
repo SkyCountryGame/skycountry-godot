@@ -32,6 +32,7 @@ public partial class Pickup : Node3D, Interactable
     //PAYLOAD: the inventory item for this pickupable world item
     public dynamic Interact()
     {
+        QueueFree();
         return invItem;
     }
 
