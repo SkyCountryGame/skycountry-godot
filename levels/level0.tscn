@@ -118,16 +118,7 @@ environment = SubResource("Environment_mck8e")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
-light_energy = 0.92
-light_indirect_energy = 0.16
-light_angular_distance = 4.05
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_normal_bias = 1.0
-shadow_opacity = 0.85
-shadow_blur = 0.5
-directional_shadow_fade_start = 0.74
-directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]

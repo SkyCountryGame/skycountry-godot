@@ -54,11 +54,13 @@ public class EventManager {
     public static void Invoke(Event e){
         if (eventListeners.ContainsKey(e.eventType)){
             foreach (EventListener l in eventListeners[e.eventType]){
+                l.HandleEvent(e);
+                /*
                 try {
                     Task.Run(() => l.HandleEvent(e));
                 } catch (System.Exception ex){
                     Godot.GD.Print($"Error invoking event {e.eventType.ToString()} for listener {l.ToString()}: {ex.Message}");
-                }
+                }*/
             }
         }
     }
