@@ -96,10 +96,18 @@ public partial class Global : Node
 		return null;
 	}
 
-	public static Interactable GetInteractable(Node n){
-		GameObject go = GetGameObject(n);
-		if (go != null && mapGameObjectToInteractable.ContainsKey(go)){
-			return mapGameObjectToInteractable[go];
+	//check if the given node is an interactable or a child of an interactable. set arg strict=true to only check single node
+	public static Interactable GetInteractable(Node n, bool strict = false){
+		if (strict){
+			if (n is Interactable interactable){ return interactable; }
+			else { return null; }
+		}
+		while (n != sceneTree.Root){
+			if (n is Interactable interactable)
+			{
+				return interactable;
+			}
+			n = n.GetParent();
 		}
 		return null;
 	}
