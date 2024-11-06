@@ -1,37 +1,29 @@
-[gd_scene load_steps=71 format=3 uid="uid://de2xm0xxwmcag"]
+[gd_scene load_steps=72 format=3 uid="uid://de2xm0xxwmcag"]
 
+[ext_resource type="Script" path="res://levels/Level.cs" id="1_1i37g"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_4tfcl"]
 [ext_resource type="Shader" path="res://levels/ArtScene/ArtScene_SkyShader.gdshader" id="1_vr5cb"]
-[ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky hdri/Sky_Anime_01_Day_a.png" id="2_gocnc"]
+[ext_resource type="Resource" path="res://assets/terrain/data.hterrain" id="2_4lnan"]
+[ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky_hdri/Sky_Anime_01_Day_a.png" id="2_gocnc"]
 [ext_resource type="Script" path="res://player/PlayerModel.cs" id="4_2lia5"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="6_i4krp"]
-[ext_resource type="Resource" path="res://terrain_directory/data.hterrain" id="7_nek7h"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_nbws0"]
-[ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_albedo_bump.png" id="9_ibf2c"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="10_lymhc"]
-[ext_resource type="Texture2D" uid="uid://ba4msdxu84w83" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_albedo_bump.png" id="10_tif5c"]
-[ext_resource type="Texture2D" uid="uid://dk7ycmhk0e2e6" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_albedo_bump.png" id="11_ni757"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="11_vt0it"]
-[ext_resource type="Texture2D" uid="uid://b4d4s71f1ika2" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_albedo_bump.png" id="12_gccny"]
-[ext_resource type="Texture2D" uid="uid://2fwptdpeya1i" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_normal_roughness.png" id="13_yvb3x"]
-[ext_resource type="Texture2D" uid="uid://b16qrvybrmhv4" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_normal_roughness.png" id="14_oexg6"]
-[ext_resource type="Texture2D" uid="uid://lqsd5xk7b0nm" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_normal_roughness.png" id="15_08lj0"]
-[ext_resource type="Texture2D" uid="uid://dkx6b5tmwu7xb" path="res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_normal_roughness.png" id="16_boqt4"]
 [ext_resource type="PackedScene" uid="uid://br5e48dbjqngp" path="res://gameobjects/Wood Props/chest_01.tscn" id="26_6bcsg"]
-[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://gameobjects/rocks/rock_2.tscn" id="39_ojci4"]
-[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/rocks/rock_1.tscn" id="39_wspli"]
-[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://gameobjects/rocks/rock_3.tscn" id="40_2vrv0"]
-[ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/rocks/rock_5.tscn" id="42_1fwfs"]
-[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://gameobjects/rocks/rock_7.tscn" id="44_fiubg"]
-[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/rocks/rock_9.tscn" id="46_7ay1s"]
+[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://gameobjects/Rocks/rock_2.tscn" id="39_ojci4"]
+[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/Rocks/rock_1.tscn" id="39_wspli"]
+[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://gameobjects/Rocks/rock_3.tscn" id="40_2vrv0"]
+[ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/Rocks/rock_5.tscn" id="42_1fwfs"]
+[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://gameobjects/Rocks/rock_7.tscn" id="44_fiubg"]
+[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/Rocks/rock_9.tscn" id="46_7ay1s"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="46_idspx"]
-[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="47_80xa4"]
-[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/rocks/rock_11.tscn" id="48_e7w23"]
-[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/rocks/rock_12.tscn" id="49_5tlat"]
-[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/rocks/rock_4.tscn" id="49_agnpt"]
-[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/rocks/rock_6.tscn" id="49_mntnu"]
-[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/rocks/rock_10.tscn" id="49_qp6dk"]
-[ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/rocks/rock_8.tscn" id="49_teqx0"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/Rocks/rock_11.tscn" id="48_e7w23"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/Rocks/rock_12.tscn" id="49_5tlat"]
+[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/Rocks/rock_4.tscn" id="49_agnpt"]
+[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/Rocks/rock_6.tscn" id="49_mntnu"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/Rocks/rock_10.tscn" id="49_qp6dk"]
+[ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/Rocks/rock_8.tscn" id="49_teqx0"]
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="50_1t2dt"]
 [ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://gameobjects/Wood Props/signpost_03.tscn" id="50_5grrp"]
 [ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://gameobjects/Wood Props/signpost_02.tscn" id="50_ycb6y"]
@@ -42,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://kwntyvs5xig7" path="res://gameobjects/Wood Props/signpost_01.tscn" id="52_0g3lu"]
 [ext_resource type="PackedScene" uid="uid://ela77477tuep" path="res://gameobjects/Wood Props/wagon_01.tscn" id="52_3qnu7"]
 [ext_resource type="PackedScene" uid="uid://doavcw4e63t8i" path="res://gameobjects/Wood Props/chest_04.tscn" id="52_5mqk4"]
-[ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/Models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
+[ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
 [ext_resource type="PackedScene" uid="uid://cl7upijqjmaql" path="res://gameobjects/Wood Props/chest_02.tscn" id="52_eblwg"]
 [ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://gameobjects/Wood Props/fence_short.tscn" id="52_g3n1k"]
 [ext_resource type="PackedScene" uid="uid://dfu4b1k6j7wq6" path="res://gameobjects/Wood Props/bridge_01.tscn" id="52_hkjrn"]
@@ -87,10 +79,34 @@ script = ExtResource("4_2lia5")
 activityState = 1
 hp = 0
 
+[sub_resource type="Resource" id="Resource_rpkcx"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_albedo_bump.png"
+
+[sub_resource type="Resource" id="Resource_75nyy"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_albedo_bump.png"
+
+[sub_resource type="Resource" id="Resource_ddpoq"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_albedo_bump.png"
+
+[sub_resource type="Resource" id="Resource_neys5"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_albedo_bump.png"
+
+[sub_resource type="Resource" id="Resource_rkegy"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot0_normal_roughness.png"
+
+[sub_resource type="Resource" id="Resource_d632m"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot1_normal_roughness.png"
+
+[sub_resource type="Resource" id="Resource_heabc"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot2_normal_roughness.png"
+
+[sub_resource type="Resource" id="Resource_r8x5x"]
+metadata/__load_path__ = "res://assets/texture/Environment/Grass/ArtScene_LookDev_slot3_normal_roughness.png"
+
 [sub_resource type="Resource" id="Resource_28kg0"]
 script = ExtResource("8_nbws0")
 mode = 0
-textures = [[ExtResource("9_ibf2c"), ExtResource("10_tif5c"), ExtResource("11_ni757"), ExtResource("12_gccny")], [ExtResource("13_yvb3x"), ExtResource("14_oexg6"), ExtResource("15_08lj0"), ExtResource("16_boqt4")]]
+textures = [[SubResource("Resource_rpkcx"), SubResource("Resource_75nyy"), SubResource("Resource_ddpoq"), SubResource("Resource_neys5")], [SubResource("Resource_rkegy"), SubResource("Resource_d632m"), SubResource("Resource_heabc"), SubResource("Resource_r8x5x")]]
 
 [sub_resource type="Resource" id="Resource_bakux"]
 metadata/__load_path__ = "res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg"
@@ -98,6 +114,8 @@ metadata/__load_path__ = "res://addons/zylann.hterrain/tools/icons/icon_detail_l
 [sub_resource type="NavigationMesh" id="NavigationMesh_7y5qx"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fo5gy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oeuuc"]
 
@@ -113,8 +131,11 @@ refraction_texture_channel = 4
 material = SubResource("StandardMaterial3D_72h3h")
 size = Vector2(50, 50)
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3015, 0)
+script = ExtResource("1_1i37g")
+sunlight = NodePath("WorldEnvironment/DirectionalLight3D")
+navRegion = NodePath("NavigationRegion3D")
 
 [node name="HUD" parent="." instance=ExtResource("1_4tfcl")]
 
@@ -134,7 +155,7 @@ playerModel = SubResource("Resource_sohc0")
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("6_i4krp")
 map_scale = Vector3(4, 4, 4)
-_terrain_data = ExtResource("7_nek7h")
+_terrain_data = ExtResource("2_4lnan")
 chunk_size = 32
 collision_enabled = true
 collision_layer = 1
@@ -155,7 +176,6 @@ shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
 shader_params/u_specular = 0.5
 
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
-visible = false
 script = ExtResource("11_vt0it")
 shader_params/u_globalmap_tint_bottom = null
 shader_params/u_globalmap_tint_top = null
@@ -320,7 +340,7 @@ visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
 visible = false
-shape = ExtResource("47_80xa4")
+shape = SubResource("BoxShape3D_fo5gy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor/CollisionShape3D"]
 visible = false

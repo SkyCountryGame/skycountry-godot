@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://mt1yi334t8ek"
-path="res://.godot/imported/LodgingBuildingDemo.glb-7d88f749cfc4a95ac266da7b341ddf54.scn"
+path="res://.godot/imported/LodgingBuildingDemo.glb-e6b92fd8dfd0a40f4928f005632fd732.scn"
 
 [deps]
 
-source_file="res://assets/Models/Demo Models/LodgingBuildingDemo.glb"
-dest_files=["res://.godot/imported/LodgingBuildingDemo.glb-7d88f749cfc4a95ac266da7b341ddf54.scn"]
+source_file="res://assets/models/Demo Models/LodgingBuildingDemo.glb"
+dest_files=["res://.godot/imported/LodgingBuildingDemo.glb-e6b92fd8dfd0a40f4928f005632fd732.scn"]
 
 [params]
 

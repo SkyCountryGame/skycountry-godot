@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bhbkxmjhvwcly"
-path="res://.godot/imported/Rock_Small_2_LP.fbx-72009f6533eede13b64f50d04695b051.scn"
+uid="uid://51cnipqr8mr4"
+path="res://.godot/imported/Rock_Small_2_LP.fbx-7a6cc38839592582b0d7826c03c765a9.scn"
 
 [deps]
 
-source_file="res://assets/Models/Rock_Small_2_LP.fbx"
-dest_files=["res://.godot/imported/Rock_Small_2_LP.fbx-72009f6533eede13b64f50d04695b051.scn"]
+source_file="res://assets/models/Rock_Small_2_LP.fbx"
+dest_files=["res://.godot/imported/Rock_Small_2_LP.fbx-7a6cc38839592582b0d7826c03c765a9.scn"]
 
 [params]
 

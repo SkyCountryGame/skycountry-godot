@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b32pqw7ny3fh7"
-path="res://.godot/imported/Rock4.gltf-192a185ba35c66b65c7896c82910622f.scn"
+path="res://.godot/imported/Rock4.gltf-ed4e9c75f8c56f5018a2cfa73d5c6fa6.scn"
 
 [deps]
 
-source_file="res://assets/Models/Rocks/Rock4.gltf"
-dest_files=["res://.godot/imported/Rock4.gltf-192a185ba35c66b65c7896c82910622f.scn"]
+source_file="res://assets/models/Rocks/Rock4.gltf"
+dest_files=["res://.godot/imported/Rock4.gltf-ed4e9c75f8c56f5018a2cfa73d5c6fa6.scn"]
 
 [params]
 

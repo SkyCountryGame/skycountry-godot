@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://du314hknnlijn"
-path="res://.godot/imported/FenceConnectorLong.gltf-f13a90a6537d5a82d6e8adacd1cdc366.scn"
+path="res://.godot/imported/FenceConnectorLong.gltf-ee0ac852d15aefd9d1e42f437ae94227.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Fence Connector Long/FenceConnectorLong.gltf"
-dest_files=["res://.godot/imported/FenceConnectorLong.gltf-f13a90a6537d5a82d6e8adacd1cdc366.scn"]
+source_file="res://assets/models/Wood Props/Fence Connector Long/FenceConnectorLong.gltf"
+dest_files=["res://.godot/imported/FenceConnectorLong.gltf-ee0ac852d15aefd9d1e42f437ae94227.scn"]
 
 [params]
 

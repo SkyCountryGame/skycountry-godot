@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ogmuhift3a0v"
-path="res://.godot/imported/Signpost03.gltf-d9fb94c023bdff286e3450e390990169.scn"
+path="res://.godot/imported/Signpost03.gltf-06ccb487ae55ba566a613da1fe202421.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Signpost 3/Signpost03.gltf"
-dest_files=["res://.godot/imported/Signpost03.gltf-d9fb94c023bdff286e3450e390990169.scn"]
+source_file="res://assets/models/Wood Props/Signpost 3/Signpost03.gltf"
+dest_files=["res://.godot/imported/Signpost03.gltf-06ccb487ae55ba566a613da1fe202421.scn"]
 
 [params]
 

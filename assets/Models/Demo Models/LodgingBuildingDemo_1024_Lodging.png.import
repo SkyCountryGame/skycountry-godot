@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cns7fqlqaf4rh"
-path.s3tc="res://.godot/imported/LodgingBuildingDemo_1024_Lodging.png-bf03015b5cbbe07fa1380d7845510fe3.s3tc.ctex"
+path.s3tc="res://.godot/imported/LodgingBuildingDemo_1024_Lodging.png-e06300ed5b3428eb2c7fed7cba88dc1e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/Models/Demo Models/LodgingBuildingDemo_1024_Lodging.png"
-dest_files=["res://.godot/imported/LodgingBuildingDemo_1024_Lodging.png-bf03015b5cbbe07fa1380d7845510fe3.s3tc.ctex"]
+source_file="res://assets/models/Demo Models/LodgingBuildingDemo_1024_Lodging.png"
+dest_files=["res://.godot/imported/LodgingBuildingDemo_1024_Lodging.png-e06300ed5b3428eb2c7fed7cba88dc1e.s3tc.ctex"]
 
 [params]
 

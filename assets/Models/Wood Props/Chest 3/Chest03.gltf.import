@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bg60vynauhrme"
-path="res://.godot/imported/Chest03.gltf-dd9d8abcb2a410b7f995dcb7fce64f18.scn"
+path="res://.godot/imported/Chest03.gltf-aa9aacd0438bde769b6d456cfa815b8b.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Chest 3/Chest03.gltf"
-dest_files=["res://.godot/imported/Chest03.gltf-dd9d8abcb2a410b7f995dcb7fce64f18.scn"]
+source_file="res://assets/models/Wood Props/Chest 3/Chest03.gltf"
+dest_files=["res://.godot/imported/Chest03.gltf-aa9aacd0438bde769b6d456cfa815b8b.scn"]
 
 [params]
 

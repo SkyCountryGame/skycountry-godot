@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dcxommx26vkv5"
-path="res://.godot/imported/Bridge01.gltf-a7f69ff84f62e6ff0a7cf48b8c179475.scn"
+path="res://.godot/imported/Bridge01.gltf-d53ed52d2d2f641b82a5dea853f601cf.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Bridge 1/Bridge01.gltf"
-dest_files=["res://.godot/imported/Bridge01.gltf-a7f69ff84f62e6ff0a7cf48b8c179475.scn"]
+source_file="res://assets/models/Wood Props/Bridge 1/Bridge01.gltf"
+dest_files=["res://.godot/imported/Bridge01.gltf-d53ed52d2d2f641b82a5dea853f601cf.scn"]
 
 [params]
 
