@@ -1,0 +1,58 @@
+[
+	{
+		"id": 1,
+		"text": "It's an odd, green bowl... ",
+		"responses": [
+			{
+				"text": "Inspect the bowl",
+				"next": 2
+			},
+			{
+				"text": "Look around",
+				"next": 3
+			},
+			{
+				"text": "Walk away",
+				"next": -1
+			}
+		],
+		"speed": 2,
+		"fontSize": 1,
+		"emotion": 0
+	},
+	{
+		"id": 2,
+		"text": "It's just an empty green bowl. There's a thin veil of dust over the top, as if it's been here for months.",
+		"responses": [
+			{
+				"text": "Back",
+				"next": 1
+			},
+			{
+				"text": "Walk away",
+				"next": -1
+			}
+		],
+		"speed": 2,
+		"fontSize": 1,
+		"emotion": 0
+	},
+	{
+		"id": 3,
+		"text": "No one's around... You've got plenty of time to investigate",
+		"responses": [
+			{
+				"text": "Inspect the bowl",
+				"next": 2
+			},
+			{
+				"text": "Walk away",
+				"next": -1
+			}
+		],
+		"speed": 2,
+		"event": "SpawnParticles",
+		"fontSize": 1,
+		"emotion": 0
+	}
+]
