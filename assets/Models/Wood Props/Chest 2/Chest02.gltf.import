@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dq8ybhjruswhq"
-path="res://.godot/imported/Chest02.gltf-a4ee95b215531776f474c86108029c7b.scn"
+path="res://.godot/imported/Chest02.gltf-f32b025c3e319e73264d300b7bb63a9b.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Chest 2/Chest02.gltf"
-dest_files=["res://.godot/imported/Chest02.gltf-a4ee95b215531776f474c86108029c7b.scn"]
+source_file="res://assets/models/Wood Props/Chest 2/Chest02.gltf"
+dest_files=["res://.godot/imported/Chest02.gltf-f32b025c3e319e73264d300b7bb63a9b.scn"]
 
 [params]
 
@@ -17,6 +17,7 @@ nodes/root_type=""
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
@@ -28,6 +29,7 @@ animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
 gltf/naming_version=1

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsxnv4dkt0rh0"
-path.s3tc="res://.godot/imported/MarketBuildingDemo_1024_Market.png-9a3facfe07b069fb8a17744f40c31e7c.s3tc.ctex"
+path.s3tc="res://.godot/imported/MarketBuildingDemo_1024_Market.png-55f958ca70b9bceca7796e9db2cd014e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/Models/Demo Models/MarketBuildingDemo_1024_Market.png"
-dest_files=["res://.godot/imported/MarketBuildingDemo_1024_Market.png-9a3facfe07b069fb8a17744f40c31e7c.s3tc.ctex"]
+source_file="res://assets/models/Demo Models/MarketBuildingDemo_1024_Market.png"
+dest_files=["res://.godot/imported/MarketBuildingDemo_1024_Market.png-55f958ca70b9bceca7796e9db2cd014e.s3tc.ctex"]
 
 [params]
 
