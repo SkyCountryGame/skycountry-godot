@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public enum EventType {
     GameOver, QuestReceived, QuestComplete, QuestFailed, Death, //just some ideas for now. would be a good to define payload in comment of each event type. and probably its intended use
     WeatherChange, DialogueInitiated, EntityAttacked, EntityDamaged,
-    WorldItemDestroyed, //payload = GameObject  (the GameObject of the item destroyed. NOT the Node3D because it will have been removed from scene)
+    WorldItemDestroyed, //payload = Tuple<GameObject, Vector3, dynamic>  (the GameObject of the item destroyed, its position, and a payload such as an InventoryItem. NOT the Node3D because it will have been removed from scene)
     SpawnParticles, //payload = Vector3 (location)
     PlaySound, //payload = Tuple<string, int> (sound file path, volume)
     SetMusic, 

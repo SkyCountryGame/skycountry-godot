@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://b7suifadqfxfl"]
+[gd_scene load_steps=7 format=4 uid="uid://b7suifadqfxfl"]
 
 [ext_resource type="Script" path="res://gameobjects/Rock.cs" id="1_4q8ih"]
 [ext_resource type="Texture2D" uid="uid://b1w4bvt7qr8q0" path="res://assets/texture/Environment/Rocks/Rock 1/Rock_Large_1_BaseColor.png" id="2_txvvk"]
-[ext_resource type="Resource" uid="uid://b4t17am80pg82" path="res://gameobjects/resources/rock.tres" id="2_ywlb4"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1pd73"]
 
@@ -47,7 +46,6 @@ collision_layer = 3
 collision_mask = 3
 freeze_mode = 1
 script = ExtResource("1_4q8ih")
-invItem = ExtResource("2_ywlb4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_1pd73")

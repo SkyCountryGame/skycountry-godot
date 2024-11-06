@@ -18,10 +18,6 @@ public partial class Pickaxe : Equipable, Collideable {
         if (properties == null){
             properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         }
-        if (pickaxeItem == null){
-            //pickaxeItem = new InventoryItem(, true);
-        }
-        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,28 +29,7 @@ public partial class Pickaxe : Equipable, Collideable {
     {
         return "Pickaxe";
     }
-
-    //PAYLOAD 
-    public dynamic Interact()
-    {
-        return pickaxeItem;
-    }
-
-    public void Retain()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool IsInteractionValid(Interactor interactor)
-    {
-        return true;
-    }
-
+    
     //attempt to use the pickaxe on the object. only works if thing is Destroyable
     public override void Use(dynamic obj = null){
         if (obj != null && obj is Destroyable){

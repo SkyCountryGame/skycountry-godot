@@ -75,9 +75,11 @@ public partial class Global : Node
 			case GameObjectType.SpawnPoint:
 				//spawnPoints.Add((SpawnPoint)node);
 				break;
+			
 			default:
 				break;
 		}
+
 	}
 	public static void RegisterGameObject(Node node, GameObjectType type){
 		RegisterGameObject(node, node.Name, type);

@@ -1,10 +1,16 @@
 using Godot;
 using System;
 
-public partial class Rock : Pickup, /*RigidBody3D*/ Interactable, Destroyable {
+public partial class Rock : RigidBody3D, Destroyable {
     int Destroyable.health { get => health; set => health = value; }
+
+    public InteractionType interactionType => InteractionType.Pickup;
+
+    public InteractionMethod interactionMethod => InteractionMethod.Destroy;
+
     private int health = 3;
 
+    [Export] public InventoryItem invItem;
 
     public Rock()
     {
@@ -14,7 +20,6 @@ public partial class Rock : Pickup, /*RigidBody3D*/ Interactable, Destroyable {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,9 +43,8 @@ public partial class Rock : Pickup, /*RigidBody3D*/ Interactable, Destroyable {
     public void Destroy()
     {
         //trigger an event to notify that a rock has been destroyed, and pass along the associated GameObject
-        EventManager.Invoke(EventType.WorldItemDestroyed, Global.GetGameObject(this)); 
+        EventManager.Invoke(EventType.WorldItemDestroyed, (Global.GetGameObject(this), GlobalPosition, invItem));
         GD.Print("destroy rock!");
         QueueFree();
     }
-
 }

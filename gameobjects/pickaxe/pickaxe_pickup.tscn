@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://bae368jfutt53"]
+[gd_scene load_steps=8 format=4 uid="uid://dqygprkf4vsga"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e18mv"]
 radius = 0.720012
