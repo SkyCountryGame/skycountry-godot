@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bx4e0em64nnhi"
-path="res://.godot/imported/Bucket.gltf-aff2989a26a655f5dbc9b3f7324cb497.scn"
+path="res://.godot/imported/Bucket.gltf-f8eb9f0f5f9d52f7e78a2b62a01b0eda.scn"
 
 [deps]
 
-source_file="res://assets/Models/Wood Props/Bucket 1/Bucket.gltf"
-dest_files=["res://.godot/imported/Bucket.gltf-aff2989a26a655f5dbc9b3f7324cb497.scn"]
+source_file="res://assets/models/Wood Props/Bucket 1/Bucket.gltf"
+dest_files=["res://.godot/imported/Bucket.gltf-f8eb9f0f5f9d52f7e78a2b62a01b0eda.scn"]
 
 [params]
 
@@ -17,6 +17,7 @@ nodes/root_type=""
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
@@ -28,6 +29,7 @@ animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
