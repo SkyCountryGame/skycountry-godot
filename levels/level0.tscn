@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=46 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -14,11 +14,11 @@
 [ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
 [ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
-[ext_resource type="PackedScene" uid="uid://bae368jfutt53" path="res://gameobjects/pickaxe_pickup.tscn" id="19_qb3p1"]
-[ext_resource type="Script" path="res://gameobjects/Pickup.cs" id="20_1d5f7"]
+[ext_resource type="PackedScene" uid="uid://dqygprkf4vsga" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="19_qb3p1"]
+[ext_resource type="Script" path="res://compononents/Pickup.cs" id="20_1d5f7"]
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
-[ext_resource type="PackedScene" uid="uid://2185bfgrt6q2" path="res://gameobjects/pickaxe_equip.tscn" id="21_rt7q5"]
+[ext_resource type="PackedScene" uid="uid://ctnq3dri1sk75" path="res://gameobjects/pickaxe/pickaxe_equip.tscn" id="21_ia0pw"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 [ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="22_qtqld"]
 
@@ -66,6 +66,13 @@ size = Vector2(50, 50)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qc06o"]
 
+[sub_resource type="Resource" id="Resource_5uie6"]
+script = ExtResource("22_qtqld")
+name = "Rock"
+itemType = 256
+equipable = false
+packedSceneWorldItem = ExtResource("11_xa5x2")
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_gbdax"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_2i0b2"]
@@ -92,14 +99,13 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
-[sub_resource type="Resource" id="Resource_ctln5"]
-resource_name = "Pickaxe"
+[sub_resource type="Resource" id="Resource_yntl8"]
 script = ExtResource("22_qtqld")
 name = "Pickaxe"
 itemType = 0
 equipable = true
 packedSceneWorldItem = ExtResource("19_qb3p1")
-packedSceneEquipable = ExtResource("21_rt7q5")
+packedSceneEquipable = ExtResource("21_ia0pw")
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
@@ -181,7 +187,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 
 [node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
-info = "Rock"
+invItem = SubResource("Resource_5uie6")
 
 [node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
@@ -251,5 +257,5 @@ process_mode = 3
 [node name="PickaxePickup" parent="." instance=ExtResource("19_qb3p1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49468, 0, 8.27726)
 script = ExtResource("20_1d5f7")
-invItem = SubResource("Resource_ctln5")
-info = "Pickaxe"
+invItem = SubResource("Resource_yntl8")
+info = null
