@@ -60,7 +60,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Camera3D camera =  Global.cam;
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*100;
+		Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*10000;
 		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
 		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,1));
 		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){

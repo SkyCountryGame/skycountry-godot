@@ -1,6 +1,6 @@
 some random notes that are not yet categorized into specific doc files.
 
-- remember to investigate adam's issues
+- write a script to generate the collisionshape3d for a gltf model
 
 - do we need a "world time" that cycles to represent the repeating daily happenings
 
