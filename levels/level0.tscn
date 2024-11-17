@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://grlpnraydgu2" path="res://gameobjects/door.tscn" id="10_peodx"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="11_is5ya"]
-[ext_resource type="PackedScene" uid="uid://w0yqou02tgux" path="res://levels/level1.tscn" id="11_ow74k"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
@@ -144,7 +143,6 @@ skeleton = NodePath("../..")
 [node name="Door" parent="." instance=ExtResource("10_peodx")]
 transform = Transform3D(0.793247, 0, -0.6089, 0, 1, 0, 0.6089, 0, 0.793247, 19.1437, 0, -16.1993)
 script = ExtResource("11_is5ya")
-destination = ExtResource("11_ow74k")
 
 [node name="Drugz" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.52858)
