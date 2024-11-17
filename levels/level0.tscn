@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=32 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -68,9 +68,6 @@ size = Vector2(50, 50)
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
-levelSceneFilenames = {
-"l2": "level2"
-}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 

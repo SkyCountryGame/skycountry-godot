@@ -11,15 +11,19 @@ public partial class Level : Node
 	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
 
 	//TODO actually gonna store the levels in Global, because need to load and access before Level node loaded
-	[Export(PropertyHint.File, "Without 'res://'")] public Godot.Collections.Dictionary<string, string> levelSceneFilenames = new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
-	private Dictionary<string, PackedScene> levelScenes = new Dictionary<string, PackedScene>(); //subsequent levels that can be accessed from this level
+	[Export(PropertyHint.File, "Without 'res://'")] 
+	public Godot.Collections.Dictionary<string,string> subsequentLevelScenesFilenames 
+		= new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
+	private Dictionary<string, PackedScene> levelPackedScenes = new Dictionary<string, PackedScene>();
+
+	//which levels are accessible from each level. this includes "sublevels"
+	public static Dictionary<Level, List<Level>> levelGraph = new Dictionary<Level, List<Level>>(); //all levels should have access to this
 
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit
 
 	[Export] public NavigationRegion3D navRegion;
-	private List<Node3D> neighborLevels = new List<Node3D>(); //the other levels (scenes) that are accesesible from this scene
 	//private List<NPCNode> npcs;
 
 	public Aabb worldBounds; //the current bounds of all the meshes in the world
@@ -31,49 +35,41 @@ public partial class Level : Node
 	public override void _Ready()
 	{
 		Global.level = this;
-		
 		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
 			Global.navRegion = navRegion;
 		}
 
-		//load the levels that can be accessed from this level
-		foreach (KeyValuePair<string, string> level in levelSceneFilenames){
-			string fn = "";
-			if (level.Value.Substr(0, 5) != "levels/"){
-				fn = "levels/";
-			} 
-			if (level.Value.Substr(level.Value.Length - 5, 5) != ".tscn"){
-				fn += level.Value + ".tscn";
-			} else {
-				fn += level.Value;
-			}
-			levelScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
-		}
-		
+		//TODO parse levels.json to build levelsGraph
+
 		//dynamically spawn things
 		//health pickups
 		//enemies
 		//find random position on floor
 
 		//update sunlight position
-		float sunlightRadius = sunlight.Position.DistanceTo(WORLD_ORIGIN);
-		sunlightTheta = Mathf.Acos(sunlight.Position.X / sunlightRadius); 
-		float sunlightAngleDelta = .01745f; //1 degrees
-		float sunlightAngularVelocity = 2*MathF.PI / (float) DURATION_DAY;
-		float sunlightAngleUpdateInterval = sunlightAngleDelta / sunlightAngularVelocity; //how long to wait between each update such that the sun rotates around in DURATION_DAY seconds
-		Timer sunlightUpdateTimer = new Timer();
-		sunlightUpdateTimer.Timeout += ()=> {
-			sunlightTheta += sunlightAngleDelta;
-			sunlight.Position = new Vector3(sunlightRadius*MathF.Cos(sunlightTheta),sunlightRadius*MathF.Sin(sunlightTheta),0);
-			sunlight.LookAt(WORLD_ORIGIN);
-			if (sunlightTheta > 2*MathF.PI){
-				sunlightTheta = 0;
-				Global.hud.LogEvent("new day!");
-				GD.Print("new day");
-			}
-		};
-		AddChild(sunlightUpdateTimer);
-		sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
+		if (sunlight != null){
+			float sunlightRadius = sunlight.Position.DistanceTo(WORLD_ORIGIN);
+			sunlightTheta = Mathf.Acos(sunlight.Position.X / sunlightRadius); 
+			float sunlightAngleDelta = .01745f; //1 degrees
+			float sunlightAngularVelocity = 2*MathF.PI / (float) DURATION_DAY;
+			float sunlightAngleUpdateInterval = sunlightAngleDelta / sunlightAngularVelocity; //how long to wait between each update such that the sun rotates around in DURATION_DAY seconds
+			
+
+			Timer sunlightUpdateTimer = new Timer();
+			sunlightUpdateTimer.Timeout += ()=> {
+				sunlightTheta += sunlightAngleDelta;
+				sunlight.Position = new Vector3(sunlightRadius*MathF.Cos(sunlightTheta),sunlightRadius*MathF.Sin(sunlightTheta),0);
+				sunlight.LookAt(WORLD_ORIGIN);
+				if (sunlightTheta > 2*MathF.PI){
+					sunlightTheta = 0;
+					Global.hud.LogEvent("new day!");
+					GD.Print("new day");
+				}
+			};
+			AddChild(sunlightUpdateTimer);
+			sunlightUpdateTimer.Start(sunlightAngleUpdateInterval);
+		}
+
 		if (navRegion != null){
 			navRegion.BakeNavigationMesh();
 		}
@@ -144,8 +140,8 @@ public partial class Level : Node
 	}
 
 	public void ChangeLevel(string levelName){
-		if (levelScenes.ContainsKey(levelName)){
-			GetTree().CallDeferred("change_scene_to_packed", levelScenes[levelName]);
+		if (levelPackedScenes.ContainsKey(levelName)){
+			GetTree().CallDeferred("change_scene_to_packed", levelPackedScenes[levelName]);
 		}
 	}
 	public void ChangeLevel(PackedScene level){

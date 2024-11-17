@@ -9,12 +9,12 @@ public partial class BirdHunter : NPCNode {
 		base._Ready();
 		m.inv = ResourceFactory.MakeInventory();
 		cycleStates = new List<State>(){ State.ROAMING, State.IDLE };
-        if (nav != null){
-            NavigationServer3D.MapChanged += (arg) => { 
-                nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
-                navReady = true; 
-            };
-        }
+		if (nav != null){
+			NavigationServer3D.MapChanged += (arg) => { 
+				nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
+				navReady = true; 
+			};
+		}
 	}
 
 	public override void _Process(double delta){
@@ -35,9 +35,9 @@ public partial class BirdHunter : NPCNode {
 						GD.Print($"NPCNode: No NavigationAgent3D found for {this}");
 					}
 				} else if (!navReady){
-                    nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
-                    navReady = true; 
-                }
+					nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
+					navReady = true; 
+				}
 				break;
 			case State.ATTACKING:
 				break;
@@ -53,7 +53,7 @@ public partial class BirdHunter : NPCNode {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-        switch (m.state) {
+		switch (m.state) {
 			case State.ROAMING:
 				if (navReady){
 					if (!nav.IsNavigationFinished()){
@@ -66,9 +66,9 @@ public partial class BirdHunter : NPCNode {
 					}
 				}
 				break;
-            case State.IDLE:
-                Velocity = Vector3.Zero;
-                break;
+			case State.IDLE:
+				Velocity = Vector3.Zero;
+				break;
 		}
 		MoveAndSlide();
 	}
@@ -78,7 +78,7 @@ public partial class BirdHunter : NPCNode {
 
 	public override void HandleCollide(ColliderZone zone, Node other)
 	{
-        //need to verify that not colliding with self (another node that is attached to this one)
+		//need to verify that not colliding with self (another node that is attached to this one)
 		switch (zone){
 			case ColliderZone.Awareness0:
 				UpdateState(State.ALERT, other);
@@ -119,7 +119,7 @@ public partial class BirdHunter : NPCNode {
 			case State.TALKING:
 				break;
 			case State.ROAMING:
-                nav.TargetPosition = (Vector3) CallDeferred("NextNavPoint");
+				nav.TargetPosition = (Vector3) CallDeferred("NextNavPoint");
 				break;
 			case State.ATTACKING:
 				break;

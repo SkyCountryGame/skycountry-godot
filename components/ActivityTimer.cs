@@ -1,0 +1,22 @@
+using Godot;
+using System;
+using Godot.Collections;
+
+[GlobalClass]
+public partial class ActivityTimer : Timer {
+	[Export] private Array<int> activities;
+	private int cur = 0; //current activity
+	[Export] private StateManager stateManager;
+
+	public override void _Ready(){
+		base._Ready();
+		activities = new Array<int>(new int[stateManager.states.Count]);
+		Timeout += ()=>{
+			cur++;
+			if (cur > activities.Count-1){
+				cur = 0;
+				stateManager.SetStateByIndex(cur);                
+			}
+		};
+	}
+}
