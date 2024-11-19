@@ -96,7 +96,6 @@ stations = [NodePath("../Tree"), NodePath("../Tree2")]
 wait_time = 1.489
 autostart = true
 script = ExtResource("6_nmqrd")
-activities = [null, null]
 stateManager = NodePath("../StateManager")
 
 [node name="StateManager" type="Node3D" parent="Bird"]
@@ -108,3 +107,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)
 
 [node name="Tree2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 0, -9.13488)
+
+[connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
