@@ -36,12 +36,6 @@ public abstract partial class NPCNode : Node3D, Collideable {
 		if (nav == null && HasNode("NavigationAgent3D")){
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		}
-		if (nav != null){
-			NavigationServer3D.MapChanged += (arg) => { 
-				nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
-				navReady = true; 
-			};
-		}
 	}
 
 	public override void _Process(double delta){
