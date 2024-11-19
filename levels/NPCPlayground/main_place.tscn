@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://do1xjjm1ptao"]
+[gd_scene load_steps=17 format=3 uid="uid://do1xjjm1ptao"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
@@ -39,6 +39,8 @@ refraction_texture_channel = 4
 [sub_resource type="PlaneMesh" id="PlaneMesh_my3tk"]
 material = SubResource("StandardMaterial3D_mcwpa")
 size = Vector2(50, 50)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sddu7"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("navRegion")]
 script = ExtResource("1_ypbtj")
@@ -87,18 +89,27 @@ skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "stateManager")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody")]
 script = ExtResource("6_m0or4")
 stations = [NodePath("../Tree"), NodePath("../Tree2")]
-stateManager = NodePath("StateManager")
+nav = NodePath("NavigationAgent3D")
+physBody = NodePath("CharacterBody3D")
 
-[node name="StateManager" type="Node3D" parent="Bird"]
+[node name="StateManager" type="Node3D" parent="Bird" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
-states = ["Idle", "Move"]
+states = ["Idle", 1]
+subject = NodePath("..")
 
 [node name="Timer" type="Timer" parent="Bird"]
 wait_time = 2.29
 autostart = true
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Bird"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Bird"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bird/CharacterBody3D"]
+shape = SubResource("SphereShape3D_sddu7")
 
 [node name="Tree" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)

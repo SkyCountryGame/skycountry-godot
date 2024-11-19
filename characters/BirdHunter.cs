@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using State = NPCModel.State;
 
 public partial class BirdHunter : NPCNode {
-	
+
 	public override void _Ready(){
 		base._Ready();
 		m.inv = ResourceFactory.MakeInventory();
@@ -28,14 +28,8 @@ public partial class BirdHunter : NPCNode {
 			case State.TALKING:
 				break;
 			case State.ROAMING:
-				if (nav == null) {
-					try {
-						nav = GetNode<NavigationAgent3D>("NavAgent");
-					} catch {
-						GD.Print($"NPCNode: No NavigationAgent3D found for {this}");
-					}
-				} else if (!navReady){
-					nav.TargetPosition = Global.level.GetRandomNavPoint(); //TODO how does birdhunter get his next navigation point?
+				if (navReady){
+					nav.TargetPosition = Global.level.GetRandomNavPoint();
 					navReady = true; 
 				}
 				break;
@@ -59,7 +53,7 @@ public partial class BirdHunter : NPCNode {
 					if (!nav.IsNavigationFinished()){
 						Vector3 nextPos = nav.GetNextPathPosition();
 						
-						Velocity = (nextPos - GlobalPosition).Normalized() *2;
+						physBody.Velocity = (nextPos - GlobalPosition).Normalized() *2;
 					} else {
 						nav.TargetPosition = NextNavPoint();
 						EffectsManager.MarkerPoint("navpoint", nav.TargetPosition);
@@ -67,10 +61,10 @@ public partial class BirdHunter : NPCNode {
 				}
 				break;
 			case State.IDLE:
-				Velocity = Vector3.Zero;
+				physBody.Velocity = Vector3.Zero;
 				break;
 		}
-		MoveAndSlide();
+		physBody.MoveAndSlide();
 	}
 
 	public void OnStateTimeout(){
@@ -84,7 +78,7 @@ public partial class BirdHunter : NPCNode {
 				UpdateState(State.ALERT, other);
 				break;
 			case ColliderZone.Body:
-				Velocity = (((Node3D)other).Position - Position).Normalized() * 4;
+				physBody.Velocity = (((Node3D)other).Position - Position).Normalized() * 4;
 				break;
 			default:
 				break;
@@ -98,15 +92,14 @@ public partial class BirdHunter : NPCNode {
 				UpdateState(State.IDLE);
 				break;
 			case ColliderZone.Body:
-				Velocity = Vector3.Zero;
+				physBody.Velocity = Vector3.Zero;
 				break;
 			default:
 				break;
 		}
 	}
 
-	//expirimenting a bit here, having this logic handled in the node class rather than the model class. idk which is better at this point
-	public override bool UpdateState(State s, dynamic payload = null)
+	public bool UpdateState(State s, dynamic payload = null)
 	{
 		State prev = m.state;
 		switch (s){
@@ -134,8 +127,7 @@ public partial class BirdHunter : NPCNode {
 		return true;
 	}
 
-
-	public override Vector3 NextNavPoint(){
+	public Vector3 NextNavPoint(){
 		float th = (float)GD.RandRange(0, 2*Mathf.Pi);
 		float d = (float)GD.RandRange(0, 10);
 		return new Vector3(d*Mathf.Cos(th), 0, d*Mathf.Sin(th)) + GlobalPosition;
