@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://do1xjjm1ptao"]
+[gd_scene load_steps=16 format=3 uid="uid://do1xjjm1ptao"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
@@ -6,7 +6,6 @@
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="4_c3pt0"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="5_vkgtl"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="6_m0or4"]
-[ext_resource type="Script" path="res://components/ActivityTimer.cs" id="6_nmqrd"]
 [ext_resource type="Script" path="res://components/StateManager.cs" id="7_ntb0s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
@@ -88,19 +87,18 @@ skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "stateManager")]
 script = ExtResource("6_m0or4")
 stations = [NodePath("../Tree"), NodePath("../Tree2")]
-
-[node name="ActivityTimer" type="Timer" parent="Bird" node_paths=PackedStringArray("stateManager")]
-wait_time = 1.489
-autostart = true
-script = ExtResource("6_nmqrd")
-stateManager = NodePath("../StateManager")
+stateManager = NodePath("StateManager")
 
 [node name="StateManager" type="Node3D" parent="Bird"]
 script = ExtResource("7_ntb0s")
 states = ["Idle", "Move"]
+
+[node name="Timer" type="Timer" parent="Bird"]
+wait_time = 2.29
+autostart = true
 
 [node name="Tree" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)
@@ -109,3 +107,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 0, -9.13488)
 
 [connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
+[connection signal="timeout" from="Bird/Timer" to="Bird" method="OnStateChange"]
