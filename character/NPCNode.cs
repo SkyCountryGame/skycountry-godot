@@ -27,6 +27,8 @@ public abstract partial class NPCNode : Node3D, Collideable {
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
 		}
+		
+		//setup some things that inheriters may or may not have
 		if (physBody == null && HasNode("CharacterBody3D")) {
 			physBody = GetNode<CharacterBody3D>("CharacterBody3D");
 		}
@@ -35,6 +37,11 @@ public abstract partial class NPCNode : Node3D, Collideable {
 		}
 		if (nav == null && HasNode("NavigationAgent3D")){
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
+		}
+		if (nav != null){
+			NavigationServer3D.MapChanged += (arg) => { 
+				navReady = true;
+			};
 		}
 	}
 

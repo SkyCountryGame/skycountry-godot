@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://do1xjjm1ptao"]
+[gd_scene load_steps=21 format=3 uid="uid://do1xjjm1ptao"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="5_vkgtl"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="6_m0or4"]
 [ext_resource type="Script" path="res://components/StateManager.cs" id="7_ntb0s"]
+[ext_resource type="Texture2D" uid="uid://guenwhee305i" path="res://assets/texture/face5.png" id="8_fcj1v"]
+[ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="8_k53kt"]
+[ext_resource type="Texture2D" uid="uid://bdvs7gnwd2yjr" path="res://assets/texture/Environment/Grass/slot0_albedo_bump.png" id="9_asfog"]
+[ext_resource type="Texture2D" uid="uid://kcuf6ymo1uav" path="res://assets/texture/Environment/Grass/Grass.png" id="10_yro5q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -90,6 +94,7 @@ skeleton = NodePath("../..")
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
 
 [node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody", "stateManager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
 script = ExtResource("6_m0or4")
 stations = [NodePath("../Tree"), NodePath("../Tree2")]
 nav = NodePath("NavigationAgent3D")
@@ -102,8 +107,10 @@ states = ["Idle", 1]
 subject = NodePath("..")
 
 [node name="Timer" type="Timer" parent="Bird"]
-wait_time = 2.29
+wait_time = 5.356
 autostart = true
+script = ExtResource("8_k53kt")
+baseWaitTime = 4
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Bird"]
 
@@ -112,11 +119,20 @@ autostart = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bird/CharacterBody3D"]
 shape = SubResource("SphereShape3D_sddu7")
 
+[node name="Sprite3D" type="Sprite3D" parent="Bird/CharacterBody3D"]
+texture = ExtResource("8_fcj1v")
+
 [node name="Tree" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 6.1454, 11.7115)
+
+[node name="Sprite3D" type="Sprite3D" parent="Tree"]
+texture = ExtResource("9_asfog")
 
 [node name="Tree2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 0, -9.13488)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 7.81176, -9.13488)
+
+[node name="Sprite3D" type="Sprite3D" parent="Tree2"]
+texture = ExtResource("10_yro5q")
 
 [connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]

@@ -30,29 +30,32 @@ public partial class Bird : NPCNode, StateHolder {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		physBody.Velocity = (nav.GetNextPathPosition() - GlobalPosition).Normalized() *2;
+		physBody.Velocity = (nav.TargetPosition - physBody.Position).Normalized() *15;
 		physBody.MoveAndSlide();
 	}
 
 	//timer timeout to switch from chilling at nest to flying to other nest
 	private void SwitchActivity(){
-		GD.Print("Switching activity");
+		GD.Print($"Switching activity");
 		if (stateManager.currentState == State.IDLE){
 			stateManager.SetState(State.ALERT);
-		} else {
+		} else if (physBody.Position.DistanceTo(nav.TargetPosition) < .3){ //this is just a quick hack so i dont have to mess with timer for now
 			stateManager.SetState(State.IDLE);
 		}
+		GD.Print($"Switched to {stateManager.currentState}");
 	}
 
 	public void SetState(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
-				nav.TargetPosition = Position;
+				nav.TargetPosition = physBody.Position;
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;
+				GD.Print($"Switching to {stationCurrent.Value.Name}");
 				nav.TargetPosition = stationCurrent.Value.Position;
+				GD.Print($"Flying to {nav.TargetPosition}");
 				break;
 			default:
 				break;
