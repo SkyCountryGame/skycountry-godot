@@ -34,11 +34,21 @@ public partial class Bird : NPCNode, StateHolder {
 		physBody.MoveAndSlide();
 	}
 
+	//timer timeout to switch from chilling at nest to flying to other nest
+	private void SwitchActivity(){
+		GD.Print("Switching activity");
+		if (stateManager.currentState == State.IDLE){
+			stateManager.SetState(State.ALERT);
+		} else {
+			stateManager.SetState(State.IDLE);
+		}
+	}
+
 	public void SetState(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
-
+				nav.TargetPosition = Position;
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;

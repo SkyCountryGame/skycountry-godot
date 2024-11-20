@@ -89,11 +89,12 @@ skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody", "stateManager")]
 script = ExtResource("6_m0or4")
 stations = [NodePath("../Tree"), NodePath("../Tree2")]
 nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterBody3D")
+stateManager = NodePath("StateManager")
 
 [node name="StateManager" type="Node3D" parent="Bird" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
@@ -118,4 +119,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.04748, 1.71858, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 0, -9.13488)
 
 [connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
-[connection signal="timeout" from="Bird/Timer" to="Bird" method="OnStateChange"]
+[connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
