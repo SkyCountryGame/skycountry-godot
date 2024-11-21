@@ -57,8 +57,9 @@ radius = 1.8
 [sub_resource type="SphereShape3D" id="SphereShape3D_05en4"]
 radius = 9.979
 
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("navRegion")]
+[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_ypbtj")
+sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

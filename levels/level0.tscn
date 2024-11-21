@@ -68,6 +68,10 @@ size = Vector2(50, 50)
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
+subsequentLevelScenesFilenames = {
+"l2": "level2",
+"npcpg": "NPCPlayground/main_place"
+}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
@@ -140,6 +144,7 @@ skeleton = NodePath("../..")
 [node name="Door" parent="." instance=ExtResource("10_peodx")]
 transform = Transform3D(0.793247, 0, -0.6089, 0, 1, 0, 0.6089, 0, 0.793247, 19.1437, 0, -16.1993)
 script = ExtResource("11_is5ya")
+destination = "npcpg"
 
 [node name="Drugz" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.52858)

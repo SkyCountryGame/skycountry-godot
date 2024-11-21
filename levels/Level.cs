@@ -16,9 +16,6 @@ public partial class Level : Node
 		= new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
 	private Dictionary<string, PackedScene> levelPackedScenes = new Dictionary<string, PackedScene>();
 
-	//which levels are accessible from each level. this includes "sublevels"
-	public static Dictionary<Level, List<Level>> levelGraph = new Dictionary<Level, List<Level>>(); //all levels should have access to this
-
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit
@@ -39,7 +36,19 @@ public partial class Level : Node
 			Global.navRegion = navRegion;
 		}
 
-		//TODO parse levels.json to build levelsGraph
+		//load the levels that can be accessed from this level
+		foreach (KeyValuePair<string, string> level in subsequentLevelScenesFilenames){
+			string fn = "";
+			if (level.Value.Substr(0, 5) != "levels/"){
+				fn = "levels/";
+			} 
+			if (level.Value.Substr(level.Value.Length - 5, 5) != ".tscn"){
+				fn += level.Value + ".tscn";
+			} else {
+				fn += level.Value;
+			}
+			levelPackedScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
+        }
 
 		//dynamically spawn things
 		//health pickups
@@ -142,6 +151,8 @@ public partial class Level : Node
 	public void ChangeLevel(string levelName){
 		if (levelPackedScenes.ContainsKey(levelName)){
 			GetTree().CallDeferred("change_scene_to_packed", levelPackedScenes[levelName]);
+		} else {
+			GD.PushWarning($"level {levelName} not found");
 		}
 	}
 	public void ChangeLevel(PackedScene level){
