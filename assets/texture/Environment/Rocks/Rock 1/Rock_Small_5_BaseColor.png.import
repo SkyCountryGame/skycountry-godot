@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cigb283il82k3"
-path.s3tc="res://.godot/imported/face2.png-47bef9cc5cb06a3831da1c1cbbe2d04b.s3tc.ctex"
+uid="uid://bsbcrx5kpnhkj"
+path.s3tc="res://.godot/imported/Rock_Small_5_BaseColor.png-6f27e4c64f41cf449f4b705219349e41.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/texture/face2.png"
-dest_files=["res://.godot/imported/face2.png-47bef9cc5cb06a3831da1c1cbbe2d04b.s3tc.ctex"]
+source_file="res://assets/texture/Environment/Rocks/Rock 1/Rock_Small_5_BaseColor.png"
+dest_files=["res://.godot/imported/Rock_Small_5_BaseColor.png-6f27e4c64f41cf449f4b705219349e41.s3tc.ctex"]
 
 [params]
 

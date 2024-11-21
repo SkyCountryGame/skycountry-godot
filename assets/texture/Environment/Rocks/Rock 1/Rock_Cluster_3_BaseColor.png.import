@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwxr6uluxobq0"
-path.s3tc="res://.godot/imported/noise.png-54e1130836a801cc9fdd9d675606e2f8.s3tc.ctex"
+uid="uid://tvptnaoescgj"
+path.s3tc="res://.godot/imported/Rock_Cluster_3_BaseColor.png-0a76542c4850384d7deb635603ae3213.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/texture/noise.png"
-dest_files=["res://.godot/imported/noise.png-54e1130836a801cc9fdd9d675606e2f8.s3tc.ctex"]
+source_file="res://assets/texture/Environment/Rocks/Rock 1/Rock_Cluster_3_BaseColor.png"
+dest_files=["res://.godot/imported/Rock_Cluster_3_BaseColor.png-0a76542c4850384d7deb635603ae3213.s3tc.ctex"]
 
 [params]
 
