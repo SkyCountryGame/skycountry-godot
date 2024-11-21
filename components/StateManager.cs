@@ -34,13 +34,11 @@ public partial class StateManager : Node3D {
 
 	public void SetState(State state){
 		this.currentState = state;
-		//EmitSignal(SignalName.StateChange, state);
 		((StateHolder)subject).SetState(state);
 	}
 
 	public void SetStateByIndex(int idx){
 		this.currentState = states[idx];
-		//EmitSignal(SignalName.StateChange, states[idx]);
 		((StateHolder)subject).SetState(states[idx]);
 	}
 }
