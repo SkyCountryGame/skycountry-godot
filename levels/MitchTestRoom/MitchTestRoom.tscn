@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://btsjflgbth3om"]
+[gd_scene load_steps=25 format=3 uid="uid://btsjflgbth3om"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_4h45c"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_f87x4"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://tg7ofg6g7nca" path="res://assets/Models/Wood Props/Bucket 1/Bucket.gltf" id="8_iir1n"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_j6iwx"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="10_s5egv"]
-[ext_resource type="PackedScene" uid="uid://ctmsldmlbf2kk" path="res://levels/MitchTestRoom/MitchTestForest.tscn" id="11_3n4f3"]
 [ext_resource type="PackedScene" uid="uid://bivqu8ka0u2ii" path="res://assets/Models/Wood Props/Fence Long/FenceLong.gltf" id="12_amjpc"]
 [ext_resource type="PackedScene" uid="uid://lr0ji12dvk6i" path="res://assets/Models/Wood Props/Fence Gate 1/FenceGate.gltf" id="14_mmcsl"]
 
@@ -61,6 +60,9 @@ size = Vector3(6.90866, 1.42981, 0.36731)
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_4h45c")
+levelSceneFilenames = {
+"TestForest": "MitchTestRoom/MitchTestForest.tscn"
+}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
@@ -268,7 +270,7 @@ shape = SubResource("BoxShape3D_tr0bb")
 [node name="FORESTdoor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.29179, 0.54866, -13.7603)
 script = ExtResource("10_s5egv")
-destination = ExtResource("11_3n4f3")
+destination = "TestForest"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="FORESTdoor"]
 
