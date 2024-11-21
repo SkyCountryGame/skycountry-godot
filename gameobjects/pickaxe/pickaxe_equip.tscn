@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://ctnq3dri1sk75"]
+[gd_scene load_steps=11 format=4 uid="uid://de1imo3mxdeis"]
 
-[ext_resource type="Script" path="res://gameobjects/pickaxe/Pickaxe.cs" id="1_uulx0"]
-[ext_resource type="Resource" uid="uid://bc4mgylt17lqr" path="res://gameobjects/pickaxe/pickaxe_invitem.tres" id="2_5id6b"]
-[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="2_8g053"]
+[ext_resource type="Script" path="res://gameobjects/pickaxe/Pickaxe.cs" id="1_g1rbu"]
+[ext_resource type="Resource" uid="uid://bp8isajsf3lxu" path="res://gameobjects/resources/pickaxe.tres" id="2_clwul"]
+[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_sgbh8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lrg0g"]
 
@@ -77,8 +77,8 @@ radius = 0.437421
 height = 3.2
 
 [node name="PickaxeEquipable" type="Node3D"]
-script = ExtResource("1_uulx0")
-pickaxeItem = ExtResource("2_5id6b")
+script = ExtResource("1_g1rbu")
+properties = ExtResource("2_clwul")
 
 [node name="Pick" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.302717, 0, -2.65458e-08, 0, 0.443618, 0, 2.64644e-08, 0, -0.303649, 0, 0, 0)
@@ -94,7 +94,7 @@ skeleton = NodePath("")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.921963, 0)
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("2_8g053")
+script = ExtResource("3_sgbh8")
 zone = 2
 
 [node name="Hitbox" type="CollisionShape3D" parent="Area3D"]

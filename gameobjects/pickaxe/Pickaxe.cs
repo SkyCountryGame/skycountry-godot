@@ -2,8 +2,6 @@ using Godot;
 using System;
 
 public partial class Pickaxe : Equipable, Collideable {
-    [Export] private InventoryItem pickaxeItem;
-
     [Export] private MeleeItemProperties properties;
 
     public Pickaxe()

@@ -5,16 +5,11 @@ using Godot;
 [GlobalClass]
 public partial class Pickup : Node3D, Interactable
 {
-    [Export] public InventoryItem invItem; //the pickup item to be added to inventory
+    [Export] public InventoryItem invItem {get; set;} //the pickup item to be added to inventory
     [Export] public string info; //short description to show when player can pick it up
 
     public InteractionType interactionType => InteractionType.Pickup;
     public InteractionMethod interactionMethod => InteractionMethod.Use;
-
-    public Pickup()
-    {
-        
-    }
 
     public override void _Ready()
     {
@@ -25,13 +20,12 @@ public partial class Pickup : Node3D, Interactable
 
     public void Clear()
     {
-        throw new System.NotImplementedException();
+        QueueFree();
     }
 
     //PAYLOAD: the inventory item for this pickupable world item
     public dynamic Interact()
     {
-        QueueFree();
         return invItem;
     }
 

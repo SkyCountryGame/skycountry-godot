@@ -353,6 +353,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				break;
 			case InteractionType.Pickup: 
 				M.AddToInventory((InventoryItem)payload);
+				interactable.Clear();
 				break;
 			case InteractionType.General:
 				break;

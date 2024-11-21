@@ -77,7 +77,6 @@ shape = SubResource("BoxShape3D_hi71w")
 
 [node name="Node" type="Node" parent="Guy" index="2"]
 script = ExtResource("6_siwyb")
-testExp = null
 
 [node name="Player" parent="." index="8" instance=ExtResource("2_y040l")]
 

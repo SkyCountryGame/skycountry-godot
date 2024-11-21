@@ -20,9 +20,7 @@ public partial class InventoryItem : Resource, System.ICloneable {
     [Export] public string name;
     [Export] public ItemType itemType;
     [Export] public bool equipable;
-    //[Export] public string scenePathWorldItem;
-    [Export] public PackedScene packedSceneWorldItem; //TODO list of scenes for objects that could be multiple
-    //[Export] public string scenePathEquippedItem;
+    [Export] public string worldItemPath; 
     [Export] public PackedScene packedSceneEquipable;
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
@@ -34,6 +32,16 @@ public partial class InventoryItem : Resource, System.ICloneable {
     //TODO maybe should keep the constructor so don't have to use godot resources
 
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up
+    public InventoryItem() : this(null, ItemType.Weapon, false, null, null) {}
+
+    public InventoryItem(string name, ItemType itemType, bool equipable, string worldItemPath, PackedScene packedSceneEquipable){
+        this.name = name;
+        this.itemType = itemType;
+        this.equipable = equipable;
+        this.worldItemPath = worldItemPath;
+        this.packedSceneEquipable = packedSceneEquipable;
+    }
+
     public void Init()
     {
         if (inited) return;
@@ -41,8 +49,7 @@ public partial class InventoryItem : Resource, System.ICloneable {
         inited = true;
     }
 
-    override
-    public string ToString()
+    override public string ToString()
     {
         return itemType.ToString() + ": " + name;
     }
@@ -62,7 +69,7 @@ public partial class InventoryItem : Resource, System.ICloneable {
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
             Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }*/
-        return packedSceneWorldItem;
+        return ResourceLoader.Load<PackedScene>(worldItemPath);
     }
     public PackedScene GetPackedSceneEquipable(){
         return packedSceneEquipable;

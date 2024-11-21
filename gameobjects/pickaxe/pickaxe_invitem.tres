@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://bc4mgylt17lqr"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bq2s1qc4i0q5"]
 
-[ext_resource type="PackedScene" uid="uid://ctnq3dri1sk75" path="res://gameobjects/pickaxe/pickaxe_equip.tscn" id="1_k3aku"]
-[ext_resource type="PackedScene" uid="uid://dqygprkf4vsga" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="2_x7ntk"]
+[ext_resource type="PackedScene" uid="uid://de1imo3mxdeis" path="res://gameobjects/pickaxe/pickaxe_equip.tscn" id="1_4hdpa"]
 [ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_myje1"]
 
 [resource]
@@ -9,5 +8,5 @@ script = ExtResource("3_myje1")
 name = "Pickaxe"
 itemType = 0
 equipable = true
-packedSceneWorldItem = ExtResource("2_x7ntk")
-packedSceneEquipable = ExtResource("1_k3aku")
+worldItemPath = "res://gameobjects/pickaxe/pickaxe_pickup.tscn"
+packedSceneEquipable = ExtResource("1_4hdpa")

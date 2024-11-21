@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://dqygprkf4vsga"]
+[gd_scene load_steps=10 format=4 uid="uid://c83di2s6skyw5"]
 
-[ext_resource type="Script" path="res://compononents/Pickup.cs" id="1_rrefl"]
-[ext_resource type="Resource" uid="uid://bc4mgylt17lqr" path="res://gameobjects/pickaxe/pickaxe_invitem.tres" id="2_53d2d"]
+[ext_resource type="Script" path="res://components/Pickup.cs" id="1_rrefl"]
+[ext_resource type="Resource" uid="uid://bq2s1qc4i0q5" path="res://gameobjects/pickaxe/pickaxe_invitem.tres" id="2_vmyae"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e18mv"]
 radius = 0.720012
@@ -77,7 +77,7 @@ shadow_mesh = SubResource("ArrayMesh_xhdy3")
 
 [node name="PickaxePickup" type="StaticBody3D"]
 script = ExtResource("1_rrefl")
-invItem = ExtResource("2_53d2d")
+invItem = ExtResource("2_vmyae")
 info = "Pickaxe"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
