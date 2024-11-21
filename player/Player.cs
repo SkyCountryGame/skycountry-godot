@@ -14,7 +14,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
-	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
+    private float angleToFacingDirection;
+    private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
@@ -78,7 +79,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	{
 		base._PhysicsProcess(delta);
 		DoMotion(delta); 
-		animationTree.Set("parameters/Run/blend_position", Velocity.Length() / velMagnitudeMax);
+		animationTree.Set("parameters/Run/blend_position", new Vector2(0,Velocity.Length() / velMagnitudeMax).Rotated(angleToFacingDirection));
 		jump = false;
 	}
 	public override void _Process(double delta)
@@ -210,6 +211,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 				case State.AIMING:
 					break;
 				case State.INVENTORY:
+					inputDir = Vector3.Zero; //To be decided whether looking is disabled or movement is disabled, but for now we are just disabling both.
 					Global.HUD.ToggleInventory(playerModel.inv); //TODO ShowInventory(). in another ticket
 					break;
 				case State.DIALOGUE:
@@ -225,40 +227,45 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	private void DoMotion(double delta){
 		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
 		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
-		
-		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
+		angleToFacingDirection = GlobalTransform.Basis.Z.SignedAngleTo(-controlDir, Vector3.Up);
 
-		Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
-		if (accelScalar == 0){ //acceleration activation toggle
-			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-				velocity = Vector3.Zero;
+		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
+		if(playerModel.GetState().Equals(State.DEFAULT)){
+			Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
+			if (accelScalar == 0){ //acceleration activation toggle
+				if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+					velocity = Vector3.Zero;
+				} else {
+					velocity = gv;
+				}
+				velocity.Y = Velocity.Y; //thank you adam
 			} else {
-				velocity = gv;
+				Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+				if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+					velocity = Vector3.Zero;
+					accel = Vector3.Zero;
+				} else if (Velocity.Length() > gv.Length()) {
+					velocity = gv;
+				}
+				velocity.Y = Velocity.Y;
+				if (Velocity.Length() < velMagnitudeMax){
+					velocity += accel * (float)delta;
+				}
 			}
-			velocity.Y = Velocity.Y; //thank you adam
+			if (jump && IsOnFloor()){
+				velocity.Y += JumpVelocity;
+				jump = false;
+			} else if (IsOnFloor()) {
+				velocity.Y = 0; 
+			} else {
+				velocity.Y += (float) (gravity * delta) * 64; //- 20;
+			}
+			Velocity = velocity;
+			MoveAndSlide();
 		} else {
-			Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-			if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-				velocity = Vector3.Zero;
-				accel = Vector3.Zero;
-			} else if (Velocity.Length() > gv.Length()) {
-				velocity = gv;
-			}
-			velocity.Y = Velocity.Y;
-			if (Velocity.Length() < velMagnitudeMax){
-				velocity += accel * (float)delta;
-			}
+			inputDir = Vector3.Zero;
+			Velocity = Vector3.Zero;
 		}
-		if (jump && IsOnFloor()){
-			velocity.Y += JumpVelocity;
-			jump = false;
-		} else if (IsOnFloor()) {
-			velocity.Y = 0; 
-		} else {
-			velocity.Y += (float) (gravity * delta) * 64; //- 20;
-		}
-		Velocity = velocity;
-		MoveAndSlide();
 	}
 
 	public Interactable GetFirstInteractable()
@@ -323,10 +330,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
     {
 		switch (e.eventType){
 			case EventType.WorldItemDestroyed: //receive the destroyed GameObject
-				GameObject worldItem = e.payload;
+				GameObject worldItem = e.payload.Item1;
 				//check if the destroyed item is an interactable and is nearby
 				Interactable it = Global.GetInteractable(worldItem);
-				if (it != null && availableInteractables.Contains(it)){
+				if (it != null && availableInteractables.Contains(it) && it.interactionMethod.Equals(InteractionMethod.Destroy)){
 					if (it.interactionType == InteractionType.Pickup){
 						HandleInteract(it);
 					}
@@ -379,6 +386,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 
 	public void UnequipRightHand(){
 		if(rightHand.GetChildCount()>0){
+			playerModel.equipped = null;
 			rightHand.RemoveChild(equippedRightHand);
 			equippedRightHand = null;
 		}
@@ -411,7 +419,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == playerModel.equipped){
-				playerModel.equipped = null;
 				UnequipRightHand();
 			}
 			Global.HUD.ShowEquipped(); //TODO should not have to call this. fix

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Rock : RigidBody3D, Destroyable {
+public partial class Rock : RigidBody3D, Interactable, Destroyable {
     int Destroyable.health { get => health; set => health = value; }
 
     public InteractionType interactionType => InteractionType.Pickup;
@@ -45,6 +45,26 @@ public partial class Rock : RigidBody3D, Destroyable {
         //trigger an event to notify that a rock has been destroyed, and pass along the associated GameObject
         EventManager.Invoke(EventType.WorldItemDestroyed, (Global.GetGameObject(this), GlobalPosition, invItem));
         GD.Print("destroy rock!");
+    }
+
+    public dynamic Interact()
+    {
+        return invItem;
+    }
+
+    public void Retain()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Clear()
+    {
         QueueFree();
     }
+
+    public bool IsInteractionValid(Interactor interactor)
+    {
+        throw new NotImplementedException();
+    }
+
 }

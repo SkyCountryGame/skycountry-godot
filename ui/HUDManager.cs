@@ -256,8 +256,13 @@ public partial class HUDManager : Node {
         GD.Print($"clicked {index}");
         InventoryItem item = Global.playerModel.inv.GetItemByIndex(index); //GetItemMetadata shouldn't be null because we always set it when adding the menu items
         if (item != null){
-            if (mouseButton == 1){ //left click
-                if (item.equipable && Global.playerNode.EquipItem(item)){
+            if (mouseButton == 1){ //left click 
+                if(Global.playerModel.equipped == item){
+                    Global.playerNode.UnequipRightHand();
+                    inventoryMenu.SetItemText(index, $"{item.name}");
+                    ShowEquipped();
+                }
+                else if (item.equipable && Global.playerNode.EquipItem(item)){
                     inventoryMenu.SetItemText(index, $" - {item.name} - "); //TODO bad. will be fixed after reactive ui update
                     ShowEquipped(item.name);
                 }

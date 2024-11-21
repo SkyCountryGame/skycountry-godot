@@ -36,6 +36,7 @@ public partial class Pickaxe : Equipable, Collideable {
             GD.Print("pick used");
         }
     }
+
     private void DisableHitbox(){
         hitbox.Disabled = true;
     }

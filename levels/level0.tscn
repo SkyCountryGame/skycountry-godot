@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -18,7 +18,6 @@
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
-[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="22_qtqld"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -81,13 +80,6 @@ emission = Color(0.908911, 0.866702, 0.900103, 1)
 emission_energy_multiplier = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jn6"]
-
-[sub_resource type="Resource" id="Resource_5uie6"]
-script = ExtResource("22_qtqld")
-name = "Rock"
-itemType = 256
-equipable = false
-worldItemPath = ""
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3cbx"]
 
@@ -199,17 +191,15 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 
 [node name="Rock" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
-invItem = SubResource("Resource_5uie6")
 
 [node name="Rock2" parent="Rocks" instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
 
 [node name="Rock3" parent="Rocks" instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7229, 1.32074, 5.6107)
 
 [node name="Rock4" parent="Rocks" instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
-mass = 0.27
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0843, 1.98111, 8.41605)
 
 [node name="NPCs" type="Node3D" parent="."]
 
