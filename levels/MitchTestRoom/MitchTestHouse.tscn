@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://duhtkdgdb3ib3"]
+[gd_scene load_steps=22 format=3 uid="uid://duhtkdgdb3ib3"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_h2moo"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_mnewy"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://tg7ofg6g7nca" path="res://assets/Models/Wood Props/Bucket 1/Bucket.gltf" id="8_cot38"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_nlod0"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="10_u1vo3"]
-[ext_resource type="PackedScene" uid="uid://dwjmpt5fbaak2" path="res://levels/level0.tscn" id="11_p15ai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -254,7 +253,6 @@ shape = SubResource("BoxShape3D_dh6ug")
 [node name="Door" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60311, 0.548661, -7.17651)
 script = ExtResource("10_u1vo3")
-destination = ExtResource("11_p15ai")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Door"]
 

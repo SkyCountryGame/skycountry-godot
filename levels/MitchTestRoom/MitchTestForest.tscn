@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ctmsldmlbf2kk"]
+[gd_scene load_steps=25 format=3 uid="uid://ctmsldmlbf2kk"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_3t8i6"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_lto7j"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://lr0ji12dvk6i" path="res://assets/Models/Wood Props/Fence Gate 1/FenceGate.gltf" id="8_h0avq"]
 [ext_resource type="PackedScene" uid="uid://dwsku2sy5wiug" path="res://assets/Models/Wood Props/Signpost 1/Signpost01.gltf" id="9_hxrwf"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="10_sv3lf"]
-[ext_resource type="PackedScene" uid="uid://btsjflgbth3om" path="res://levels/MitchTestRoom/MitchTestRoom.tscn" id="11_5k2wm"]
 [ext_resource type="PackedScene" uid="uid://bivqu8ka0u2ii" path="res://assets/Models/Wood Props/Fence Long/FenceLong.gltf" id="12_hosjm"]
 [ext_resource type="Script" path="res://gameobjects/Rock.cs" id="13_xr3sc"]
 
@@ -61,6 +60,9 @@ emission = Color(0.82, 0.642333, 0, 1)
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_3t8i6")
+levelSceneFilenames = {
+"TestRoom": "MitchTestRoom/MitchTestRoom.tscn"
+}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
@@ -475,7 +477,7 @@ light_color = Color(1, 0.783, 0.38, 1)
 [node name="HOMEdoor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5209, 0.54866, 38.7191)
 script = ExtResource("10_sv3lf")
-destination = ExtResource("11_5k2wm")
+destination = "TestRoom"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="HOMEdoor"]
 
