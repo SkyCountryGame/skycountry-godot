@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_3km67"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_nyks5"]
-[ext_resource type="PackedScene" uid="uid://bl36oxkmkwx2" path="res://assets/RollinDude/RollinDudeMk5.glb" id="3_wai1g"]
+[ext_resource type="PackedScene" uid="uid://55e2x1i0nhix" path="res://assets/RollinDude/RollinDudeMk5.glb" id="3_wai1g"]
 [ext_resource type="Shape3D" uid="uid://carsvebux3jg5" path="res://player/player_body_shape.tres" id="4_o7lqg"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
