@@ -15,6 +15,7 @@ public partial class Inventory : Resource, System.ICloneable
 	[Export]
 	public int capacity; //max # items can be wwww
 
+	public Inventory(){}
 	public Inventory(int capacity = 1)
 	{
 		this.capacity = capacity;
@@ -46,7 +47,7 @@ public partial class Inventory : Resource, System.ICloneable
 		string res = stock.Count + "/" + capacity + "\n";
 		foreach (InventoryItem i in stock)
 		{
-				res += i.name + "(" + i.GetItemType() + ") \n";
+				res += i.name + "(" + i.itemType + ") \n";
 		}
 		return res;
 	}

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://66w8xf03iigf"
-path="res://.godot/imported/Crate01.gltf-4a8fb2dfdb6f28fffbe97b50fb73d592.scn"
+path="res://.godot/imported/Crate01.gltf-1cbf36ed4d9e4c64e44a53d6ebc909cc.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Crate 1/Crate01.gltf"
-dest_files=["res://.godot/imported/Crate01.gltf-4a8fb2dfdb6f28fffbe97b50fb73d592.scn"]
+source_file="res://assets/Models/Wood Props/Crate 1/Crate01.gltf"
+dest_files=["res://.godot/imported/Crate01.gltf-1cbf36ed4d9e4c64e44a53d6ebc909cc.scn"]
 
 [params]
 

@@ -1,43 +1,47 @@
 using System;
 using Godot;
-using static InventoryItemProperties;
 
 
 //TODO there is still some sorting out to do with the Node vs Model situation
 [GlobalClass]
 public partial class InventoryItem : Resource, System.ICloneable {
+    public enum ItemType {
+        Weapon = 1<<0,
+        Aid = 1<<1,
+        Ammo = 1<<2, 
+        Apparel = 1<<3,
+        Shield = 1<<4, 
+        Semantic = 1<<5, 
+        Quest = 1<<6, 
+        Junk = 1<<7,
+        Mineral = 1<<8
+    }
+
+    [Export] public string name;
+    [Export] public ItemType itemType;
+    [Export] public bool equipable;
+    [Export] public string worldItemPath; 
+    [Export] public PackedScene packedSceneEquipable;
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
-    public string name;    
-    public PackedScene packedScene; //the scene that will be instantiated if this item is dropped 
 
     private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
     public bool inited = false;
-    [Export] private InventoryItemProperties properties = new InventoryItemProperties();
 
-    public InventoryItem() : base() { }
-
-    //name is the same as the key in the GameObjectManager.gameObjectsPacked
-    public InventoryItem(ItemType t, string name, bool equippable = false) : base()
-    {
-        properties.itemType = t;
-        this.name = name;
-        id = nextId++;
-        
-        //if the packedscene is already loaded, use that, otherwise keep the path to load it later if need be
-        if (Global.prefabs.ContainsKey(this.name) && Global.prefabs[this.name] != null){
-            packedScene = Global.prefabs[this.name];
-        }
-        if (ResourceLoader.Exists($"res://gameobjects/{this.name}.tscn")){
-            packedScenePath = $"res://gameobjects/{this.name}.tscn";
-        }
-        if (packedScene == null && packedScenePath == null) {
-            packedScene = Global.prefabs["ERROR"];
-        }
-    }
+    //TODO maybe should keep the constructor so don't have to use godot resources
 
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up
+    public InventoryItem() : this(null, ItemType.Weapon, false, null, null) {}
+
+    public InventoryItem(string name, ItemType itemType, bool equipable, string worldItemPath, PackedScene packedSceneEquipable){
+        this.name = name;
+        this.itemType = itemType;
+        this.equipable = equipable;
+        this.worldItemPath = worldItemPath;
+        this.packedSceneEquipable = packedSceneEquipable;
+    }
+
     public void Init()
     {
         if (inited) return;
@@ -45,10 +49,9 @@ public partial class InventoryItem : Resource, System.ICloneable {
         inited = true;
     }
 
-    override
-    public string ToString()
+    override public string ToString()
     {
-        return properties.itemType.ToString() + ": " + name;
+        return itemType.ToString() + ": " + name;
     }
 
     public override int GetHashCode()
@@ -61,16 +64,15 @@ public partial class InventoryItem : Resource, System.ICloneable {
         return MemberwiseClone();
     }
 
-    public PackedScene GetPackedScene(){
-        if (packedScene == null){
+    public PackedScene GetPackedSceneWorldItem(){
+        /*if (packedScene == null){
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
             Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
-        }
-        return packedScene;
+        }*/
+        return ResourceLoader.Load<PackedScene>(worldItemPath);
     }
-
-    public ItemType GetItemType(){
-        return properties.itemType;
+    public PackedScene GetPackedSceneEquipable(){
+        return packedSceneEquipable;
     }
 
     /**

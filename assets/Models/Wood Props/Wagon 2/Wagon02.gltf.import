@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ctdeyb2ccy5s1"
-path="res://.godot/imported/Wagon02.gltf-f35b5f7bd9644d94f5c03ee3cec96ae8.scn"
+path="res://.godot/imported/Wagon02.gltf-9703ef50217cc5268b19eb247a7347e4.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Wagon 2/Wagon02.gltf"
-dest_files=["res://.godot/imported/Wagon02.gltf-f35b5f7bd9644d94f5c03ee3cec96ae8.scn"]
+source_file="res://assets/Models/Wood Props/Wagon 2/Wagon02.gltf"
+dest_files=["res://.godot/imported/Wagon02.gltf-9703ef50217cc5268b19eb247a7347e4.scn"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bx4e0em64nnhi"
-path="res://.godot/imported/Bucket.gltf-f8eb9f0f5f9d52f7e78a2b62a01b0eda.scn"
+path="res://.godot/imported/Bucket.gltf-aff2989a26a655f5dbc9b3f7324cb497.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Bucket 1/Bucket.gltf"
-dest_files=["res://.godot/imported/Bucket.gltf-f8eb9f0f5f9d52f7e78a2b62a01b0eda.scn"]
+source_file="res://assets/Models/Wood Props/Bucket 1/Bucket.gltf"
+dest_files=["res://.godot/imported/Bucket.gltf-aff2989a26a655f5dbc9b3f7324cb497.scn"]
 
 [params]
 

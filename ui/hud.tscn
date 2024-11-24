@@ -118,7 +118,6 @@ layout_mode = 2
 max_text_lines = 6
 text_overrun_behavior = 0
 item_count = 1
-item_0/text = ""
 
 [connection signal="item_clicked" from="InventoryMenu" to="." method="OnInventoryMenuItemClicked"]
 [connection signal="pressed" from="DialoguePanel/PanelContainerTop/InfoPanel/ButtonContinue" to="." method="OnButtonContinuePressed"]

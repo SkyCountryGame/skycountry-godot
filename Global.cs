@@ -16,7 +16,7 @@ public partial class Global : Node
 	public static Player playerNode;  //set by Player 
 	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
 	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
-	public static HUDManager hud; // set by HUDManager on ready
+	public static HUDManager HUD; // set by HUDManager on ready
 	public static PauseMenu pauseMenu; // set by PauseMenu on ready
 	public static PrefabManager prefabMgr; // constructed here in init()
 	public static Dictionary<string, PackedScene> prefabs;
@@ -75,9 +75,11 @@ public partial class Global : Node
 			case GameObjectType.SpawnPoint:
 				//spawnPoints.Add((SpawnPoint)node);
 				break;
+			
 			default:
 				break;
 		}
+
 	}
 	public static void RegisterGameObject(Node node, GameObjectType type){
 		RegisterGameObject(node, node.Name, type);
@@ -96,18 +98,23 @@ public partial class Global : Node
 		return null;
 	}
 
-	//check if the given node is an interactable or a child of an interactable. set arg strict=true to only check single node
 	public static Interactable GetInteractable(Node n, bool strict = false){
-		if (strict){
-			if (n is Interactable interactable){ return interactable; }
-			else { return null; }
-		}
-		while (n != sceneTree.Root){
-			if (n is Interactable interactable)
-			{
-				return interactable;
-			}
-			n = n.GetParent();
+        if (strict){
+            if (n is Interactable interactable){ return interactable; }
+            else { return null; }
+        }
+        while (n != sceneTree.Root){
+            if (n is Interactable interactable)
+            {
+                return interactable;
+            }
+            n = n.GetParent();
+        }
+        return null;
+    }
+	public static Interactable GetInteractable(GameObject go){
+		if (mapGameObjectToInteractable.ContainsKey(go)){
+			return mapGameObjectToInteractable[go];
 		}
 		return null;
 	}

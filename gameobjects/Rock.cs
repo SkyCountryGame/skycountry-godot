@@ -1,13 +1,16 @@
 using Godot;
 using System;
-using System.ComponentModel;
 
-public partial class Rock : RigidBody3D, Interactable {
+public partial class Rock : RigidBody3D, Interactable, Destroyable {
+    int Destroyable.health { get => health; set => health = value; }
+
     public InteractionType interactionType => InteractionType.Pickup;
 
-    public InteractionMethod interactionMethod => InteractionMethod.Use;
+    public InteractionMethod interactionMethod => InteractionMethod.Destroy;
 
-    private InventoryItem rockItem;
+    private int health = 3;
+
+    [Export] public InventoryItem invItem;
 
     public Rock()
     {
@@ -17,8 +20,6 @@ public partial class Rock : RigidBody3D, Interactable {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
-        rockItem = new InventoryItem(InventoryItemProperties.ItemType.Mineral, "rock", false);
-        //GetChild<MeshInstance3D>(0).SetSurfaceMaterial(0, new SpatialMaterial() { AlbedoColor = new Color(0.5f, 0.5f, 0.5f) });
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,10 +32,24 @@ public partial class Rock : RigidBody3D, Interactable {
         return "Rock";
     }
 
-    //PAYLOAD 
+    public void ApplyDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0){
+            Destroy();
+        }
+    }
+
+    public void Destroy()
+    {
+        //trigger an event to notify that a rock has been destroyed, and pass along the associated GameObject
+        EventManager.Invoke(EventType.WorldItemDestroyed, (Global.GetGameObject(this), GlobalPosition, invItem));
+        GD.Print("destroy rock!");
+    }
+
     public dynamic Interact()
     {
-        return rockItem;
+        return invItem;
     }
 
     public void Retain()
@@ -44,11 +59,12 @@ public partial class Rock : RigidBody3D, Interactable {
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        QueueFree();
     }
 
     public bool IsInteractionValid(Interactor interactor)
     {
         throw new NotImplementedException();
     }
+
 }

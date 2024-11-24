@@ -11,9 +11,9 @@
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
-[ext_resource type="Script" path="res://gameobjects/Clickable.cs" id="14_yk8hg"]
 [ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
+[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="19_j7qq0"]
 [ext_resource type="Script" path="res://character/NPCNode.cs" id="19_jnosp"]
 [ext_resource type="Resource" uid="uid://bq1tpsxc5ol1m" path="res://characters/npc0.tres" id="20_menxn"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
@@ -34,10 +34,6 @@ background_mode = 2
 sky = SubResource("Sky_3r2si")
 ambient_light_source = 1
 tonemap_mode = 2
-
-[sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_k2ft2"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
@@ -89,6 +85,10 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
 
+[sub_resource type="TorusMesh" id="TorusMesh_cl3xm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
+
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
@@ -98,24 +98,13 @@ levelSceneFilenames = {
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
-[node name="HUD" parent="." instance=ExtResource("2_fsd0o")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mck8e")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
-light_energy = 0.92
-light_indirect_energy = 0.16
-light_angular_distance = 4.05
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_normal_bias = 1.0
-shadow_opacity = 0.85
-shadow_blur = 0.5
-directional_shadow_fade_start = 0.74
-directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
@@ -127,26 +116,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 [node name="Player" parent="." instance=ExtResource("8_ywuup")]
 process_mode = 1
 
-[node name="Clerk" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
-script = ExtResource("9_80eq6")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Clerk"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clerk/StaticBody3D"]
-mesh = SubResource("TorusMesh_cl3xm")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clerk/StaticBody3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_jdkl7")
-
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
 target = NodePath("../Player")
-HUD = NodePath("../HUD")
+HUD = NodePath("../UI/HUD")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_k2ft2")
@@ -176,24 +151,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789129, 0)
 mesh = SubResource("PrismMesh_j76bu")
 surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 
-[node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
-
-[node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
-
-[node name="Rock3" parent="." instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
-
-[node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
-mass = 0.27
-
-[node name="Devtool" parent="." instance=ExtResource("13_3aiva")]
-
 [node name="SignPost" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72674, 2, 10.6561)
-script = ExtResource("14_yk8hg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SignPost"]
 shape = SubResource("CylinderShape3D_gbdax")
@@ -225,22 +184,62 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vxpf4")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GlowStick"]
 shape = SubResource("CapsuleShape3D_s4jn6")
 
-[node name="WandererGuy" type="CharacterBody3D" parent="." node_paths=PackedStringArray("nav")]
+[node name="DeathWall" parent="." instance=ExtResource("14_hhq11")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 0, 8.72595)
+
+[node name="Rocks" type="Node3D" parent="."]
+
+[node name="Rock" parent="Rocks" instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+
+[node name="Rock2" parent="Rocks" instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+
+[node name="Rock3" parent="Rocks" instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7229, 1.32074, 5.6107)
+
+[node name="Rock4" parent="Rocks" instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0843, 1.98111, 8.41605)
+
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="WandererGuy" type="CharacterBody3D" parent="NPCs" node_paths=PackedStringArray("nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4937, 0.6, 17.685)
 script = ExtResource("19_jnosp")
 m = ExtResource("20_menxn")
 nav = NodePath("NavAgent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WandererGuy"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/WandererGuy"]
 shape = SubResource("BoxShape3D_j3cbx")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WandererGuy"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/WandererGuy"]
 mesh = SubResource("BoxMesh_ok0df")
 
-[node name="NavAgent" type="NavigationAgent3D" parent="WandererGuy"]
+[node name="NavAgent" type="NavigationAgent3D" parent="NPCs/WandererGuy"]
 
-[node name="DeathWall" parent="." instance=ExtResource("14_hhq11")]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -10, 0, 8.72595)
+[node name="Clerk" type="Node3D" parent="NPCs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
+script = ExtResource("9_80eq6")
 
-[node name="PauseMenu" parent="." instance=ExtResource("22_744mc")]
+[node name="StaticBody3D" type="StaticBody3D" parent="NPCs/Clerk"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPCs/Clerk/StaticBody3D"]
+mesh = SubResource("TorusMesh_cl3xm")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCs/Clerk/StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_jdkl7")
+
+[node name="UI" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
+
+[node name="HUD" parent="UI" instance=ExtResource("2_fsd0o")]
+
+[node name="Devtool" parent="UI" instance=ExtResource("13_3aiva")]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("22_744mc")]
 process_mode = 3
+
+[node name="PickaxePickup" parent="UI" instance=ExtResource("19_j7qq0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.93166, -0.645879, 0.62842)

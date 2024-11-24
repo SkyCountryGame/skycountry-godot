@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dayymo3uj8fr"
-path="res://.godot/imported/FenceShort.gltf-3400b7f25f6765de737485715ab3983a.scn"
+path="res://.godot/imported/FenceShort.gltf-7073ec5e8ca8b9a463835fd37e29c15c.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Fence Short/FenceShort.gltf"
-dest_files=["res://.godot/imported/FenceShort.gltf-3400b7f25f6765de737485715ab3983a.scn"]
+source_file="res://assets/Models/Wood Props/Fence Short/FenceShort.gltf"
+dest_files=["res://.godot/imported/FenceShort.gltf-7073ec5e8ca8b9a463835fd37e29c15c.scn"]
 
 [params]
 
