@@ -21,7 +21,7 @@ public abstract partial class NPCNode : Node3D, Collideable {
 	protected List<State> cycleStates; //states that will be automatically cycled through via timer
 	protected int cycleStateIdx = 0; //curent index of cycle state
 
-	[Export] protected CharacterBody3D physBody;
+	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected StateManager stateManager;
 	public override void _Ready(){
 		if (m == null){

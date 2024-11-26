@@ -13,6 +13,7 @@ public partial class StateManager : Node3D {
 	[Export] public Array<State> states; //this has to be set in editor 
 	[Signal] public delegate void StateChangeEventHandler();
 	public State currentState;
+	[Export] public State defaultState;
 	[Export] private Node3D subject; //the thing for which this statemachine manages state
 
 	//all of the states that something could be
@@ -29,7 +30,7 @@ public partial class StateManager : Node3D {
 
 	public override void _Ready(){
 		base._Ready();
-		currentState = states[0];
+		currentState = defaultState;
 	}
 
 	public void SetState(State state){

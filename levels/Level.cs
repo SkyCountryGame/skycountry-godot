@@ -104,23 +104,37 @@ public partial class Level : Node
 
 	//gets some random point within the world bounds
 	public Vector3 GetRandomPoint(){
-		//worldBounds = GetWorldBounds();
 		return new Vector3(
 			(float)GD.RandRange(worldBounds.Position.X, worldBounds.End.X),
 			0,
 			(float)GD.RandRange(worldBounds.Position.Z, worldBounds.End.Z)
 		);
 	}
+	
 	//gets some random point that can be navigated to
-	public Vector3 GetRandomNavPoint(){
+	public Vector3 GetRandomNavPoint()
+	{
 		Rid navMapID = Global.navRegion.GetNavigationMap();
-		Vector3 res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
-		while (res.X == 0 && res.Z == 0){
-			res = NavigationServer3D.MapGetClosestPoint(navMapID, GetRandomPoint());
+		Vector3 randomPoint = GetRandomPoint();
+		Vector3 closestPoint = NavigationServer3D.MapGetClosestPoint(navMapID, randomPoint);
+	
+		if (closestPoint != Vector3.Zero)
+		{
+			return closestPoint;
 		}
-		res = GetRandomPoint();
-		GD.Print("random nav point:" + res);
-		return res;
+		//try again if not valid
+		const int maxAttempts = 10;
+		for (int i = 0; i < maxAttempts; i++)
+		{
+			randomPoint = GetRandomPoint();
+			closestPoint = NavigationServer3D.MapGetClosestPoint(navMapID, randomPoint);
+			if (closestPoint != Vector3.Zero)
+			{
+				return closestPoint;
+			}
+		}
+		GD.Print("Failed to find a valid random nav point");
+		return Vector3.Zero;
 	}
 
 	//gets the bounds of all the meshes in the world by combining all their axis-aligned bounding boxes

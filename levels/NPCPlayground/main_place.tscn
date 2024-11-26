@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://do1xjjm1ptao"]
+[gd_scene load_steps=29 format=3 uid="uid://do1xjjm1ptao"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://characters/Enemy.cs" id="12_6700b"]
 [ext_resource type="Texture2D" uid="uid://cx2e16kdao4as" path="res://assets/texture/face2.png" id="13_tqtjf"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="14_euwly"]
+[ext_resource type="Texture2D" uid="uid://cfqej0rp1hi0y" path="res://assets/texture/face0.png" id="15_kg7hs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -32,6 +33,8 @@ ambient_light_source = 1
 tonemap_mode = 2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ckcui"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7sen"]
 
@@ -52,10 +55,13 @@ size = Vector2(50, 50)
 [sub_resource type="BoxShape3D" id="BoxShape3D_w2bov"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_f25d6"]
-radius = 1.8
+radius = 2.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_05en4"]
-radius = 9.979
+radius = 18.236
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mew7e"]
+radius = 7.381
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_ypbtj")
@@ -104,6 +110,7 @@ mesh = SubResource("PlaneMesh_my3tk")
 skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
+transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 17.1354, 0, -13.2163)
 
 [node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody", "stateManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
@@ -147,39 +154,76 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 7.81176, -9.13488)
 texture = ExtResource("10_yro5q")
 
 [node name="Enemy1" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5373, 2.83912, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2543, 2.83912, 19.2371)
 script = ExtResource("12_6700b")
 nav = NodePath("NavigationAgent3D")
-physBody = NodePath("CharacterBody3D")
+physBody = NodePath("CharacterMotionModule")
 stateManager = NodePath("StateManager")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy1"]
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="Enemy1"]
-
-[node name="Sprite3D" type="Sprite3D" parent="Enemy1/CharacterBody3D"]
-texture = ExtResource("13_tqtjf")
-
-[node name="Body" type="CollisionShape3D" parent="Enemy1/CharacterBody3D"]
-shape = SubResource("BoxShape3D_w2bov")
-
-[node name="Area3D2" type="Area3D" parent="Enemy1/CharacterBody3D"]
-script = ExtResource("14_euwly")
-zone = 1
-
-[node name="AttackZone" type="CollisionShape3D" parent="Enemy1/CharacterBody3D/Area3D2"]
-shape = SubResource("SphereShape3D_f25d6")
-
-[node name="Area3D3" type="Area3D" parent="Enemy1/CharacterBody3D"]
-script = ExtResource("14_euwly")
-
-[node name="ChaseZone" type="CollisionShape3D" parent="Enemy1/CharacterBody3D/Area3D3"]
-shape = SubResource("SphereShape3D_05en4")
 
 [node name="StateManager" type="Node3D" parent="Enemy1" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
 states = Array[int]([0, 1, 4])
 subject = NodePath("..")
+
+[node name="CharacterMotionModule" type="CharacterBody3D" parent="Enemy1"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy1/CharacterMotionModule"]
+texture = ExtResource("13_tqtjf")
+
+[node name="Body" type="CollisionShape3D" parent="Enemy1/CharacterMotionModule"]
+shape = SubResource("BoxShape3D_w2bov")
+
+[node name="Area3D2" type="Area3D" parent="Enemy1/CharacterMotionModule"]
+script = ExtResource("14_euwly")
+zone = 1
+
+[node name="AttackZone" type="CollisionShape3D" parent="Enemy1/CharacterMotionModule/Area3D2"]
+shape = SubResource("SphereShape3D_f25d6")
+
+[node name="Area3D3" type="Area3D" parent="Enemy1/CharacterMotionModule"]
+script = ExtResource("14_euwly")
+
+[node name="ChaseZone" type="CollisionShape3D" parent="Enemy1/CharacterMotionModule/Area3D3"]
+shape = SubResource("SphereShape3D_05en4")
+
+[node name="Enemy2" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63792, 2.83912, 19.2371)
+script = ExtResource("12_6700b")
+nav = NodePath("NavigationAgent3D")
+physBody = NodePath("CharacterMotionModule")
+stateManager = NodePath("StateManager")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy2"]
+
+[node name="StateManager" type="Node3D" parent="Enemy2" node_paths=PackedStringArray("subject")]
+script = ExtResource("7_ntb0s")
+states = Array[int]([3, 1])
+defaultState = 3
+subject = NodePath("..")
+
+[node name="CharacterMotionModule" type="CharacterBody3D" parent="Enemy2"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy2/CharacterMotionModule"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35085, 0, 0)
+texture = ExtResource("15_kg7hs")
+
+[node name="Body" type="CollisionShape3D" parent="Enemy2/CharacterMotionModule"]
+shape = SubResource("BoxShape3D_w2bov")
+
+[node name="Area3D2" type="Area3D" parent="Enemy2/CharacterMotionModule"]
+script = ExtResource("14_euwly")
+zone = 1
+
+[node name="AttackZone" type="CollisionShape3D" parent="Enemy2/CharacterMotionModule/Area3D2"]
+shape = SubResource("SphereShape3D_f25d6")
+
+[node name="Area3D3" type="Area3D" parent="Enemy2/CharacterMotionModule"]
+script = ExtResource("14_euwly")
+
+[node name="ChaseZone" type="CollisionShape3D" parent="Enemy2/CharacterMotionModule/Area3D3"]
+shape = SubResource("SphereShape3D_mew7e")
 
 [connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
