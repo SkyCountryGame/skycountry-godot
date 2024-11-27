@@ -31,6 +31,13 @@ public partial class Bird : NPCNode, StateHolder {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		switch (stateManager.currentState){
+			case State.IDLE:
+				break;
+			case State.ALERT:
+				mot.pos_goal = nav.TargetPosition;
+				break;
+		}
 		mot.Update(delta);
 	}
 
@@ -38,7 +45,7 @@ public partial class Bird : NPCNode, StateHolder {
 	private void SwitchActivity(){
 		if (stateManager.currentState == State.IDLE){
 			stateManager.SetState(State.ALERT);
-		} else if (physBody.Position.DistanceTo(nav.TargetPosition) < .3){ //this is just a quick hack so i dont have to mess with timer for now
+		} else {
 			GD.Print("bird idle");
 			stateManager.SetState(State.IDLE);
 		}
@@ -46,13 +53,13 @@ public partial class Bird : NPCNode, StateHolder {
 
 	public void SetState(StateManager.State state)
 	{
+		GD.Print($"bird Setting state to {state}");
 		switch (state){
 			case State.IDLE:
 				SetTargetPosition(physBody.Position);
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;
-				GD.Print($"Switching to {stationCurrent.Value.Name}");
 				SetTargetPosition(stationCurrent.Value.Position);
 				GD.Print($"Flying to {nav.TargetPosition}");
 				break;
@@ -63,7 +70,6 @@ public partial class Bird : NPCNode, StateHolder {
 
 	private void SetTargetPosition(Vector3 pos){
 		nav.TargetPosition = pos;
-		mot.pos_goal = pos;
 	}
 
 	public override void HandleCollide(ColliderZone zone, Node other)
