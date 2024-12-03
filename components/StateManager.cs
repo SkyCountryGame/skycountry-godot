@@ -11,7 +11,6 @@ public partial class StateManager : Node3D {
 
 	//the states that this thing is allowed to be
 	[Export] public Array<State> states; //this has to be set in editor 
-	[Signal] public delegate void StateChangeEventHandler();
 	public State currentState;
 	[Export] public State defaultState;
 	[Export] private Node3D subject; //the thing for which this statemachine manages state

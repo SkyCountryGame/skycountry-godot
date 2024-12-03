@@ -75,6 +75,10 @@ public partial class Enemy2 : NPCNode, StateHolder {
                 }
                 break;
             case ColliderZone.Awareness1:
+                if (other is Player){
+                    //target = (Node3D) other;
+                    stateManager.SetState(State.ALERT);
+                }
                 break;
         }
 	}

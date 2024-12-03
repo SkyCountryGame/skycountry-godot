@@ -45,9 +45,7 @@ public partial class Bird : NPCNode, StateHolder {
 	}
 
 	//timer timeout to switch from chilling at nest to flying to other nest
-	private void SwitchActivity(){
-		stateManager.SetState(cycleStateCurrent.Next != null ? cycleStateCurrent.Next.Value : cycleStates.First.Value);
-		
+	private void SwitchActivity(){		
 		if (stateManager.currentState == State.IDLE){
 			stateManager.SetState(State.ALERT);
 			activityTimer.Reset(State.ALERT);
@@ -76,7 +74,6 @@ public partial class Bird : NPCNode, StateHolder {
 
 	private void SetTargetPosition(Vector3 pos){
 		nav.TargetPosition = pos;
-		mot.pos_goal = pos;
 	}
 
 	public override void HandleCollide(ColliderZone zone, Node other)

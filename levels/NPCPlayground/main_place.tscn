@@ -164,7 +164,7 @@ stateManager = NodePath("StateManager")
 
 [node name="StateManager" type="Node3D" parent="Enemy1" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
-states = Array[int]([0, 1, 4])
+states = Array[int]([0, 1, 4, 3])
 subject = NodePath("..")
 
 [node name="CharacterMotionModule" type="CharacterBody3D" parent="Enemy1"]
@@ -225,5 +225,4 @@ script = ExtResource("14_euwly")
 [node name="ChaseZone" type="CollisionShape3D" parent="Enemy2/CharacterMotionModule/Area3D3"]
 shape = SubResource("SphereShape3D_mew7e")
 
-[connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
