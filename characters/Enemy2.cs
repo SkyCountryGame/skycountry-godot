@@ -30,7 +30,7 @@ public partial class Enemy2 : NPCNode, StateHolder {
         }
 	}
 
-	public void SetState(StateManager.State state)
+	public void HandleStateChange(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
@@ -82,4 +82,10 @@ public partial class Enemy2 : NPCNode, StateHolder {
                 break;
         }
 	}
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }
+
 }

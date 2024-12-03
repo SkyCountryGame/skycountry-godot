@@ -55,7 +55,7 @@ public partial class Bird : NPCNode, StateHolder {
 		}
 	}
 
-	public void SetState(StateManager.State state)
+	public void HandleStateChange(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
@@ -85,4 +85,10 @@ public partial class Bird : NPCNode, StateHolder {
 	{
 		throw new NotImplementedException();
 	}
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }
+
 }

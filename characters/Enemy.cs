@@ -49,7 +49,7 @@ public partial class Enemy : NPCNode, StateHolder {
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 
-	public void SetState(StateManager.State state)
+	public void HandleStateChange(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
@@ -105,4 +105,10 @@ public partial class Enemy : NPCNode, StateHolder {
                 break;
         }
 	}
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }
+
 }
