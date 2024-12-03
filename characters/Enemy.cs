@@ -80,6 +80,7 @@ public partial class Enemy : NPCNode, StateHolder {
             case ColliderZone.Awareness1:
                 if (other is Player){
                     stateManager.SetState(State.ATTACKING);
+                    ((Damageable)other).ApplyDamage(1);
                     GD.Print("Enemy is attacking you!");
                     Global.HUD.LogEvent("Enemy is attacking you!");
                 }

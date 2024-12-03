@@ -1,7 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=45 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
+[ext_resource type="Script" path="res://inventory/Inventory.cs" id="5_xpy5i"]
+[ext_resource type="Script" path="res://player/PlayerModel.cs" id="6_5ryjk"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://gameobjects/moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
@@ -34,6 +36,16 @@ background_mode = 2
 sky = SubResource("Sky_3r2si")
 ambient_light_source = 1
 tonemap_mode = 2
+
+[sub_resource type="Resource" id="Resource_iw4md"]
+script = ExtResource("5_xpy5i")
+capacity = 4
+
+[sub_resource type="Resource" id="Resource_k1pgf"]
+script = ExtResource("6_5ryjk")
+activityState = 1
+hp = 3
+inv = SubResource("Resource_iw4md")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_k2ft2"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
@@ -116,6 +128,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
 [node name="Player" parent="." instance=ExtResource("8_ywuup")]
 process_mode = 1
+playerModel = SubResource("Resource_k1pgf")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
