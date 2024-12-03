@@ -19,8 +19,6 @@ public partial class Inventory : Resource, System.ICloneable
 	{
 		stock = new List<InventoryItem>(capacity);
 	}
-
-	public Inventory(){}
 	public Inventory(int capacity = 1)
 	{
 		this.capacity = capacity;

@@ -300,9 +300,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case ColliderZone.Awareness1:
 				break;
 			case ColliderZone.Body:
-				if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
-					HandleInteract(interactable);
-				}
+					if (interactable != null && interactable.interactionMethod == InteractionMethod.Contact){
+						HandleInteract(interactable);
+					}
 				break;
 		}
 	}

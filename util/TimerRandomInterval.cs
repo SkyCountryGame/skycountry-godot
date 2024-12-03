@@ -14,6 +14,13 @@ public partial class TimerRandomInterval : Timer
 		};
 	}
 
+	public void Reset(StateManager.State state){
+		Stop();
+		WaitTime = new Random().NextDouble() * 5 + baseWaitTime;
+
+		Start();
+	}
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{

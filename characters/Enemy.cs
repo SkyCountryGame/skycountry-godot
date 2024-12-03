@@ -57,7 +57,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 physBody.Velocity = Vector3.Zero;
 				break;
             case State.ROAMING:
-                nav.TargetPosition = (Vector3)CallDeferred("GetRandomNavPoint", Global.level);
+                nav.TargetPosition = new Vector3(1, 1, 3); // TODO fix. Global.level not yet updated here   //(Vector3)CallDeferred("GetRandomNavPoint", Global.level);
                 break;
 			case State.ALERT: //player is detected. chase
 				break;
@@ -81,7 +81,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 if (other is Player){
                     stateManager.SetState(State.ATTACKING);
                     GD.Print("Enemy is attacking you!");
-                    Global.hud.LogEvent("Enemy is attacking you!");
+                    Global.HUD.LogEvent("Enemy is attacking you!");
                 }
                 break;
         }

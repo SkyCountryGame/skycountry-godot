@@ -59,7 +59,7 @@ public partial class Enemy2 : NPCNode, StateHolder {
                 if (other is Player){
                     stateManager.SetState(State.ATTACKING);
                     GD.Print("Enemy is attacking you!");
-                    Global.hud.ShowAction("Enemy is attacking you!");
+                    Global.HUD.ShowAction("Enemy is attacking you!");
                 }
                 break;
         }

@@ -7,14 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="5_vkgtl"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="6_m0or4"]
 [ext_resource type="Script" path="res://components/StateManager.cs" id="7_ntb0s"]
-[ext_resource type="Texture2D" uid="uid://uhj6s1h4i0fn" path="res://assets/texture/face5.png" id="8_fcj1v"]
+[ext_resource type="Texture2D" uid="uid://dyoca216jp74j" path="res://assets/texture/face5.png" id="8_fcj1v"]
 [ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="8_k53kt"]
 [ext_resource type="Texture2D" uid="uid://bdvs7gnwd2yjr" path="res://assets/texture/Environment/Grass/slot0_albedo_bump.png" id="9_asfog"]
-[ext_resource type="Texture2D" uid="uid://kcuf6ymo1uav" path="res://assets/texture/Environment/Grass/Grass.png" id="10_yro5q"]
+[ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="10_yro5q"]
 [ext_resource type="Script" path="res://characters/Enemy.cs" id="12_6700b"]
-[ext_resource type="Texture2D" uid="uid://cx2e16kdao4as" path="res://assets/texture/face2.png" id="13_tqtjf"]
+[ext_resource type="Texture2D" uid="uid://csr15w0b7bhkm" path="res://assets/texture/face2.png" id="13_tqtjf"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="14_euwly"]
-[ext_resource type="Texture2D" uid="uid://cfqej0rp1hi0y" path="res://assets/texture/face0.png" id="15_kg7hs"]
+[ext_resource type="Texture2D" uid="uid://c3v3vup5lpgst" path="res://assets/texture/face0.png" id="15_kg7hs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)

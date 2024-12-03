@@ -24,7 +24,7 @@ public partial class Door : Node3D, Interactable
     public dynamic Interact()
     {
 		if (destination == null){
-			Global.hud.LogEvent("Door leads nowhere.");
+			Global.HUD.LogEvent("Door leads nowhere.");
 		} else {
 			GD.Print("Door leads to " + destination);
         	Global.level.ChangeLevel(destination);

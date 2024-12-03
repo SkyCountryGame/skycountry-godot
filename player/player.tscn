@@ -63,6 +63,10 @@ transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_3km67")
 animationTree = NodePath("RollinDudeMk5/AnimationTree")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.675, -0.1)
+shape = ExtResource("4_o7lqg")
+
 [node name="AwarenessZone" type="Area3D" parent="."]
 script = ExtResource("3_nyks5")
 metadata/objtype = ""
@@ -76,7 +80,7 @@ zone = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BodyZone"]
 transform = Transform3D(1, -5.82077e-11, 0, 5.82077e-11, 1, 0, 0, 0, 1, 0, 0.675, -0.1)
-shape = SubResource("CylinderShape3D_7at0a")
+shape = ExtResource("4_o7lqg")
 
 [node name="RollinDudeMk5" parent="." instance=ExtResource("3_wai1g")]
 transform = Transform3D(-0.3, 0, 2.62268e-08, 0, 0.3, 0, -2.62268e-08, 0, -0.3, 0, 0, 0)
@@ -246,9 +250,5 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = ExtResource("6_6q3qh")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.675, -0.1)
-shape = ExtResource("4_o7lqg")
 
 [editable path="RollinDudeMk5"]

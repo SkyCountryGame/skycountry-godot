@@ -11,17 +11,20 @@ public partial class Bird : NPCNode, StateHolder {
 	[Export] private Array<Node3D> stations = new Array<Node3D>(); //places of interest to the bird (birdnests)
 	private LinkedList<Node3D> stationsLL; //store as linkedlist for easy incrementing
 	private LinkedListNode<Node3D> stationCurrent; //the curent station of interest. the bird is either here or headed here
-	private ActivityTimer activityTimer;
+	private TimerRandomInterval activityTimer;
 
 	private MotionModule mot;
 	
 	public override void _Ready(){
 		base._Ready();
+		activityTimer = GetNode<TimerRandomInterval>("Timer");
 		//activityTimer = GetNode<ActivityTimer>("ActivityTimer");
 		//activityTimer.Start();
 		stationsLL = new LinkedList<Node3D>(stations);
 		stationCurrent = stationsLL.First;
 		mot = new MotionModule(physBody);
+		cycleStates = new LinkedList<State>(new State[2]{State.IDLE, State.ALERT});
+		cycleStateCurrent = cycleStates.First;
 	}
 
 	public override void _Process(double delta){
@@ -31,14 +34,24 @@ public partial class Bird : NPCNode, StateHolder {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		switch (stateManager.currentState){
+			case State.IDLE:
+				break;
+			case State.ALERT:
+				mot.pos_goal = nav.TargetPosition;
+				break;
+		}
 		mot.Update(delta);
 	}
 
 	//timer timeout to switch from chilling at nest to flying to other nest
 	private void SwitchActivity(){
+		stateManager.SetState(cycleStateCurrent.Next != null ? cycleStateCurrent.Next.Value : cycleStates.First.Value);
+		
 		if (stateManager.currentState == State.IDLE){
 			stateManager.SetState(State.ALERT);
-		} else if (physBody.Position.DistanceTo(nav.TargetPosition) < .3){ //this is just a quick hack so i dont have to mess with timer for now
+			activityTimer.Reset(State.ALERT);
+		} else {
 			GD.Print("bird idle");
 			stateManager.SetState(State.IDLE);
 		}
