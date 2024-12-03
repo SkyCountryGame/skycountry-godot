@@ -9,7 +9,7 @@ public enum ColliderZone
 {
 	Awareness0, //e.g. did i hear something? 
 	Awareness1, //e.g. hey! i see you! 
-	Body //e.g. watch where you're walkin!
+	Body, //e.g. watch where you're walkin!
 }
 
 public interface Collideable
