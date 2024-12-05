@@ -162,17 +162,6 @@ public partial class Level : Node
 		return worldBounds;
 	}
 
-	public void ChangeLevel(string levelName){
-		if (levelPackedScenes.ContainsKey(levelName)){
-			GetTree().CallDeferred("change_scene_to_packed", levelPackedScenes[levelName]);
-		} else {
-			GD.PushWarning($"level {levelName} not found");
-		}
-	}
-	public void ChangeLevel(PackedScene level){
-		GetTree().CallDeferred("change_scene_to_packed", level);
-	}
-
 	//make sure level has the proper nodes
 	public bool ValidateLevel(){
 		//check hud, pausemenu, camera, light?
@@ -181,7 +170,7 @@ public partial class Level : Node
 
 	public void LoadSaveData(ConfigFile cfg){
 		string levelName = (string) cfg.GetValue("level", "name");
-		ChangeLevel(levelName);
+		Global._.ChangeLevel(levelName, this);
 		//TODO activeScene if in a sublevel
 		//TODO time, npcs, enemies				
 	}

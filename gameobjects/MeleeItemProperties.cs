@@ -1,10 +1,7 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class MeleeItemProperties : Resource {
-
-    [Export]
-    public string scenePath;
+public partial class MeleeItemProperties : ItemProperties {
     [Export]
     public string swingAnimation;
     [Export]

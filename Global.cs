@@ -81,6 +81,26 @@ public partial class Global : Node
 		}
 
 	}
+
+	public void ChangeLevel(string levelName, Node previousScene){
+		if(playerNode!=null){
+			Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
+			GetTree().Root.AddChild(nextLevel);
+			playerNode.Reparent(nextLevel);
+			GetTree().Root.RemoveChild(previousScene);
+			playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition;
+		}
+		else {
+			Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
+			GetTree().Root.AddChild(nextLevel);
+			playerNode = (Player) ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate();
+			nextLevel.AddChild(playerNode);
+			playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition;
+			GetTree().Root.RemoveChild(previousScene);
+		}
+		
+	}
+
 	public static void RegisterGameObject(Node node, GameObjectType type){
 		RegisterGameObject(node, node.Name, type);
 	}

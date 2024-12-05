@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4tketuwmon6"
-path.s3tc="res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png-73c2618c4a1027b024179628dc3dc72b.s3tc.ctex"
+path.s3tc="res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png-a4df12ba597e6e7a9ee3add8efeeeae8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/models/Enemies/Whelp/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png"
-dest_files=["res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png-73c2618c4a1027b024179628dc3dc72b.s3tc.ctex"]
+source_file="res://assets/Models/Enemies/Whelp/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png"
+dest_files=["res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Emissive.png-a4df12ba597e6e7a9ee3add8efeeeae8.s3tc.ctex"]
 
 [params]
 

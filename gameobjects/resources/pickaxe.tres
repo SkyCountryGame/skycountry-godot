@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_rp68d")
-equipPath = "TestPickaxe"
 swingAnimation = "Mining02"
 durability = 1
 damage = 1
@@ -12,7 +11,5 @@ miningDamage = 1
 arcLength = 1
 range = 1
 reswingSpeed = 1
-name = "pickaxe"
-itemType = 0
-equippable = true
-scenePath = "res://gameobjects/pickaxe_equip.tscn"
+scenePath = "res://gameobjects/pickaxe/pickaxe_equip.tscn"
+usableWhileMoving = false

@@ -1,12 +1,9 @@
-[gd_scene load_steps=45 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
-[ext_resource type="Script" path="res://inventory/Inventory.cs" id="5_xpy5i"]
-[ext_resource type="Script" path="res://player/PlayerModel.cs" id="6_5ryjk"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://gameobjects/moving_platform_3.tscn" id="8_t3ins"]
-[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="8_ywuup"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
@@ -15,7 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
 [ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
-[ext_resource type="PackedScene" path="res://gameobjects/door.tscn" id="17_mx4ln"]
+[ext_resource type="PackedScene" uid="uid://grlpnraydgu2" path="res://gameobjects/door.tscn" id="17_mx4ln"]
+[ext_resource type="PackedScene" uid="uid://c48ne3hparnm" path="res://gameobjects/bat/bat_pickup.tscn" id="18_d7mr5"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="18_u5pw2"]
 [ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="19_j7qq0"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
@@ -36,16 +34,6 @@ background_mode = 2
 sky = SubResource("Sky_3r2si")
 ambient_light_source = 1
 tonemap_mode = 2
-
-[sub_resource type="Resource" id="Resource_iw4md"]
-script = ExtResource("5_xpy5i")
-capacity = 4
-
-[sub_resource type="Resource" id="Resource_k1pgf"]
-script = ExtResource("6_5ryjk")
-activityState = 1
-hp = 3
-inv = SubResource("Resource_iw4md")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_k2ft2"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
@@ -126,15 +114,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -12)
 [node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
 
-[node name="Player" parent="." instance=ExtResource("8_ywuup")]
-process_mode = 1
-playerModel = SubResource("Resource_k1pgf")
-
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
 script = ExtResource("8_7fw5a")
-target = NodePath("../Player")
 HUD = NodePath("../UI/HUD")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -259,3 +242,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.93166, -0.645879, 0.62842)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4653, 0.114144, -7.29972)
 script = ExtResource("18_u5pw2")
 destination = "npcpg"
+
+[node name="SpawnLocation" type="Node3D" parent="."]
+
+[node name="Bat" parent="." instance=ExtResource("18_d7mr5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1497, 0.0999999, -1.28501)

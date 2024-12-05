@@ -34,7 +34,7 @@ public partial class LampPost : Node, Interactable {
     public dynamic Interact()
     {
         if (n > 4){ //it's a magic lamp
-            Global.level.ChangeLevel("l2");
+            Global._.ChangeLevel("res://levels/level2.tscn", Global.playerNode.GetParent());
         }
         //toggle lamp light
         lamplight.LightEnergy = lamplight.LightEnergy == 0 ? 1 : 0;

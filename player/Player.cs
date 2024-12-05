@@ -30,18 +30,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	
 	//PLAYER STATE
 	[Export]
-	private PlayerModel playerModel; //this is the player data that should be persisted between scenes. '_M' because shorthand
+	private PlayerModel playerModel;
 	[Export]
 	public AnimationTree animationTree;
-	private PlayerModel M; //shorthand
 
 	//EQUIPMENT NODE3D MANAGEMENT
-	public Equipable equippedRightHand; //these nodes are the actual 3d models that are attached to the player (e.g. sword), and are children of the bodypart that "holds" the item. null if nothing equipped there 
-	public Equipable equippedLeftHand; 
-	public Equipable equippedHead;
-	public Equipable equippedBody;
-	public Equipable equippedLegs;
-	public Equipable equippedFeet;
+	public Equipable equippedRightHand; //We dont need the rest of this yet, lets just keep it to this for now
 
     
 
@@ -68,7 +62,6 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
 		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
-		M = playerModel;
 	}
 
     private void AttackFinished(StringName animName)
@@ -124,7 +117,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			} else if (Input.IsActionJustPressed("down")){
 				//TODO inv down
 			} else if (Input.IsActionJustPressed("player_inv")){
-				if (M.activityState == State.INVENTORY){
+				if (playerModel.activityState == State.INVENTORY){
 					SetState(State.DEFAULT);
 				} else {
 					SetState(State.INVENTORY);
@@ -161,7 +154,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			} else if (Input.IsActionJustPressed("player_inv")){
 				//_.UpdateState(State.INVENTORY); //TODO deal with how we want to control later. was thinking could use wasd to navigate items in addition to dragdrop. paused while inv?
 				//GD.Print(_.inv);
-				if (M.activityState == State.INVENTORY){
+				if (playerModel.activityState == State.INVENTORY){
 					SetState(State.DEFAULT);
 				} else {
 					SetState(State.INVENTORY);
@@ -176,10 +169,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	  * logic to perform when switching states
 	  */
     public bool SetState(State s){
-		State prev = M.activityState; //some state transitions need to know previous
-		if (M.dS[M.activityState].Contains(s)){ //first make sure that we are allowed to transition to the given state
-			M.activityState = s;
-			switch (M.activityState){
+		State prev = playerModel.activityState; //some state transitions need to know previous
+		if (playerModel.dS[playerModel.activityState].Contains(s)){ //first make sure that we are allowed to transition to the given state
+			playerModel.activityState = s;
+			switch (playerModel.activityState){
 				case State.DEFAULT:
 					if (prev == State.INVENTORY){
 						Global.HUD.HideInventory();
@@ -201,7 +194,12 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 					if (playerModel.equipped != null && equippedRightHand != null) {
 						//swing! strike! cast! etc.
 						equippedRightHand.hitbox.Disabled = false;
-						((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("Mining02"); //TODO player has an animationmap
+						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){
+							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties)equippedRightHand.GetItemProperties()).swingAnimation); //TODO player has an animationmap
+				
+						} else {
+							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("Mining02"); //Default for now, we need to figure out the relationship soon
+						}
 					}
 					break;
 				case State.COOLDOWN:
@@ -232,7 +230,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		angleToFacingDirection = GlobalTransform.Basis.Z.SignedAngleTo(-controlDir, Vector3.Up);
 
 		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
-		if(playerModel.GetState().Equals(State.DEFAULT)){
+		if(playerModel.GetState().Equals(State.DEFAULT) || (playerModel.GetState().Equals(State.ATTACKING) && equippedRightHand.GetItemProperties().usableWhileMoving)){
 			Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
 			if (accelScalar == 0){ //acceleration activation toggle
 				if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
@@ -361,7 +359,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			case InteractionType.Inventory: //opening an external inventory, such as chest
 				break;
 			case InteractionType.Pickup: 
-				M.AddToInventory((InventoryItem)payload);
+				playerModel.AddToInventory((InventoryItem)payload);
 				interactable.Clear();
 				break;
 			case InteractionType.General:
@@ -402,6 +400,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		// 	Global.HUD.ShowEquipped(playerModel.equipped.name);
 		// } else {
 		if (playerModel.inv.Contains(item) && item.equipable){
+			if(playerModel.equipped!= null){
+				UnequipRightHand();
+			}
 			playerModel.equipped = item;
 			EquipRightHand(item);
 		}

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://k4t04x7f51ef"
-path="res://.godot/imported/CrumblinDryGeezerV2.glb-f252882d41331f58e6ebc57cc120f8c5.scn"
+path="res://.godot/imported/CrumblinDryGeezerV2.glb-fc77fcc7d6fb2a8e5e27bf0554586d23.scn"
 
 [deps]
 
-source_file="res://assets/models/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2.glb"
-dest_files=["res://.godot/imported/CrumblinDryGeezerV2.glb-f252882d41331f58e6ebc57cc120f8c5.scn"]
+source_file="res://assets/Models/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2.glb"
+dest_files=["res://.godot/imported/CrumblinDryGeezerV2.glb-fc77fcc7d6fb2a8e5e27bf0554586d23.scn"]
 
 [params]
 

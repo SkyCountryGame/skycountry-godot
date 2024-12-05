@@ -1,10 +1,11 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : Equipable, Collideable {
-    [Export] private MeleeItemProperties properties;
+public partial class Bat : Equipable, Collideable
+{
+	[Export] private MeleeItemProperties properties;
 
-    public Pickaxe()
+    public Bat()
     {
     }
 
@@ -14,7 +15,7 @@ public partial class Pickaxe : Equipable, Collideable {
         base._Ready();
         Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
         if (properties == null){
-            properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
+            properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/bat.tres");
         }
 		itemProperties = properties;
     }
@@ -26,15 +27,15 @@ public partial class Pickaxe : Equipable, Collideable {
 
     public string Info()
     {
-        return "Pickaxe";
+        return "Bat";
     }
     
-    //attempt to use the pickaxe on the object. only works if thing is Destroyable
+    //attempt to use the bat on the object. only works if thing is Destroyable
     public override void Use(dynamic obj = null){
         if (obj != null && obj is Destroyable){
             ((Destroyable)obj).ApplyDamage(properties.damage);
             CallDeferred("DisableHitbox");
-            GD.Print("pick used");
+            GD.Print("bat used");
         }
     }
 
@@ -55,5 +56,4 @@ public partial class Pickaxe : Equipable, Collideable {
     {
         return; //nothing to do for now
     }
-
 }

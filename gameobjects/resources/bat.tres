@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MeleeItemProperties" load_steps=2 format=3 uid="uid://dcbpcddjl8p1u"]
+
+[ext_resource type="Script" path="res://gameobjects/MeleeItemProperties.cs" id="1_w0flw"]
+
+[resource]
+script = ExtResource("1_w0flw")
+swingAnimation = "1H_Melee_Slash2"
+durability = 1
+damage = 1
+miningDamage = 1
+arcLength = 1
+range = 1
+reswingSpeed = 1
+scenePath = "res://gameobjects/bat/bat_equip.tscn"
+usableWhileMoving = true
