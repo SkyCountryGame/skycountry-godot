@@ -2,18 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d01250bv45vwk"
-path.s3tc="res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_BaseColor.png-ee4753d7dd822ae574797848f6814af3.s3tc.ctex"
+uid="uid://bxupmlko5grvj"
+path.s3tc="res://.godot/imported/door_texture.png-1bea5c0881a4c943fa1fd57497922365.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 
-source_file="res://assets/Models/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_BaseColor.png"
-dest_files=["res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_BaseColor.png-ee4753d7dd822ae574797848f6814af3.s3tc.ctex"]
+source_file="res://assets/texture/door_texture.png"
+dest_files=["res://.godot/imported/door_texture.png-1bea5c0881a4c943fa1fd57497922365.s3tc.ctex"]
 
 [params]
 

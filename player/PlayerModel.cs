@@ -9,7 +9,19 @@ public partial class PlayerModel : Resource {
     public State activityState = State.DEFAULT;
 	[Export]
     public int hp = 0;
-	public Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+	public Dictionary<State, HashSet<State>> dS = new Dictionary<State, HashSet<State>>
+        {
+            { State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE } },
+            { State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT } },
+            { State.ROLLING, new HashSet<State>() { State.DEFAULT } },
+            { State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT } },
+            { State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT } },
+            { State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING } },
+            { State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING } },
+            { State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN } },
+            { State.INVENTORY, new HashSet<State>() { State.DEFAULT } },
+            { State.DIALOGUE, new HashSet<State>() { State.DEFAULT } }
+        }; //allowed state transitions, used when updating
 	
 	[Flags]
 	public enum State //maybe activity state? 
@@ -33,23 +45,11 @@ public partial class PlayerModel : Resource {
 	public InventoryItem equipped; 
 	
 	public PlayerModel(){
-		dS = new Dictionary<State, HashSet<State>>();
-		dS.Add(State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE });
-		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
-		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
-		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
-		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT });
-		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
-		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
-		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
-		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
-		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
-		inv = new Inventory(4);
+		inv = new Inventory();
 	}
     public PlayerModel(CharacterBody3D playerNode) : base() {
-		
 		this.playerNode = playerNode;
-		inv = new Inventory(4);
+		inv = new Inventory();
 	}
 
 	public State GetState() { return activityState;}

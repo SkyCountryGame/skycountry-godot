@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5j0pybh30uts"
-path.s3tc="res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png-05979022389005c71a79735027a8db4e.s3tc.ctex"
+path.s3tc="res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png-f2f4e335c4923703c4c6cb71a774dede.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/models/Enemies/Whelp/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png"
-dest_files=["res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png-05979022389005c71a79735027a8db4e.s3tc.ctex"]
+source_file="res://assets/Models/Enemies/Whelp/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png"
+dest_files=["res://.godot/imported/WhelpV2_WhelpLOWPOLY_DefaultMaterial_Roughness.png-f2f4e335c4923703c4c6cb71a774dede.s3tc.ctex"]
 
 [params]
 

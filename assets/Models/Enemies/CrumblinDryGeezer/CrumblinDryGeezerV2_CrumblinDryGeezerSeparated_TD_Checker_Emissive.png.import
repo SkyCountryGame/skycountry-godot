@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bkatxrai75h0d"
-path.s3tc="res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png-95f490e141bdf6d94ea0015e12956330.s3tc.ctex"
+path.s3tc="res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png-fa553643ef77349af242b4c9646f3e55.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://assets/models/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png"
-dest_files=["res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png-95f490e141bdf6d94ea0015e12956330.s3tc.ctex"]
+source_file="res://assets/Models/Enemies/CrumblinDryGeezer/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png"
+dest_files=["res://.godot/imported/CrumblinDryGeezerV2_CrumblinDryGeezerSeparated_TD_Checker_Emissive.png-fa553643ef77349af242b4c9646f3e55.s3tc.ctex"]
 
 [params]
 

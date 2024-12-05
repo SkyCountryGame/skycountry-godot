@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dmqrguy5mee7x"
-path="res://.godot/imported/WhelpV2.glb-33af35bc6e654c55c2f4f4bf4938c8c0.scn"
+uid="uid://cccp3ej23bt6l"
+path="res://.godot/imported/Bat.fbx-d45aa940ec18b3b0a20b14d09ab63f61.scn"
 
 [deps]
 
-source_file="res://assets/Models/Enemies/Whelp/WhelpV2.glb"
-dest_files=["res://.godot/imported/WhelpV2.glb-33af35bc6e654c55c2f4f4bf4938c8c0.scn"]
+source_file="res://assets/Models/Equipment/Bat.fbx"
+dest_files=["res://.godot/imported/Bat.fbx-d45aa940ec18b3b0a20b14d09ab63f61.scn"]
 
 [params]
 
@@ -27,10 +27,11 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=false
+animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
-gltf/embedded_image_handling=1
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1

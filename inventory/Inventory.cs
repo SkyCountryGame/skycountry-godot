@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Godot;
 
 /**
@@ -13,13 +14,13 @@ public partial class Inventory : Resource, System.ICloneable
 	//public Dictionary<int, InventoryItem> stockIndexed; //for quick access //TODO will only need this if we decide to use a select-anything inv instead of cycle-through
 
 	[Export]
-	public int capacity = 4; //max # items can be wwww
+	public int capacity = 10000; //max # items can be wwww
 
 	public Inventory()
 	{
 		stock = new List<InventoryItem>(capacity);
 	}
-	public Inventory(int capacity = 1)
+	public Inventory(int capacity)
 	{
 		this.capacity = capacity;
 		stock = new List<InventoryItem>(capacity);
