@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=18 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_q8fr7"]
 [ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/DemoBuildings/market_building_demo.tscn" id="2_ucx1i"]
+[ext_resource type="Script" path="res://brain/Camera.cs" id="3_byha7"]
 [ext_resource type="PackedScene" uid="uid://bibpl4warnq50" path="res://gameobjects/DemoBuildings/player_house_demo.tscn" id="3_f6faj"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="4_sbx5e"]
 [ext_resource type="Resource" path="res://assets/DemoTerrain/data.hterrain" id="5_fajaf"]
@@ -34,6 +35,7 @@ navigation_mesh = SubResource("NavigationMesh_464t1")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9961, 4.31258, 31.0935)
+script = ExtResource("3_byha7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.6324, 7.19891)
