@@ -18,12 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://gameobjects/Rocks/rock_7.tscn" id="44_fiubg"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/Rocks/rock_9.tscn" id="46_7ay1s"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="46_idspx"]
-[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/rocks/rock_11.tscn" id="48_e7w23"]
-[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/rocks/rock_12.tscn" id="49_5tlat"]
-[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/rocks/rock_4.tscn" id="49_agnpt"]
-[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/rocks/rock_6.tscn" id="49_mntnu"]
-[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/rocks/rock_10.tscn" id="49_qp6dk"]
-[ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/rocks/rock_8.tscn" id="49_teqx0"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/Rocks/rock_11.tscn" id="48_e7w23"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/Rocks/rock_12.tscn" id="49_5tlat"]
+[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/Rocks/rock_4.tscn" id="49_agnpt"]
+[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://gameobjects/Rocks/rock_6.tscn" id="49_mntnu"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/Rocks/rock_10.tscn" id="49_qp6dk"]
+[ext_resource type="PackedScene" uid="uid://cf3ujfwvlhvv8" path="res://gameobjects/Rocks/rock_8.tscn" id="49_teqx0"]
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="50_1t2dt"]
 [ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://gameobjects/Wood Props/signpost_03.tscn" id="50_5grrp"]
 [ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://gameobjects/Wood Props/signpost_02.tscn" id="50_ycb6y"]
@@ -34,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://kwntyvs5xig7" path="res://gameobjects/Wood Props/signpost_01.tscn" id="52_0g3lu"]
 [ext_resource type="PackedScene" uid="uid://ela77477tuep" path="res://gameobjects/Wood Props/wagon_01.tscn" id="52_3qnu7"]
 [ext_resource type="PackedScene" uid="uid://doavcw4e63t8i" path="res://gameobjects/Wood Props/chest_04.tscn" id="52_5mqk4"]
-[ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
+[ext_resource type="PackedScene" uid="uid://crl5w2rs5pwv4" path="res://assets/Models/Demo Models/PlayerHouseDemo.glb" id="52_8aoug"]
 [ext_resource type="PackedScene" uid="uid://cl7upijqjmaql" path="res://gameobjects/Wood Props/chest_02.tscn" id="52_eblwg"]
 [ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://gameobjects/Wood Props/fence_short.tscn" id="52_g3n1k"]
 [ext_resource type="PackedScene" uid="uid://dfu4b1k6j7wq6" path="res://gameobjects/Wood Props/bridge_01.tscn" id="52_hkjrn"]
@@ -173,7 +173,6 @@ shader_params/u_tile_reduction = Vector4(0, 0, 0, 0)
 shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
-shader_params/u_specular = 0.5
 
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
 script = ExtResource("11_vt0it")

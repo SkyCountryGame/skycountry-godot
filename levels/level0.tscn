@@ -92,10 +92,6 @@ emission_energy_multiplier = 0.0
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
-subsequentLevelScenesFilenames = {
-"l2": "level2",
-"npcpg": "NPCPlayground/main_place"
-}
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
@@ -188,15 +184,19 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 
 [node name="Rock" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+invItem = null
 
 [node name="Rock2" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+invItem = null
 
 [node name="Rock3" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7229, 1.32074, 5.6107)
+invItem = null
 
 [node name="Rock4" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0843, 1.98111, 8.41605)
+invItem = null
 
 [node name="NPCs" type="Node3D" parent="."]
 
