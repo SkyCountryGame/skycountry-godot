@@ -27,7 +27,7 @@ public partial class Door : Node3D, Interactable
 			Global.HUD.LogEvent("Door leads nowhere.");
 		} else {
 			GD.Print("Door leads to " + destination);
-        	Global._.ChangeLevel(destination, Global.playerNode.GetParent());
+        	Global.ChangeLevel(destination);
 		}
 		return true;
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=43 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://gameobjects/moving_platform_3.tscn" id="8_t3ins"]
 [ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="11_snjx2"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
@@ -80,6 +81,13 @@ emission = Color(0.908911, 0.866702, 0.900103, 1)
 emission_energy_multiplier = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jn6"]
+
+[sub_resource type="Resource" id="Resource_wdiha"]
+script = ExtResource("11_snjx2")
+name = ""
+itemType = 0
+equipable = false
+worldItemPath = ""
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3cbx"]
 
@@ -184,19 +192,16 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 
 [node name="Rock" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
-invItem = null
 
 [node name="Rock2" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
-invItem = null
 
 [node name="Rock3" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7229, 1.32074, 5.6107)
-invItem = null
+invItem = SubResource("Resource_wdiha")
 
 [node name="Rock4" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0843, 1.98111, 8.41605)
-invItem = null
 
 [node name="NPCs" type="Node3D" parent="."]
 
@@ -241,7 +246,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.93166, -0.645879, 0.62842)
 [node name="Door" parent="." instance=ExtResource("17_mx4ln")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4653, 0.114144, -7.29972)
 script = ExtResource("18_u5pw2")
-destination = "npcpg"
+destination = "res://levels/NPCPlayground/main_place.tscn"
 
 [node name="SpawnLocation" type="Node3D" parent="."]
 

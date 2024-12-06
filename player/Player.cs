@@ -418,7 +418,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		}
 		if (playerModel.inv.RemoveItem(item)){
 			Node gameObject = item.GetPackedSceneWorldItem().Instantiate();
-			Global.level.AddChild(gameObject);
+			Global.currentLevel.AddChild(gameObject);
 			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
 
 			if (item == playerModel.equipped){

@@ -6,22 +6,22 @@ using Godot;
 public partial class PlayerModel : Resource {
 	public CharacterBody3D playerNode;
 	[Export]
-    public State activityState = State.DEFAULT;
+	public State activityState = State.DEFAULT;
 	[Export]
-    public int hp = 0;
+	public int hp = 0;
 	public Dictionary<State, HashSet<State>> dS = new Dictionary<State, HashSet<State>>
-        {
-            { State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE } },
-            { State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT } },
-            { State.ROLLING, new HashSet<State>() { State.DEFAULT } },
-            { State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT } },
-            { State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT } },
-            { State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING } },
-            { State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING } },
-            { State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN } },
-            { State.INVENTORY, new HashSet<State>() { State.DEFAULT } },
-            { State.DIALOGUE, new HashSet<State>() { State.DEFAULT } }
-        }; //allowed state transitions, used when updating
+		{
+			{ State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE } },
+			{ State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT } },
+			{ State.ROLLING, new HashSet<State>() { State.DEFAULT } },
+			{ State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT } },
+			{ State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT } },
+			{ State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING } },
+			{ State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING } },
+			{ State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN } },
+			{ State.INVENTORY, new HashSet<State>() { State.DEFAULT } },
+			{ State.DIALOGUE, new HashSet<State>() { State.DEFAULT } }
+		}; //allowed state transitions, used when updating
 	
 	[Flags]
 	public enum State //maybe activity state? 
@@ -47,7 +47,7 @@ public partial class PlayerModel : Resource {
 	public PlayerModel(){
 		inv = new Inventory();
 	}
-    public PlayerModel(CharacterBody3D playerNode) : base() {
+	public PlayerModel(CharacterBody3D playerNode) : base() {
 		this.playerNode = playerNode;
 		inv = new Inventory();
 	}
@@ -56,27 +56,27 @@ public partial class PlayerModel : Resource {
 
 	//---INVENTORY---	
 	public void AddToInventory(InventoryItem item)
-    {
-        inv.Add(item);
+	{
+		inv.Add(item);
 		Global.HUD.UpdateInventoryMenu(inv);
-    }
+	}
 
-    public void AddToInventory(Inventory inv)
-    {
-        foreach (InventoryItem ii in inv.GetItems())
-        {
-            AddToInventory(ii);
-        }
-    }
+	public void AddToInventory(Inventory inv)
+	{
+		foreach (InventoryItem ii in inv.GetItems())
+		{
+			AddToInventory(ii);
+		}
+	}
 
-    public bool IsInvFull()
-    {
-        return inv.IsFull();
-    }
+	public bool IsInvFull()
+	{
+		return inv.IsFull();
+	}
 
 	/*public List<Wearable> GetActiveArmor()
-    {
-        return armor;
-    }*/
+	{
+		return armor;
+	}*/
 
 }

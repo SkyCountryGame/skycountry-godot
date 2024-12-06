@@ -15,13 +15,12 @@ public partial class Global : Node
 	public static PlayerModel playerModel; //set by Player, persists between scenes
 	public static Player playerNode;  //set by Player 
 	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
-	public static SceneTree sceneTree; // set by each level on ready TODO probably wont need this
 	public static HUDManager HUD; // set by HUDManager on ready
 	public static PauseMenu pauseMenu; // set by PauseMenu on ready
 	public static PrefabManager prefabMgr; // constructed here in init()
 	public static Dictionary<string, PackedScene> prefabs;
 	public static NavigationRegion3D navRegion; // set by each level
-	public static Level level; // the current "level", set by each level on ready
+	public static Level currentLevel; // the current "level", set by each level on ready
 	
 	//GAME LOGIC MANAGER THINGS
 	public static AtmosphereManager atmosphereManager; // constructed here in init()
@@ -43,7 +42,6 @@ public partial class Global : Node
 	}
 
 	public void init(){
-		sceneTree = GetTree();
 		atmosphereManager = new AtmosphereManager();
 		prefabMgr = new PrefabManager();
 		prefabs = prefabMgr.prefabs; //for shorthand
@@ -82,23 +80,28 @@ public partial class Global : Node
 
 	}
 
-	public void ChangeLevel(string levelName, Node previousScene){
-		if(playerNode!=null){
-			Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
-			GetTree().Root.AddChild(nextLevel);
-			playerNode.Reparent(nextLevel);
-			GetTree().Root.RemoveChild(previousScene);
-			playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition;
+	public static void ChangeLevel(string levelName, Node previousScene = null){
+		Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
+		if (previousScene == null){
+			if (currentLevel == null){
+				GD.PushError("No previous scene. Perhaps trying to enter a level from menu and forgot to pass previousScene?");
+			} else {
+				previousScene = currentLevel;
+			}
 		}
-		else {
-			Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
-			GetTree().Root.AddChild(nextLevel);
+		_.GetTree().Root.AddChild(nextLevel);
+
+		if (playerNode!=null){
+			playerNode.Reparent(nextLevel);
+		}
+		else { //NOTE shouldn't assume that the next level has player by default. it is currently done this way to persist child nodes of player such as equiped items. 
 			playerNode = (Player) ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate();
 			nextLevel.AddChild(playerNode);
-			playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition;
-			GetTree().Root.RemoveChild(previousScene);
 		}
-		
+
+		playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition; //TODO use exported spawnpoint node instead, or have Level handle player spawning and positioning. 
+		_.GetTree().Root.RemoveChild(previousScene);
+		currentLevel = nextLevel;
 	}
 
 	public static void RegisterGameObject(Node node, GameObjectType type){
@@ -119,19 +122,20 @@ public partial class Global : Node
 	}
 
 	public static Interactable GetInteractable(Node n, bool strict = false){
-        if (strict){
-            if (n is Interactable interactable){ return interactable; }
-            else { return null; }
-        }
-        while (n != sceneTree.Root){
-            if (n is Interactable interactable)
-            {
-                return interactable;
-            }
-            n = n.GetParent();
-        }
-        return null;
-    }
+		if (strict){
+			if (n is Interactable interactable){ return interactable; }
+			else { return null; }
+		}
+		Node stRoot = _.GetTree().Root;
+		while (n != stRoot){
+			if (n is Interactable interactable)
+			{
+				return interactable;
+			}
+			n = n.GetParent();
+		}
+		return null;
+	}
 	public static Interactable GetInteractable(GameObject go){
 		if (mapGameObjectToInteractable.ContainsKey(go)){
 			return mapGameObjectToInteractable[go];
@@ -160,7 +164,7 @@ public partial class Global : Node
 		cfg.SetValue("player", "transform", playerNode.GlobalTransform);
 		cfg.SetValue("player", "rotation", playerNode.Rotation);
 		cfg.SetValue("player", "model", playerModel);
-		cfg.SetValue("level", "name", level.Name);
+		cfg.SetValue("level", "name", currentLevel.Name);
 		cfg.SetValue("level", "activeScene", playerNode.GetTree().CurrentScene);
 		//cfg.SetValue("level", "time", );
 		//foreach (NPCNode npcn in level.npcs){
@@ -175,6 +179,6 @@ public partial class Global : Node
 		ConfigFile cfg = new ConfigFile(); 
 		cfg.Load($"user://savegame{saveSlot}.cfg");
 		playerNode.LoadSaveData(cfg);
-		level.LoadSaveData(cfg);
+		currentLevel.LoadSaveData(cfg);
 	}
 }

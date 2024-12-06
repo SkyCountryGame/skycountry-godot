@@ -31,7 +31,7 @@ public partial class Level : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Global.level = this;
+		Global.currentLevel = this;
 		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
 			Global.navRegion = navRegion;
 		}
@@ -170,7 +170,7 @@ public partial class Level : Node
 
 	public void LoadSaveData(ConfigFile cfg){
 		string levelName = (string) cfg.GetValue("level", "name");
-		Global._.ChangeLevel(levelName, this);
+		Global.ChangeLevel(levelName);
 		//TODO activeScene if in a sublevel
 		//TODO time, npcs, enemies				
 	}

@@ -27,7 +27,7 @@ public partial class MainMenu : Control
 	private void OnButtonStartPressed()
 	{
 		Global.saveSlot = 0; //NOTE do we want to instead resume from last played game?
-		Global._.ChangeLevel("res://levels/level0.tscn", this);
+		Global.ChangeLevel("res://levels/level0.tscn", this);
 	}
 	private void OnButtonLoadPressed()
 	{

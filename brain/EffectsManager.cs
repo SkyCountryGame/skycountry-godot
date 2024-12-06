@@ -34,12 +34,12 @@ public class EffectsManager {
     public static void MarkerPoint(string key, Vector3 pos, int duration = 2000){
         Node3D markerNode = (Node3D) Global.prefabs["MarkerPoint"].Instantiate();
         markerNode.Position = pos;
-        Global.level.AddChild(markerNode);
+        Global.currentLevel.AddChild(markerNode);
 
         //set the timer to remove this floating text after spcified duration
         Task.Run(() => {
             System.Threading.Thread.Sleep(duration);
-            Global.level.CallDeferred("remove_child", markerNode);
+            Global.currentLevel.CallDeferred("remove_child", markerNode);
             markerNode.QueueFree();
         });
     }
