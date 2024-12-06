@@ -14,8 +14,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	private Vector3 velocity = Vector3.Zero;
 	private AnimationPlayer rollcurve; //function that defines vel during roll
 	private Vector3 controlDir; //user-inputted vector of intended direction of player, adjusted for camera
-    private float angleToFacingDirection;
-    private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
+	private float angleToFacingDirection;
+	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 24f; //approximate max velocity allowed
@@ -37,11 +37,11 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	//EQUIPMENT NODE3D MANAGEMENT
 	public Equipable equippedRightHand; //We dont need the rest of this yet, lets just keep it to this for now
 
-    
+	
 
-    //rings, amulets, etc. ?
+	//rings, amulets, etc. ?
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		base._Ready();
 		EventManager.RegisterListener(this);
@@ -64,10 +64,10 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
 	}
 
-    private void AttackFinished(StringName animName)
-    {
+	private void AttackFinished(StringName animName)
+	{
 		SetState(State.DEFAULT);
-    }
+	}
 
 
 	public override void _PhysicsProcess(double delta)
@@ -168,7 +168,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	/**
 	  * logic to perform when switching states
 	  */
-    public bool SetState(State s){
+	public bool SetState(State s){
 		State prev = playerModel.activityState; //some state transitions need to know previous
 		if (playerModel.dS[playerModel.activityState].Contains(s)){ //first make sure that we are allowed to transition to the given state
 			playerModel.activityState = s;
@@ -327,7 +327,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	}
 
 	public void HandleEvent(Event e)
-    {
+	{
 		switch (e.eventType){
 			case EventType.WorldItemDestroyed: //receive the destroyed GameObject
 				GameObject worldItem = e.payload.Item1;
@@ -344,7 +344,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 			default:
 				break;
 		}
-    }
+	}
 
 	public void HandleInteract(Interactable interactable)
 	{

@@ -1,0 +1,47 @@
+[gd_scene load_steps=12 format=3 uid="uid://hmgp0540tje8"]
+
+[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
+[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/DemoBuildings/market_building_demo.tscn" id="2_ucx1i"]
+[ext_resource type="PackedScene" uid="uid://bibpl4warnq50" path="res://gameobjects/DemoBuildings/player_house_demo.tscn" id="3_f6faj"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="4_sbx5e"]
+[ext_resource type="Resource" path="res://assets/DemoTerrain/data.hterrain" id="5_fajaf"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="6_uacsr"]
+[ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/Grass_Simple.png" id="7_jip43"]
+[ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="8_cj0oj"]
+[ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="9_qjwo7"]
+[ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="10_e8vfu"]
+
+[sub_resource type="Resource" id="Resource_88805"]
+script = ExtResource("6_uacsr")
+mode = 0
+textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="LodgingBuildingDemo" parent="." instance=ExtResource("1_1jaco")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -16.4749, 0, 0.586597)
+
+[node name="MarketBuildingDemo" parent="." instance=ExtResource("2_ucx1i")]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 9.09559, 0, 12.9157)
+
+[node name="PlayerHouseDemo" parent="." instance=ExtResource("3_f6faj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6149, 0, 1.10926)
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("4_sbx5e")
+centered = true
+_terrain_data = ExtResource("5_fajaf")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_88805")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null

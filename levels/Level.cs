@@ -48,7 +48,7 @@ public partial class Level : Node
 				fn += level.Value;
 			}
 			levelPackedScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
-        }
+		}
 
 		//dynamically spawn things
 		//health pickups
