@@ -1,13 +1,13 @@
-[gd_scene load_steps=29 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=32 format=3 uid="uid://hmgp0540tje8"]
 
-[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
+[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_q8fr7"]
 [ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky_hdri/Sky_Anime_01_Day_a.png" id="2_3vwmo"]
-[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/DemoBuildings/market_building_demo.tscn" id="2_ucx1i"]
+[ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://gameobjects/tscn/DemoBuildings/market_building_demo.tscn" id="2_ucx1i"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_vmfbb"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="3_byha7"]
-[ext_resource type="PackedScene" uid="uid://bibpl4warnq50" path="res://gameobjects/DemoBuildings/player_house_demo.tscn" id="3_f6faj"]
+[ext_resource type="PackedScene" uid="uid://bibpl4warnq50" path="res://gameobjects/tscn/DemoBuildings/player_house_demo.tscn" id="3_f6faj"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="4_sbx5e"]
 [ext_resource type="Resource" path="res://assets/DemoTerrain/data.hterrain" id="5_fajaf"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="6_uacsr"]
@@ -17,12 +17,15 @@
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="10_e8vfu"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
-[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/Rocks/rock_9.tscn" id="17_d1aw2"]
-[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/Rocks/rock_12.tscn" id="18_6qjtl"]
-[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/Rocks/rock_11.tscn" id="19_pm21m"]
-[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/Rocks/rock_10.tscn" id="20_qhbjg"]
+[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="17_d1aw2"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/tscn/rocks/rock_12.tscn" id="18_6qjtl"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/tscn/rocks/rock_11.tscn" id="19_pm21m"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/tscn/rocks/rock_10.tscn" id="20_qhbjg"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="21_vtgu2"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
+[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="24_64q68"]
+[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="25_6mkl0"]
+[ext_resource type="PackedScene" uid="uid://3xtvy6mcdr2m" path="res://characters/blockhead.tscn" id="26_ah1kj"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
@@ -214,3 +217,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.947
 light_energy = 1.103
 spot_range = 15.8984
 spot_angle = 21.478
+
+[node name="Barrel01" parent="." instance=ExtResource("24_64q68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.138, 0.5, 2.50346)
+
+[node name="Barrel02" parent="." instance=ExtResource("25_6mkl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.9607, 0.5, -5.4104)
+
+[node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("26_ah1kj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3736, 0.165528, -1.10263)
+stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]

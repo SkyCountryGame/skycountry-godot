@@ -5,7 +5,7 @@ using Godot;
 using State = StateManager.State;
 
 //functionality common to all NPCs. specific NPCs will extend this abstract class
-public abstract partial class NPCNode : Node3D, Collideable {
+public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
 
 	[Export] public NPCModel m;
 
@@ -24,6 +24,8 @@ public abstract partial class NPCNode : Node3D, Collideable {
 
 	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected StateManager stateManager;
+	[Export] private AnimationController animController;
+
 	public override void _Ready(){
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
@@ -58,4 +60,14 @@ public abstract partial class NPCNode : Node3D, Collideable {
 	public abstract void HandleCollide(ColliderZone zone, Node other);
 
 	public abstract void HandleDecollide(ColliderZone zone, Node other);
+
+    public virtual void HandleStateChange(State state)
+    {
+        if (animController != null){
+			animController.HandleStateChange(state);
+		}
+    }
+
+    public abstract bool CanChangeState(State state);
+
 }

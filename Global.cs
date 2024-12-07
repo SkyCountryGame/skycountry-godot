@@ -90,7 +90,7 @@ public partial class Global : Node
 			}
 		}
 		_.GetTree().Root.AddChild(nextLevel);
-
+		
 		if (playerNode!=null){
 			playerNode.Reparent(nextLevel);
 		}
@@ -102,6 +102,7 @@ public partial class Global : Node
 		playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition; //TODO use exported spawnpoint node instead, or have Level handle player spawning and positioning. 
 		_.GetTree().Root.RemoveChild(previousScene);
 		currentLevel = nextLevel;
+		
 	}
 
 	public static void RegisterGameObject(Node node, GameObjectType type){

@@ -88,9 +88,8 @@ sky_mode = 1
 
 [node name="HUD" parent="." instance=ExtResource("2_wxw3l")]
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 script = ExtResource("1_f6jas")
-target = NodePath("")
 HUD = NodePath("../HUD")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]

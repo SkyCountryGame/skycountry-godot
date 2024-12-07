@@ -56,7 +56,7 @@ public partial class Camera : Camera3D
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		if (target != null){
+		if (target != null && target.IsInsideTree()){
 			posDest = target.GlobalPosition + offset;
 			//NOTE maybe use interpolation instead? 
 			if (posDest != Position){

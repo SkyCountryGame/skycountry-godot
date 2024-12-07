@@ -6,7 +6,7 @@ using Microsoft.VisualBasic;
 using System.Collections.Generic;
 
 //enemy 1: sits idle, chases player, attacks player when close enough
-public partial class Enemy : NPCNode, StateHolder {
+public partial class Enemy : NPCNode {
 	
     private Node3D target; 
 
@@ -49,8 +49,9 @@ public partial class Enemy : NPCNode, StateHolder {
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 
-	public void HandleStateChange(StateManager.State state)
+	public override void HandleStateChange(StateManager.State state)
 	{
+        base.HandleStateChange(state);
 		switch (state){
 			case State.IDLE:
 				nav.TargetPosition = physBody.GlobalPosition;
@@ -106,7 +107,7 @@ public partial class Enemy : NPCNode, StateHolder {
         }
 	}
 
-    public bool CanChangeState(State state)
+    public override bool CanChangeState(State state)
     {
         throw new NotImplementedException();
     }

@@ -30,8 +30,9 @@ public partial class Enemy2 : NPCNode, StateHolder {
         }
 	}
 
-	public void HandleStateChange(StateManager.State state)
+	public override void HandleStateChange(StateManager.State state)
 	{
+        base.HandleStateChange(state);
 		switch (state){
 			case State.IDLE:
 				nav.TargetPosition = physBody.GlobalPosition;
@@ -83,7 +84,7 @@ public partial class Enemy2 : NPCNode, StateHolder {
         }
 	}
 
-    public bool CanChangeState(State state)
+    public override bool CanChangeState(State state)
     {
         throw new NotImplementedException();
     }

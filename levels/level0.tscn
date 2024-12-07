@@ -1,23 +1,21 @@
-[gd_scene load_steps=43 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=40 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
-[ext_resource type="PackedScene" uid="uid://mpnfn272l8i6" path="res://gameobjects/moving_platform_3.tscn" id="8_t3ins"]
-[ext_resource type="Script" path="res://gameobjects/Talker.cs" id="9_80eq6"]
+[ext_resource type="Script" path="res://components/Talker.cs" id="9_80eq6"]
 [ext_resource type="Script" path="res://gameobjects/Drugz.cs" id="10_c8j53"]
-[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="11_snjx2"]
-[ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock.tscn" id="11_xa5x2"]
+[ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock/rock.tscn" id="11_xa5x2"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="12_knnwi"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="13_3aiva"]
-[ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/death_wall.tscn" id="14_hhq11"]
+[ext_resource type="PackedScene" uid="uid://buydkmv2qkxpr" path="res://gameobjects/tscn/death_wall.tscn" id="14_hhq11"]
 [ext_resource type="Script" path="res://gameobjects/Glower.cs" id="15_m6ir7"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="16_p6gv0"]
-[ext_resource type="PackedScene" uid="uid://grlpnraydgu2" path="res://gameobjects/door.tscn" id="17_mx4ln"]
+[ext_resource type="PackedScene" uid="uid://grlpnraydgu2" path="res://gameobjects/door/door.tscn" id="17_mx4ln"]
 [ext_resource type="PackedScene" uid="uid://c48ne3hparnm" path="res://gameobjects/bat/bat_pickup.tscn" id="18_d7mr5"]
-[ext_resource type="Script" path="res://gameobjects/Door.cs" id="18_u5pw2"]
+[ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="18_u5pw2"]
 [ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="19_j7qq0"]
-[ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamp_post.tscn" id="20_vj7e2"]
+[ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamppost/lamp_post.tscn" id="20_vj7e2"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwqku"]
@@ -82,13 +80,6 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s4jn6"]
 
-[sub_resource type="Resource" id="Resource_wdiha"]
-script = ExtResource("11_snjx2")
-name = ""
-itemType = 0
-equipable = false
-worldItemPath = ""
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_j3cbx"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ok0df"]
@@ -114,9 +105,7 @@ sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -12)
-
-[node name="MovingPlatform3" parent="." instance=ExtResource("8_t3ins")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63511, 1.83672, 0)
+script = null
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
@@ -192,16 +181,19 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 
 [node name="Rock" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+script = null
 
 [node name="Rock2" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+script = null
 
 [node name="Rock3" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7229, 1.32074, 5.6107)
-invItem = SubResource("Resource_wdiha")
+script = null
 
 [node name="Rock4" parent="Rocks" instance=ExtResource("11_xa5x2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0843, 1.98111, 8.41605)
+script = null
 
 [node name="NPCs" type="Node3D" parent="."]
 

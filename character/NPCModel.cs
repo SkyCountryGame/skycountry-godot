@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using State = StateManager.State;
 
 [GlobalClass]
 public partial class NPCModel : Resource{
@@ -14,17 +15,6 @@ public partial class NPCModel : Resource{
 	[Export] public int disposition = 0; //level of hostility/friendliness. more negative is more hostile, positive friendly, 0 neutral
 	
     [Export] public Dialogue dialogue; //NPCs can have dialogue, often many, each associated with a level or other conditions
-
-	public enum State { 
-        IDLE, //standing still
-        ALERT, //something nearby happened, like somebody entered awareness zone, maybe watching or pursuing
-        TALKING, 
-        ROAMING, //same as idle except moving around 
-        ATTACKING, //attacking target
-        SLEEPING, 
-        ACTION, //performing an action which may also be triggering an event
-        DEAD 
-    } //cycles through these states, changes based on environment and TBD functions
     
 	public enum Emotion { HAPPY, SAD, ANGRY, SCARED, SURPRISED, DISGUSTED, NEUTRAL }
 	public enum HomeostaticPressure {NONE, HUNGER, SOCIAL, RESTORE, REDPRODUCE, SLEEP }; //dictates object of pursual

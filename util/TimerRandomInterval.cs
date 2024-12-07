@@ -3,7 +3,7 @@ using System;
 
 public partial class TimerRandomInterval : Timer
 {
-	[Export] private int baseWaitTime = 3;
+	[Export] public int baseWaitTime = 3;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

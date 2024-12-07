@@ -36,18 +36,8 @@ public partial class Level : Node
 			Global.navRegion = navRegion;
 		}
 
-		//load the levels that can be accessed from this level
-		foreach (KeyValuePair<string, string> level in subsequentLevelScenesFilenames){
-			string fn = "";
-			if (level.Value.Substr(0, 5) != "levels/"){
-				fn = "levels/";
-			} 
-			if (level.Value.Substr(level.Value.Length - 5, 5) != ".tscn"){
-				fn += level.Value + ".tscn";
-			} else {
-				fn += level.Value;
-			}
-			levelPackedScenes[level.Key] = ResourceLoader.Load<PackedScene>("res://" + fn); 
+		if (HasNode("SpawnLocation") && Global.playerNode != null){
+			Global.playerNode.GlobalPosition = GetNode<Node3D>("SpawnLocation").GlobalPosition;
 		}
 
 		//dynamically spawn things

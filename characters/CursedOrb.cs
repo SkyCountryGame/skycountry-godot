@@ -43,4 +43,8 @@ public partial class CursedOrb : NPCNode
         throw new NotImplementedException();
     }
 
+    public override bool CanChangeState(StateManager.State state)
+    {
+        throw new NotImplementedException();
+    }
 }

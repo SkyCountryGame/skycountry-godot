@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=4 uid="uid://b7suifadqfxfl"]
 
-[ext_resource type="Script" path="res://gameobjects/Rock.cs" id="1_0fg68"]
+[ext_resource type="Script" path="res://gameobjects/rock/Rock.cs" id="1_0fg68"]
 [ext_resource type="Resource" uid="uid://imcy51vsk1cx" path="res://gameobjects/resources/rock.tres" id="2_6e10i"]
 [ext_resource type="Texture2D" uid="uid://b1w4bvt7qr8q0" path="res://assets/texture/Environment/Rocks/Rock 1/Rock_Large_1_BaseColor.png" id="2_txvvk"]
 
