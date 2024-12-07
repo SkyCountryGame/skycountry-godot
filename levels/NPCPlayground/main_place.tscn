@@ -1,20 +1,22 @@
-[gd_scene load_steps=29 format=3 uid="uid://do1xjjm1ptao"]
+[gd_scene load_steps=32 format=3 uid="uid://do1xjjm1ptao"]
 
 [ext_resource type="Script" path="res://brain/Camera.cs" id="1_f6jas"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_ypbtj"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_wxw3l"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="4_5qor6"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="5_vkgtl"]
+[ext_resource type="Script" path="res://player/PlayerModel.cs" id="6_aapo2"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="6_m0or4"]
 [ext_resource type="Script" path="res://components/StateManager.cs" id="7_ntb0s"]
-[ext_resource type="Texture2D" uid="uid://uhj6s1h4i0fn" path="res://assets/texture/face5.png" id="8_fcj1v"]
+[ext_resource type="Texture2D" uid="uid://dyoca216jp74j" path="res://assets/texture/face5.png" id="8_fcj1v"]
 [ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="8_k53kt"]
 [ext_resource type="Texture2D" uid="uid://bdvs7gnwd2yjr" path="res://assets/texture/Environment/Grass/slot0_albedo_bump.png" id="9_asfog"]
-[ext_resource type="Texture2D" uid="uid://kcuf6ymo1uav" path="res://assets/texture/Environment/Grass/Grass.png" id="10_yro5q"]
+[ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="10_yro5q"]
 [ext_resource type="Script" path="res://characters/Enemy.cs" id="12_6700b"]
-[ext_resource type="Texture2D" uid="uid://cx2e16kdao4as" path="res://assets/texture/face2.png" id="13_tqtjf"]
+[ext_resource type="Texture2D" uid="uid://csr15w0b7bhkm" path="res://assets/texture/face2.png" id="13_tqtjf"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="14_euwly"]
-[ext_resource type="Texture2D" uid="uid://cfqej0rp1hi0y" path="res://assets/texture/face0.png" id="15_kg7hs"]
+[ext_resource type="Script" path="res://characters/Enemy2.cs" id="15_88ig6"]
+[ext_resource type="Texture2D" uid="uid://c3v3vup5lpgst" path="res://assets/texture/face0.png" id="15_kg7hs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mu5b3"]
 sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
@@ -49,6 +51,11 @@ refraction_texture_channel = 4
 [sub_resource type="PlaneMesh" id="PlaneMesh_my3tk"]
 material = SubResource("StandardMaterial3D_mcwpa")
 size = Vector2(50, 50)
+
+[sub_resource type="Resource" id="Resource_m43cm"]
+script = ExtResource("6_aapo2")
+activityState = 1
+hp = 3
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sddu7"]
 
@@ -111,6 +118,7 @@ skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_vkgtl")]
 transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 17.1354, 0, -13.2163)
+playerModel = SubResource("Resource_m43cm")
 
 [node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody", "stateManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
@@ -164,7 +172,7 @@ stateManager = NodePath("StateManager")
 
 [node name="StateManager" type="Node3D" parent="Enemy1" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
-states = Array[int]([0, 1, 4])
+states = Array[int]([0, 1, 4, 3])
 subject = NodePath("..")
 
 [node name="CharacterMotionModule" type="CharacterBody3D" parent="Enemy1"]
@@ -190,7 +198,7 @@ shape = SubResource("SphereShape3D_05en4")
 
 [node name="Enemy2" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63792, 2.83912, 19.2371)
-script = ExtResource("12_6700b")
+script = ExtResource("15_88ig6")
 nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterMotionModule")
 stateManager = NodePath("StateManager")
@@ -225,5 +233,4 @@ script = ExtResource("14_euwly")
 [node name="ChaseZone" type="CollisionShape3D" parent="Enemy2/CharacterMotionModule/Area3D3"]
 shape = SubResource("SphereShape3D_mew7e")
 
-[connection signal="StateChange" from="Bird/StateManager" to="Bird" method="OnStateChange"]
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]

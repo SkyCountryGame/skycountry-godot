@@ -1,11 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 //a node that can clicked on.
 public partial class Clickable : Node, Interactable {
@@ -25,8 +19,8 @@ public partial class Clickable : Node, Interactable {
 
 	//
 	public dynamic Interact()
-	{
-		//TODO how to have player "interact" when click on this thing
+	{	
+
 		return null;
 	}
 
@@ -64,10 +58,4 @@ public partial class Clickable : Node, Interactable {
 	{
 		throw new NotImplementedException();
 	}
-
-    public int GetHashCode()
-    {
-        throw new NotImplementedException();
-    }
-
 }

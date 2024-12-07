@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://imcy51vsk1cx"]
+
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_wkxf5"]
+
+[resource]
+script = ExtResource("3_wkxf5")
+name = "Rock"
+itemType = 256
+equipable = false
+worldItemPath = "res://gameobjects/rock.tscn"

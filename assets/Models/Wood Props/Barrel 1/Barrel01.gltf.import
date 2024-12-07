@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://7mf4srvei5io"
-path="res://.godot/imported/Barrel01.gltf-6271a6b6d4455a9aaf711186293f1bef.scn"
+path="res://.godot/imported/Barrel01.gltf-a1928a609f2b887aa04ea5113c410ae7.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Barrel 1/Barrel01.gltf"
-dest_files=["res://.godot/imported/Barrel01.gltf-6271a6b6d4455a9aaf711186293f1bef.scn"]
+source_file="res://assets/Models/Wood Props/Barrel 1/Barrel01.gltf"
+dest_files=["res://.godot/imported/Barrel01.gltf-a1928a609f2b887aa04ea5113c410ae7.scn"]
 
 [params]
 

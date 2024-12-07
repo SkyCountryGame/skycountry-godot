@@ -71,7 +71,7 @@ public partial class Level : Node
 				sunlight.LookAt(WORLD_ORIGIN);
 				if (sunlightTheta > 2*MathF.PI){
 					sunlightTheta = 0;
-					Global.hud.LogEvent("new day!");
+					Global.HUD.LogEvent("new day!");
 					GD.Print("new day");
 				}
 			};

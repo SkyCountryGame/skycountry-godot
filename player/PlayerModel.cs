@@ -1,17 +1,17 @@
+using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Godot;
 
 [GlobalClass]
 public partial class PlayerModel : Resource {
 	public CharacterBody3D playerNode;
 	[Export]
-    private State activityState = State.DEFAULT;
+    public State activityState = State.DEFAULT;
 	[Export]
     public int hp = 0;
-	Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
+	public Dictionary<State, HashSet<State>> dS; //allowed state transitions, used when updating
 	
-	[System.Flags]
+	[Flags]
 	public enum State //maybe activity state? 
 	{
 		DEFAULT = 1 << 0,
@@ -31,15 +31,14 @@ public partial class PlayerModel : Resource {
 	public Inventory inv; //NOTE this might be moved into an Entity superclass 
 	//[Export]
 	public InventoryItem equipped; 
-
-    public PlayerModel(CharacterBody3D playerNode){
-		this.playerNode = playerNode;
-        dS = new Dictionary<State, HashSet<State>>();
-		dS.Add(State.DEFAULT, new HashSet<State>() {State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE});
+	
+	public PlayerModel(){
+		dS = new Dictionary<State, HashSet<State>>();
+		dS.Add(State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE });
 		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
 		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.PREPARING, new HashSet<State>() { State.ATTACKING, State.DEFAULT });
-		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN });
+		dS.Add(State.ATTACKING, new HashSet<State>() { State.COOLDOWN, State.DEFAULT });
 		dS.Add(State.RELOADING, new HashSet<State>() { State.DEFAULT, State.HEALING, State.AIMING });
 		dS.Add(State.COOLDOWN, new HashSet<State>() { State.DEFAULT, State.HEALING, State.RELOADING, State.CHARGING, State.AIMING });
 		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
@@ -47,57 +46,19 @@ public partial class PlayerModel : Resource {
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
 		inv = new Inventory(4);
 	}
-
-	/**
-	  * logic to perform when switching states
-	  */
-    public bool UpdateState(State s){
-		State prev = activityState; //some state transitions need to know previous
-		if (dS[activityState].Contains(s)){
-			activityState = s;
-			switch (activityState){
-				case State.DEFAULT:
-					if (prev == State.INVENTORY){
-						Global.hud.HideInventory();
-					} else if (prev == State.DIALOGUE) {
-						Global.hud.ExitDialogue();
-					}
-					break;
-				case State.CHARGING:
-					break;
-				case State.ROLLING:
-					break;
-				case State.PREPARING:
-					break;
-				case State.ATTACKING:
-					break;
-				case State.COOLDOWN:
-					break;
-				case State.HEALING:
-					break;
-				case State.RELOADING:
-					break;
-				case State.AIMING:
-					break;
-				case State.INVENTORY:
-					//Global.hud.ShowInventory();
-					GD.Print("show inventory");
-					break;
-				case State.DIALOGUE:
-					break;
-			}
-		} else {
-			return false;
-		}
-		return true;
+    public PlayerModel(CharacterBody3D playerNode) : base() {
+		
+		this.playerNode = playerNode;
+		inv = new Inventory(4);
 	}
+
 	public State GetState() { return activityState;}
 
 	//---INVENTORY---	
 	public void AddToInventory(InventoryItem item)
     {
         inv.Add(item);
-		Global.hud.UpdateInventoryMenu(inv);
+		Global.HUD.UpdateInventoryMenu(inv);
     }
 
     public void AddToInventory(Inventory inv)

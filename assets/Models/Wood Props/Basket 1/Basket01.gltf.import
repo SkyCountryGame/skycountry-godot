@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cqmqat17n3b8a"
-path="res://.godot/imported/Basket01.gltf-5d29ca23de90b74a6f99c0cd3c82c1a4.scn"
+path="res://.godot/imported/Basket01.gltf-c1b92b01057841b0c538ac698bf90e51.scn"
 
 [deps]
 
-source_file="res://assets/models/Wood Props/Basket 1/Basket01.gltf"
-dest_files=["res://.godot/imported/Basket01.gltf-5d29ca23de90b74a6f99c0cd3c82c1a4.scn"]
+source_file="res://assets/Models/Wood Props/Basket 1/Basket01.gltf"
+dest_files=["res://.godot/imported/Basket01.gltf-c1b92b01057841b0c538ac698bf90e51.scn"]
 
 [params]
 

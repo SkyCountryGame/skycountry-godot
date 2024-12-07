@@ -13,33 +13,17 @@ public class GameObject {
     public GameObject(Node node){
         gdNode = node;
     }
-
-    //public void update(float dt);
-
 }
 
-/**
-*   connect a scene node to a GameObject in the editor 
-*/
-public abstract partial class GameObjectConnector : Node 
-{
+public enum GameObjectType {
+    SpawnPoint, 
+    WorldItem, 
+    Equipable, 
+    Entity, 
+    Structure, 
+    Enemy, Friendly, Neutral, 
+    Interactable, 
+    Light
+};
 
-    public override void _Ready(){
-        Global.RegisterGameObject((Node)this, Name, type);
-    }
-
-    [Export(PropertyHint.Enum, "What is the nature of this object? To help things in the game respond to it.")]
-    public GameObjectType type {get; set;}
-
-    [Export(PropertyHint.ArrayType, "What quests are this object related to? This could affect gameplay and story.")]
-    public int[] questIDs {get; set;}
-
-    [Export(PropertyHint.None, "note for object")]
-	public string devinfo {get; set;}
-}
-
-public enum GameObjectType {SpawnPoint, Entity, Prop, Structure, Item, Enemy, Friendly, Neutral, Interactable, Light};
-//NOTE: currently experimenting with different ways to represent this stuff
-public struct WorldObjectInfo{
-    public GameObjectType type;
-}
+//GameObjectPropertiesResource? or is that dealt with for specific types?
