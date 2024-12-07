@@ -30,7 +30,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 break;
             case State.ROAMING:
                 if (navReady && physBody.Position.DistanceTo(nav.TargetPosition) < .15){
-                    nav.TargetPosition = Global.level.GetRandomPoint();//(Vector3)CallDeferred("GetRandomNavPoint", Global.level);
+                    nav.TargetPosition = Global.currentLevel.GetRandomPoint();
                 }
                 GD.Print($"Roaming to {nav.TargetPosition}");
                 mot.pos_goal = nav.TargetPosition;
@@ -57,7 +57,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 physBody.Velocity = Vector3.Zero;
 				break;
             case State.ROAMING:
-                nav.TargetPosition = new Vector3(1, 1, 3); // TODO fix. Global.level not yet updated here   //(Vector3)CallDeferred("GetRandomNavPoint", Global.level);
+                nav.TargetPosition = new Vector3(1, 1, 3); // TODO fix. Global.currentLevel not yet updated here   //(Vector3)CallDeferred("GetRandomNavPoint", Global.currentLevel);
                 break;
 			case State.ALERT: //player is detected. chase
 				break;

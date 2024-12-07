@@ -86,9 +86,9 @@ public partial class Bird : NPCNode, StateHolder {
 		throw new NotImplementedException();
 	}
 
-    public bool CanChangeState(State state)
-    {
-        throw new NotImplementedException();
-    }
+	public bool CanChangeState(State state)
+	{
+		throw new NotImplementedException();
+	}
 
 }
