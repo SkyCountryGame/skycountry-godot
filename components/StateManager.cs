@@ -11,12 +11,11 @@ public partial class StateManager : Node3D {
 
 	//the states that this thing is allowed to be
 	[Export] public Array<State> states; //this has to be set in editor 
-	[Signal] public delegate void StateChangeEventHandler();
 	public State currentState;
 	[Export] public State defaultState;
 	[Export] private Node3D subject; //the thing for which this statemachine manages state
 
-	//all of the states that something could be
+	//all of the states that something could be. could be defined by another class, to keep StateManager Node generic
 	public enum State { 
 		IDLE, //standing still
 		ALERT, //something nearby happened, like somebody entered awareness zone, maybe watching or pursuing
@@ -34,12 +33,12 @@ public partial class StateManager : Node3D {
 	}
 
 	public void SetState(State state){
-		this.currentState = state;
-		((StateHolder)subject).SetState(state);
+		currentState = state;
+		((StateHolder)subject).HandleStateChange(state);
 	}
 
 	public void SetStateByIndex(int idx){
 		this.currentState = states[idx];
-		((StateHolder)subject).SetState(states[idx]);
+		((StateHolder)subject).HandleStateChange(states[idx]);
 	}
 }

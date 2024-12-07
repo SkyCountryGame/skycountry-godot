@@ -30,7 +30,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 break;
             case State.ROAMING:
                 if (navReady && physBody.Position.DistanceTo(nav.TargetPosition) < .15){
-                    nav.TargetPosition = Global.level.GetRandomPoint();//(Vector3)CallDeferred("GetRandomNavPoint", Global.level);
+                    nav.TargetPosition = Global.currentLevel.GetRandomPoint();
                 }
                 GD.Print($"Roaming to {nav.TargetPosition}");
                 mot.pos_goal = nav.TargetPosition;
@@ -49,7 +49,7 @@ public partial class Enemy : NPCNode, StateHolder {
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 
-	public void SetState(StateManager.State state)
+	public void HandleStateChange(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
@@ -57,7 +57,7 @@ public partial class Enemy : NPCNode, StateHolder {
                 physBody.Velocity = Vector3.Zero;
 				break;
             case State.ROAMING:
-                nav.TargetPosition = (Vector3)CallDeferred("GetRandomNavPoint", Global.level);
+                nav.TargetPosition = new Vector3(1, 1, 3); // TODO fix. Global.currentLevel not yet updated here   //(Vector3)CallDeferred("GetRandomNavPoint", Global.currentLevel);
                 break;
 			case State.ALERT: //player is detected. chase
 				break;
@@ -80,8 +80,9 @@ public partial class Enemy : NPCNode, StateHolder {
             case ColliderZone.Awareness1:
                 if (other is Player){
                     stateManager.SetState(State.ATTACKING);
+                    ((Damageable)other).ApplyDamage(1);
                     GD.Print("Enemy is attacking you!");
-                    Global.hud.LogEvent("Enemy is attacking you!");
+                    Global.HUD.LogEvent("Enemy is attacking you!");
                 }
                 break;
         }
@@ -104,4 +105,10 @@ public partial class Enemy : NPCNode, StateHolder {
                 break;
         }
 	}
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }
+
 }

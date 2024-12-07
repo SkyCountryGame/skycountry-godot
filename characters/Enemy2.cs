@@ -30,7 +30,7 @@ public partial class Enemy2 : NPCNode, StateHolder {
         }
 	}
 
-	public void SetState(StateManager.State state)
+	public void HandleStateChange(StateManager.State state)
 	{
 		switch (state){
 			case State.IDLE:
@@ -59,7 +59,7 @@ public partial class Enemy2 : NPCNode, StateHolder {
                 if (other is Player){
                     stateManager.SetState(State.ATTACKING);
                     GD.Print("Enemy is attacking you!");
-                    Global.hud.ShowAction("Enemy is attacking you!");
+                    Global.HUD.ShowAction("Enemy is attacking you!");
                 }
                 break;
         }
@@ -75,7 +75,17 @@ public partial class Enemy2 : NPCNode, StateHolder {
                 }
                 break;
             case ColliderZone.Awareness1:
+                if (other is Player){
+                    //target = (Node3D) other;
+                    stateManager.SetState(State.ALERT);
+                }
                 break;
         }
 	}
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }
+
 }

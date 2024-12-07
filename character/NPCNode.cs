@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Timers;
 using Godot;
-using State = NPCModel.State;
+using State = StateManager.State;
 
 //functionality common to all NPCs. specific NPCs will extend this abstract class
 public abstract partial class NPCNode : Node3D, Collideable {
@@ -18,7 +18,8 @@ public abstract partial class NPCNode : Node3D, Collideable {
 	private Vector3 navTarget; //where the thing is trying to go currently
 
 	protected Node3D target; //a node of interest to the npc. 
-	protected List<State> cycleStates; //states that will be automatically cycled through via timer
+	protected LinkedList<State> cycleStates; //states that will be automatically cycled through via timer
+	protected LinkedListNode<State> cycleStateCurrent; //the current state in the cycle
 	protected int cycleStateIdx = 0; //curent index of cycle state
 
 	[Export] protected CharacterBody3D physBody; //used for handling motion
