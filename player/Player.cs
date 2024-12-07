@@ -52,13 +52,15 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		base._Ready();
 		EventManager.RegisterListener(this);
 		animationTree.AnimationFinished += AttackFinished;
-		if (Global.playerModel == null){
-			//TODO this is where we would load savedata (or maybe SceneManager does that?)
-			playerModel = new PlayerModel(this);
-			Global.playerModel = playerModel;
-		} else {
+		if (Global.playerModel != null){
 			playerModel = Global.playerModel;
+		} else {
+			if (playerModel == null) { //use default if not set from editor
+				playerModel = new PlayerModel(this);
+			}
+			Global.playerModel = playerModel;
 		}
+		
 		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
 
@@ -432,6 +434,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		playerModel.hp -= d; //TODO take into account armor, skills, etc.
 		if (playerModel.hp < 0){
 			EventManager.Invoke(EventType.GameOver); 
+			GD.Print("dead");
+			SetProcessMode(ProcessModeEnum.Disabled);
 		}
 	}
 

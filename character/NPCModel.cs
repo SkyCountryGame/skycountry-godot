@@ -54,27 +54,6 @@ public partial class NPCModel : Resource{
 		
 	}
 
-	public bool UpdateState(State s){
-		switch (s){
-			case State.IDLE:
-				break;
-			case State.TALKING:
-				break;
-			case State.ROAMING:
-				break;
-			case State.ATTACKING:
-				break;
-			case State.SLEEPING:
-				break;
-			case State.ACTION:
-				break;
-			case State.DEAD:
-				break;
-		}
-		state = s; //TODO
-        return true;
-	}
-
 	public void GetCurrentActivity(double time){
 		//use the time duration activity map to get the jcurrent activity.
 		//then we can set antimation etc. accordingly 

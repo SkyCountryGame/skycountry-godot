@@ -32,10 +32,8 @@ public partial class PlayerModel : Resource {
 	//[Export]
 	public InventoryItem equipped; 
 	
-
-    public PlayerModel(CharacterBody3D playerNode){
-		this.playerNode = playerNode;
-        dS = new Dictionary<State, HashSet<State>>();
+	public PlayerModel(){
+		dS = new Dictionary<State, HashSet<State>>();
 		dS.Add(State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE });
 		dS.Add(State.CHARGING, new HashSet<State>() { State.ROLLING, State.DEFAULT });
 		dS.Add(State.ROLLING, new HashSet<State>() { State.DEFAULT });
@@ -46,6 +44,11 @@ public partial class PlayerModel : Resource {
 		dS.Add(State.AIMING, new HashSet<State>() { State.DEFAULT, State.ATTACKING, State.HEALING, State.COOLDOWN });
 		dS.Add(State.INVENTORY, new HashSet<State>() { State.DEFAULT });
 		dS.Add(State.DIALOGUE, new HashSet<State>() { State.DEFAULT });
+		inv = new Inventory(4);
+	}
+    public PlayerModel(CharacterBody3D playerNode) : base() {
+		
+		this.playerNode = playerNode;
 		inv = new Inventory(4);
 	}
 

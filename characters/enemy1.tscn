@@ -1,0 +1,34 @@
+[node name="Enemy1" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5373, 2.83912, 0)
+script = ExtResource("11_o7q8p")
+nav = NodePath("NavigationAgent3D")
+physBody = NodePath("CharacterBody3D")
+stateManager = NodePath("StateManager")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy1"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Enemy1"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy1/CharacterBody3D"]
+texture = ExtResource("13_a4qlc")
+
+[node name="Area3D2" type="Area3D" parent="Enemy1/CharacterBody3D"]
+
+[node name="AttackZone" type="CollisionShape3D" parent="Enemy1/CharacterBody3D/Area3D2"]
+shape = SubResource("SphereShape3D_31to2")
+script = ExtResource("12_2c2bk")
+zone = 1
+
+[node name="Area3D3" type="Area3D" parent="Enemy1/CharacterBody3D"]
+
+[node name="ChaseZone" type="CollisionShape3D" parent="Enemy1/CharacterBody3D/Area3D3"]
+shape = SubResource("SphereShape3D_30ob0")
+script = ExtResource("12_2c2bk")
+
+[node name="Body" type="CollisionShape3D" parent="Enemy1/CharacterBody3D"]
+shape = SubResource("BoxShape3D_uvx7k")
+
+[node name="StateManager" type="Node3D" parent="Enemy1" node_paths=PackedStringArray("subject")]
+script = ExtResource("7_ntb0s")
+states = Array[int]([0, 1, 4])
+subject = NodePath("..")
