@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_nyks5"]
 [ext_resource type="PackedScene" uid="uid://bl36oxkmkwx2" path="res://assets/RollinDude/RollinDudeMk5.glb" id="3_wai1g"]
 [ext_resource type="Shape3D" uid="uid://carsvebux3jg5" path="res://player/player_body_shape.tres" id="4_o7lqg"]
-[ext_resource type="Shape3D" uid="uid://bpihcvcjy81m6" path="res://player/ray_cast_floor.tres" id="6_6q3qh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0opn"]
 radius = 3.0
@@ -18,45 +17,29 @@ animation = &"RUNBackpedal"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_34nye"]
 animation = &"Idle01"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o4ww4"]
-animation = &"RUNSidestepLEFT1"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fjr20"]
+animation = &"WALKForward2"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_31c3x"]
-animation = &"RUNSidestepRIGHT1"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_revws"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qw1ln"]
 animation = &"RunBowlegged"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_aw33g"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_khcu3")
-blend_point_0/pos = Vector2(0, -0.99)
-blend_point_1/node = SubResource("AnimationNodeAnimation_34nye")
-blend_point_1/pos = Vector2(0, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_o4ww4")
-blend_point_2/pos = Vector2(-0.99, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_31c3x")
-blend_point_3/pos = Vector2(0.99, 0)
-blend_point_4/node = SubResource("AnimationNodeAnimation_revws")
-blend_point_4/pos = Vector2(0, 0.99)
-snap = Vector2(1, 1)
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_c2fe0"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_c1kwc")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_fjr20")
+blend_point_1/pos = 0.25
+blend_point_2/node = SubResource("AnimationNodeAnimation_qw1ln")
+blend_point_2/pos = 1.0
+min_space = 0.0
+snap = 0.25
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hr45x"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yovv2"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j45f2"]
-switch_mode = 2
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eqqvy"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ghyy4"]
-states/Mining02/node = SubResource("AnimationNodeAnimation_3mmeh")
-states/Mining02/position = Vector2(532, 221)
-states/Run/node = SubResource("AnimationNodeBlendSpace2D_aw33g")
-states/Run/position = Vector2(545, 113)
-states/Start/position = Vector2(278, 152)
-transitions = ["Start", "Run", SubResource("AnimationNodeStateMachineTransition_hr45x"), "Run", "Mining02", SubResource("AnimationNodeStateMachineTransition_yovv2"), "Mining02", "Run", SubResource("AnimationNodeStateMachineTransition_j45f2")]
-graph_offset = Vector2(53.853, 35.2582)
+states/Run/node = SubResource("AnimationNodeBlendSpace1D_c2fe0")
+states/Run/position = Vector2(531, 126)
+transitions = ["Start", "Run", SubResource("AnimationNodeStateMachineTransition_eqqvy")]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("animationTree")]
 transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -223,32 +206,11 @@ bones/68/scale = Vector3(1, 1, 1)
 bones/69/position = Vector3(-2.00122, 2.48623, -0.446741)
 bones/69/rotation = Quaternion(-0.000339508, 0.0583213, 0.909834, 0.410854)
 bones/69/scale = Vector3(1, 1, 1)
-bones/70/position = Vector3(-1.50881, 2.22305, 1.28238)
-
-[node name="HandAttachment" type="BoneAttachment3D" parent="RollinDudeMk5/Armature/Skeleton3D" index="5"]
-transform = Transform3D(-0.650105, -0.759043, 0.0349036, 0.757017, -0.643044, 0.115847, -0.0654884, 0.101735, 0.992654, -2.03237, 2.48088, -0.476901)
-bone_name = "Hand.R"
-bone_idx = 27
-
-[node name="HandContainer" type="Node3D" parent="RollinDudeMk5/Armature/Skeleton3D/HandAttachment"]
-transform = Transform3D(0.999997, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="ItemContainer" type="Node3D" parent="RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer"]
-transform = Transform3D(0.996072, 0.0698468, -0.054428, -0.058668, 0.0601657, -0.996461, -0.0663244, 0.995739, 0.0640272, -0.295449, 0.587857, -0.0948824)
-
-[node name="AnimationPlayer" parent="RollinDudeMk5" index="1"]
-active = false
+bones/70/position = Vector3(-1.41504, 1.22454, 1.26503)
 
 [node name="AnimationTree" type="AnimationTree" parent="RollinDudeMk5"]
 tree_root = SubResource("AnimationNodeStateMachine_ghyy4")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Run/blend_position = Vector2(-0.00205338, 0.947368)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-collision_layer = 8192
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = ExtResource("6_6q3qh")
+parameters/Run/blend_position = 0.0981241
 
 [editable path="RollinDudeMk5"]

@@ -111,13 +111,24 @@ subsequentLevelScenesFilenames = {
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
+[node name="HUD" parent="." instance=ExtResource("2_fsd0o")]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mck8e")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
+light_energy = 0.92
+light_indirect_energy = 0.16
+light_angular_distance = 4.05
 shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 1.0
+shadow_opacity = 0.85
+shadow_blur = 0.5
+directional_shadow_fade_start = 0.74
+directional_shadow_pancake_size = 17.4
 sky_mode = 1
 
 [node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
@@ -135,7 +146,7 @@ transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 
 current = true
 script = ExtResource("8_7fw5a")
 target = NodePath("../Player")
-HUD = NodePath("../UI/HUD")
+HUD = NodePath("../HUD")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_k2ft2")
@@ -165,8 +176,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789129, 0)
 mesh = SubResource("PrismMesh_j76bu")
 surface_material_override/0 = SubResource("StandardMaterial3D_qc06o")
 
+[node name="Rock" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36144, 0.66037, 2.80535)
+
+[node name="Rock2" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.08236, 0.711241, 2.08706)
+
+[node name="Rock3" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5128, 0, -7.23256)
+
+[node name="Rock4" parent="." instance=ExtResource("11_xa5x2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2326, 1.38077, -0.700886)
+mass = 0.27
+
+[node name="Devtool" parent="." instance=ExtResource("13_3aiva")]
+
 [node name="SignPost" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72674, 2, 10.6561)
+script = ExtResource("14_yk8hg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SignPost"]
 shape = SubResource("CylinderShape3D_gbdax")
