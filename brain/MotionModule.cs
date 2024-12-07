@@ -1,4 +1,5 @@
 using Godot;
+using static StateManager;
 
 //encapsulates motion-handling logic within a module that can be added to the player or any character
 //and adds functionality such as acceleration
@@ -117,5 +118,10 @@ public partial class MotionModule : Node {
 
         // Move the body
         body.MoveAndSlide();
+    }
+
+    //NOTE later might be OnStateChange, from listener interface
+    public void HandleStateChange(State state){
+
     }
 }

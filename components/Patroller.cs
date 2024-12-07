@@ -14,8 +14,6 @@ public partial class Patroller : NPCNode, StateHolder {
 	private LinkedList<Node3D> stationsLL; //store as linkedlist for easy incrementing
 	private LinkedListNode<Node3D> stationCurrent; //currently heading here
 	private TimerRandomInterval activityTimer;
-
-	private MotionModule mot;
 	
 	public override void _Ready(){
 		base._Ready();
@@ -26,7 +24,7 @@ public partial class Patroller : NPCNode, StateHolder {
 		activityTimer.Start();
 		stationsLL = new LinkedList<Node3D>(stations);
 		stationCurrent = stationsLL.First;
-		mot = new MotionModule(physBody);
+		//TODO set cycles states from editor 
 		cycleStates = new LinkedList<State>(new State[3]{State.IDLE, State.ALERT, State.TALKING});
 		cycleStateCurrent = cycleStates.First;
 	}

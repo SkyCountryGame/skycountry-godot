@@ -24,7 +24,8 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
 
 	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected StateManager stateManager;
-	[Export] private AnimationController animController;
+	[Export] protected AnimationController animController;
+	[Export] protected MotionModule mot;
 
 	public override void _Ready(){
 		if (m == null){
@@ -46,6 +47,9 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
 				navReady = true;
 			};
 		}
+		if (mot == null && physBody != null){
+			mot = new MotionModule(physBody);
+		}
 	}
 
 	public override void _Process(double delta){
@@ -65,6 +69,9 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
     {
         if (animController != null){
 			animController.HandleStateChange(state);
+		}
+		if (mot != null){
+			mot.HandleStateChange(state);
 		}
     }
 

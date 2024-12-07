@@ -3,11 +3,11 @@ using System;
 using Godot.Collections;
 
 /*
-* a state machine for any Node3D. define what states the thing has, then connect the signal StateChange to whatever other nodes
+* base class for a state machine for any Node3D. it has listeners which are notified when the state changes
 */
 
 [GlobalClass]
-public partial class StateManager : Node3D {
+public partial class StateManager : Node3D /*StateHolder*/ {
 
 	//the states that this thing is allowed to be
 	[Export] public Array<State> states; //this has to be set in editor 
@@ -30,6 +30,7 @@ public partial class StateManager : Node3D {
 	public override void _Ready(){
 		base._Ready();
 		currentState = defaultState;
+		
 	}
 
 	public void SetState(State state){
@@ -38,7 +39,19 @@ public partial class StateManager : Node3D {
 	}
 
 	public void SetStateByIndex(int idx){
-		this.currentState = states[idx];
+		currentState = states[idx];
 		((StateHolder)subject).HandleStateChange(states[idx]);
 	}
+
+	/* TODO
+    public void HandleStateChange(State state)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool CanChangeState(State state)
+    {
+        throw new NotImplementedException();
+    }*/
+
 }

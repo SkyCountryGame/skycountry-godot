@@ -12,8 +12,6 @@ public partial class Bird : NPCNode {
 	private LinkedList<Node3D> stationsLL; //store as linkedlist for easy incrementing
 	private LinkedListNode<Node3D> stationCurrent; //the curent station of interest. the bird is either here or headed here
 	private TimerRandomInterval activityTimer;
-
-	private MotionModule mot;
 	
 	public override void _Ready(){
 		base._Ready();
