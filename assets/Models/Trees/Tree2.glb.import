@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dctysp03dksey"
-path="res://.godot/imported/Rock_Small_1_LP.fbx-add542fea75f3454354aa9afcddcc18b.scn"
+uid="uid://pcv2ea5b222w"
+path="res://.godot/imported/Tree2.glb-aabe89b41734ca82f8af725c4cbfeddd.scn"
 
 [deps]
 
-source_file="res://assets/Models/Rock_Small_1_LP.fbx"
-dest_files=["res://.godot/imported/Rock_Small_1_LP.fbx-add542fea75f3454354aa9afcddcc18b.scn"]
+source_file="res://assets/Models/Trees/Tree2.glb"
+dest_files=["res://.godot/imported/Tree2.glb-aabe89b41734ca82f8af725c4cbfeddd.scn"]
 
 [params]
 
@@ -27,11 +27,10 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
+gltf/naming_version=1
+gltf/embedded_image_handling=1
