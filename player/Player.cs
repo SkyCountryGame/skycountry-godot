@@ -82,9 +82,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		if(playerModel.GetState() == State.DEFAULT){
 			//RayCast Stuff
 			Vector2 mousePosition = GetViewport().GetMousePosition();
-			Camera3D camera =  Global.cam;
-			Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-			Vector3 rayTarget = rayOrigin+camera.ProjectRayNormal(mousePosition)*10000;
+			Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
+			Vector3 rayTarget = rayOrigin+Global.cam.ProjectRayNormal(mousePosition)*10000;
 			PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
 			Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
 			if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
@@ -192,9 +191,8 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 					//make sure we have something from the inventory equipped and that the equippable child node has been set
 					GD.Print("attacking");
 					if (playerModel.equipped != null && equippedRightHand != null) {
-						//swing! strike! cast! etc.
 						equippedRightHand.hitbox.Disabled = false;
-						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){
+						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){ //TODO feel like this should be an enum check? 
 							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties)equippedRightHand.GetItemProperties()).swingAnimation); //TODO player has an animationmap
 				
 						} else {
