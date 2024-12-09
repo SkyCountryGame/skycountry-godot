@@ -12,21 +12,22 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
 	protected Vector3 goalPosition; //a world position where the npc is currently trying to go 
 	protected AnimationTree animTree; //npcs gotta have animations
 
-	[Export] protected NavigationAgent3D nav;
+	
 	protected Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
 	protected bool navReady = false;
 	private Vector3 navTarget; //where the thing is trying to go currently
 
 	protected Node3D target; //a node of interest to the npc. 
-	protected LinkedList<State> cycleStates; //states that will be automatically cycled through via timer
-	protected LinkedListNode<State> cycleStateCurrent; //the current state in the cycle
+	public LinkedList<State> cycleStates; //states that will be automatically cycled through via timer
+	public LinkedListNode<State> cycleStateCurrent; //the current state in the cycle
 	protected int cycleStateIdx = 0; //curent index of cycle state
 
 	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected StateManager stateManager;
 	[Export] protected AnimationController animController;
-	[Export] protected MotionModule mot;
-
+	[Export] protected MotionModule mot; //all NPCs have MotionModule
+	[Export] protected NavigationAgent3D nav;
+	
 	public override void _Ready(){
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
@@ -48,7 +49,7 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder {
 			};
 		}
 		if (mot == null && physBody != null){
-			mot = new MotionModule(physBody);
+			mot = new MotionModule();
 		}
 	}
 

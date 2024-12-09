@@ -55,3 +55,10 @@ public partial class StateManager : Node3D /*StateHolder*/ {
     }*/
 
 }
+
+//an idea
+struct StateStruct {
+	string label;
+	float duration;
+	//List<State> nextStates;
+}

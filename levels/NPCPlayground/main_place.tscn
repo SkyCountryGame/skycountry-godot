@@ -108,13 +108,13 @@ gi_mode = 2
 mesh = SubResource("PlaneMesh_my3tk")
 skeleton = NodePath("../..")
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody", "stateManager")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "stateManager", "nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
 script = ExtResource("6_m0or4")
 stations = [NodePath("../Tree"), NodePath("../Tree2")]
-nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterBody3D")
 stateManager = NodePath("StateManager")
+nav = NodePath("NavigationAgent3D")
 
 [node name="StateManager" type="Node3D" parent="Bird" node_paths=PackedStringArray("subject")]
 script = ExtResource("7_ntb0s")
@@ -149,12 +149,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31682, 7.81176, -9.13488)
 [node name="Sprite3D" type="Sprite3D" parent="Tree2"]
 texture = ExtResource("10_yro5q")
 
-[node name="Enemy1" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
+[node name="Enemy1" type="Node3D" parent="." node_paths=PackedStringArray("physBody", "stateManager", "nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2543, 2.83912, 19.2371)
 script = ExtResource("12_6700b")
-nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterMotionModule")
 stateManager = NodePath("StateManager")
+nav = NodePath("NavigationAgent3D")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy1"]
 
@@ -184,12 +184,12 @@ script = ExtResource("14_euwly")
 [node name="ChaseZone" type="CollisionShape3D" parent="Enemy1/CharacterMotionModule/Area3D3"]
 shape = SubResource("SphereShape3D_05en4")
 
-[node name="Enemy2" type="Node3D" parent="." node_paths=PackedStringArray("nav", "physBody", "stateManager")]
+[node name="Enemy2" type="Node3D" parent="." node_paths=PackedStringArray("physBody", "stateManager", "nav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63792, 2.83912, 19.2371)
 script = ExtResource("15_88ig6")
-nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterMotionModule")
 stateManager = NodePath("StateManager")
+nav = NodePath("NavigationAgent3D")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy2"]
 

@@ -1,0 +1,114 @@
+[gd_scene load_steps=14 format=3 uid="uid://drynyp80t0050"]
+
+[ext_resource type="Script" path="res://levels/Level.cs" id="1_opfev"]
+[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="2_881yj"]
+[ext_resource type="PackedScene" uid="uid://ogmuhift3a0v" path="res://assets/Models/Wood Props/Signpost 3/Signpost03.gltf" id="3_t00yv"]
+[ext_resource type="Script" path="res://brain/CameraFancy.cs" id="4_nbv13"]
+[ext_resource type="Script" path="res://util/TimerLevelChange.cs" id="5_fiadu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vxx3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0i70m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72h3h"]
+specular_mode = 1
+metallic_specular = 0.34
+roughness_texture_channel = 1
+refraction_texture_channel = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ykmgf"]
+material = SubResource("StandardMaterial3D_72h3h")
+size = Vector2(50, 50)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jelhj"]
+sky_top_color = Color(0.541176, 0.423529, 0.290196, 1)
+sky_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+sky_energy_multiplier = 1.5
+ground_bottom_color = Color(0.164706, 0.176471, 0.168627, 1)
+ground_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
+
+[sub_resource type="Sky" id="Sky_3r2si"]
+sky_material = SubResource("ProceduralSkyMaterial_jelhj")
+
+[sub_resource type="Environment" id="Environment_5bkph"]
+background_mode = 2
+sky = SubResource("Sky_3r2si")
+ambient_light_source = 1
+tonemap_mode = 2
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_e62of"]
+exposure_multiplier = 0.096
+frustum_focus_distance = 82.28
+frustum_focal_length = 5.49
+
+[node name="Intro" type="Node3D"]
+script = ExtResource("1_opfev")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1227.0
+offset_bottom = 724.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 0
+offset_right = 1036.0
+offset_bottom = 483.0
+
+[node name="VFlowContainer" type="VFlowContainer" parent="Control/CenterContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/CenterContainer/VFlowContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_direction = 2
+layout_mode = 2
+text = "Intro"
+fit_content = true
+
+[node name="Button" type="Button" parent="Control/CenterContainer/VFlowContainer"]
+layout_mode = 2
+text = "  \\
+===>
+  /"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control/CenterContainer/VFlowContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "SKY COUNTRY"
+fit_content = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = ExtResource("2_881yj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
+material_override = SubResource("StandardMaterial3D_3vxx3")
+material_overlay = SubResource("StandardMaterial3D_0i70m")
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_ykmgf")
+skeleton = NodePath("../..")
+
+[node name="Signpost" parent="." instance=ExtResource("3_t00yv")]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("targets")]
+script = ExtResource("4_nbv13")
+targets = [NodePath("../Signpost")]
+rotationSpeed = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5bkph")
+camera_attributes = SubResource("CameraAttributesPhysical_e62of")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605245, 0.663032, -0.585974, 0.465858, -3.27003, 36.1152, 10.5027)
+light_color = Color(0.796172, 0.801828, 0.649819, 1)
+shadow_enabled = true
+sky_mode = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+script = ExtResource("5_fiadu")
+level = "res://levels/Demo/Demo_v0.1.tscn"

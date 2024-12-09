@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 
 //a thing that talks (has dialogue)
+[GlobalClass]
 public partial class Talker : Node3D, Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
 	public InteractionMethod interactionMethod { get => InteractionMethod.Use; }

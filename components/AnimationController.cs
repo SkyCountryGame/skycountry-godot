@@ -23,12 +23,14 @@ public partial class AnimationController : Node
         {
             State s = (State)Enum.Parse(typeof(State), entry.Key);
             mapStateAnim[s] = entry.Value;
+            animPlayer.GetAnimation(entry.Value).LoopMode = Animation.LoopModeEnum.Linear;
         }
     }
 
     public void PlayAnimation(string animName)
     {
-        animPlayer.Play(animName);
+        animPlayer.Play(animName, -1, 1, true);
+        
     }
 
     public void HandleStateChange(State state){

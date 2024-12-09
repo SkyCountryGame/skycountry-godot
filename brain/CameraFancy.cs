@@ -9,9 +9,11 @@ using System.Data;
 public partial class CameraFancy : Camera3D
 {
 
-	[Export]
-	public Godot.Collections.Array<Node3D> targets; //thing to follow and look at. this can be changed. 
+	[Export] public Godot.Collections.Array<Node3D> targets; //thing to follow and look at. this can be changed. 
 	private Node3D target; //current target
+	[Export] private float rotationSpeed = 0f; 
+
+	//TODO camera use motion module
 	private Vector3 posDest; //current destination of camera
 	private Vector3 vel = new Vector3(0, 0, 0); //current velocity of camera
 	private float accelCoeff = 2f; //acceleration magnitude
@@ -23,8 +25,7 @@ public partial class CameraFancy : Camera3D
 	private float camRotateIncrement = (float) (Math.PI / 64.0d);
 	private CameraState state = CameraState.DEFAULT;
 
-	[Export]
-	private HUDManager HUD;
+	[Export] private HUDManager HUD;
 
 	private enum CameraState {
 		DEFAULT, //follow player
@@ -69,6 +70,9 @@ public partial class CameraFancy : Camera3D
 				vel = (posDest-Position)/ct; // we want to reach the destination in ct seconds
 				Position += vel * (float)delta + .5f * accelCoeff * dir * (float)(delta*delta);
 				
+			}
+			if (rotationSpeed > 0){
+				offset = offset.Rotated(Vector3.Up, rotationSpeed * (float)delta);
 			}
 			LookAt(target.GlobalPosition);
 

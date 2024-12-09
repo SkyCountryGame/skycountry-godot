@@ -10,12 +10,9 @@ public partial class Enemy : NPCNode {
 	
     private Node3D target; 
 
-    private MotionModule mot;
-
 	public override void _Ready(){
 		base._Ready();
         stateManager.SetState(stateManager.defaultState); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
-        mot = new MotionModule(physBody);
 	}
 
 	public override void _Process(double delta){
@@ -45,7 +42,7 @@ public partial class Enemy : NPCNode {
                 //attack
                 break;
         }
-        mot.Update(delta);
+        mot.Update(delta, physBody);
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 

@@ -25,12 +25,12 @@ sky_energy_multiplier = 1.5
 ground_bottom_color = Color(0.164706, 0.176471, 0.168627, 1)
 ground_horizon_color = Color(0.676471, 0.65, 0.614706, 1)
 
-[sub_resource type="Sky" id="Sky_3r2si"]
+[sub_resource type="Sky" id="Sky_8gkkb"]
 sky_material = SubResource("ProceduralSkyMaterial_lwqku")
 
 [sub_resource type="Environment" id="Environment_mck8e"]
 background_mode = 2
-sky = SubResource("Sky_3r2si")
+sky = SubResource("Sky_8gkkb")
 ambient_light_source = 1
 tonemap_mode = 2
 
@@ -42,14 +42,14 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jcw5"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72h3h"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ae1dc"]
 specular_mode = 1
 metallic_specular = 0.34
 roughness_texture_channel = 1
 refraction_texture_channel = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q726u"]
-material = SubResource("StandardMaterial3D_72h3h")
+material = SubResource("StandardMaterial3D_ae1dc")
 size = Vector2(50, 50)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gcr6y"]

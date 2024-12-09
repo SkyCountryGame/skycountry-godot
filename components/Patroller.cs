@@ -31,7 +31,6 @@ public partial class Patroller : NPCNode, StateHolder {
 
 	public override void _Process(double delta){
 		base._Process(delta);
-		stateManager.SetState(cycleStateCurrent.Value);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -42,13 +41,16 @@ public partial class Patroller : NPCNode, StateHolder {
 				break;
 			case State.ALERT:
 				mot.pos_goal = nav.TargetPosition;
+				GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");
 				break;
 		}
-		mot.Update(delta);
+		mot.UpdateOld(delta, physBody);
+		//Position = physBody.GlobalPosition;
+		LookAt(physBody.Velocity, Vector3.Up);
 	}
 
 	//timer timeout to switch from chilling at nest to flying to other nest
-	private void SwitchActivity(){		
+	private void SwitchActivity(){
 		GD.Print("Switching activity");
 		cycleStateCurrent = cycleStateCurrent.Next ?? cycleStates.First;
 		stateManager.SetState(cycleStateCurrent.Value);
@@ -59,13 +61,13 @@ public partial class Patroller : NPCNode, StateHolder {
 		base.HandleStateChange(state);
 		switch (state){
 			case State.IDLE:
-				SetTargetPosition(physBody.Position);
+			case State.TALKING:
+				SetTargetPosition(GlobalPosition);
+				physBody.Velocity = Vector3.Zero;
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;
-				GD.Print($"Switching to {stationCurrent.Value.Name}");
-				SetTargetPosition(stationCurrent.Value.Position);
-				GD.Print($"Flying to {nav.TargetPosition}");
+				SetTargetPosition(stationCurrent.Value.GlobalPosition);
 				break;
 			default:
 				break;
@@ -73,7 +75,9 @@ public partial class Patroller : NPCNode, StateHolder {
 	}
 
 	private void SetTargetPosition(Vector3 pos){
+		GD.Print($"{Name} Setting target position: {pos}");
 		nav.TargetPosition = pos;
+		mot.pos_goal = pos;
 	}
 
 	public override void HandleCollide(ColliderZone zone, Node other)
