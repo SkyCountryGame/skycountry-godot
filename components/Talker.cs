@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using State = StateManager.State;
 
 //a thing that talks (has dialogue)
 [GlobalClass]
-public partial class Talker : Node3D, Interactable {
+public partial class Talker : Component, Interactable {
 	public InteractionType interactionType { get => InteractionType.Dialogue; }
 	public InteractionMethod interactionMethod { get => InteractionMethod.Use; }
 

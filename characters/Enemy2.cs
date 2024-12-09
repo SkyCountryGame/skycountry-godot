@@ -12,7 +12,7 @@ public partial class Enemy2 : NPCNode {
 
 	public override void _Ready(){
 		base._Ready();
-        stateManager.SetState(State.IDLE); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
+        SetState(State.IDLE); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
 	}
 
 	public override void _Process(double delta){
@@ -23,16 +23,16 @@ public partial class Enemy2 : NPCNode {
 	{
 		base._PhysicsProcess(delta);
         //currently this updates updates every frame, can do via timer
-        if (stateManager.currentState == State.ALERT){
+        if (currentState == State.ALERT){
             nav.TargetPosition = target.GlobalPosition;
             physBody.Velocity = (nav.TargetPosition - physBody.GlobalPosition).Normalized() *15;
             physBody.MoveAndSlide();
         }
 	}
 
-	public override void OnStateChange(StateManager.State state)
+	public override void OnStateChange(State state, float duration = -1)
 	{
-        base.OnStateChange(state);
+        base.OnStateChange(state, duration);
 		switch (state){
 			case State.IDLE:
 				nav.TargetPosition = physBody.GlobalPosition;
@@ -53,12 +53,12 @@ public partial class Enemy2 : NPCNode {
             case ColliderZone.Awareness0:
                 if (other is Player){
                     target = (Node3D) other;
-                    stateManager.SetState(State.ALERT);
+                    SetState(State.ALERT);
                 }
                 break;
             case ColliderZone.Awareness1:
                 if (other is Player){
-                    stateManager.SetState(State.ATTACKING);
+                    SetState(State.ATTACKING);
                     GD.Print("Enemy is attacking you!");
                     Global.HUD.ShowAction("Enemy is attacking you!");
                 }
@@ -72,13 +72,13 @@ public partial class Enemy2 : NPCNode {
             case ColliderZone.Awareness0:
                 if (other is Player){
                     //target = (Node3D) other;
-                    stateManager.SetState(State.IDLE);
+                    SetState(State.IDLE);
                 }
                 break;
             case ColliderZone.Awareness1:
                 if (other is Player){
                     //target = (Node3D) other;
-                    stateManager.SetState(State.ALERT);
+                    SetState(State.ALERT);
                 }
                 break;
         }

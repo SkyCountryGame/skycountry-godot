@@ -14,10 +14,13 @@ public partial class TimerRandomInterval : Timer
 		};
 	}
 
-	public void Reset(StateManager.State state){
+	public void Reset(float waitTime = -1){ 
 		Stop();
-		WaitTime = new Random().NextDouble() * 5 + baseWaitTime;
-
+		if (waitTime != 1){
+			WaitTime = waitTime;
+		} else {
+			WaitTime = new Random().NextDouble() * 5 + baseWaitTime;
+		}
 		Start();
 	}
 

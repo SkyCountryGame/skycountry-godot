@@ -4,4 +4,4 @@ thoughts during demo development:
     - are there ever any "stateless" nodes that have components?
     - StateManager 
     - i think usable is different from equippable
-    
+    - 

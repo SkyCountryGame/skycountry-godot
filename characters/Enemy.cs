@@ -12,7 +12,7 @@ public partial class Enemy : NPCNode {
 
 	public override void _Ready(){
 		base._Ready();
-        stateManager.SetState(stateManager.defaultState); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
+        SetState(defaultState); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
 	}
 
 	public override void _Process(double delta){
@@ -22,7 +22,7 @@ public partial class Enemy : NPCNode {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-        switch (stateManager.currentState){
+        switch (currentState){
             case State.IDLE:
                 break;
             case State.ROAMING:
@@ -46,9 +46,9 @@ public partial class Enemy : NPCNode {
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 
-	public override void OnStateChange(StateManager.State state)
+	public override void OnStateChange(State state, float duration = -1)
 	{
-        base.OnStateChange(state);
+        base.OnStateChange(state, duration);
 		switch (state){
 			case State.IDLE:
 				nav.TargetPosition = physBody.GlobalPosition;
@@ -72,12 +72,12 @@ public partial class Enemy : NPCNode {
             case ColliderZone.Awareness0:
                 if (other is Player){
                     target = (Node3D) other;
-                    stateManager.SetState(State.ALERT);
+                    SetState(State.ALERT);
                 }
                 break;
             case ColliderZone.Awareness1:
                 if (other is Player){
-                    stateManager.SetState(State.ATTACKING);
+                    SetState(State.ATTACKING);
                     ((Damageable)other).ApplyDamage(1);
                     GD.Print("Enemy is attacking you!");
                     Global.HUD.LogEvent("Enemy is attacking you!");
@@ -92,13 +92,13 @@ public partial class Enemy : NPCNode {
             case ColliderZone.Awareness0:
                 if (other is Player){
                     //target = (Node3D) other;
-                    stateManager.SetState(State.IDLE);
+                    SetState(State.IDLE);
                 }
                 break;
             case ColliderZone.Awareness1:
                 if (other is Player){
                     target = (Node3D) other;
-                    stateManager.SetState(State.ALERT);
+                    SetState(State.ALERT);
                 }
                 break;
         }

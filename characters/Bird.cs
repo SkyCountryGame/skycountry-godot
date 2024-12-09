@@ -32,7 +32,7 @@ public partial class Bird : NPCNode {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		switch (stateManager.currentState){
+		switch (currentState){
 			case State.IDLE:
 				break;
 			case State.ALERT:
@@ -44,15 +44,15 @@ public partial class Bird : NPCNode {
 
 	//timer timeout to switch from chilling at nest to flying to other nest
 	private void SwitchActivity(){		
-		if (stateManager.currentState == State.IDLE){
-			stateManager.SetState(State.ALERT);
-			activityTimer.Reset(State.ALERT);
+		if (currentState == State.IDLE){
+			SetState(State.ALERT);
+			activityTimer.Reset();
 		} else {
-			stateManager.SetState(State.IDLE);
+			SetState(State.IDLE);
 		}
 	}
 
-	public override void OnStateChange(StateManager.State state)
+	public override void OnStateChange(State state, float duration = -1)
 	{
 		base.OnStateChange(state);
 		switch (state){
@@ -61,7 +61,7 @@ public partial class Bird : NPCNode {
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;
-				SetTargetPosition(stationCurrent.Value.Position);
+				SetTargetPosition(stationCurrent.Value.GlobalPosition);
 				break;
 			default:
 				break;

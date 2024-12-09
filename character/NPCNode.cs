@@ -5,7 +5,7 @@ using Godot;
 using State = StateManager.State;
 
 //functionality common to all NPCs. specific NPCs will extend this abstract class
-public abstract partial class NPCNode : Node3D, Collideable, StateHolder, StateChangeListener {
+public abstract partial class NPCNode : StateManager, Collideable, StateChangeListener {
 
 	[Export] public NPCModel m;
 
@@ -23,12 +23,12 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder, StateC
 	protected int cycleStateIdx = 0; //curent index of cycle state
 
 	[Export] protected CharacterBody3D physBody; //used for handling motion
-	[Export] protected StateManager stateManager;
 	[Export] protected AnimationController animController;
 	[Export] protected MotionModule mot; //all NPCs have MotionModule
 	[Export] protected NavigationAgent3D nav;
 	
 	public override void _Ready(){
+		base._Ready();
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
 		}
@@ -36,9 +36,6 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder, StateC
 		//setup some things that inheriters may or may not have
 		if (physBody == null && HasNode("CharacterBody3D")) {
 			physBody = GetNode<CharacterBody3D>("CharacterBody3D");
-		}
-		if (stateManager == null && HasNode("StateManager")){
-			stateManager = GetNode<StateManager>("StateManager");
 		}
 		if (nav == null && HasNode("NavigationAgent3D")){
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
@@ -53,10 +50,9 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder, StateC
 		}
 		
 		if (animController != null){
-			stateManager.AddStateListener(animController);
+			AddStateListener(animController);
 		}
-		stateManager.AddStateListener(this);
-		stateManager.stateHolder = this;
+		AddStateListener(this);
 	}
 
 	public override void _Process(double delta){
@@ -72,13 +68,15 @@ public abstract partial class NPCNode : Node3D, Collideable, StateHolder, StateC
 
 	public abstract void HandleDecollide(ColliderZone zone, Node other);
 
-    public virtual void OnStateChange(State state)
+    public virtual void OnStateChange(State state, float duration = -1)
     {
 		//if (mot != null){
 		//	mot.HandleStateChange(state);
 		//}
     }
 
-    public abstract bool CanChangeState(State state);
+    public override bool CanChangeState(State state){
+		return true;
+	}
 
 }

@@ -94,7 +94,7 @@ skeleton = NodePath("../..")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("targets")]
 script = ExtResource("4_nbv13")
-targets = []
+targets = [NodePath("../Signpost")]
 rotationSpeed = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

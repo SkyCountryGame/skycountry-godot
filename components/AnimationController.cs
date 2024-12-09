@@ -33,7 +33,7 @@ public partial class AnimationController : Node, StateChangeListener
 		
 	}
 
-	public void OnStateChange(State state)
+	public void OnStateChange(State state, float duration = -1)
 	{
 		if (mapStateAnim.ContainsKey(state)){
 			PlayAnimation(mapStateAnim[state]);

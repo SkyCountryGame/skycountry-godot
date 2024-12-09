@@ -8,7 +8,7 @@ using Godot.Collections;
 */
 
 [GlobalClass]
-public partial class StateManager : Node3D {
+public abstract partial class StateManager : Node3D {
 
 	//the states that this thing is allowed to be
 	[Export] public Array<State> states; //this has to be set in editor 
@@ -41,12 +41,12 @@ public partial class StateManager : Node3D {
 		}
 	}
 
-	public void SetState(State state, int duration = -1){
-		if (((StateHolder)stateHolder).CanChangeState(state)){
+	public void SetState(State state, float duration = -1){
+		if (CanChangeState(state)){
 			State prevState = currentState;
 			currentState = state;
 			foreach (StateChangeListener l in listeners){
-				l.OnStateChange(state);
+				l.OnStateChange(state, duration);
 			}
 		}
 	}
@@ -60,13 +60,12 @@ public partial class StateManager : Node3D {
 			listeners.Add(l);
 		}
 	}
-}
 
-public interface StateHolder {
-	bool CanChangeState(StateManager.State state); //to tell the manager if can switch to given state
+	public abstract bool CanChangeState(State state); //to tell the manager if can switch to given state
+
 }
 public interface StateChangeListener {
-	void OnStateChange(StateManager.State state);
+	void OnStateChange(StateManager.State state, float duration = -1);
 }
 
 //an idea

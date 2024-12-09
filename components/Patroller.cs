@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using State = StateManager.State;
 using System.Collections.Generic;
+using System.Threading;
 
 //this thing "patrols" between some set of nodes
 [GlobalClass]
@@ -20,12 +21,12 @@ public partial class Patroller : NPCNode {
 		activityTimer = new TimerRandomInterval();
 		AddChild(activityTimer);
 		activityTimer.Timeout += SwitchActivity;
-		activityTimer.baseWaitTime = 1;
+		activityTimer.baseWaitTime = 3;
 		activityTimer.Start();
 		stationsLL = new LinkedList<Node3D>(stations);
 		stationCurrent = stationsLL.First;
 		//TODO set cycles states from editor 
-		cycleStates = new LinkedList<State>(new State[3]{State.IDLE, State.ALERT, State.TALKING});
+		cycleStates = new LinkedList<State>(new State[2]{State.IDLE, State.ALERT});
 		cycleStateCurrent = cycleStates.First;
 	}
 
@@ -36,7 +37,7 @@ public partial class Patroller : NPCNode {
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-		switch (stateManager.currentState){
+		switch (currentState){
 			case State.IDLE:
 				break;
 			case State.ALERT:
@@ -44,26 +45,37 @@ public partial class Patroller : NPCNode {
 				GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");
 				break;
 		}
-		mot.UpdateOld(delta, physBody);
-		//Position = physBody.GlobalPosition;
-		LookAt(physBody.Velocity, Vector3.Up);
+		mot.Update(delta, physBody);
+		if (mot.pos_goal != physBody.GlobalPosition){
+			physBody.LookAt(mot.pos_goal);
+		}
+		/*if (physBody.Velocity.Length() > 0f){
+			LookAt(physBody.Velocity, Vector3.Up);
+		}*/
 	}
 
 	//timer timeout to switch from chilling at nest to flying to other nest
 	private void SwitchActivity(){
 		GD.Print("Switching activity");
 		cycleStateCurrent = cycleStateCurrent.Next ?? cycleStates.First;
-		stateManager.SetState(cycleStateCurrent.Value);
+		SetState(cycleStateCurrent.Value);
 	}
 
-	public override void OnStateChange(State state)
+	public override void OnStateChange(State state, float duration = -1)
 	{
 		base.OnStateChange(state);
 		switch (state){
 			case State.IDLE:
-			case State.TALKING:
-				SetTargetPosition(Position);
+				SetTargetPosition(physBody.GlobalPosition);
 				physBody.Velocity = Vector3.Zero;
+				break;
+			case State.TALKING:
+				SetTargetPosition(physBody.GlobalPosition);
+				physBody.Velocity = Vector3.Zero;
+				new Thread(() => {
+					Thread.Sleep((int)(duration * 1000));
+					SetState(State.IDLE);
+				}).Start();
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;

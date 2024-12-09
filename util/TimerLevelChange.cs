@@ -13,6 +13,7 @@ public partial class TimerLevelChange : Timer
 			GD.PushWarning("level not set for timer");
 			return;
 		}
+		WaitTime = time;
 		Timeout += () => {
 			GetTree().ChangeSceneToPacked(ResourceLoader.Load<PackedScene>(level));
 		};
