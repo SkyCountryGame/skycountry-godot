@@ -8155,7 +8155,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003, 1.37718, -0.014)
 shape = SubResource("BoxShape3D_jefoi")
 
 [node name="Armature" type="Node3D" parent="CharacterBody3D"]
-transform = Transform3D(-1.31397e-08, 0, -0.300601, 0, 0.300601, 0, 0.300601, 0, -1.31397e-08, 0, 0.7556, 0)
+transform = Transform3D(-0.300601, 0, -2.62794e-08, 0, 0.300601, 0, 2.62794e-08, 0, -0.300601, 0, 0.7556, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="CharacterBody3D/Armature"]
 bones/0/name = "Spine1"
@@ -8611,10 +8611,10 @@ libraries = {
 "": SubResource("AnimationLibrary_s6awk")
 }
 
-[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("subject")]
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("listenerNodes")]
 script = ExtResource("3_g3p5o")
 states = Array[int]([0, 1, 2])
-subject = NodePath("..")
+listenerNodes = []
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
@@ -8630,5 +8630,5 @@ animPlayer = NodePath("../AnimationPlayer")
 [node name="MotionModule" type="Node3D" parent="."]
 script = ExtResource("4_wx2qt")
 jolt = -1.0
-max_accel = 6.0
+max_accel = 12.0
 max_speed = 7.0

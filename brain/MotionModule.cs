@@ -82,12 +82,12 @@ public partial class MotionModule : Node3D  {
 
     public void UpdateOld(double dt, CharacterBody3D body)
     {
-        if ((pos_goal - ((Node3D)body.GetParent()).Position).Length() < .05f){
+        if ((pos_goal - ((Node3D)body.GetParent()).GlobalPosition).Length() < .05f){
             body.Velocity = Vector3.Zero;
             body.MoveAndSlide();
             return;
         }
-        vel_goal = (pos_goal - body.GlobalPosition).Normalized() * max_speed;
+        vel_goal = (pos_goal - ((Node3D)body.GetParent()).GlobalPosition).Normalized() * max_speed;
         accel_goal = (vel_goal - body.Velocity).Normalized() * max_accel;
         accel = accel_goal; //don't do jolt for now
         //accel = (accel_goal - accel).Normalized() * jolt * (float)dt;  //(vel_goal - Velocity).Normalized() * max_accel;

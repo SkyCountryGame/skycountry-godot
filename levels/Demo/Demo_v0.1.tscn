@@ -25,12 +25,11 @@
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
 [ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="24_64q68"]
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="25_6mkl0"]
-[ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="26_ah1kj"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="27_k0d2h"]
 [ext_resource type="Script" path="res://components/StateManager.cs" id="28_ot0g7"]
 [ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="29_f1hf2"]
 [ext_resource type="Texture2D" uid="uid://casnjqwudl8rm" path="res://assets/texture/face5.png" id="30_xd4ec"]
-[ext_resource type="PackedScene" uid="uid://3xtvy6mcdr2m" path="res://characters/blockhead.tscn" id="26_ah1kj"]
+[ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://gameobjects/trees/RegularTree1_A.tscn" id="32_orf7b"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://gameobjects/trees/RegularTree2_A.tscn" id="33_2l3aj"]
 [ext_resource type="PackedScene" uid="uid://chcp2xs5tfiny" path="res://gameobjects/trees/RegularTree3_A.tscn" id="34_uyj4k"]
@@ -54,7 +53,26 @@ background_mode = 2
 sky = SubResource("Sky_6m6wn")
 ambient_light_source = 3
 ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
-ambient_light_energy = 1.49
+ambient_light_sky_contribution = 0.87
+ambient_light_energy = 2.35
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 0.31
+ssao_intensity = 0.36
+ssao_sharpness = 0.58
+fog_enabled = true
+fog_light_color = Color(0.666453, 0.64665, 0.822713, 1)
+fog_light_energy = 0.57
+fog_sun_scatter = 0.15
+fog_density = 0.0154
+fog_sky_affect = 0.151
+volumetric_fog_albedo = Color(0.373787, 0.000126608, 0.388593, 1)
+volumetric_fog_emission = Color(0.47788, 0.47788, 0.47788, 1)
+volumetric_fog_emission_energy = 12.01
+volumetric_fog_length = 30.97
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
+exposure_multiplier = 0.828
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_464t1"]
 
@@ -80,6 +98,7 @@ HUD = NodePath("../HUD")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eexlt")
+camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
@@ -252,10 +271,10 @@ physBody = NodePath("CharacterBody3D")
 stateManager = NodePath("StateManager")
 nav = NodePath("NavigationAgent3D")
 
-[node name="StateManager" type="Node3D" parent="Bird" node_paths=PackedStringArray("subject")]
+[node name="StateManager" type="Node3D" parent="Bird" node_paths=PackedStringArray("listenerNodes")]
 script = ExtResource("28_ot0g7")
 states = ["Idle", 1]
-subject = NodePath("..")
+listenerNodes = []
 
 [node name="Timer" type="Timer" parent="Bird"]
 wait_time = 5.356
@@ -274,12 +293,9 @@ shape = SubResource("SphereShape3D_0m0tt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9851, 0, 0)
 texture = ExtResource("30_xd4ec")
 
-[node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("26_ah1kj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.6391, 0, 0)
+[node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
 stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
-radius = 0.5
-
-[connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
+radius = 1.0
 
 [node name="Tree4" parent="." instance=ExtResource("32_orf7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9517, -1.19209e-07, -4.40123)
@@ -310,3 +326,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2793, 0, 0.847713)
 
 [node name="Sapling6" parent="." instance=ExtResource("41_6s2o2")]
 transform = Transform3D(0.800857, 0, -0.598856, 0, 1, 0, 0.598856, 0, 0.800857, -23.604, 0, -9.65204)
+
+[connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]

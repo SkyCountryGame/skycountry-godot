@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using Godot.Collections;
 
 /*
@@ -7,13 +8,15 @@ using Godot.Collections;
 */
 
 [GlobalClass]
-public partial class StateManager : Node3D /*StateHolder*/ {
+public partial class StateManager : Node3D {
 
 	//the states that this thing is allowed to be
 	[Export] public Array<State> states; //this has to be set in editor 
 	public State currentState;
 	[Export] public State defaultState;
-	[Export] private Node3D subject; //the thing for which this statemachine manages state
+	[Export] private Array<Node> listenerNodes; //the thing for which this statemachine manages state
+	private HashSet<StateChangeListener> listeners;
+	public Node3D stateHolder; //the thing that cares about this state, and knows what state transitions are allowed
 
 	//all of the states that something could be. could be defined by another class, to keep StateManager Node generic
 	public enum State { 
@@ -30,30 +33,40 @@ public partial class StateManager : Node3D /*StateHolder*/ {
 	public override void _Ready(){
 		base._Ready();
 		currentState = defaultState;
-		
+		listeners = new HashSet<StateChangeListener>();
+		if (listenerNodes != null){
+			foreach (Node3D ln in listenerNodes){
+				listeners.Add((StateChangeListener)ln);
+			}
+		}
 	}
 
-	public void SetState(State state){
-		currentState = state;
-		((StateHolder)subject).HandleStateChange(state);
+	public void SetState(State state, int duration = -1){
+		if (((StateHolder)stateHolder).CanChangeState(state)){
+			State prevState = currentState;
+			currentState = state;
+			foreach (StateChangeListener l in listeners){
+				l.OnStateChange(state);
+			}
+		}
 	}
 
 	public void SetStateByIndex(int idx){
-		currentState = states[idx];
-		((StateHolder)subject).HandleStateChange(states[idx]);
+		currentState = states[idx];	
 	}
 
-	/* TODO
-    public void HandleStateChange(State state)
-    {
-        throw new NotImplementedException();
-    }
+	public void AddStateListener(StateChangeListener l){
+		if (!listeners.Contains(l)){
+			listeners.Add(l);
+		}
+	}
+}
 
-    public bool CanChangeState(State state)
-    {
-        throw new NotImplementedException();
-    }*/
-
+public interface StateHolder {
+	bool CanChangeState(StateManager.State state); //to tell the manager if can switch to given state
+}
+public interface StateChangeListener {
+	void OnStateChange(StateManager.State state);
 }
 
 //an idea

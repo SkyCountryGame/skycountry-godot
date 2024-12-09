@@ -46,9 +46,9 @@ public partial class Enemy : NPCNode {
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
 
-	public override void HandleStateChange(StateManager.State state)
+	public override void OnStateChange(StateManager.State state)
 	{
-        base.HandleStateChange(state);
+        base.OnStateChange(state);
 		switch (state){
 			case State.IDLE:
 				nav.TargetPosition = physBody.GlobalPosition;

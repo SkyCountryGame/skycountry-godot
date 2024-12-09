@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 //this thing "patrols" between some set of nodes
 [GlobalClass]
-public partial class Patroller : NPCNode, StateHolder {
+public partial class Patroller : NPCNode {
 
 	[Export] private Array<Node3D> stations = new Array<Node3D>();
 	[Export] private float radius = 3f; //tavel to a random point within this radius
@@ -56,13 +56,13 @@ public partial class Patroller : NPCNode, StateHolder {
 		stateManager.SetState(cycleStateCurrent.Value);
 	}
 
-	public override void HandleStateChange(State state)
+	public override void OnStateChange(State state)
 	{
-		base.HandleStateChange(state);
+		base.OnStateChange(state);
 		switch (state){
 			case State.IDLE:
 			case State.TALKING:
-				SetTargetPosition(GlobalPosition);
+				SetTargetPosition(Position);
 				physBody.Velocity = Vector3.Zero;
 				break;
 			case State.ALERT:
@@ -92,7 +92,7 @@ public partial class Patroller : NPCNode, StateHolder {
 
 	public override bool CanChangeState(State state)
 	{
-		throw new NotImplementedException();
+		return true;
 	}
 
 }

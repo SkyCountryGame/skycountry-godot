@@ -52,12 +52,12 @@ public partial class Bird : NPCNode {
 		}
 	}
 
-	public override void HandleStateChange(StateManager.State state)
+	public override void OnStateChange(StateManager.State state)
 	{
-		base.HandleStateChange(state);
+		base.OnStateChange(state);
 		switch (state){
 			case State.IDLE:
-				SetTargetPosition(physBody.Position);
+				SetTargetPosition(physBody.GlobalPosition);
 				break;
 			case State.ALERT:
 				stationCurrent = stationCurrent.Next ?? stationsLL.First;
@@ -84,7 +84,7 @@ public partial class Bird : NPCNode {
 
 	public override bool CanChangeState(State state)
 	{
-		throw new NotImplementedException();
+		return true;
 	}
 
 }
