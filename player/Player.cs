@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable, EventListener
+public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Interactor, Damageable, EventListener
 {
 
 	//MOVEMENT 
@@ -37,7 +37,9 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 	//EQUIPMENT NODE3D MANAGEMENT
 	public Equipable equippedRightHand; //We dont need the rest of this yet, lets just keep it to this for now
 
-	
+	[Export] protected CharacterBody3D physBody; //used for handling motion
+	[Export] protected AnimationController animController;
+	[Export] protected MotionModule mot;
 
 	//rings, amulets, etc. ?
 
@@ -176,6 +178,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 					if (prev == State.INVENTORY){
 						Global.HUD.HideInventory();
 					} else if (prev == State.DIALOGUE) {
+						EventManager.Invoke(EventType.DialogueEnd);
 						Global.HUD.ExitDialogue();
 					} else if (prev == State.ATTACKING){
 						equippedRightHand.hitbox.Disabled=true;
@@ -351,6 +354,7 @@ public partial class Player : CharacterBody3D, Collideable, Interactor, Damageab
 		{
 			case InteractionType.Dialogue:
 				if (SetState(State.DIALOGUE)){
+					EventManager.Invoke(EventType.DialogueStart, Global.GetGameObject((Node)interactable));
 					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;

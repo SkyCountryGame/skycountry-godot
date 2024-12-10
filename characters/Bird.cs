@@ -36,11 +36,16 @@ public partial class Bird : NPCNode {
 			case State.IDLE:
 				break;
 			case State.ALERT:
-				mot.pos_goal = nav.TargetPosition;
+				if  (navReady){
+					mot.pos_goal = nav.GetNextPathPosition();
+				} else {
+					mot.pos_goal = nav.TargetPosition;
+				}
 				break;
 		}
 		mot.Update(delta, physBody);
 	}
+
 
 	//timer timeout to switch from chilling at nest to flying to other nest
 	private void SwitchActivity(){		

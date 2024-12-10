@@ -11,4 +11,5 @@ todo:
 * camera updates
 * work out gameobject system/abstractions
 * Player has lots of updates for using AnimController and StateHolder
-- 
+* improve HUD
+* explore features of NavAgent, NavMesh, CharacterBody. 

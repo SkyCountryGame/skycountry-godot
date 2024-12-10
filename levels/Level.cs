@@ -70,7 +70,7 @@ public partial class Level : Node
 		}
 
 		if (navRegion != null){
-			navRegion.BakeNavigationMesh();
+			//navRegion.BakeNavigationMesh();
 		}
 		worldBounds = GetWorldBounds();
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);

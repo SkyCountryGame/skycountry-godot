@@ -172,7 +172,7 @@ public partial class Global : Node
 	}
 	public static Interactable GetInteractable(GameObject go){
 		if (go != null && mapTypeGameObjects[GameObjectType.Interactable].Contains(go)){
-			
+
 			return mapGameObjectToInteractable[go];
 		}
 		return null;

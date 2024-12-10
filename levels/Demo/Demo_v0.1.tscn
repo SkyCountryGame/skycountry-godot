@@ -41,6 +41,13 @@
 [ext_resource type="PackedScene" uid="uid://dbiumpjqlpiku" path="res://gameobjects/trees/tree_object.tscn" id="40_rofaf"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_1n15s"]
+
+[sub_resource type="Resource" id="Resource_88805"]
+script = ExtResource("6_uacsr")
+mode = 0
+textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
 energy_multiplier = 2.16
@@ -78,13 +85,6 @@ adjustment_saturation = 1.22
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
 exposure_multiplier = 0.828
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_464t1"]
-
-[sub_resource type="Resource" id="Resource_88805"]
-script = ExtResource("6_uacsr")
-mode = 0
-textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_0m0tt"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
@@ -100,20 +100,10 @@ script = ExtResource("3_byha7")
 target = NodePath("../Player")
 HUD = NodePath("../HUD")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_eexlt")
-camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
-
-[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
-light_angular_distance = 0.25
-shadow_enabled = true
-sky_mode = 1
-
 [node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_464t1")
+navigation_mesh = SubResource("NavigationMesh_1n15s")
 
 [node name="HTerrain" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("4_sbx5e")
@@ -136,6 +126,16 @@ shader_params/u_tile_reduction = null
 shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="NavigationRegion3D"]
+environment = SubResource("Environment_eexlt")
+camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="NavigationRegion3D/WorldEnvironment"]
+transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
+light_angular_distance = 0.25
+shadow_enabled = true
+sky_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
@@ -267,12 +267,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1887, 0.5, 12.8749)
 [node name="Barrel02" parent="." instance=ExtResource("25_6mkl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4094, 0.5, -11.2468)
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "nav", "listenerNodes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
 script = ExtResource("27_k0d2h")
 stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
-nav = NodePath("NavigationAgent3D")
 physBody = NodePath("CharacterBody3D")
+nav = NodePath("NavigationAgent3D")
+states = Array[int]([0, 1])
+listenerNodes = []
 
 [node name="Timer" type="Timer" parent="Bird"]
 wait_time = 5.356
@@ -281,6 +283,7 @@ script = ExtResource("29_f1hf2")
 baseWaitTime = 4
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Bird"]
+avoidance_enabled = true
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="Bird"]
 
@@ -288,7 +291,6 @@ baseWaitTime = 4
 shape = SubResource("SphereShape3D_0m0tt")
 
 [node name="Sprite3D" type="Sprite3D" parent="Bird/CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9851, 0, 0)
 texture = ExtResource("30_xd4ec")
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]

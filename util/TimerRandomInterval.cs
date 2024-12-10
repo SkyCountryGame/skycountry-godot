@@ -16,7 +16,7 @@ public partial class TimerRandomInterval : Timer
 
 	public void Reset(float waitTime = -1){ 
 		Stop();
-		if (waitTime != 1){
+		if (waitTime != -1){
 			WaitTime = waitTime;
 		} else {
 			WaitTime = new Random().NextDouble() * 5 + baseWaitTime;
