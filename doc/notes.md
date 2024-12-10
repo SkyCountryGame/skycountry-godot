@@ -4,4 +4,5 @@ thoughts during demo development:
     - are there ever any "stateless" nodes that have components?
     - StateManager 
     - i think usable is different from equippable
-    - 
+    - register gameobjects with all of the nodes that comprise the object
+    - do gameobjects need UUIDs?

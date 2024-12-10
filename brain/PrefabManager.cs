@@ -14,21 +14,10 @@ public partial class PrefabManager {
     public Dictionary<string, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it), for objects of which there can be multiple
     public Dictionary<string, Node> mapPackedSceneToSingleNode; //assoc packed scenes with the single node that was instantiated from it, for objects of which there can only be one, like a pausemenu or a boss
     //TODO make these 3 variables into a Prefab class for better encapsulation. e.g. rather than 3 HashMaps we have one HashMap<string, Prefab> 
+
+    //NOTE there is also all the separate nodes in a scenetree that comprise a gameobject. 
     
     public PrefabManager(){
-        //level loading possibilities
-        //Option 1: iterate through the scene files in the folder for the level
-        //string[] scenefilepaths = System.IO.Directory.GetFiles(levelname);
-        //foreach (string filename in scenefilepaths){
-        //    if (filename.EndsWith(".tscn")){
-
-        //    }
-        //    levelScenesList.Add(ResourceLoader.Load<PackedScene>(filename));
-        //}
-
-        //Option 2: iterate through the lines of a config textfile to build the map of accessible levels
-        //TODO
-
         prefabs = new Dictionary<string, PackedScene>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/floatingtext.tscn"));

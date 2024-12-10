@@ -28,8 +28,10 @@ public partial class Global : Node
 
 	public Dictionary<PackedScene, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it)
 
-	public static Dictionary<Node, GameObject> gameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
+	public static Dictionary<Node, GameObject> mapNodeGameObjects = new Dictionary<Node, GameObject>();  //map godot nodes to game objects
 	public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
+	public static Dictionary<GameObject, List<Node>> mapGameObjectNodes = new Dictionary<GameObject, List<Node>>(); //map game objects to their nodes
+	public static Dictionary<GameObjectType, HashSet<GameObject>> mapTypeGameObjects = new Dictionary<GameObjectType, HashSet<GameObject>>(); //map types to game objects
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -46,6 +48,9 @@ public partial class Global : Node
 		prefabMgr = new PrefabManager();
 		prefabs = prefabMgr.prefabs; //for shorthand
 		ProcessMode = ProcessModeEnum.Always;
+		foreach (GameObjectType t in Enum.GetValues(typeof(GameObjectType))){
+			mapTypeGameObjects.Add(t, new HashSet<GameObject>());
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -56,32 +61,6 @@ public partial class Global : Node
 		if (Input.IsActionJustPressed("pause")){
 			TogglePause();
 		}
-	}
-
-	public static void RegisterGameObject(Node node, string name, GameObjectType type){
-		GameObject go;
-		Node stRoot = _.GetTree().Root;
-		while (node.GetParent() != stRoot){
-			node = node.GetParent();
-		}
-		if (!gameObjects.ContainsKey(node)){
-			go = new GameObject(node);
-			gameObjects.Add(node, go);
-		} else {
-			go = gameObjects[node];
-		}
-		switch(type){
-			case GameObjectType.Interactable:
-				mapGameObjectToInteractable.Add(go, (Interactable)node);
-				break;
-			case GameObjectType.SpawnPoint:
-				//spawnPoints.Add((SpawnPoint)node);
-				break;
-			
-			default:
-				break;
-		}
-
 	}
 
 	public static void ChangeLevel(string levelName, Node previousScene = null){
@@ -108,35 +87,102 @@ public partial class Global : Node
 		currentLevel = nextLevel;		
 	}
 
+	//associate a game object with all of the nodes that comprise it
+	public static void RegisterGameObject(List<Node> nodes, GameObjectType type){
+		GameObject go = null;
+		//first check to see there is already a game object associated with any of the nodes.
+		foreach (Node node in nodes){
+			if (mapNodeGameObjects.ContainsKey(node)){
+				go = mapNodeGameObjects[node];
+				break;
+			}
+		}
+		if (go == null){
+			go = new GameObject(type);
+			mapGameObjectNodes.Add(go, nodes); //associate all the nodes with the game object
+			foreach (Node node in nodes){
+				mapNodeGameObjects.Add(node, go);
+				if (node is Interactable){
+					GD.Print("ADDING INTERACTABLE GAME OBJ");
+					mapGameObjectToInteractable.Add(go, (Interactable)node); //this assumes that each gameobject can have only one interactable
+				}
+			}
+			mapTypeGameObjects[type].Add(go);
+			
+		} else {
+			mapGameObjectNodes[go].AddRange(nodes);
+		}
+		//now associate the type. 
+		foreach (GameObjectType t in Enum.GetValues(typeof(GameObjectType))){
+			if ((type | t) != 0 && !mapTypeGameObjects[t].Contains(go)){
+				mapTypeGameObjects[t].Add(go);
+			}
+		}
+		return;
+
+	}
+
+	//TODO will probably remove and just use the list of nodes method, because almost all will be multiple nodes, and the map uses a list
+	public static void RegisterGameObject(Node node, string name, GameObjectType type){
+		GameObject go;
+		Node stRoot = _.GetTree().Root;
+		while (node.GetParent() != stRoot){
+			node = node.GetParent();
+		}
+		if (!mapNodeGameObjects.ContainsKey(node)){
+			go = new GameObject(node);
+			mapNodeGameObjects.Add(node, go);
+		} else {
+			go = mapNodeGameObjects[node];
+		}
+		switch(type){
+			case GameObjectType.Interactable:
+				mapGameObjectToInteractable.Add(go, (Interactable)node);
+				break;
+			case GameObjectType.SpawnPoint:
+				//spawnPoints.Add((SpawnPoint)node);
+				break;
+			
+			default:
+				break;
+		}
+
+	}
+
 	public static void RegisterGameObject(Node node, GameObjectType type){
 		RegisterGameObject(node, node.Name, type);
 	}
 
 	public static GameObject GetGameObject(Node n){
-		if (gameObjects.ContainsKey(n)){
-			return gameObjects[n];
+		if (mapNodeGameObjects.ContainsKey(n)){
+			return mapNodeGameObjects[n];
 		}
-		while (n.GetParent() != null){
+		/*while (n.GetParent() != null){
 			n = n.GetParent();
-			if (gameObjects.ContainsKey(n)){
-				return gameObjects[n];
+			if (mapNodeGameObjects.ContainsKey(n)){
+				return mapNodeGameObjects[n];
 			}
-		}
+		}*/
 		return null;
 	}
 
 	public static Interactable GetInteractable(Node n, bool strict = false){
 		GameObject go = GetGameObject(n);
-		if (go != null){
-			return GetInteractable(go);
-		}
-		return null;
+		return GetInteractable(go);
 	}
 	public static Interactable GetInteractable(GameObject go){
-		if (mapGameObjectToInteractable.ContainsKey(go)){
+		if (go != null && mapTypeGameObjects[GameObjectType.Interactable].Contains(go)){
+			
 			return mapGameObjectToInteractable[go];
 		}
 		return null;
+	}
+
+	public static void RegisterInteractable(Interactable interactable){
+		GameObject go = mapNodeGameObjects[(Node)interactable];
+		if (go != null){
+			mapGameObjectToInteractable.Add(go, interactable);
+		}
 	}
 
 	public static void TogglePause(){

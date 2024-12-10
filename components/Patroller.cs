@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 
 //this thing "patrols" between some set of nodes
-[GlobalClass]
+[GlobalClass] //TODO not actually a component, but an NPC
 public partial class Patroller : NPCNode {
 
 	[Export] private Array<Node3D> stations = new Array<Node3D>();
@@ -73,7 +73,7 @@ public partial class Patroller : NPCNode {
 				SetTargetPosition(physBody.GlobalPosition);
 				physBody.Velocity = Vector3.Zero;
 				new Thread(() => {
-					Thread.Sleep((int)(duration * 1000));
+					Thread.Sleep((int)(5 * 1000));
 					SetState(State.IDLE);
 				}).Start();
 				break;

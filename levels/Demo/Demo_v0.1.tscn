@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=48 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://ggn65mne3c6n" path="res://gameobjects/trees/RegularTree2_B.tscn" id="38_fwcs8"]
 [ext_resource type="PackedScene" uid="uid://dbrwdpclvsbax" path="res://gameobjects/trees/RegularTree3_B.tscn" id="39_vbd3j"]
 [ext_resource type="PackedScene" uid="uid://fs3bk1pprmjk" path="res://gameobjects/trees/RegularSapling1_B.tscn" id="40_epou2"]
+[ext_resource type="PackedScene" uid="uid://dbiumpjqlpiku" path="res://gameobjects/trees/tree_object.tscn" id="40_rofaf"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
@@ -325,5 +326,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2793, 0, 0.847713)
 
 [node name="Sapling6" parent="." instance=ExtResource("41_6s2o2")]
 transform = Transform3D(0.800857, 0, -0.598856, 0, 1, 0, 0.598856, 0, 0.800857, -23.604, 0, -9.65204)
+
+[node name="TreeObject" parent="." instance=ExtResource("40_rofaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7082, 0, 18.0982)
 
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
