@@ -111,4 +111,5 @@ sky_mode = 1
 one_shot = true
 autostart = true
 script = ExtResource("5_fiadu")
+time = 10
 level = "res://levels/Demo/Demo_v0.1.tscn"

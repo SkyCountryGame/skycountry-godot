@@ -8629,5 +8629,6 @@ jolt = -1.0
 max_accel = 12.0
 max_speed = 7.0
 
-[node name="Talker" type="Node3D" parent="."]
+[node name="Talker" type="Node3D" parent="." node_paths=PackedStringArray("subject")]
 script = ExtResource("5_td11p")
+subject = NodePath("..")

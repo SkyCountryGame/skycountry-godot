@@ -60,6 +60,10 @@ public partial class Global : Node
 
 	public static void RegisterGameObject(Node node, string name, GameObjectType type){
 		GameObject go;
+		Node stRoot = _.GetTree().Root;
+		while (node.GetParent() != stRoot){
+			node = node.GetParent();
+		}
 		if (!gameObjects.ContainsKey(node)){
 			go = new GameObject(node);
 			gameObjects.Add(node, go);
@@ -122,17 +126,9 @@ public partial class Global : Node
 	}
 
 	public static Interactable GetInteractable(Node n, bool strict = false){
-		if (strict){
-			if (n is Interactable interactable){ return interactable; }
-			else { return null; }
-		}
-		Node stRoot = _.GetTree().Root;
-		while (n != stRoot){
-			if (n is Interactable interactable)
-			{
-				return interactable;
-			}
-			n = n.GetParent();
+		GameObject go = GetGameObject(n);
+		if (go != null){
+			return GetInteractable(go);
 		}
 		return null;
 	}
