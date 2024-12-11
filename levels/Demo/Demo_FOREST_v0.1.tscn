@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=33 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -19,6 +19,13 @@
 [ext_resource type="PackedScene" uid="uid://v43hxhrvubte" path="res://gameobjects/trees/BareTree1_A.tscn" id="16_rqclp"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="18_5tvrn"]
+[ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://gameobjects/trees/RegularTree1_C.tscn" id="20_dkfk8"]
+[ext_resource type="PackedScene" uid="uid://cabag3v5pe1ro" path="res://gameobjects/trees/RegularTree2_C.tscn" id="21_qq80u"]
+[ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://gameobjects/trees/RegularTree3_C.tscn" id="22_rrhu1"]
+[ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://gameobjects/trees/BareTree2_B.tscn" id="23_o3ldj"]
+[ext_resource type="PackedScene" uid="uid://da4ranwjj47xe" path="res://gameobjects/trees/RegularSapling2_C.tscn" id="24_ic5n3"]
+[ext_resource type="PackedScene" uid="uid://hbx8qr1enmrd" path="res://gameobjects/trees/BareSapling2_B.tscn" id="25_b5cll"]
+[ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://gameobjects/trees/BareSapling1_B.tscn" id="26_b3hh8"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("4_wjo57")
@@ -142,3 +149,27 @@ script = ExtResource("17_38mhm")
 
 [node name="Rock29" parent="." instance=ExtResource("18_5tvrn")]
 transform = Transform3D(-0.351304, 0.355633, -0.696162, 0.0858562, 0.863618, 0.320119, 0.69165, 0.0734307, -0.393332, -10.9991, 0.057019, 14.1011)
+
+[node name="Tree3" parent="." instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.069, 0.131613, 6.23858)
+
+[node name="Tree1" parent="." instance=ExtResource("20_dkfk8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.312, 0.135548, 6.343)
+
+[node name="Tree2" parent="." instance=ExtResource("21_qq80u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9167, 0.139754, 4.38068)
+
+[node name="Tree4" parent="." instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.6523, 0, 4.88781)
+
+[node name="Tree5" parent="." instance=ExtResource("23_o3ldj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5255, 0.021697, 4.2017)
+
+[node name="Sapling2" parent="." instance=ExtResource("24_ic5n3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.9349, 0, 3.81706)
+
+[node name="Sapling3" parent="." instance=ExtResource("25_b5cll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.0783, -5.96046e-08, 2.97525)
+
+[node name="Sapling1" parent="." instance=ExtResource("26_b3hh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.4611, 1.19209e-07, 3.15856)

@@ -267,14 +267,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1887, 0.5, 12.8749)
 [node name="Barrel02" parent="." instance=ExtResource("25_6mkl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4094, 0.5, -11.2468)
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "nav", "listenerNodes")]
+[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "nav", "physBody")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
 script = ExtResource("27_k0d2h")
 stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
-physBody = NodePath("CharacterBody3D")
 nav = NodePath("NavigationAgent3D")
-states = Array[int]([0, 1])
-listenerNodes = []
+physBody = NodePath("CharacterBody3D")
 
 [node name="Timer" type="Timer" parent="Bird"]
 wait_time = 5.356
@@ -319,7 +317,7 @@ transform = Transform3D(2.06198, 0, 0, 0, 1.28961, 0, 0, 0, 2.48655, 14.6151, -1
 transform = Transform3D(1.335, 0, 0, 0, 1.20118, 0, 0, 0, 1.335, -5.52852, 0, -4.73583)
 
 [node name="Tree9" parent="." instance=ExtResource("39_vbd3j")]
-transform = Transform3D(-1.10924, 0, 3.18433, 0, 1.49914, 0, -2.44462, 0, -1.44488, 9.64721, 0, -0.590305)
+transform = Transform3D(-0.413201, 0, 1.18565, 0, 1, 0, -0.91064, 0, -0.537987, 9.64721, 0, -0.590305)
 
 [node name="Sapling7" parent="." instance=ExtResource("40_epou2")]
 transform = Transform3D(-0.637113, 0, -1.30423, 0, 1.33323, 0, 1.30373, 0, -0.637358, 16.4813, -4.77902, -0.771862)
