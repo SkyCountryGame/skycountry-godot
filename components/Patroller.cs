@@ -44,17 +44,15 @@ public partial class Patroller : NPCNode, EventListener {
 			case State.IDLE:
 				break;
 			case State.ALERT:
-				mot.pos_goal = nav.TargetPosition; //TODO proper pathfinding with navagent
+				if  (navReady){
+					mot.pos_goal = nav.GetNextPathPosition();
+				}
 				GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");
 				break;
 		}
 		mot.Update(delta, physBody);
 		if (mot.pos_goal != physBody.GlobalPosition){
-			try {
-				physBody.LookAt(mot.pos_goal, Vector3.Up);
-			} catch (Exception e){
-				GD.Print(e);
-			}
+			physBody.LookAt(new Vector3(mot.pos_goal.X, physBody.GlobalPosition.Y, mot.pos_goal.Z), Vector3.Up);
 		}
 		/*if (physBody.Velocity.Length() > 0f){
 			LookAt(physBody.Velocity, Vector3.Up);
@@ -93,9 +91,9 @@ public partial class Patroller : NPCNode, EventListener {
 	}
 
 	private void SetTargetPosition(Vector3 pos){
-		GD.Print($"{Name} Setting target position: {pos}");
-		nav.TargetPosition = pos;
-		mot.pos_goal = pos;
+		Vector3 navPos = Global.currentLevel.GetNavPoint(pos);
+		nav.TargetPosition = navPos;
+		mot.pos_goal = navPos;
 	}
 
 	public override void HandleCollide(ColliderZone zone, Node other)

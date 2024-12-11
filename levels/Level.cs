@@ -21,6 +21,7 @@ public partial class Level : Node
 	private float sunlightTheta; //the current angle, relative to +X, assuming that the sun orbits on the x-y plane. used to figure sun orbit
 
 	[Export] public NavigationRegion3D navRegion;
+	private Rid navMapID;
 	//private List<NPCNode> npcs;
 
 	public Aabb worldBounds; //the current bounds of all the meshes in the world
@@ -34,6 +35,7 @@ public partial class Level : Node
 		Global.currentLevel = this;
 		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
 			Global.navRegion = navRegion;
+			navMapID = navRegion.GetNavigationMap();
 		}
 
 		if (HasNode("SpawnLocation") && Global.playerNode != null){
@@ -92,6 +94,11 @@ public partial class Level : Node
 				
 	}
 
+	//get a point that's on the navmesh that's closest to the given point
+	public Vector3 GetNavPoint(Vector3 pos){
+		return NavigationServer3D.MapGetClosestPoint(navMapID, pos);
+	}
+
 	//gets some random point within the world bounds
 	public Vector3 GetRandomPoint(){
 		return new Vector3(
@@ -104,7 +111,6 @@ public partial class Level : Node
 	//gets some random point that can be navigated to
 	public Vector3 GetRandomNavPoint()
 	{
-		Rid navMapID = Global.navRegion.GetNavigationMap();
 		Vector3 randomPoint = GetRandomPoint();
 		Vector3 closestPoint = NavigationServer3D.MapGetClosestPoint(navMapID, randomPoint);
 	

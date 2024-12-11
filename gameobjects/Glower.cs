@@ -14,7 +14,7 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
 	private Material material;
 
     public override void _Ready(){
-        Global.RegisterGameObject(this, GameObjectType.Interactable);
+        Global.RegisterGameObject(this, GameObjectType.Entity);
         //material = new StandardMaterial3D();
         //material.Set("albedo", new Color(1,0,0));
         material = GetNode<MeshInstance3D>("Awareness1/CollisionShape3D/MeshInstance3D").GetActiveMaterial(0);
@@ -26,7 +26,7 @@ public partial class Glower : RigidBody3D, Interactable, Collideable {
         if (active){
             //material.Set("emission_energy_multiplier", GlobalPosition.DistanceTo(target.GlobalTransform.Origin));
             double val = 1.0 / MathF.Pow(GlobalPosition.DistanceTo(target.GlobalTransform.Origin)-.4f,2);
-            material.Set("emission_energy_multiplier", val);
+            //material.Set("emission_energy_multiplier", val);
         }
     }
 

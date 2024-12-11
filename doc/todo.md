@@ -13,3 +13,4 @@ todo:
 * Player has lots of updates for using AnimController and StateHolder
 * improve HUD
 * explore features of NavAgent, NavMesh, CharacterBody. 
+    * later might want to make nav baking more efficient by specifying which nodes to scan instead of doing all recursively 
