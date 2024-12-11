@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=47 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -60,30 +60,7 @@ background_mode = 2
 sky = SubResource("Sky_6m6wn")
 ambient_light_source = 3
 ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
-ambient_light_sky_contribution = 0.87
-ambient_light_energy = 2.35
-tonemap_mode = 2
-ssao_enabled = true
-ssao_radius = 0.31
-ssao_intensity = 0.36
-ssao_sharpness = 0.58
-fog_enabled = true
-fog_light_color = Color(0.132366, 0.117963, 0.211411, 1)
-fog_light_energy = 0.93
-fog_sun_scatter = 0.15
-fog_density = 0.0154
-fog_sky_affect = 0.38
-volumetric_fog_albedo = Color(0.373787, 0.000126608, 0.388593, 1)
-volumetric_fog_emission = Color(0.47788, 0.47788, 0.47788, 1)
-volumetric_fog_emission_energy = 12.01
-volumetric_fog_length = 30.97
-adjustment_enabled = true
-adjustment_brightness = 0.96
-adjustment_contrast = 1.71
-adjustment_saturation = 1.22
-
-[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
-exposure_multiplier = 0.828
+ambient_light_energy = 1.49
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0m0tt"]
 
@@ -129,7 +106,6 @@ shader_params/u_colormap_opacity_per_texture = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="NavigationRegion3D"]
 environment = SubResource("Environment_eexlt")
-camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="NavigationRegion3D/WorldEnvironment"]
 transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
