@@ -29,7 +29,7 @@ public partial class Talker : Component, Interactable {
 	public dynamic Interact()
 	{
 		if (dialogue != null){
-			subject.SetState(State.TALKING);
+			((StateManager)subject).SetState(State.TALKING);
 			return dialogue.Next();
 		}
 		return null;

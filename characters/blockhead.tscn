@@ -8614,7 +8614,6 @@ libraries = {
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("animPlayer")]
 script = ExtResource("4_00rf5")
@@ -8628,8 +8627,8 @@ animPlayer = NodePath("../AnimationPlayer")
 [node name="MotionModule" type="Node3D" parent="."]
 script = ExtResource("4_wx2qt")
 jolt = -1.0
-max_accel = 12.0
-max_speed = 7.0
+max_accel = 7.0
+max_speed = 9.0
 
 [node name="Talker" type="Node3D" parent="." node_paths=PackedStringArray("subject")]
 script = ExtResource("5_td11p")

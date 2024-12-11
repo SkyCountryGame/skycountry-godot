@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=48 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="10_e8vfu"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
+[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_ebm4n"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="17_d1aw2"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/tscn/rocks/rock_12.tscn" id="18_6qjtl"]
 [ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/tscn/rocks/rock_11.tscn" id="19_pm21m"]
@@ -41,13 +42,6 @@
 [ext_resource type="PackedScene" uid="uid://dbiumpjqlpiku" path="res://gameobjects/trees/tree_object.tscn" id="40_rofaf"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_1n15s"]
-
-[sub_resource type="Resource" id="Resource_88805"]
-script = ExtResource("6_uacsr")
-mode = 0
-textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
-
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
 energy_multiplier = 2.16
@@ -62,6 +56,17 @@ ambient_light_source = 3
 ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
 ambient_light_energy = 1.49
 
+[sub_resource type="Resource" id="Resource_88805"]
+script = ExtResource("6_uacsr")
+mode = 0
+textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1n15s"]
+vertices = PackedVector3Array(-59.5, 0.07, -59.5, -59.5, 0.07, 59.5, 59.5, 0.07, 59.5, 59.5, 0.07, -59.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_parsed_geometry_type = 2
+cell_height = 0.01
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_0m0tt"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
@@ -69,20 +74,16 @@ script = ExtResource("1_kq37l")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
-[node name="Devtool" parent="." instance=ExtResource("2_vmfbb")]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eexlt")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7044, 10.9519, 24.1525)
-script = ExtResource("3_byha7")
-target = NodePath("../Player")
-HUD = NodePath("../HUD")
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
+light_angular_distance = 0.25
+shadow_enabled = true
+sky_mode = 1
 
-[node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_1n15s")
-
-[node name="HTerrain" type="Node3D" parent="NavigationRegion3D"]
+[node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("4_sbx5e")
 centered = true
 _terrain_data = ExtResource("5_fajaf")
@@ -104,14 +105,23 @@ shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="NavigationRegion3D"]
-environment = SubResource("Environment_eexlt")
+[node name="Devtool" parent="." instance=ExtResource("2_vmfbb")]
 
-[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="NavigationRegion3D/WorldEnvironment"]
-transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
-light_angular_distance = 0.25
-shadow_enabled = true
-sky_mode = 1
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7044, 10.9519, 24.1525)
+script = ExtResource("3_byha7")
+target = NodePath("../Player")
+HUD = NodePath("../HUD")
+
+[node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_1n15s")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+shape = ExtResource("13_ebm4n")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
@@ -244,7 +254,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1887, 0.5, 12.8749)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4094, 0.5, -11.2468)
 
 [node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "nav", "listenerNodes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.69976, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.0094, 13.6395, 0)
 script = ExtResource("27_k0d2h")
 stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
 physBody = NodePath("CharacterBody3D")
@@ -270,8 +280,13 @@ shape = SubResource("SphereShape3D_0m0tt")
 texture = ExtResource("30_xd4ec")
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
-stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
+stations = [NodePath("../Barrel01"), NodePath("../Barrel02"), NodePath("../Firepit"), NodePath("../Sapling3")]
 radius = 1.0
+
+[node name="Blockhead2" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.97393)
+stations = [NodePath("../Sapling3"), NodePath("../Tree6"), NodePath("../Tree5")]
 
 [node name="Tree4" parent="." instance=ExtResource("32_orf7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9517, -1.19209e-07, -4.40123)

@@ -12,7 +12,7 @@ public partial class Pickaxe : Equipable, Collideable {
     public override void _Ready()
 	{
         base._Ready();
-        Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
+        Global.RegisterGameObject(this, Name, GameObjectType.Equipable & GameObjectType.Interactable);
         if (properties == null){
             properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         }

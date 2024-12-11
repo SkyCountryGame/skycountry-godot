@@ -3,7 +3,7 @@ using Godot;
 //an item that sits somewhere in the game world that can be picked up and added to inventory or consumed in some way
 //PAYLOAD: InventoryItem
 [GlobalClass]
-public partial class Pickup : Node3D, Interactable
+public partial class Pickup : Component, Interactable
 {
     [Export] public InventoryItem invItem {get; set;} //the pickup item to be added to inventory
     [Export] public string info; //short description to show when player can pick it up
