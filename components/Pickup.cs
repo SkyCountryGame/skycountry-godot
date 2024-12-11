@@ -10,6 +10,7 @@ public partial class Pickup : Node3D, Interactable
 
     public InteractionType interactionType => InteractionType.Pickup;
     public InteractionMethod interactionMethod => InteractionMethod.Use;
+    //TODO hold reference to ingame item to destory when interact
 
     public override void _Ready()
     {
