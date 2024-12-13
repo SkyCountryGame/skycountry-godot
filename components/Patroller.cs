@@ -16,9 +16,9 @@ public partial class Patroller : NPCNode, EventListener {
 	private LinkedListNode<Node3D> stationCurrent; //currently heading here
 	private TimerRandomInterval activityTimer;
 
-    public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.DialogueStart, EventType.DialogueEnd}; 
+	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.DialogueStart, EventType.DialogueEnd}; 
 
-    public override void _Ready(){
+	public override void _Ready(){
 		base._Ready();
 		EventManager.RegisterListener(this);
 		activityTimer = new TimerRandomInterval();
@@ -111,8 +111,8 @@ public partial class Patroller : NPCNode, EventListener {
 		return true;
 	}
 
-    public void HandleEvent(Event e)
-    {
+	public void HandleEvent(Event e)
+	{
 		if (eventTypes.Contains(e.eventType)){
 			switch (e.eventType){
 				case EventType.DialogueStart:
@@ -127,5 +127,5 @@ public partial class Patroller : NPCNode, EventListener {
 					break;
 			}
 		}
-    }
+	}
 }

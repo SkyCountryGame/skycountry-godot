@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=50 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -24,8 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/tscn/rocks/rock_10.tscn" id="20_qhbjg"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="21_vtgu2"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
-[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="24_64q68"]
-[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="25_6mkl0"]
 [ext_resource type="Script" path="res://characters/Bird.cs" id="27_k0d2h"]
 [ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="29_f1hf2"]
 [ext_resource type="Texture2D" uid="uid://casnjqwudl8rm" path="res://assets/texture/face5.png" id="30_xd4ec"]
@@ -37,9 +35,14 @@
 [ext_resource type="PackedScene" uid="uid://capfbrg2ju6q2" path="res://gameobjects/trees/RegularSapling2_A.tscn" id="36_jqwoy"]
 [ext_resource type="PackedScene" uid="uid://ckafih2k5orxu" path="res://gameobjects/trees/RegularTree1_B.tscn" id="37_dev8b"]
 [ext_resource type="PackedScene" uid="uid://ggn65mne3c6n" path="res://gameobjects/trees/RegularTree2_B.tscn" id="38_fwcs8"]
+[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/tscn/rocks/rock_1.tscn" id="39_7vjkn"]
 [ext_resource type="PackedScene" uid="uid://dbrwdpclvsbax" path="res://gameobjects/trees/RegularTree3_B.tscn" id="39_vbd3j"]
 [ext_resource type="PackedScene" uid="uid://fs3bk1pprmjk" path="res://gameobjects/trees/RegularSapling1_B.tscn" id="40_epou2"]
+[ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/tscn/rocks/rock_5.tscn" id="40_l3mg2"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
+[ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/tscn/rocks/rock_4.tscn" id="41_dkvei"]
+[ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="42_2f5qc"]
+[ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="43_c2ki4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
@@ -54,6 +57,7 @@ sky = SubResource("Sky_6m6wn")
 ambient_light_source = 3
 ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
 ambient_light_energy = 1.49
+ssao_enabled = true
 
 [sub_resource type="Resource" id="Resource_88805"]
 script = ExtResource("6_uacsr")
@@ -246,16 +250,10 @@ light_energy = 1.103
 spot_range = 15.8984
 spot_angle = 21.478
 
-[node name="Barrel01" parent="." instance=ExtResource("24_64q68")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5516, 0.5, 16.4607)
-
-[node name="Barrel02" parent="." instance=ExtResource("25_6mkl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4094, 0.5, -11.2468)
-
 [node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "nav", "listenerNodes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.0094, 13.6395, 0)
 script = ExtResource("27_k0d2h")
-stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
+stations = [null, null]
 physBody = NodePath("CharacterBody3D")
 nav = NodePath("NavigationAgent3D")
 states = Array[int]([0, 1])
@@ -280,7 +278,7 @@ texture = ExtResource("30_xd4ec")
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
-stations = [NodePath("../Barrel01"), NodePath("../Barrel02"), NodePath("../Firepit"), NodePath("../Sapling3")]
+stations = [null, null, NodePath("../Firepit"), NodePath("../Sapling3")]
 radius = 1.0
 
 [node name="Blockhead2" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
@@ -290,17 +288,35 @@ stations = [NodePath("../Sapling3"), NodePath("../Tree6"), NodePath("../Tree5")]
 [node name="Tree4" parent="." instance=ExtResource("32_orf7b")]
 transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, 17.9517, -1.19209e-07, -4.40123)
 
+[node name="Tree14" parent="." instance=ExtResource("32_orf7b")]
+transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -37.7433, -1.19209e-07, 2.21684)
+
 [node name="Tree5" parent="." instance=ExtResource("33_2l3aj")]
 transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -25.6296, 1.19209e-07, -1.5117)
 
 [node name="Tree6" parent="." instance=ExtResource("34_uyj4k")]
 transform = Transform3D(-0.301208, 0, 2.48179, 0, 1.5, 0, -2.48179, 0, -0.301208, 2.61018, 0.0251074, -11.2536)
 
+[node name="Tree12" parent="." instance=ExtResource("34_uyj4k")]
+transform = Transform3D(-2.12838, 0, 1.31149, 0, 1.5, 0, -1.31149, 0, -2.12838, -18.8885, 0.0766039, -19.1211)
+
 [node name="Sapling3" parent="." instance=ExtResource("35_226f8")]
-transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -29.0715, 2.38419e-07, 6.29343)
+transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -30.792, 2.38419e-07, 6.29343)
+
+[node name="Sapling9" parent="." instance=ExtResource("35_226f8")]
+transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -8.06175, 2.38419e-07, -18.6272)
+
+[node name="Sapling12" parent="." instance=ExtResource("35_226f8")]
+transform = Transform3D(1.8439, 0, 1.6882, 0, 1.5, 0, -1.6882, 0, 1.8439, 0.00720978, 2.38419e-07, 35.3363)
 
 [node name="Sapling4" parent="." instance=ExtResource("36_jqwoy")]
 transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, 10.275, 1.19209e-07, 20.4493)
+
+[node name="Sapling10" parent="." instance=ExtResource("36_jqwoy")]
+transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -44.7624, 1.19209e-07, 4.65365)
+
+[node name="Sapling11" parent="." instance=ExtResource("36_jqwoy")]
+transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, 7.18206, 1.19209e-07, 30.3997)
 
 [node name="Tree7" parent="." instance=ExtResource("37_dev8b")]
 transform = Transform3D(2.06198, 0, 0, 0, 1.28961, 0, 0, 0, 2.48655, 14.6151, -1.90735e-06, 9.07775)
@@ -317,6 +333,9 @@ transform = Transform3D(-1.033, 0, 2.2766, 0, 1.5, 0, -2.2766, 0, -1.033, -36.68
 [node name="Tree10" parent="." instance=ExtResource("39_vbd3j")]
 transform = Transform3D(-1.033, 0, 2.2766, 0, 1.5, 0, -2.2766, 0, -1.033, -35.4828, 0, -7.65161)
 
+[node name="Tree13" parent="." instance=ExtResource("39_vbd3j")]
+transform = Transform3D(1.97384, 0, -1.53427, 0, 1.5, 0, 1.53427, 0, 1.97384, -12.3024, -0.0336075, 34.6512)
+
 [node name="Sapling7" parent="." instance=ExtResource("40_epou2")]
 transform = Transform3D(-0.637113, 0, -1.30423, 0, 1.33323, 0, 1.30373, 0, -0.637358, 16.4813, -4.77902, -0.771862)
 
@@ -331,5 +350,26 @@ transform = Transform3D(2.00214, 0, -1.49714, 0, 1.5, 0, 1.49714, 0, 2.00214, -2
 
 [node name="Tree1" parent="." instance=ExtResource("32_orf7b")]
 transform = Transform3D(2.5, 0, 0, 0, 1.5, 0, 0, 0, 2.5, -25.6404, 0, 26.0501)
+
+[node name="Rock1" parent="." instance=ExtResource("39_7vjkn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0526, 0.133103, 0.372677)
+
+[node name="Rock5" parent="." instance=ExtResource("40_l3mg2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.9833, 0.142055, 19.2844)
+
+[node name="Rock10" parent="." instance=ExtResource("17_d1aw2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.94747, 0.11509, 8.55111)
+
+[node name="Rock11" parent="." instance=ExtResource("19_pm21m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.77132, 0.115222, 19.9002)
+
+[node name="Rock4" parent="." instance=ExtResource("41_dkvei")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.438, 0.142397, 8.18443)
+
+[node name="Barrel01" parent="." instance=ExtResource("42_2f5qc")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -17.794, 0.602364, 0.835709)
+
+[node name="Barrel02" parent="." instance=ExtResource("43_c2ki4")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -17.6088, 0.62561, 2.29673)
 
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
