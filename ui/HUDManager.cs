@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -122,15 +123,27 @@ public partial class HUDManager : Node {
     }
     public void OnDialogueResponseItemClicked(int index, Vector2 pos, int mouseButton){
         if (mouseButton == 1){ //left click
-            int id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
-            if (dialogueEvent != null){ //invoke event if one is associated with the statement
-                dialogueEvent.Invoke();
-                dialogueEvent = null;
+            int id = -1;
+            if(currentDialogue.currentStatement.responses[index].methodName!=null){
+                if(EventManager.Invoke(EventType.Function, true, (currentDialogue.currentStatement.responses[index].methodName, currentDialogue.currentStatement.responses[index].args))){
+                    id = currentDialogue.currentStatement.responses[index].nextStatementID;
+                } else {
+                    id = currentDialogue.currentStatement.responses[index].failureNextStatementID;
+                }
             }
+            else {
+                id = (int) dialogueChoices.GetItemMetadata(index); //get the id of the next statement
+                if (dialogueEvent != null){ //invoke event if one is associated with the statement
+                    dialogueEvent.Invoke();
+                    dialogueEvent = null;
+                }
+            }
+            
             if (id == -1){
                 ExitDialogue();
                 return;
             }
+            
             Dialogue.StatementNode sn = currentDialogue.statements[id];
             currentDialogue.currentStatement = sn;
             UpdateDialoguePanel(sn);
@@ -157,7 +170,6 @@ public partial class HUDManager : Node {
                 idx = dialogueChoices.AddItem(r.response);
                 dialogueChoices.SetItemMetadata(idx, r.nextStatementID);
             }
-            idx = dialogueChoices.AddItem("Exit");
             dialogueChoices.SetItemMetadata(idx, -1);
             //buttonContinue.Visible = false;
         } else {

@@ -1,7 +1,9 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using static PlayerModel;
 
 public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Interactor, Damageable, EventListener
@@ -18,7 +20,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	public float velMagnitudeMax = 10f; //approximate max velocity allowed
+	public float velMagnitudeMax = 11f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION and BEHAVIOR STUFF
@@ -103,6 +105,10 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		}
 	}
 
+	public void printWord(string blah){
+        GD.Print( blah);
+    }
+
 	public override void _Input(InputEvent ev){
 		
 		//do appropriate thing whether we are in inventory or not
@@ -178,7 +184,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					if (prev == State.INVENTORY){
 						Global.HUD.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						EventManager.Invoke(EventType.DialogueEnd);
+						EventManager.Invoke(EventType.DialogueEnd, false);
 						Global.HUD.ExitDialogue();
 					} else if (prev == State.ATTACKING){
 						equippedRightHand.EnableHitbox();
@@ -327,7 +333,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		
 	}
 
-	public void HandleEvent(Event e)
+	public bool HandleEvent(Event e)
 	{
 		switch (e.eventType){
 			case EventType.WorldItemDestroyed: //receive the destroyed GameObject
@@ -345,6 +351,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			default:
 				break;
 		}
+		return true;
 	}
 
 	public void HandleInteract(Interactable interactable)
@@ -354,7 +361,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		{
 			case InteractionType.Dialogue:
 				if (SetState(State.DIALOGUE)){
-					EventManager.Invoke(EventType.DialogueStart, Global.GetGameObject((Node)interactable));
+					EventManager.Invoke(EventType.DialogueStart, false, Global.GetGameObject((Node)interactable));
 					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
@@ -435,7 +442,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	{
 		playerModel.hp -= d; //TODO take into account armor, skills, etc.
 		if (playerModel.hp < 0){
-			EventManager.Invoke(EventType.GameOver); 
+			EventManager.Invoke(EventType.GameOver, false); 
 			GD.Print("dead");
 			SetProcessMode(ProcessModeEnum.Disabled);
 		}

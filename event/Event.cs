@@ -14,6 +14,7 @@ public enum EventType {
     SetMusic, 
     CustomScene1, //for example some little scene plays out after a dialogue
     BeginTradeUI,
+    Function, //payload = Tuple<string, list<object>> (function name, parameters to function)
     None //default
 }
 
@@ -28,7 +29,7 @@ public class Event {
         payload = p;
     }
     public bool Invoke(){
-        EventManager.Invoke(this);
+        EventManager.Invoke(this,false);
         return true;
     }
     //idea to include checking of if event can be invoked within the event itself (in Invoke()). we'll see if the other logic ends up handling this as needed
@@ -37,7 +38,7 @@ public class Event {
 
 public interface EventListener {
     HashSet<EventType> eventTypes { get; } //what types of event does this thing care about?
-    void HandleEvent(Event e);
+    bool HandleEvent(Event e);
 }
 
 public class EventManager {
@@ -51,10 +52,15 @@ public class EventManager {
         }
     }
 
-    public static void Invoke(Event e){
+//temp, i need to think about this more, but just want to test functionality
+    public static bool Invoke(Event e, bool singleInvoke){
         if (eventListeners.ContainsKey(e.eventType)){
             foreach (EventListener l in eventListeners[e.eventType]){
+                if(singleInvoke){
+                    return l.HandleEvent(e);
+                }
                 l.HandleEvent(e);
+
                 /*
                 try {
                     Task.Run(() => l.HandleEvent(e));
@@ -62,11 +68,13 @@ public class EventManager {
                     Godot.GD.Print($"Error invoking event {e.eventType.ToString()} for listener {l.ToString()}: {ex.Message}");
                 }*/
             }
+            return true;
         }
+        return false;
     }
     //a convenience method that will construct the event object for you
-    public static void Invoke(EventType t, dynamic payload = null){
+    public static bool Invoke(EventType t, bool singleInvoke, dynamic payload = null){
         Event e = new Event(t, payload);
-        Invoke(e);
+        return Invoke(e, singleInvoke);
     }
 }

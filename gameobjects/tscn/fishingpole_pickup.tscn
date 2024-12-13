@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkbtudgucxygh"]
+[gd_scene load_steps=6 format=3 uid="uid://ibdslqa81l0k"]
 
 [ext_resource type="Script" path="res://components/Pickup.cs" id="1_uxvvr"]
 [ext_resource type="Script" path="res://util/AutomaticMeshFromCollisionShape.cs" id="1_yj4jy"]

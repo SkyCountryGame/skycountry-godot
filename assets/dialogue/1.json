@@ -1,0 +1,67 @@
+[
+    {
+        "id": 1,
+        "text": "Hey do you have 10 rocks?",
+        "responses": [
+            {
+                "text": "Yes.",
+                "exec": {
+                    "success" : 2,
+                    "failure": 3,
+                    "name": "CheckAndRemoveInventory",
+                    "args": ["Rock", 10]
+                }
+            },
+            {
+                "text": "No.",
+                "next": 4
+            },
+            {
+                "text": "Goodbye.",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 2,
+        "text": "Nice! Thanks haha now we can ROCK out haha",
+        "responses": [
+            {
+                "text": "...",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 3,
+        "text": "Fucking liar you piece of shit i hope you fucking die how dare you lie to my face like that you subhuman piece of shit didnt your mother teach you that lying is bad i guess your mother actually didnt love you so never taught you that lesson because how could anybody love you you dogshit piece of trash i hope you burn in a fucking fire and nobody even tries to come and rescue you you piece of shit",
+        "responses": [
+            {
+                "text": "Ill be back",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    },
+    {
+        "id": 4,
+        "text": "Oh... ok...",
+        "responses": [
+            {
+                "text": "Bye",
+                "next": -1
+            }
+        ],
+        "speed": 2,
+        "fontSize": 1,
+        "emotion": 0
+    }
+]

@@ -20,7 +20,7 @@ public class AtmosphereManager : EventListener {
 
     public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.WeatherChange, EventType.SpawnParticles, EventType.PlaySound};
 
-    public void HandleEvent(Event e)
+    public bool HandleEvent(Event e)
     {
         GD.Print($"AtmosphereManager handling event {e.eventType.ToString()}");
         switch (e.eventType){
@@ -37,5 +37,6 @@ public class AtmosphereManager : EventListener {
                 
                 break;
         }
+        return true;
     }
 }

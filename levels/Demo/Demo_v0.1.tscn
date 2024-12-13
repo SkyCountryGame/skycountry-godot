@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=52 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="10_e8vfu"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
-[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_ebm4n"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="17_d1aw2"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://gameobjects/tscn/rocks/rock_12.tscn" id="18_6qjtl"]
 [ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://gameobjects/tscn/rocks/rock_11.tscn" id="19_pm21m"]
@@ -36,15 +35,23 @@
 [ext_resource type="PackedScene" uid="uid://dbrwdpclvsbax" path="res://gameobjects/trees/RegularTree3_B.tscn" id="39_vbd3j"]
 [ext_resource type="PackedScene" uid="uid://fs3bk1pprmjk" path="res://gameobjects/trees/RegularSapling1_B.tscn" id="40_epou2"]
 [ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/tscn/rocks/rock_5.tscn" id="40_l3mg2"]
-[ext_resource type="PackedScene" uid="uid://bkbtudgucxygh" path="res://gameobjects/tscn/fishingpole_pickup.tscn" id="40_wi0ti"]
+[ext_resource type="PackedScene" uid="uid://ibdslqa81l0k" path="res://gameobjects/tscn/fishingpole_pickup.tscn" id="40_wi0ti"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 [ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/tscn/rocks/rock_4.tscn" id="41_dkvei"]
 [ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="42_2f5qc"]
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="43_c2ki4"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
+[ext_resource type="PackedScene" uid="uid://ctp1wbgjw382x" path="res://gameobjects/rock/rock_pickup.tscn" id="45_idycp"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1n15s"]
+
+[sub_resource type="Resource" id="Resource_88805"]
+script = ExtResource("6_uacsr")
+mode = 0
+textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
@@ -61,32 +68,28 @@ ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
 ambient_light_energy = 1.49
 ssao_enabled = true
 
-[sub_resource type="Resource" id="Resource_88805"]
-script = ExtResource("6_uacsr")
-mode = 0
-textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
+exposure_multiplier = 0.828
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_1n15s"]
-vertices = PackedVector3Array(-59.5, 0.07, -59.5, -59.5, 0.07, 59.5, 59.5, 0.07, 59.5, 59.5, 0.07, -59.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-geometry_parsed_geometry_type = 2
-cell_height = 0.01
-
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[node name="Wod2" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_kq37l")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_eexlt")
+[node name="Devtool" parent="." instance=ExtResource("2_vmfbb")]
 
-[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
-light_angular_distance = 0.25
-shadow_enabled = true
-sky_mode = 1
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7044, 10.9519, 24.1525)
+script = ExtResource("3_byha7")
+target = NodePath("../Player")
+HUD = NodePath("../HUD")
 
-[node name="HTerrain" type="Node3D" parent="."]
+[node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_1n15s")
+
+[node name="HTerrain" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("4_sbx5e")
 centered = true
 _terrain_data = ExtResource("5_fajaf")
@@ -108,23 +111,15 @@ shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
 
-[node name="Devtool" parent="." instance=ExtResource("2_vmfbb")]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="NavigationRegion3D"]
+environment = SubResource("Environment_eexlt")
+camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7044, 10.9519, 24.1525)
-script = ExtResource("3_byha7")
-target = NodePath("../Player")
-HUD = NodePath("../HUD")
-
-[node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_1n15s")
-
-[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
-shape = ExtResource("13_ebm4n")
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="NavigationRegion3D/WorldEnvironment"]
+transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
+light_angular_distance = 0.25
+shadow_enabled = true
+sky_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
@@ -369,4 +364,37 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -4.3615, 0.197253, 16.6254)
 
 [node name="FishingPolePickup" parent="." instance=ExtResource("40_wi0ti")]
-transform = Transform3D(0.220085, 0, 0.975481, 0, 1, 0, -0.975481, 0, 0.220085, -17.1346, 0.788893, 24.624)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0577, 0.788893, 12.4773)
+
+[node name="Rocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1498, 0)
+
+[node name="RockPickup" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.41948, 0, 45.8169)
+
+[node name="RockPickup2" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4867, 0, 45.8169)
+
+[node name="RockPickup3" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94128, 0, 45.8169)
+
+[node name="RockPickup4" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.7351, 0, 45.8169)
+
+[node name="RockPickup5" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30964, 0, 45.8169)
+
+[node name="RockPickup6" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4477, 0, 45.8169)
+
+[node name="RockPickup7" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.00931, 0, 45.8169)
+
+[node name="RockPickup8" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7267, 0, 45.8169)
+
+[node name="RockPickup9" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.676631, 0, 45.8169)
+
+[node name="RockPickup10" parent="Rocks" instance=ExtResource("45_idycp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40231, 0, 45.8169)
