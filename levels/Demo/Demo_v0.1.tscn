@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=54 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -43,6 +43,10 @@
 [ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/tscn/rocks/rock_4.tscn" id="41_dkvei"]
 [ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="42_2f5qc"]
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="43_c2ki4"]
+[ext_resource type="PackedScene" uid="uid://btl0xnkreo34w" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
+[ext_resource type="PackedScene" uid="uid://cf175ilhtndsy" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
+[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
+[ext_resource type="PackedScene" uid="uid://cekpx3bad5706" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
@@ -371,5 +375,26 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -17.794, 0.602364, 0.83
 
 [node name="Barrel02" parent="." instance=ExtResource("43_c2ki4")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -17.6088, 0.62561, 2.29673)
+
+[node name="WoodStoolStump" parent="." instance=ExtResource("44_rn0rc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7062, 0.314035, 12.2655)
+
+[node name="WoodStool" parent="." instance=ExtResource("45_57l3c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.91299, 0.296446, 10.7913)
+
+[node name="WoodLog" parent="." instance=ExtResource("46_xv32s")]
+transform = Transform3D(1.80948, -0.570062, 0.00222529, 0.570065, 1.80948, -0.00471467, -0.000705787, 0.00516545, 1.89715, -7.82822, 0.653605, 14.021)
+
+[node name="WoodLog2" parent="." instance=ExtResource("46_xv32s")]
+transform = Transform3D(1.01581, -0.324114, -1.56917, 0.570065, 1.80948, -0.00471467, 1.49745, -0.468985, 1.06625, -7.82822, 0.653605, 13.385)
+
+[node name="WoodLog3" parent="." instance=ExtResource("46_xv32s")]
+transform = Transform3D(1.57376, 1.31109, -1.63353, -0.333054, 2.17386, 1.4239, 2.06796, -0.647662, 1.47248, -7.31256, 0.566481, 13.385)
+
+[node name="LogBench" parent="." instance=ExtResource("47_eby20")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -9.97398, 0.197253, 16.6254)
+
+[node name="LogBench2" parent="." instance=ExtResource("47_eby20")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -4.3615, 0.197253, 16.6254)
 
 [connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]

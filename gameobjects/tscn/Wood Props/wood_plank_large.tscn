@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=4 uid="uid://ctxwefr3jrq18"]
+
+[ext_resource type="PackedScene" uid="uid://yewrqh3mlp3c" path="res://assets/Models/Wood Props/Wood Plank Large/WoodPlank_Large.gltf" id="1_j5x2s"]
+[ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_a22se"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0au5n"]
+_surfaces = [{
+"aabb": AABB(-0.647494, -0.03631, -0.11661, 1.29499, 0.07262, 0.23322),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAAHAAIAAAABAAcAAQADAAQAAQAAAAMAAwACAAUAAwAAAAIABAAFAAYABAADAAUABgACAAcABgAFAAIAAQAGAAcAAQAEAAYA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("///K7krZAAD//zcRStkAALMA/////wAAY//K7gAAAABj/zcRAAAAAAAA///zBAAAAAAAAPMEAACzAAAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1fc6o"]
+resource_name = "WoodPlank_Large_WoodPlankLong"
+_surfaces = [{
+"aabb": AABB(-0.647494, -0.03631, -0.11661, 1.29499, 0.07262, 0.23322),
+"attribute_data": PackedByteArray("SwBDSeYAD8fTW9v7lQB3bOYApr11b9P/2v8dSUz+Gcg6b+n7SwC/bNNbQeM5AQC4wgB6SnVvQeM5AdnK2v/lbJ3+tLc6b4HjWP9LSp3+3MlYXIHjoP9dbEz+pLhYXOn7"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AQAWAAcAAQAEABYABQAKAA0ABQACAAoACQAGAA8ACQAAAAYADgAQABMADgALABAAFAAIABcAFAARAAgAAwASABUAAwAMABIA"),
+"material": ExtResource("2_a22se"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("///K7krZVv///8ruStkg////yu5K2cPL//83EUrZ6P///zcRStkY////NxFK2X7NswD/////6/+zAP///////7MA//////fUY//K7gAAaP9j/8ruAACg02P/yu4AANr/Y/83EQAA//9j/zcRAACy1WP/NxEAANr/AAD///ME//8AAP//8wTa/wAA///zBPfUAAAAAPMEXv8AAAAA8wTa/wAAAADzBPfUswAAAP//Tf+zAAAA///3/7MAAAD///fU94CDvwQAuQFpo0hG1D+m/wQAuQH8pGhJU4DWv7iB/3+N1Y3V44CNv5CpflIwgM3/3T+5/+KqHFUrgNP/QYDfv5R/lP+N1Y3ViD8Q/49/j/+N1Y3Vfz/9/gAAuQGN1Y3V")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_0au5n")
+
+[node name="WoodPlank_Large" instance=ExtResource("1_j5x2s")]
+
+[node name="WoodPlankLong" parent="." index="0"]
+mesh = SubResource("ArrayMesh_1fc6o")
