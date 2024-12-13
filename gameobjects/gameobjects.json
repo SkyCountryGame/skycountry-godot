@@ -18,7 +18,10 @@
             "fishingpole_equip.tscn",
             "fishingpole_pickup.tscn"
         ],
-		"inventoryItem": ""
+		"inventoryItem": "",
+		"itemProperties": {
+			
+		}
 	}
 
 ]

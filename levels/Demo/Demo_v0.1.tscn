@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=51 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -24,8 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/tscn/rocks/rock_10.tscn" id="20_qhbjg"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="21_vtgu2"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
-[ext_resource type="Script" path="res://characters/Bird.cs" id="27_k0d2h"]
-[ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="29_f1hf2"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://gameobjects/trees/RegularTree1_A.tscn" id="32_orf7b"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://gameobjects/trees/RegularTree2_A.tscn" id="33_2l3aj"]
@@ -37,16 +35,16 @@
 [ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/tscn/rocks/rock_1.tscn" id="39_7vjkn"]
 [ext_resource type="PackedScene" uid="uid://dbrwdpclvsbax" path="res://gameobjects/trees/RegularTree3_B.tscn" id="39_vbd3j"]
 [ext_resource type="PackedScene" uid="uid://fs3bk1pprmjk" path="res://gameobjects/trees/RegularSapling1_B.tscn" id="40_epou2"]
-[ext_resource type="PackedScene" uid="uid://bkbtudgucxygh" path="res://gameobjects/tscn/fishingpole_pickup.tscn" id="40_wi0ti"]
 [ext_resource type="PackedScene" uid="uid://bw20i8njv56ia" path="res://gameobjects/tscn/rocks/rock_5.tscn" id="40_l3mg2"]
+[ext_resource type="PackedScene" uid="uid://bkbtudgucxygh" path="res://gameobjects/tscn/fishingpole_pickup.tscn" id="40_wi0ti"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 [ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/tscn/rocks/rock_4.tscn" id="41_dkvei"]
 [ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="42_2f5qc"]
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="43_c2ki4"]
-[ext_resource type="PackedScene" uid="uid://btl0xnkreo34w" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
-[ext_resource type="PackedScene" uid="uid://cf175ilhtndsy" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
-[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
-[ext_resource type="PackedScene" uid="uid://cekpx3bad5706" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_3vwmo")
@@ -134,6 +132,7 @@ light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_2fyb0")]
 transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -9.25845, 4.76837e-07, 17.2892)
+collision_mask = 1
 
 [node name="LodgingBuildingDemo" parent="." instance=ExtResource("1_1jaco")]
 transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -13.8096, -1.90735e-06, -3.01665)
@@ -252,12 +251,9 @@ light_energy = 1.103
 spot_range = 15.8984
 spot_angle = 21.478
 
-[node name="Enemy" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.6202, 27.279, 0)
-
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
-stations = [null, null, NodePath("../Firepit"), NodePath("../Sapling3")]
+stations = [NodePath("../Tree4"), NodePath("../Tree14"), NodePath("../Firepit"), NodePath("../Sapling3")]
 radius = 1.0
 
 [node name="Blockhead2" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]

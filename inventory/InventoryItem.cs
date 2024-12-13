@@ -61,10 +61,6 @@ public partial class InventoryItem : Resource, System.ICloneable {
     }
 
     public PackedScene GetPackedSceneWorldItem(){
-        /*if (packedScene == null){
-            packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
-            Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
-        }*/
         return Prefab.Get(name+"_pickup");
     }
     public PackedScene GetPackedSceneEquipable(){

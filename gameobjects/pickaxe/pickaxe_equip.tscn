@@ -78,7 +78,7 @@ height = 3.2
 
 [node name="PickaxeEquipable" type="Node3D" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("1_g1rbu")
-properties = ExtResource("2_clwul")
+itemProperties = ExtResource("2_clwul")
 hitbox = NodePath("Area3D/Hitbox")
 
 [node name="Pick" type="MeshInstance3D" parent="."]

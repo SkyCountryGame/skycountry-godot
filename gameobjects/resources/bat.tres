@@ -11,5 +11,4 @@ miningDamage = 1
 arcLength = 1
 range = 1
 reswingSpeed = 1
-scenePath = "res://gameobjects/bat/bat_equip.tscn"
 usableWhileMoving = true

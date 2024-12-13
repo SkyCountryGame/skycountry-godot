@@ -11,5 +11,5 @@ miningDamage = 1
 arcLength = 1
 range = 1
 reswingSpeed = 1
-scenePath = "res://gameobjects/pickaxe/pickaxe_equip.tscn"
+scenePath = ""
 usableWhileMoving = false

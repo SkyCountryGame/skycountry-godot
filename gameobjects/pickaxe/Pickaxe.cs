@@ -2,7 +2,6 @@ using Godot;
 using System;
 
 public partial class Pickaxe : Equipable, Collideable {
-    [Export] private MeleeItemProperties properties;
 
     public Pickaxe()
     {
@@ -12,11 +11,10 @@ public partial class Pickaxe : Equipable, Collideable {
     public override void _Ready()
 	{
         base._Ready();
-        Global.RegisterGameObject(this, Name, GameObjectType.Equipable & GameObjectType.Interactable);
-        if (properties == null){
-            properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
+        Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
+        if (itemProperties == null){
+            itemProperties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
         }
-		itemProperties = properties;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +30,7 @@ public partial class Pickaxe : Equipable, Collideable {
     //attempt to use the pickaxe on the object. only works if thing is Destroyable
     public override void Use(dynamic obj = null){
         if (obj != null && obj is Destroyable){
-            ((Destroyable)obj).ApplyDamage(properties.damage);
+            ((Destroyable)obj).ApplyDamage(((MeleeItemProperties)itemProperties).damage);
             CallDeferred("DisableHitbox");
             GD.Print("pick used");
         }
