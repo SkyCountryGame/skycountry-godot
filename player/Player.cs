@@ -18,7 +18,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	public float velMagnitudeMax = 24f; //approximate max velocity allowed
+	public float velMagnitudeMax = 10f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION and BEHAVIOR STUFF

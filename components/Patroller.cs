@@ -51,7 +51,7 @@ public partial class Patroller : NPCNode, EventListener {
 				break;
 		}
 		mot.Update(delta, physBody);
-		if (mot.pos_goal.X != physBody.GlobalPosition.X && mot.pos_goal.Z != physBody.GlobalPosition.Z){
+		if (mot.pos_goal.X != physBody.GlobalPosition.X || mot.pos_goal.Z != physBody.GlobalPosition.Z){
 			physBody.LookAt(new Vector3(mot.pos_goal.X, physBody.GlobalPosition.Y, mot.pos_goal.Z), Vector3.Up);
 		}
 		/*if (physBody.Velocity.Length() > 0f){

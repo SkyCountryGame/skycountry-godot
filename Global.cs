@@ -119,7 +119,6 @@ public partial class Global : Node
 
 	}
 
-	//TODO will probably remove and just use the list of nodes method, because almost all will be multiple nodes, and the map uses a list
 	public static void RegisterGameObject(Node node, string name, GameObjectType type){
 		RegisterGameObject(GetGameObjectNodes(node), type);
 	}

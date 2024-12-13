@@ -369,4 +369,4 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -4.3615, 0.197253, 16.6254)
 
 [node name="FishingPolePickup" parent="." instance=ExtResource("40_wi0ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0577, 0.788893, 12.4773)
+transform = Transform3D(0.220085, 0, 0.975481, 0, 1, 0, -0.975481, 0, 0.220085, -17.1346, 0.788893, 24.624)

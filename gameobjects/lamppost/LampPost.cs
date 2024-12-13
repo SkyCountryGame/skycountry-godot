@@ -16,6 +16,7 @@ public partial class LampPost : Node, Interactable {
 
 	public override void _Ready()
 	{
+		GD.Print("LampPost ready");
 		Global.RegisterGameObject(this, GameObjectType.Interactable);
 		//lamplight = GetNode<OmniLight3D>("CollisionShape3D/StaticBody3D/OmniLight3D");
 		
@@ -44,7 +45,7 @@ public partial class LampPost : Node, Interactable {
 
 	public bool IsInteractionValid(Interactor interactor)
 	{
-		throw new NotImplementedException();
+		return true;
 	}
 
 	public void Retain()

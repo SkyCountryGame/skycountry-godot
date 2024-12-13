@@ -18,7 +18,7 @@ public partial class Camera : Camera3D
 	private float offsetDist = 10; 
 	private float offsetTheta = 0; //about y
 	private float offsetPhi = 45; //about x (target's x)
-	private float camRotateIncrement = (float) (Math.PI / 64.0d);
+	private float camRotateIncrement = (float) (Math.PI / 8.0d);
 	private CameraState state = CameraState.DEFAULT;
 
 	[Export]

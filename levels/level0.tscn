@@ -97,10 +97,6 @@ light_color = Color(0.796172, 0.801828, 0.649819, 1)
 shadow_enabled = true
 sky_mode = 1
 
-[node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -12)
-script = null
-
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 transform = Transform3D(1, 0, 0, 0, 0.928738, 0.370736, 0, -0.370736, 0.928738, 0, 3.59515, 6.50117)
 current = true
@@ -229,3 +225,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1497, 0.0999999, -1.28501)
 
 [node name="PickaxePickup" parent="." instance=ExtResource("6_krsbu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.624, 0.0499992, 4.44565)
+
+[node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7833, 0.1, -14.6407)
