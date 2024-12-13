@@ -93,8 +93,3 @@ skeleton = NodePath("")
 transform = Transform3D(0.303, 0, -2.65765e-08, 0, 0.444, 0, -2.64891e-08, 0, -0.304, 0.00605619, 0, -5.29449e-10)
 mesh = SubResource("ArrayMesh_yxpl4")
 skeleton = NodePath("")
-
-[node name="Pickup" type="Node3D" parent="."]
-script = ExtResource("1_rrefl")
-invItem = ExtResource("2_vmyae")
-info = "Pickaxe"

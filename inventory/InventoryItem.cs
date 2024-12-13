@@ -1,6 +1,6 @@
 using System;
 using Godot;
-
+using Prefab = PrefabManager;
 
 //TODO there is still some sorting out to do with the Node vs Model situation
 [GlobalClass]
@@ -11,21 +11,19 @@ public partial class InventoryItem : Resource, System.ICloneable {
         Ammo = 1<<2, 
         Apparel = 1<<3,
         Shield = 1<<4, 
-        Semantic = 1<<5, 
-        Quest = 1<<6, 
-        Junk = 1<<7,
-        Mineral = 1<<8
+        Semantic = 1<<5,
+        Tool = 1<<6, 
+        Quest = 1<<7,
+        Junk = 1<<8,
+        Mineral = 1<<9
     }
 
     [Export] public string name;
     [Export] public ItemType itemType;
     [Export] public bool equipable;
-    [Export] public string worldItemPath; 
-    [Export] public PackedScene packedSceneEquipable;
+    
     public int id;
     private static int nextId = 0; //keep count so that id is always unique
-
-    private string packedScenePath; //the path to the scene that will be instantiated if this item is dropped
 
     public bool inited = false;
 
@@ -34,12 +32,10 @@ public partial class InventoryItem : Resource, System.ICloneable {
     //sets up the necessary data for this item to be added to an entity's inventory. e.g. this is usually called when an item is picked up
     public InventoryItem() : this(null, ItemType.Weapon, false, null, null) {}
 
-    public InventoryItem(string name, ItemType itemType, bool equipable, string worldItemPath, PackedScene packedSceneEquipable){
+    public InventoryItem(string name, ItemType itemType, bool equipable, PackedScene packedSceneWorldItem, PackedScene packedSceneEquipable){
         this.name = name;
         this.itemType = itemType;
         this.equipable = equipable;
-        this.worldItemPath = worldItemPath;
-        this.packedSceneEquipable = packedSceneEquipable;
     }
 
     public void Init()
@@ -69,23 +65,9 @@ public partial class InventoryItem : Resource, System.ICloneable {
             packedScene = ResourceLoader.Load<PackedScene>(packedScenePath);
             Global.prefabs[name] = packedScene; //for now these are indexed by invitem name but will probably be something else in future
         }*/
-        return ResourceLoader.Load<PackedScene>(worldItemPath);
+        return Prefab.Get(name+"_pickup");
     }
     public PackedScene GetPackedSceneEquipable(){
-        return packedSceneEquipable;
+        return Prefab.Get(name+"_equip");
     }
-
-    /**
-     * how effective the given entity is with this item
-     */
-     /*
-    public int GetEffectiveness(Entity entity)
-    {
-        int res = 0;
-        foreach (KeyValuePair<EntityTypes.Skill, int> m in EffectivenessMap)
-        {
-            res += entity.GetSkill(m.Key) * m.Value;
-        }
-        return res;
-    }*/
 }

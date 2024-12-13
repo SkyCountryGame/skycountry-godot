@@ -15,7 +15,7 @@ public class EffectsManager {
         if (floatingTextNodes[obj].ContainsKey(key)){
             floatingTextNodes[obj][key].Text = text;
         } else {
-            Label3D textObj = (Label3D) Global.prefabs["FloatingText"].Instantiate();
+            Label3D textObj = (Label3D) PrefabManager.prefabs["FloatingText"].Instantiate();
             textObj.Text = text;
             textObj.Position = offset;
             obj.AddChild(textObj);
@@ -32,7 +32,7 @@ public class EffectsManager {
     }
 
     public static void MarkerPoint(string key, Vector3 pos, int duration = 2000){
-        Node3D markerNode = (Node3D) Global.prefabs["MarkerPoint"].Instantiate();
+        Node3D markerNode = (Node3D) PrefabManager.prefabs["MarkerPoint"].Instantiate();
         markerNode.Position = pos;
         Global.currentLevel.AddChild(markerNode);
 

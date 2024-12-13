@@ -17,8 +17,6 @@ public partial class Global : Node
 	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
 	public static HUDManager HUD; // set by HUDManager on ready
 	public static PauseMenu pauseMenu; // set by PauseMenu on ready
-	public static PrefabManager prefabMgr; // constructed here in init()
-	public static Dictionary<string, PackedScene> prefabs;
 	public static NavigationRegion3D navRegion; // set by each level
 	public static Level currentLevel; // the current "level", set by each level on ready
 	
@@ -44,9 +42,8 @@ public partial class Global : Node
 	}
 
 	public void init(){
+		PrefabManager.Init();
 		atmosphereManager = new AtmosphereManager();
-		prefabMgr = new PrefabManager();
-		prefabs = prefabMgr.prefabs; //for shorthand
 		ProcessMode = ProcessModeEnum.Always;
 		foreach (GameObjectType t in Enum.GetValues(typeof(GameObjectType))){
 			mapTypeGameObjects.Add(t, new HashSet<GameObject>());
@@ -124,29 +121,7 @@ public partial class Global : Node
 
 	//TODO will probably remove and just use the list of nodes method, because almost all will be multiple nodes, and the map uses a list
 	public static void RegisterGameObject(Node node, string name, GameObjectType type){
-		GameObject go;
-		Node stRoot = _.GetTree().Root;
-		while (node.GetParent() != stRoot){
-			node = node.GetParent();
-		}
-		if (!mapNodeGameObjects.ContainsKey(node)){
-			go = new GameObject(node);
-			mapNodeGameObjects.Add(node, go);
-		} else {
-			go = mapNodeGameObjects[node];
-		}
-		switch(type){
-			case GameObjectType.Interactable:
-				mapGameObjectToInteractable.Add(go, (Interactable)node);
-				break;
-			case GameObjectType.SpawnPoint:
-				//spawnPoints.Add((SpawnPoint)node);
-				break;
-			
-			default:
-				break;
-		}
-
+		RegisterGameObject(GetGameObjectNodes(node), type);
 	}
 
 	public static void RegisterGameObject(Node node, GameObjectType type){
@@ -164,6 +139,13 @@ public partial class Global : Node
 			}
 		}*/
 		return null;
+	}
+
+	//helper functin to get all the nodes that comprise a game object, given its root node
+    public static List<Node> GetGameObjectNodes(Node n){
+		List<Node> res = new List<Node>(){n};
+        res.AddRange(n.GetChildren());
+		return res;
 	}
 
 	public static Interactable GetInteractable(Node n, bool strict = false){

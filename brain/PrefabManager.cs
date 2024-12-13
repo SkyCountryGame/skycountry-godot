@@ -10,14 +10,15 @@ using System.Collections.Generic;
     */
 public partial class PrefabManager {
     
-    public Dictionary<string, PackedScene> prefabs; //prefabs are just PackedScenes that are used to instantiate game objects
+    public static Dictionary<string, PackedScene> prefabs = new Dictionary<string, PackedScene>(); //prefabs are just PackedScenes that are used to instantiate game objects
     public Dictionary<string, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it), for objects of which there can be multiple
     public Dictionary<string, Node> mapPackedSceneToSingleNode; //assoc packed scenes with the single node that was instantiated from it, for objects of which there can only be one, like a pausemenu or a boss
     //TODO make these 3 variables into a Prefab class for better encapsulation. e.g. rather than 3 HashMaps we have one HashMap<string, Prefab> 
 
     //NOTE there is also all the separate nodes in a scenetree that comprise a gameobject. 
     
-    public PrefabManager(){
+    //public PrefabManager(){
+    public static void Init(){
         prefabs = new Dictionary<string, PackedScene>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
         prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/floatingtext.tscn"));
@@ -70,5 +71,22 @@ public partial class PrefabManager {
             return node;
         }
         return null;
+    }
+
+    //get a prefab
+    public static PackedScene Get(string label){
+        if (prefabs.ContainsKey(label)){
+            return prefabs[label];
+        }
+        PackedScene p = null;
+        if (ResourceLoader.Exists($"res://gameobjects/tscn/{label}.tscn")){
+            p = ResourceLoader.Load<PackedScene>($"res://gameobjects/tscn/{label}.tscn");
+            prefabs[label] = p;
+        } else if (ResourceLoader.Exists($"res://gameobjects/{label.Split("_")[0]}/{label}.tscn")) {
+            p = ResourceLoader.Load<PackedScene>($"res://gameobjects/{label.Split("_")[0]}/{label}.tscn");
+            prefabs[label] = p;
+        } 
+        //TODO else check other dirs        
+        return p;
     }
 }

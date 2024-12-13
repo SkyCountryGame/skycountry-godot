@@ -1,22 +1,12 @@
 using Godot;
 using System;
 
-public partial class Pickaxe : Equipable, Collideable {
-    [Export] private MeleeItemProperties properties;
-
-    public Pickaxe()
-    {
-    }
+public partial class FishingPole : Equipable {
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
         base._Ready();
-        Global.RegisterGameObject(this, Name, GameObjectType.Equipable & GameObjectType.Interactable);
-        if (properties == null){
-            properties = ResourceLoader.Load<MeleeItemProperties>("res://gameobjects/resources/pickaxe.tres");
-        }
-		itemProperties = properties;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,16 +16,16 @@ public partial class Pickaxe : Equipable, Collideable {
 
     public string Info()
     {
-        return "Pickaxe";
+        return "Fishing Pole";
     }
     
     //attempt to use the pickaxe on the object. only works if thing is Destroyable
     public override void Use(dynamic obj = null){
-        if (obj != null && obj is Destroyable){
-            ((Destroyable)obj).ApplyDamage(properties.damage);
-            CallDeferred("DisableHitbox");
-            GD.Print("pick used");
-        }
+        GD.Print("Fishing Pole used");
+    }
+
+    private void DisableHitbox(){
+        hitbox.Disabled = true;
     }
     
     public void HandleCollide(ColliderZone zone, Node other)

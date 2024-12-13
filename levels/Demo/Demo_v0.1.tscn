@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=46 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -26,9 +26,7 @@
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
 [ext_resource type="PackedScene" uid="uid://3bbxp23apgws" path="res://gameobjects/tscn/Wood Props/barrel_01.tscn" id="24_64q68"]
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="25_6mkl0"]
-[ext_resource type="Script" path="res://characters/Bird.cs" id="27_k0d2h"]
-[ext_resource type="Script" path="res://util/TimerRandomInterval.cs" id="29_f1hf2"]
-[ext_resource type="Texture2D" uid="uid://casnjqwudl8rm" path="res://assets/texture/face5.png" id="30_xd4ec"]
+[ext_resource type="PackedScene" uid="uid://ckyclxamu4m7" path="res://characters/bird_old_improve.tscn" id="27_4mdfa"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://gameobjects/trees/RegularTree1_A.tscn" id="32_orf7b"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://gameobjects/trees/RegularTree2_A.tscn" id="33_2l3aj"]
@@ -40,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://dbrwdpclvsbax" path="res://gameobjects/trees/RegularTree3_B.tscn" id="39_vbd3j"]
 [ext_resource type="PackedScene" uid="uid://fs3bk1pprmjk" path="res://gameobjects/trees/RegularSapling1_B.tscn" id="40_epou2"]
 [ext_resource type="PackedScene" uid="uid://dbiumpjqlpiku" path="res://gameobjects/trees/tree_object.tscn" id="40_rofaf"]
+[ext_resource type="PackedScene" uid="uid://bkbtudgucxygh" path="res://gameobjects/tscn/fishingpole_pickup.tscn" id="40_wi0ti"]
 [ext_resource type="PackedScene" uid="uid://dfi06lj0pphin" path="res://gameobjects/trees/RegularSapling2_B.tscn" id="41_6s2o2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
@@ -66,8 +65,6 @@ vertices = PackedVector3Array(-59.5, 0.07, -59.5, -59.5, 0.07, 59.5, 59.5, 0.07,
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 geometry_parsed_geometry_type = 2
 cell_height = 0.01
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_0m0tt"]
 
 [node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_kq37l")
@@ -253,31 +250,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.1887, 0.5, 12.8749)
 [node name="Barrel02" parent="." instance=ExtResource("25_6mkl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4094, 0.5, -11.2468)
 
-[node name="Bird" type="Node3D" parent="." node_paths=PackedStringArray("stations", "physBody", "nav", "listenerNodes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.0094, 13.6395, 0)
-script = ExtResource("27_k0d2h")
-stations = [NodePath("../Barrel01"), NodePath("../Barrel02")]
-physBody = NodePath("CharacterBody3D")
-nav = NodePath("NavigationAgent3D")
-states = Array[int]([0, 1])
-listenerNodes = []
-
-[node name="Timer" type="Timer" parent="Bird"]
-wait_time = 5.356
-autostart = true
-script = ExtResource("29_f1hf2")
-baseWaitTime = 4
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Bird"]
-avoidance_enabled = true
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="Bird"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bird/CharacterBody3D"]
-shape = SubResource("SphereShape3D_0m0tt")
-
-[node name="Sprite3D" type="Sprite3D" parent="Bird/CharacterBody3D"]
-texture = ExtResource("30_xd4ec")
+[node name="Enemy" parent="." instance=ExtResource("27_4mdfa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.6202, 27.279, 0)
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
@@ -327,4 +301,5 @@ transform = Transform3D(0.800857, 0, -0.598856, 0, 1, 0, 0.598856, 0, 0.800857, 
 [node name="TreeObject" parent="." instance=ExtResource("40_rofaf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7082, 0, 18.0982)
 
-[connection signal="timeout" from="Bird/Timer" to="Bird" method="SwitchActivity"]
+[node name="FishingPolePickup" parent="." instance=ExtResource("40_wi0ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0577, 0.788893, 12.4773)

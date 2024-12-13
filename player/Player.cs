@@ -181,7 +181,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 						EventManager.Invoke(EventType.DialogueEnd);
 						Global.HUD.ExitDialogue();
 					} else if (prev == State.ATTACKING){
-						equippedRightHand.hitbox.Disabled=true;
+						equippedRightHand.EnableHitbox();
 					}
 					break;
 				case State.CHARGING:
@@ -194,7 +194,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					//make sure we have something from the inventory equipped and that the equippable child node has been set
 					GD.Print("attacking");
 					if (playerModel.equipped != null && equippedRightHand != null) {
-						equippedRightHand.hitbox.Disabled = false;
+						equippedRightHand.EnableHitbox();
 						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){ //TODO feel like this should be an enum check? 
 							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties)equippedRightHand.GetItemProperties()).swingAnimation); //TODO player has an animationmap
 				
@@ -383,7 +383,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public void EquipRightHand(InventoryItem item){
 		equippedRightHand = (Equipable) item.GetPackedSceneEquipable().Instantiate();
 		rightHand.AddChild(equippedRightHand);
-		equippedRightHand.hitbox.Disabled = true;
+		equippedRightHand.EnableHitbox(false);
 	}
 
 	public void UnequipRightHand(){
@@ -419,10 +419,9 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			item = playerModel.equipped;
 		}
 		if (playerModel.inv.RemoveItem(item)){
-			Node gameObject = item.GetPackedSceneWorldItem().Instantiate();
-			Global.currentLevel.AddChild(gameObject);
-			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
-
+			Node3D worldItem = (Node3D) item.GetPackedSceneWorldItem().Instantiate();
+			Global.currentLevel.AddChild(worldItem);
+			worldItem.Position = Global.playerNode.Position + new Vector3(0,1,1);
 			if (item == playerModel.equipped){
 				UnequipRightHand();
 			}

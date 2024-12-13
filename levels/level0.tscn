@@ -1,7 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://dwjmpt5fbaak2"]
+[gd_scene load_steps=37 format=3 uid="uid://dwjmpt5fbaak2"]
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
+[ext_resource type="PackedScene" uid="uid://brt5upnw6wocy" path="res://gameobjects/tscn/fishing_pole.tscn" id="5_rmumv"]
+[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="6_krsbu"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
 [ext_resource type="Script" path="res://components/Talker.cs" id="9_80eq6"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://gameobjects/rock/rock.tscn" id="11_xa5x2"]
@@ -13,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://grlpnraydgu2" path="res://gameobjects/door/door.tscn" id="17_mx4ln"]
 [ext_resource type="PackedScene" uid="uid://c48ne3hparnm" path="res://gameobjects/bat/bat_pickup.tscn" id="18_d7mr5"]
 [ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="18_u5pw2"]
-[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="19_j7qq0"]
 [ext_resource type="PackedScene" uid="uid://n2ciai3ucq8v" path="res://gameobjects/lamppost/lamp_post.tscn" id="20_vj7e2"]
 [ext_resource type="PackedScene" uid="uid://c4em7nm7axjkt" path="res://ui/pause_menu.tscn" id="22_744mc"]
 
@@ -122,6 +123,9 @@ gi_mode = 2
 mesh = SubResource("PlaneMesh_q726u")
 skeleton = NodePath("../..")
 
+[node name="FishingPole" parent="NavigationRegion3D" instance=ExtResource("5_rmumv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3746, 1.16428, 6.23619)
+
 [node name="SignPost" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.72674, 2, 10.6561)
 
@@ -213,9 +217,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49013, 0.763058, 4.73254)
 [node name="PauseMenu" parent="UI" instance=ExtResource("22_744mc")]
 process_mode = 3
 
-[node name="PickaxePickup" parent="UI" instance=ExtResource("19_j7qq0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.93166, -0.645879, 0.62842)
-
 [node name="Door" parent="." instance=ExtResource("17_mx4ln")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4653, 0.114144, -7.29972)
 script = ExtResource("18_u5pw2")
@@ -225,3 +226,6 @@ destination = "res://levels/NPCPlayground/main_place.tscn"
 
 [node name="Bat" parent="." instance=ExtResource("18_d7mr5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1497, 0.0999999, -1.28501)
+
+[node name="PickaxePickup" parent="." instance=ExtResource("6_krsbu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.624, 0.0499992, 4.44565)

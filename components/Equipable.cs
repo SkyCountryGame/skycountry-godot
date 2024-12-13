@@ -5,7 +5,7 @@ using System;
 public abstract partial class Equipable : Node3D {
     private InventoryItem inventoryItem;
     public ItemProperties itemProperties;
-    public CollisionShape3D hitbox; //collisionzone that triggers tool use on object of tool
+    [Export] public CollisionShape3D hitbox; //collisionzone that triggers tool use on object of tool
     //type? properties? or should all that be in the extending classes?
 
     public Equipable()
@@ -16,7 +16,9 @@ public abstract partial class Equipable : Node3D {
     public override void _Ready()
 	{
         Global.RegisterGameObject(this, Name, GameObjectType.Equipable);
-        hitbox = GetNode<CollisionShape3D>("Area3D/Hitbox");
+        if (hitbox == null){
+            hitbox = GetNode<CollisionShape3D>("Area3D/Hitbox");
+        }
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,4 +34,11 @@ public abstract partial class Equipable : Node3D {
     public ItemProperties GetItemProperties(){
         return itemProperties;
     }
+
+    public void EnableHitbox(bool en = true){
+        if (hitbox != null){
+            hitbox.Disabled = !en;
+        } 
+    }
+
 }

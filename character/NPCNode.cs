@@ -29,7 +29,7 @@ public abstract partial class NPCNode : StateManager, Collideable, StateChangeLi
 	
 	public override void _Ready(){
 		base._Ready();
-		Global.RegisterGameObject(GetGameObjectNodes(), GameObjectType.Entity);
+		Global.RegisterGameObject(this, GameObjectType.Entity);
 
 		if (m == null){
 			m = new NPCModel(); //TODO placeholder 
@@ -80,13 +80,4 @@ public abstract partial class NPCNode : StateManager, Collideable, StateChangeLi
     public override bool CanChangeState(State state){
 		return true;
 	}
-
-	private List<Node> GetGameObjectNodes(){
-		List<Node> res = new List<Node>(){this};
-		foreach (Node node in GetChildren()){
-			res.Add(node);
-		}
-		return res;
-	}
-
 }

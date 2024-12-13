@@ -158,8 +158,11 @@ cam_rotate_down={
 
 [layer_names]
 
-3d_physics/layer_2="Equippables"
-3d_physics/layer_3="Mining"
+3d_physics/layer_1="player"
+3d_physics/layer_2="interactable"
+3d_physics/layer_3="mining"
+3d_physics/layer_4="npc"
+3d_physics/layer_5="enemy"
 3d_physics/layer_14="Floors"
 
 [rendering]

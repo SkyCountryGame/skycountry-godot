@@ -9,10 +9,11 @@
 radius = 0.325519
 height = 2.01571
 
-[node name="Bat" instance=ExtResource("1_nh67s")]
+[node name="Bat" node_paths=PackedStringArray("hitbox") instance=ExtResource("1_nh67s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.293999, 0)
 script = ExtResource("2_u8br8")
 properties = ExtResource("3_up0wy")
+hitbox = NodePath("Area3D/Hitbox")
 
 [node name="Area3D" type="Area3D" parent="." index="1"]
 script = ExtResource("2_2o4vf")

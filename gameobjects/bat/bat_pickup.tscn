@@ -42,6 +42,8 @@ radius = 0.439856
 height = 2.97055
 
 [node name="Bat" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("2_m6eql")
 invItem = ExtResource("3_pxd3f")
 info = "Bat"

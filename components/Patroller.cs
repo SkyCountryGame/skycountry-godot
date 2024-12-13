@@ -47,11 +47,11 @@ public partial class Patroller : NPCNode, EventListener {
 				if  (navReady){
 					mot.pos_goal = nav.GetNextPathPosition();
 				}
-				GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");
+				//GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");
 				break;
 		}
 		mot.Update(delta, physBody);
-		if (mot.pos_goal != physBody.GlobalPosition){
+		if (mot.pos_goal.X != physBody.GlobalPosition.X && mot.pos_goal.Z != physBody.GlobalPosition.Z){
 			physBody.LookAt(new Vector3(mot.pos_goal.X, physBody.GlobalPosition.Y, mot.pos_goal.Z), Vector3.Up);
 		}
 		/*if (physBody.Velocity.Length() > 0f){

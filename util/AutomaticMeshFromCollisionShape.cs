@@ -26,8 +26,7 @@ public partial class AutomaticMeshFromCollisionShape : CollisionShape3D
 
 		mi.Rotation = Rotation;
 
-        AddChild(mi);
-        
+        AddChild(mi);        
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
