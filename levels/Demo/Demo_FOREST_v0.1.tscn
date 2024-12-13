@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=32 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -12,13 +12,19 @@
 [ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="10_ygowh"]
 [ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="11_manrk"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
-[ext_resource type="PackedScene" uid="uid://bhu836n01te0" path="res://gameobjects/trees/BareTree2_A.tscn" id="13_ad82a"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://gameobjects/trees/BareTree3_B.tscn" id="14_bpjh8"]
-[ext_resource type="PackedScene" uid="uid://y381icowonag" path="res://gameobjects/trees/BareTree3_A.tscn" id="15_qkhgv"]
-[ext_resource type="PackedScene" uid="uid://v43hxhrvubte" path="res://gameobjects/trees/BareTree1_A.tscn" id="16_rqclp"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="18_5tvrn"]
+[ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://gameobjects/trees/RegularTree1_C.tscn" id="20_dkfk8"]
+[ext_resource type="PackedScene" uid="uid://cabag3v5pe1ro" path="res://gameobjects/trees/RegularTree2_C.tscn" id="21_qq80u"]
+[ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://gameobjects/trees/RegularTree3_C.tscn" id="22_rrhu1"]
+[ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://gameobjects/trees/BareTree2_B.tscn" id="23_o3ldj"]
+[ext_resource type="PackedScene" uid="uid://da4ranwjj47xe" path="res://gameobjects/trees/RegularSapling2_C.tscn" id="24_ic5n3"]
+[ext_resource type="PackedScene" uid="uid://hbx8qr1enmrd" path="res://gameobjects/trees/BareSapling2_B.tscn" id="25_b5cll"]
+[ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://gameobjects/trees/BareSapling1_B.tscn" id="26_b3hh8"]
+[ext_resource type="PackedScene" uid="uid://ieq8t38xr25g" path="res://gameobjects/trees/BareTree1_B.tscn" id="27_e1mau"]
+[ext_resource type="PackedScene" uid="uid://be0m87coffwag" path="res://gameobjects/trees/RegularSapling1_C.tscn" id="28_grsil"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("4_wjo57")
@@ -32,19 +38,18 @@ background_mode = 2
 sky = SubResource("Sky_6m6wn")
 ambient_light_source = 3
 ambient_light_color = Color(0.3366, 0.68508, 0.99, 1)
-ambient_light_sky_contribution = 0.87
+ambient_light_sky_contribution = 0.92
 ambient_light_energy = 2.35
 tonemap_mode = 2
-ssao_enabled = true
 ssao_radius = 0.31
 ssao_intensity = 0.36
 ssao_sharpness = 0.58
-fog_enabled = true
 fog_light_color = Color(0.132366, 0.117963, 0.211411, 1)
 fog_light_energy = 0.93
 fog_sun_scatter = 0.15
 fog_density = 0.0154
 fog_sky_affect = 0.38
+volumetric_fog_density = 0.0124
 volumetric_fog_albedo = Color(0.373787, 0.000126608, 0.388593, 1)
 volumetric_fog_emission = Color(0.47788, 0.47788, 0.47788, 1)
 volumetric_fog_emission_energy = 12.01
@@ -83,6 +88,7 @@ camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
+light_energy = 0.0
 light_angular_distance = 0.25
 shadow_enabled = true
 sky_mode = 1
@@ -114,23 +120,9 @@ shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
 
-[node name="Tree2" parent="NavigationRegion3D" instance=ExtResource("13_ad82a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.641014, 0.118533, 15.146)
-
-[node name="Tree3" parent="NavigationRegion3D" instance=ExtResource("14_bpjh8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1283, 0.121901, 8.0545)
-
-[node name="Tree4" parent="NavigationRegion3D" instance=ExtResource("15_qkhgv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6876, 0.127574, 6.932)
-
-[node name="Tree1" parent="NavigationRegion3D" instance=ExtResource("16_rqclp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64392, 0.115318, 21.0554)
-
-[node name="Tree5" parent="NavigationRegion3D" instance=ExtResource("13_ad82a")]
-transform = Transform3D(5.58591, 0, 0, 0, 2.79548, -0.342808, 0, 0.169461, 5.65507, 3.72505, -0.512336, 14.9015)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
+visible = false
 light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_qukrv")]
@@ -142,3 +134,36 @@ script = ExtResource("17_38mhm")
 
 [node name="Rock29" parent="." instance=ExtResource("18_5tvrn")]
 transform = Transform3D(-0.351304, 0.355633, -0.696162, 0.0858562, 0.863618, 0.320119, 0.69165, 0.0734307, -0.393332, -10.9991, 0.057019, 14.1011)
+
+[node name="Tree3" parent="." instance=ExtResource("14_bpjh8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 22.8998, 0.131613, -16.5495)
+
+[node name="Tree7" parent="." instance=ExtResource("14_bpjh8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -46.9071, 0.131613, -16.5495)
+
+[node name="Tree1" parent="." instance=ExtResource("20_dkfk8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 36.8131, 0.135548, 14.6391)
+
+[node name="Tree2" parent="." instance=ExtResource("21_qq80u")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 37.3592, 0.139754, -7.66565)
+
+[node name="Tree4" parent="." instance=ExtResource("22_rrhu1")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 40.6291, 0, 2.93191)
+
+[node name="Tree5" parent="." instance=ExtResource("23_o3ldj")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -18.3994, 0.021697, -11.3056)
+
+[node name="Sapling2" parent="." instance=ExtResource("24_ic5n3")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 34.8149, 0, 9.65576)
+
+[node name="Sapling3" parent="." instance=ExtResource("25_b5cll")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -8.40627, -5.96046e-08, 2.97525)
+
+[node name="Sapling1" parent="." instance=ExtResource("26_b3hh8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -28.262, 1.19209e-07, 13.6627)
+
+[node name="Tree6" parent="." instance=ExtResource("27_e1mau")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 9.30563, 0, 13.4536)
+
+[node name="Sapling4" parent="." instance=ExtResource("28_grsil")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 38.5559, 0, 21.5913)
