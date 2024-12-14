@@ -29,7 +29,7 @@ public class Event {
         payload = p;
     }
     public bool Invoke(){
-        EventManager.Invoke(this,false);
+        EventManager.Invoke(this);
         return true;
     }
     //idea to include checking of if event can be invoked within the event itself (in Invoke()). we'll see if the other logic ends up handling this as needed
@@ -53,12 +53,9 @@ public class EventManager {
     }
 
 //temp, i need to think about this more, but just want to test functionality
-    public static bool Invoke(Event e, bool singleInvoke){
+    public static void Invoke(Event e){
         if (eventListeners.ContainsKey(e.eventType)){
             foreach (EventListener l in eventListeners[e.eventType]){
-                if(singleInvoke){
-                    return l.HandleEvent(e);
-                }
                 l.HandleEvent(e);
 
                 /*
@@ -68,13 +65,11 @@ public class EventManager {
                     Godot.GD.Print($"Error invoking event {e.eventType.ToString()} for listener {l.ToString()}: {ex.Message}");
                 }*/
             }
-            return true;
         }
-        return false;
     }
     //a convenience method that will construct the event object for you
-    public static bool Invoke(EventType t, bool singleInvoke, dynamic payload = null){
+    public static void Invoke(EventType t, dynamic payload = null){
         Event e = new Event(t, payload);
-        return Invoke(e, singleInvoke);
+        Invoke(e);
     }
 }

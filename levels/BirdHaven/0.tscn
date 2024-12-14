@@ -31,7 +31,7 @@ tonemap_mode = 2
 vertices = PackedVector3Array(-99.5, 0.45, -249.5, -99.5, 0.45, 249.5, 99.5, 0.45, 249.5, 99.5, 0.45, -249.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_ypbtj")
 sunlight = NodePath("DirectionalLight3D")
 

@@ -1,14 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://darxsa5kedpia"]
+[gd_scene load_steps=21 format=3 uid="uid://darxsa5kedpia"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_dmqny"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="3_uxc7l"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="4_1nru1"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="5_tmuy4"]
 [ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://gameobjects/tscn/Wood Props/keg.tscn" id="9_3yk1m"]
-[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_ibp53"]
+[ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="9_c61dd"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="14_a0y17"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="22_f2v6q"]
-[ext_resource type="PackedScene" uid="uid://cf175ilhtndsy" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="27_1rl33"]
+[ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="27_1rl33"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_84f85"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -52,10 +52,12 @@ emission_enabled = true
 emission = Color(0.818114, 0.929618, 0.980198, 1)
 emission_texture = SubResource("GradientTexture2D_ouqy0")
 
-[node name="Wod2" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2s7nr"]
+size = Vector3(2.67033, 2.91827, 0.001)
+
+[node name="World2" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_dmqny")
 sunlight = NodePath("DirectionalLight3D")
-navRegion = NodePath("")
 
 [node name="Devtool" parent="." instance=ExtResource("3_uxc7l")]
 
@@ -91,11 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 
 current = true
 fov = 65.0
 
-[node name="Player" parent="." instance=ExtResource("13_ibp53")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -5.75757, 0.29507, 4.83829)
-collision_mask = 1
-
-[node name="spawnpoint" type="Node3D" parent="."]
+[node name="SpawnLocation" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.60841, 0.66496, 4.73146)
 script = ExtResource("14_a0y17")
 
@@ -260,3 +258,11 @@ material = ExtResource("22_f2v6q")
 transform = Transform3D(-4.37114e-08, -4, 0, 0.25, -4.37114e-08, 0, 0, 0, 1, -1.32612, 0.384967, 0.00189209)
 size = Vector3(0.399963, 1, 0.156128)
 material = ExtResource("22_f2v6q")
+
+[node name="Door" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.551, 1.428, 5.959)
+script = ExtResource("9_c61dd")
+destination = "res://levels/Demo/Demo_v0.1.tscn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+shape = SubResource("BoxShape3D_2s7nr")

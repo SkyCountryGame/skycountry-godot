@@ -69,7 +69,7 @@ script = ExtResource("8_6awk4")
 mode = 0
 textures = [[ExtResource("9_i6pf1"), ExtResource("10_ygowh"), ExtResource("11_manrk"), ExtResource("12_hueh4")], [null, null, null, null]]
 
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_1m4au")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
