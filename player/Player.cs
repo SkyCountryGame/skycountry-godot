@@ -112,8 +112,8 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	}
 
 	public void printWord(string blah){
-        GD.Print( blah);
-    }
+		GD.Print( blah);
+	}
 
 	public override void _Input(InputEvent ev){
 		

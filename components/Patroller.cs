@@ -111,8 +111,8 @@ public partial class Patroller : NPCNode, EventListener {
 		return true;
 	}
 
-    public bool HandleEvent(Event e)
-    {
+	public bool HandleEvent(Event e)
+	{
 		if (eventTypes.Contains(e.eventType)){
 			switch (e.eventType){
 				case EventType.DialogueStart:
@@ -128,5 +128,5 @@ public partial class Patroller : NPCNode, EventListener {
 			}
 		}
 		return true;
-    }
+	}
 }
