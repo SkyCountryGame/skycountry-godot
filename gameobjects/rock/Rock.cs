@@ -43,7 +43,7 @@ public partial class Rock : RigidBody3D, Interactable, Destroyable {
 	public void Destroy()
 	{
 		//trigger an event to notify that a rock has been destroyed, and pass along the associated GameObject
-		EventManager.Invoke(EventType.WorldItemDestroyed, (Global.GetGameObject(this), GlobalPosition, invItem));
+		EventManager.Invoke(EventType.WorldItemDestroyed, false, (Global.GetGameObject(this), GlobalPosition, invItem));
 		GD.Print("destroy rock!");
 	}
 

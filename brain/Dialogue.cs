@@ -39,10 +39,24 @@ public partial class Dialogue : Resource
     }
     public struct ResponseNode {
         public string response; //NOTE should be "responseText"?
+        public int failureNextStatementID;
+        public List<Object> args;
+        public string methodName;
+
         public int nextStatementID;
         public ResponseNode(string response, int nextStatementID){
             this.response = response;
             this.nextStatementID = nextStatementID;
+            failureNextStatementID = nextStatementID; //figure no matter what we want to proceed to next
+            args = null;
+            methodName = null;
+        }
+        public ResponseNode(string response, string methodName, int nextStatementID, int failureNextStatementID, List<Object> args){
+            this.response = response;
+            this.nextStatementID = nextStatementID;
+            this.failureNextStatementID = failureNextStatementID;
+            this.args = args;
+            this.methodName = methodName;
         }
     }
     //---
@@ -65,37 +79,50 @@ public partial class Dialogue : Resource
     //parse file contents as json and populate this object. local variables here are named with 'j' suffix if a json thing. 'd' obviously stands for dialogue. 
     //return false if any of the json values do not follow the dialogue format spec
     private bool ParseDialogue(string dstr){
-        JsonDocument dj = JsonDocument.Parse(dstr); //dialogue as json
-        if (dj.RootElement.ValueKind != JsonValueKind.Array){
+        JsonDocument jsonDocument = JsonDocument.Parse(dstr); //dialogue as json
+        if (jsonDocument.RootElement.ValueKind != JsonValueKind.Array){
             return false;
         }
-        foreach (JsonElement sj in dj.RootElement.EnumerateArray()){ //iterate through each statement. sj = statementjson
-            if (sj.TryGetProperty("text", out JsonElement tj)){ //statement text. tj = text json
-                StatementNode sn;
-                if (tj.ValueKind == JsonValueKind.String){ 
-                    sn = new StatementNode(tj.GetString());
+        foreach (JsonElement jsonElement in jsonDocument.RootElement.EnumerateArray()){ //iterate through each statement. sj = statementjson
+            if (jsonElement.TryGetProperty("text", out JsonElement textJsonElement)){ //statement text. tj = text json
+                StatementNode statementNode;
+                if (textJsonElement.ValueKind == JsonValueKind.String){ 
+                    statementNode = new StatementNode(textJsonElement.GetString());
                 } else { return false; } //NOTE possible future: use array of strings and construct a statement for each one, generating the appropriate ids
                 
-                if (sj.TryGetProperty("id", out JsonElement ij) && ij.ValueKind == JsonValueKind.Number){ //id of statement. ij = id json
-                    if (sj.TryGetProperty("event", out JsonElement ej)) { //this statement triggers an in game event. ej = event json
-                        if (ej.ValueKind == JsonValueKind.String){ //for now action is an int, to be mapped to an enum probably. might end up being a string
-                            sn.eventType = Enum.Parse<EventType>(ej.GetString()); //not worrying about payload for dialogue-triggered events
+                if (jsonElement.TryGetProperty("id", out JsonElement idJsonElement) && idJsonElement.ValueKind == JsonValueKind.Number){ //id of statement. ij = id json
+                    if (jsonElement.TryGetProperty("event", out JsonElement eventJsonElement)) { //this statement triggers an in game event. ej = event json
+                        if (eventJsonElement.ValueKind == JsonValueKind.String){ //for now action is an int, to be mapped to an enum probably. might end up being a string
+                            statementNode.eventType = Enum.Parse<EventType>(eventJsonElement.GetString()); //not worrying about payload for dialogue-triggered events
                         } else { return false; } //event json not string
                     }
-                    if ( sj.TryGetProperty("responses", out JsonElement rj)){ //responses. rj = responses json
-                        if (rj.ValueKind == JsonValueKind.Array){
-                            foreach (JsonElement r in rj.EnumerateArray()){
-                                if (r.TryGetProperty("text", out JsonElement rtj) && r.TryGetProperty("next", out JsonElement nij) && nij.ValueKind == JsonValueKind.Number){
-                                    //rtj = response text json, nij = next id json
-                                    sn.responses.Add(new ResponseNode(rtj.GetString(), nij.GetInt32()));
+                    if ( jsonElement.TryGetProperty("responses", out JsonElement responsesJsonElement)){ //responses. rj = responses json
+                        if (responsesJsonElement.ValueKind == JsonValueKind.Array){
+                            foreach (JsonElement response in responsesJsonElement.EnumerateArray()){
+                                if (response.TryGetProperty("text", out JsonElement responseTextJsonElement)){
+                                    if(response.TryGetProperty("next", out JsonElement nextIdJsonElement) && nextIdJsonElement.ValueKind == JsonValueKind.Number){
+                                        //rtj = response text json, nij = next id json
+                                        statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), nextIdJsonElement.GetInt32()));   
+                                    }
+                                    else if (response.TryGetProperty("exec", out JsonElement execJsonElement)) {
+                                        if(execJsonElement.TryGetProperty("success", out JsonElement successJsonElement) && execJsonElement.TryGetProperty("failure", out JsonElement failureJsonElement) && execJsonElement.TryGetProperty("name", out JsonElement methodNameJsonElement)){
+                                            if(execJsonElement.TryGetProperty("args", out JsonElement argsJsonElement) && argsJsonElement.ValueKind == JsonValueKind.Array){
+                                                statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), methodNameJsonElement.GetString(), successJsonElement.GetInt32(), failureJsonElement.GetInt32(), argsJsonElement.EnumerateArray().Select(x => x.ToString() as object).ToList()));
+                                            } else {
+                                                statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), methodNameJsonElement.GetString(), successJsonElement.GetInt32(), failureJsonElement.GetInt32(), null));
+                                            }
+                                            
+                                        }
+                                    }
                                 } else { return false; }
+                                
                             }
                         } else { return false; }
-                    } else if (sj.TryGetProperty("next", out JsonElement nj) && nj.ValueKind == JsonValueKind.Number){ //goes to another statement before player can respond
+                    } else if (jsonElement.TryGetProperty("next", out JsonElement nextJsonElement) && nextJsonElement.ValueKind == JsonValueKind.Number){ //goes to another statement before player can respond
                         //nj = next id json
-                        sn.nextStatementID = nj.GetInt32();
+                        statementNode.nextStatementID = nextJsonElement.GetInt32();
                     }
-                    statements[ij.GetInt32()] = sn;
+                    statements[idJsonElement.GetInt32()] = statementNode;
                 } else { return false; }
             } else { return false; }
         }

@@ -82,7 +82,7 @@ emission_energy_multiplier = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jdkl7"]
 
-[node name="Wod" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[node name="Wod2" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 process_mode = 1
 script = ExtResource("1_iiogu")
 sunlight = NodePath("DirectionalLight3D")

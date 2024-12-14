@@ -8632,4 +8632,5 @@ max_speed = 9.0
 
 [node name="Talker" type="Node3D" parent="." node_paths=PackedStringArray("subject")]
 script = ExtResource("5_td11p")
+dialogueFilename = "assets/dialogue/1.json"
 subject = NodePath("..")

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -61,6 +62,19 @@ public partial class Inventory : Resource, System.ICloneable
 		return stock.Find(item => item.id == itemID);
 	}
 
+	public Dictionary<string, int> GetDetailedItemList(){
+		Dictionary<string, int> itemCounts = new Dictionary<string, int>();
+		foreach(InventoryItem inventoryItem in stock){
+			if(!itemCounts.ContainsKey(inventoryItem.name)){
+				itemCounts.Add(inventoryItem.name, 1);
+			}
+			else {
+				itemCounts[inventoryItem.name]=itemCounts[inventoryItem.name]+1;
+			}
+		}
+		return itemCounts;
+	}
+
 	public InventoryItem GetItemByIndex(int idx){
 		if (idx < 0 || idx >= stock.Count) return null;
 		return stock[idx];
@@ -74,6 +88,10 @@ public partial class Inventory : Resource, System.ICloneable
 	public bool RemoveItem(InventoryItem item)
 	{
 		return stock.Remove(item);
+	}
+
+	public bool RemoveItemByName(string name){
+		return stock.Remove(stock.Find(item => item.name == name));
 	}
 
 	public bool Contains(InventoryItem item)
