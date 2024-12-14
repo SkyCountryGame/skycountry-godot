@@ -87,10 +87,53 @@ max_value = 0.0
 [node name="LabelValue" type="Label" parent="DevPanel/HBoxContainer/VBox4"]
 layout_mode = 2
 
-[node name="Button1" type="Button" parent="DevPanel/HBoxContainer"]
+[node name="VBox5" type="VBoxContainer" parent="DevPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
 layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 8
 text = "Test resource save"
 
-[connection signal="pressed" from="DevPanel/HBoxContainer/Button1" to="." method="OnButton1Pressed"]
+[node name="Button2" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "toggle camera mode"
+
+[node name="Button3" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"
+
+[node name="Button4" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"
+
+[node name="Button5" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"
+
+[node name="Button6" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"
+
+[node name="Button7" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"
+
+[node name="Button8" type="Button" parent="DevPanel/HBoxContainer/VBox5"]
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 8
+text = "do thing"

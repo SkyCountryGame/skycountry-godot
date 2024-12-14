@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class DevTool : Node2D
 {
@@ -17,7 +18,7 @@ public partial class DevTool : Node2D
 	private TextEdit textEdit4; //gravity accel
 	private Label labelValue4; 
 
-	private Button button1; //save resource test
+	private List<Button> buttons;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -56,7 +57,11 @@ public partial class DevTool : Node2D
 			slider3.Value = Global.playerNode.JumpVelocity;
 			//slider4.Value = Global.playerNode.gravity;
 		}
-		button1 = GetNode<Button>("DevPanel/HBoxContainer/Button1");
+		buttons = new List<Button>();
+		GetNode<VBoxContainer>("DevPanel/HBoxContainer/VBox5").GetChildren().ToList().ForEach((b)=> {
+			buttons.Add((Button)b);
+			((Button)b).Pressed += ()=>OnButtonPressed(b.Name);
+		});
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -110,8 +115,18 @@ public partial class DevTool : Node2D
 		}
 	}
 
-	private void OnButton1Pressed()
+	private void OnButtonPressed(string label)
 	{
-		ResourceSaver.Save(Global.playerModel, "res://player/PlayerModel.tres");
+		switch (label){
+			case "Button1": //save test
+				ResourceSaver.Save(Global.playerModel, "res://player/PlayerModel.tres");
+				break;
+			case "Button2": //toggle camera mode
+				Global.cam.Projection = Global.cam.Projection == Camera.ProjectionType.Perspective ? Camera.ProjectionType.Orthogonal : Camera.ProjectionType.Perspective; 
+				break;
+			default:
+				break;
+		}
+		
 	}
 }

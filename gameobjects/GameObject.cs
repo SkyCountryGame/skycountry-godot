@@ -9,7 +9,7 @@ using Godot;
     */
 public class GameObject {
     protected Node gdNode; //the godot scene node. TODO remove
-    Guid id;
+    public Guid id;
     public string desc_short;
     public string desc_long;
     public GameObjectType type;
