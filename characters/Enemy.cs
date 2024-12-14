@@ -7,8 +7,6 @@ using System.Collections.Generic;
 
 //enemy 1: sits idle, chases player, attacks player when close enough
 public partial class Enemy : NPCNode {
-	
-    private Node3D target; 
 
 	public override void _Ready(){
 		base._Ready();

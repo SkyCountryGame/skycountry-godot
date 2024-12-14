@@ -19,3 +19,4 @@ todo:
 * make GameObject system testable 
 * make Equipable a Component
 * file organization: prefabs folder. Pickup etc. out of components/. 
+* update Player to use statemanagement and motionmodule similar to npc. 

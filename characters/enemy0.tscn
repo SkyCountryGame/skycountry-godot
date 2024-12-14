@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://degb480meonrx"]
+
+[ext_resource type="Script" path="res://characters/Enemy.cs" id="1_3pxg8"]
+
+[node name="Enemy0" type="Node3D" node_paths=PackedStringArray("listenerNodes")]
+script = ExtResource("1_3pxg8")
+listenerNodes = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=52 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -43,6 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://bmhrehrmqpce1" path="res://gameobjects/tscn/Wood Props/barrel_02.tscn" id="43_c2ki4"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
+[ext_resource type="PackedScene" uid="uid://degb480meonrx" path="res://characters/enemy0.tscn" id="46_iqukh"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
 [ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
 
@@ -370,3 +371,5 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 
 [node name="FishingPolePickup" parent="." instance=ExtResource("40_wi0ti")]
 transform = Transform3D(0.220085, 0, 0.975481, 0, 1, 0, -0.975481, 0, 0.220085, -17.1346, 0.788893, 24.624)
+
+[node name="Enemy0" parent="." instance=ExtResource("46_iqukh")]
