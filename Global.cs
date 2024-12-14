@@ -74,7 +74,7 @@ public partial class Global : Node
 		_.GetTree().Root.AddChild(nextLevel);
 		
 		if (playerNode!=null){
-			playerNode.Reparent(nextLevel);
+			playerNode.CallDeferred("reparent", nextLevel);
 		}
 		else { //NOTE shouldn't assume that the next level has player by default. it is currently done this way to persist child nodes of player such as equiped items. 
 			playerNode = (Player) ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate();
@@ -82,7 +82,7 @@ public partial class Global : Node
 		}
 
 		playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition; //TODO use exported spawnpoint node instead, or have Level handle player spawning and positioning. 
-		_.GetTree().Root.RemoveChild(previousScene);
+		_.GetTree().Root.CallDeferred("remove_child", previousScene);
 		currentLevel = nextLevel;		
 	}
 
@@ -98,11 +98,12 @@ public partial class Global : Node
 		}
 		if (go == null){
 			go = new GameObject(type);
+			GD.Print("NEW GAME OBJECT " + go.id);
 			mapGameObjectNodes.Add(go, nodes); //associate all the nodes with the game object
 			foreach (Node node in nodes){
 				mapNodeGameObjects.Add(node, go);
 				if (node is Interactable){
-					GD.Print("ADDING INTERACTABLE GAME OBJ");
+					GD.Print("ADDING INTERACTABLE GAME OBJ " + node.Name);
 					mapGameObjectToInteractable.Add(go, (Interactable)node); //this assumes that each gameobject can have only one interactable
 				}
 			}

@@ -1,12 +1,10 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using static PlayerModel;
 
-public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Interactor, Damageable, EventListener
+public partial class Player : CharacterBody3D, Collideable, Interactor, Damageable, EventListener
 {
 
 	//MOVEMENT 
@@ -20,7 +18,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	public float velMagnitudeMax = 11f; //approximate max velocity allowed
+	public float velMagnitudeMax = 24f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION and BEHAVIOR STUFF
@@ -39,9 +37,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	//EQUIPMENT NODE3D MANAGEMENT
 	public Equipable equippedRightHand; //We dont need the rest of this yet, lets just keep it to this for now
 
-	[Export] protected CharacterBody3D physBody; //used for handling motion
-	[Export] protected AnimationController animController;
-	[Export] protected MotionModule mot;
+	
 
 	//rings, amulets, etc. ?
 
@@ -84,23 +80,17 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public override void _Process(double delta)
 	{
 		if(playerModel.GetState() == State.DEFAULT){
-			//if (Input.IsMouseButtonPressed(0)){
-				//RayCast Stuff
-				Vector2 mousePosition = GetViewport().GetMousePosition();
-				Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
-				Vector3 rayTarget = rayOrigin+Global.cam.ProjectRayNormal(mousePosition)*10000;
-				PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-				Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
-				if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
-					Vector3 pos = (Vector3)intersection["position"];
-					Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
-					LookAt(viewAngle);
-				}
-			//} else {
-			//	if (inputDir.Length() > 0){
-					//LookAt(inputDir, Vector3.Up);
-			//	}
-			//}
+			//RayCast Stuff
+			Vector2 mousePosition = GetViewport().GetMousePosition();
+			Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
+			Vector3 rayTarget = rayOrigin+Global.cam.ProjectRayNormal(mousePosition)*10000;
+			PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+			Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
+			if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+				Vector3 pos = (Vector3)intersection["position"];
+				Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+				LookAt(viewAngle);
+			}
 		}
 
 		//HUD stuff
@@ -110,10 +100,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			Global.HUD.HideAction();
 		}
 	}
-
-	public void printWord(string blah){
-        GD.Print( blah);
-    }
 
 	public override void _Input(InputEvent ev){
 		
@@ -190,10 +176,9 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					if (prev == State.INVENTORY){
 						Global.HUD.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						EventManager.Invoke(EventType.DialogueEnd);
 						Global.HUD.ExitDialogue();
 					} else if (prev == State.ATTACKING){
-						equippedRightHand.EnableHitbox();
+						equippedRightHand.hitbox.Disabled=true;
 					}
 					break;
 				case State.CHARGING:
@@ -206,7 +191,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					//make sure we have something from the inventory equipped and that the equippable child node has been set
 					GD.Print("attacking");
 					if (playerModel.equipped != null && equippedRightHand != null) {
-						equippedRightHand.EnableHitbox();
+						equippedRightHand.hitbox.Disabled = false;
 						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){ //TODO feel like this should be an enum check? 
 							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties)equippedRightHand.GetItemProperties()).swingAnimation); //TODO player has an animationmap
 				
@@ -243,7 +228,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		angleToFacingDirection = GlobalTransform.Basis.Z.SignedAngleTo(-controlDir, Vector3.Up);
 
 		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
-		if(playerModel.GetState().Equals(State.DEFAULT) || (playerModel.GetState().Equals(State.ATTACKING) && equippedRightHand.GetItemProperties().usableWhileMoving)){
+		if(playerModel.GetState().Equals(State.DEFAULT) || (playerModel.GetState().Equals(State.ATTACKING) && equippedRightHand.GetItemProperties().usableWhileMoving)){ //TODO move to motionmodule. CanMove() conditions
 			Vector3 gv = controlDir * velMagnitudeMax; //goal velocity based on user input
 			if (accelScalar == 0){ //acceleration activation toggle
 				if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
@@ -339,7 +324,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		
 	}
 
-	public bool HandleEvent(Event e)
+	public void HandleEvent(Event e)
 	{
 		switch (e.eventType){
 			case EventType.WorldItemDestroyed: //receive the destroyed GameObject
@@ -357,7 +342,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			default:
 				break;
 		}
-		return true;
 	}
 
 	public void HandleInteract(Interactable interactable)
@@ -367,7 +351,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		{
 			case InteractionType.Dialogue:
 				if (SetState(State.DIALOGUE)){
-					EventManager.Invoke(EventType.DialogueStart, Global.GetGameObject((Node)interactable));
 					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
@@ -396,7 +379,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public void EquipRightHand(InventoryItem item){
 		equippedRightHand = (Equipable) item.GetPackedSceneEquipable().Instantiate();
 		rightHand.AddChild(equippedRightHand);
-		equippedRightHand.EnableHitbox(false);
+		equippedRightHand.hitbox.Disabled = true;
 	}
 
 	public void UnequipRightHand(){
@@ -432,9 +415,10 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			item = playerModel.equipped;
 		}
 		if (playerModel.inv.RemoveItem(item)){
-			Node3D worldItem = (Node3D) item.GetPackedSceneWorldItem().Instantiate();
-			Global.currentLevel.AddChild(worldItem);
-			worldItem.Position = Global.playerNode.Position + new Vector3(0,1,1);
+			Node gameObject = item.GetPackedSceneWorldItem().Instantiate();
+			Global.currentLevel.AddChild(gameObject);
+			((Node3D) gameObject).Position = Global.playerNode.Position + new Vector3(0,1,1);
+
 			if (item == playerModel.equipped){
 				UnequipRightHand();
 			}

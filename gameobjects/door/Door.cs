@@ -12,6 +12,7 @@ public partial class Door : Node3D, Interactable
 
     public override void _Ready()
 	{
+        Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
 		if (destination == null){
             GD.PushWarning("no destination set for door");
 		} 

@@ -454,9 +454,10 @@ transform = Transform3D(0.999992, 0, 0.00392698, 0, 1, 0, -0.00392698, 0, 0.9999
 size = Vector3(0.368652, 0.11377, 5.81)
 material = ExtResource("21_vtgu2")
 
-[node name="Door" type="Area3D" parent="PlayerHouseDemo"]
+[node name="Door" type="StaticBody3D" parent="PlayerHouseDemo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.269, 0.975, 2.035)
 script = ExtResource("23_0kef8")
+destination = "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHouseDemo/Door"]
 shape = SubResource("BoxShape3D_lxb5p")

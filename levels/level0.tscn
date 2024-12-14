@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
-[ext_resource type="PackedScene" path="res://gameobjects/tscn/fishing_pole.tscn" id="5_rmumv"]
+[ext_resource type="PackedScene" uid="uid://brt5upnw6wocy" path="res://gameobjects/tscn/fishing_pole.tscn" id="5_rmumv"]
 [ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://gameobjects/pickaxe/pickaxe_pickup.tscn" id="6_krsbu"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
 [ext_resource type="Script" path="res://components/Talker.cs" id="9_80eq6"]

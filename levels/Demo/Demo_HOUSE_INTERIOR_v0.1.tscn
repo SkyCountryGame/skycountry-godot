@@ -36,7 +36,7 @@ exposure_multiplier = 0.828
 size = Vector3(2.0083, 0.182434, 1.99683)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xjvuv"]
-size = Vector3(15.9722, 6.38013, 1)
+size = Vector3(15.972, 6.38, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_5ti73"]
 colors = PackedColorArray(0.0697, 0.154775, 0.41, 1, 0.559, 1, 0.46, 1)
@@ -53,7 +53,7 @@ emission = Color(0.818114, 0.929618, 0.980198, 1)
 emission_texture = SubResource("GradientTexture2D_ouqy0")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2s7nr"]
-size = Vector3(2.67033, 2.91827, 0.001)
+size = Vector3(2.8, 3, 0.1)
 
 [node name="World2" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_dmqny")
@@ -137,7 +137,7 @@ use_collision = true
 size = Vector3(12.9816, 6.42957, 1)
 
 [node name="FRONTWALL" type="StaticBody3D" parent="HOUSE"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 6.1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HOUSE/FRONTWALL"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0366211, -0.256714, 0)
@@ -259,8 +259,8 @@ transform = Transform3D(-4.37114e-08, -4, 0, 0.25, -4.37114e-08, 0, 0, 0, 1, -1.
 size = Vector3(0.399963, 1, 0.156128)
 material = ExtResource("22_f2v6q")
 
-[node name="Door" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.551, 1.428, 5.959)
+[node name="Door" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.551, 1.428, 5.64542)
 script = ExtResource("9_c61dd")
 destination = "res://levels/Demo/Demo_v0.1.tscn"
 
