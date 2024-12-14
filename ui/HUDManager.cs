@@ -125,7 +125,7 @@ public partial class HUDManager : Node {
         if (mouseButton == 1){ //left click
             int id = -1;
             if(currentDialogue.currentStatement.responses[index].methodName!=null){
-                if(EventManager.Invoke(EventType.Function, true, (currentDialogue.currentStatement.responses[index].methodName, currentDialogue.currentStatement.responses[index].args))){
+                if(Global.dialogueFunctionController.run(currentDialogue.currentStatement.responses[index].methodName, currentDialogue.currentStatement.responses[index].args)){
                     id = currentDialogue.currentStatement.responses[index].nextStatementID;
                 } else {
                     id = currentDialogue.currentStatement.responses[index].failureNextStatementID;

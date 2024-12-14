@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=68 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://gameobjects/tscn/DemoBuildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://gameobjects/tscn/rocks/rock_10.tscn" id="20_qhbjg"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="21_vtgu2"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
+[ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="23_0kef8"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://gameobjects/trees/RegularTree1_A.tscn" id="32_orf7b"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://gameobjects/trees/RegularTree2_A.tscn" id="33_2l3aj"]
@@ -43,14 +44,14 @@
 [ext_resource type="PackedScene" uid="uid://dcbepa7qt58xs" path="res://gameobjects/tscn/rocks/rock_4.tscn" id="41_dkvei"]
 [ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://gameobjects/trees/RegularTree1_C.tscn" id="42_h2u0k"]
 [ext_resource type="PackedScene" uid="uid://cabag3v5pe1ro" path="res://gameobjects/trees/RegularTree2_C.tscn" id="43_u4ymu"]
-[ext_resource type="PackedScene" uid="uid://btl0xnkreo34w" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_stool_stump.tscn" id="44_rn0rc"]
 [ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://gameobjects/trees/RegularTree3_C.tscn" id="44_vv8sr"]
-[ext_resource type="PackedScene" uid="uid://cf175ilhtndsy" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
+[ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="45_57l3c"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://gameobjects/trees/BareTree3_B.tscn" id="45_a7miq"]
 [ext_resource type="PackedScene" uid="uid://ctp1wbgjw382x" path="res://gameobjects/rock/rock_pickup.tscn" id="45_idycp"]
 [ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://gameobjects/trees/BareTree2_B.tscn" id="46_2pbc0"]
-[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
-[ext_resource type="PackedScene" uid="uid://cekpx3bad5706" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/wood_log.tscn" id="46_xv32s"]
+[ext_resource type="PackedScene" path="res://gameobjects/tscn/Wood Props/log_bench.tscn" id="47_eby20"]
 [ext_resource type="PackedScene" uid="uid://budk7sld21llg" path="res://gameobjects/tscn/Wood Props/fence_long.tscn" id="48_ores1"]
 [ext_resource type="PackedScene" uid="uid://tp3frmjj1lcd" path="res://gameobjects/tscn/Wood Props/fence_gate.tscn" id="49_kbv7p"]
 [ext_resource type="PackedScene" uid="uid://dgx5oij6th1p" path="res://gameobjects/tscn/Wood Props/bucket.tscn" id="52_rsd34"]
@@ -85,7 +86,10 @@ script = ExtResource("6_uacsr")
 mode = 0
 textures = [[ExtResource("7_jip43"), ExtResource("8_cj0oj"), ExtResource("9_qjwo7"), ExtResource("10_e8vfu")], [null, null, null, null]]
 
-[node name="Wod2" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_lxb5p"]
+size = Vector3(1.30786, 1.94055, 0.001)
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_kq37l")
 sunlight = NodePath("DirectionalLight3D")
 navRegion = NodePath("NavigationRegion3D")
@@ -107,7 +111,6 @@ script = ExtResource("3_byha7")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -17.0839, 12.8491, 20.5822)
-current = true
 fov = 63.0
 
 [node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
@@ -441,6 +444,17 @@ material = ExtResource("21_vtgu2")
 transform = Transform3D(0.999992, 0, 0.00392698, 0, 1, 0, -0.00392698, 0, 0.999992, 0.277242, 0.280518, -0.497493)
 size = Vector3(0.368652, 0.11377, 5.81)
 material = ExtResource("21_vtgu2")
+
+[node name="Door" type="Area3D" parent="PlayerHouseDemo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.269, 0.975, 2.035)
+script = ExtResource("23_0kef8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHouseDemo/Door"]
+shape = SubResource("BoxShape3D_lxb5p")
+
+[node name="SpawnLocation" type="Node3D" parent="PlayerHouseDemo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2414, 0.0422781, 2.67095)
+script = ExtResource("11_kvv3g")
 
 [node name="Firepit" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.73536, -0.0521517, 13.7329)

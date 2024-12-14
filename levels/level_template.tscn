@@ -22,7 +22,7 @@ tonemap_mode = 2
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ckcui"]
 
-[node name="Wod" type="Node3D"]
+[node name="World" type="Node3D"]
 script = ExtResource("1_ypbtj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

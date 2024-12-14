@@ -14,6 +14,7 @@ public partial class Global : Node
 	//GAME NODES
 	public static PlayerModel playerModel; //set by Player, persists between scenes
 	public static Player playerNode;  //set by Player 
+	public static DialogueFunctionController dialogueFunctionController;
 	public static Camera cam; //set by Camera on ready (probably will change because alternate cameras)
 	public static HUDManager HUD; // set by HUDManager on ready
 	public static PauseMenu pauseMenu; // set by PauseMenu on ready
@@ -44,6 +45,7 @@ public partial class Global : Node
 	public void init(){
 		PrefabManager.Init();
 		atmosphereManager = new AtmosphereManager();
+		dialogueFunctionController = new DialogueFunctionController();
 		ProcessMode = ProcessModeEnum.Always;
 		foreach (GameObjectType t in Enum.GetValues(typeof(GameObjectType))){
 			mapTypeGameObjects.Add(t, new HashSet<GameObject>());

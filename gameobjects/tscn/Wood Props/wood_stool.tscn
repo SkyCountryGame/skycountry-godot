@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://cf175ilhtndsy"]
+[gd_scene load_steps=6 format=4 uid="uid://x5706ljfwt3t"]
 
 [ext_resource type="PackedScene" uid="uid://dt5iv5ucs6vyk" path="res://assets/Models/Wood Props/Wood Stool/WoodStool.gltf" id="1_cby1k"]
 [ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_cl1nx"]
@@ -35,7 +35,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h3e5n")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1d73u"]
+height = 0.333208
+
 [node name="WoodStool" instance=ExtResource("1_cby1k")]
 
 [node name="Wood Stool" parent="." index="0"]
 mesh = SubResource("ArrayMesh_bfkgq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0484926, 0)
+shape = SubResource("CylinderShape3D_1d73u")

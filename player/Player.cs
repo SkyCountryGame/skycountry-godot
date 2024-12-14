@@ -184,7 +184,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					if (prev == State.INVENTORY){
 						Global.HUD.HideInventory();
 					} else if (prev == State.DIALOGUE) {
-						EventManager.Invoke(EventType.DialogueEnd, false);
+						EventManager.Invoke(EventType.DialogueEnd);
 						Global.HUD.ExitDialogue();
 					} else if (prev == State.ATTACKING){
 						equippedRightHand.EnableHitbox();
@@ -361,7 +361,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		{
 			case InteractionType.Dialogue:
 				if (SetState(State.DIALOGUE)){
-					EventManager.Invoke(EventType.DialogueStart, false, Global.GetGameObject((Node)interactable));
+					EventManager.Invoke(EventType.DialogueStart, Global.GetGameObject((Node)interactable));
 					Global.HUD.ShowDialogue(((Talker)interactable).GetDialogue());
 				}
 				break;
@@ -442,7 +442,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	{
 		playerModel.hp -= d; //TODO take into account armor, skills, etc.
 		if (playerModel.hp < 0){
-			EventManager.Invoke(EventType.GameOver, false); 
+			EventManager.Invoke(EventType.GameOver); 
 			GD.Print("dead");
 			SetProcessMode(ProcessModeEnum.Disabled);
 		}
