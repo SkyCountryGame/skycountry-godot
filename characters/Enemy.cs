@@ -4,13 +4,23 @@ using Godot.Collections;
 using State = StateManager.State;
 using Microsoft.VisualBasic;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
-//enemy 1: sits idle, chases player, attacks player when close enough
+//enemy 0: every 5 seconds, update goal position to player position
 public partial class Enemy : NPCNode {
+
+    Godot.Timer timer;
 
 	public override void _Ready(){
 		base._Ready();
-        SetState(defaultState); //dont know if i like to have to call upon a statemgr no matter what just so that godot nodes can interface with from editor for some state-holding-entities
+        timer = new Godot.Timer();
+        AddChild(timer);
+        timer.Timeout += () => UpdatePathGoal();
+        timer.WaitTime = 5;
+        timer.OneShot = false;
+        timer.Start();
+        SetState(defaultState);
 	}
 
 	public override void _Process(double delta){
@@ -23,18 +33,10 @@ public partial class Enemy : NPCNode {
         switch (currentState){
             case State.IDLE:
                 break;
-            case State.ROAMING:
-                if (navReady && physBody.Position.DistanceTo(nav.TargetPosition) < .15){
-                    nav.TargetPosition = Global.currentLevel.GetRandomPoint();
-                }
-                GD.Print($"Roaming to {nav.TargetPosition}");
-                mot.pos_goal = nav.TargetPosition;
-                //physBody.Velocity = (nav.TargetPosition - physBody.GlobalPosition).Normalized() *5;
-                break;
             case State.ALERT:
-                nav.TargetPosition = target.GlobalPosition; //could put this in a timer
-                mot.pos_goal = nav.TargetPosition;
-                //physBody.Velocity = (nav.TargetPosition - physBody.GlobalPosition).Normalized() *15;
+                if (navReady){
+                    mot.pos_goal = nav.GetNextPathPosition();
+                }
                 break;
             case State.ATTACKING:
                 //attack
@@ -43,6 +45,13 @@ public partial class Enemy : NPCNode {
         mot.Update(delta, physBody);
         //physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
+
+    private void UpdatePathGoal(){
+        if (Global.playerNode != null){
+            nav.TargetPosition = Global.playerNode.GlobalPosition;
+        }
+        
+    }
 
 	public override void OnStateChange(State state, float duration = -1)
 	{
@@ -58,6 +67,11 @@ public partial class Enemy : NPCNode {
 			case State.ALERT: //player is detected. chase
 				break;
             case State.ATTACKING: //player is close enough. attack
+                //do cooldown
+                Task.Run(() => {
+                    Thread.Sleep(1000);
+                    SetState(State.ALERT);
+                });
                 break;
 			default:
 				break;
@@ -67,12 +81,6 @@ public partial class Enemy : NPCNode {
 	public override void HandleCollide(ColliderZone zone, Node other)
 	{
 		switch (zone) {
-            case ColliderZone.Awareness0:
-                if (other is Player){
-                    target = (Node3D) other;
-                    SetState(State.ALERT);
-                }
-                break;
             case ColliderZone.Awareness1:
                 if (other is Player){
                     SetState(State.ATTACKING);
@@ -104,7 +112,7 @@ public partial class Enemy : NPCNode {
 
     public override bool CanChangeState(State state)
     {
-        throw new NotImplementedException();
+        return true;
     }
 
 }

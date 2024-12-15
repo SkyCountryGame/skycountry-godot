@@ -114,8 +114,9 @@ public partial class Global : Node
 		}
 		//now associate the type. 
 		foreach (GameObjectType t in Enum.GetValues(typeof(GameObjectType))){
-			if ((type | t) != 0 && !mapTypeGameObjects[t].Contains(go)){
+			if ((type & t) != 0 && !mapTypeGameObjects[t].Contains(go)){
 				mapTypeGameObjects[t].Add(go);
+
 			}
 		}
 		return;

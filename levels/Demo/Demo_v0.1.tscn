@@ -168,10 +168,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
 stations = [NodePath("../TREES/Tree4"), NodePath("../TREES/Tree14"), NodePath("../Firepit"), NodePath("../TREES/Sapling3")]
 radius = 1.0
 
-[node name="Blockhead2" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.76327, 0, 15.3812)
-stations = [NodePath("../TREES/Sapling3"), NodePath("../TREES/Tree6"), NodePath("../TREES/Tree5")]
-
 [node name="LodgingBuildingDemo" parent="." instance=ExtResource("1_1jaco")]
 transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, -13.8096, -1.90735e-06, -3.01665)
 

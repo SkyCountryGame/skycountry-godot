@@ -446,6 +446,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		if (playerModel.hp < 0){
 			EventManager.Invoke(EventType.GameOver); 
 			GD.Print("dead");
+			Global.HUD.LogEvent("You are dead. (TODO implement gameover)");
 			SetProcessMode(ProcessModeEnum.Disabled);
 		}
 	}

@@ -20,7 +20,7 @@ public partial class Talker : Component, Interactable {
 	public List<Dialogue> dialogues; //each character has his own set of dialogues
     
 	public override void _Ready(){
-        //Global.RegisterGameObject(this, GameObjectType.Interactable);
+        Global.RegisterGameObject(subject, GameObjectType.Interactable);
         //dialogue = ResourceLoader.Load<Dialogue>(dialogueFilename);
         dialogue = new Dialogue(dialogueFilename);
     }
