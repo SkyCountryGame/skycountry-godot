@@ -224,7 +224,8 @@ destination = "res://levels/NPCPlayground/main_place.tscn"
 script = ExtResource("15_2fbkt")
 
 [node name="Bat" parent="." instance=ExtResource("18_d7mr5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1497, 0.0999999, -1.28501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38931, 0.0999999, -9.44192)
+collision_mask = 1
 
 [node name="PickaxePickup" parent="." instance=ExtResource("6_krsbu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.624, 0.0499992, 4.44565)

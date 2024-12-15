@@ -84,7 +84,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public override void _Process(double delta)
 	{
 		if(playerModel.GetState() == State.DEFAULT){
-			if (Input.IsMouseButtonPressed(0)){
+			//if (Input.IsMouseButtonPressed(0)){
 				//RayCast Stuff
 				Vector2 mousePosition = GetViewport().GetMousePosition();
 				Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
@@ -96,11 +96,11 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
 					LookAt(viewAngle);
 				}
-			} else {
-				if (Velocity.Length() > 0){
-					LookAt(Velocity, Vector3.Up);
-				}
-			}
+			//} else {
+			//	if (Velocity.Length() > 0){
+			//		LookAt(Velocity, Vector3.Up);
+			//	}
+			//}
 		}
 
 		//HUD stuff
