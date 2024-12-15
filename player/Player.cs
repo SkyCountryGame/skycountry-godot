@@ -84,7 +84,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public override void _Process(double delta)
 	{
 		if(playerModel.GetState() == State.DEFAULT){
-			//if (Input.IsMouseButtonPressed(0)){
+			if (Input.IsMouseButtonPressed(0)){
 				//RayCast Stuff
 				Vector2 mousePosition = GetViewport().GetMousePosition();
 				Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
@@ -96,11 +96,11 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
 					LookAt(viewAngle);
 				}
-			//} else {
-			//	if (inputDir.Length() > 0){
-					//LookAt(inputDir, Vector3.Up);
-			//	}
-			//}
+			} else {
+				if (Velocity.Length() > 0){
+					LookAt(Velocity, Vector3.Up);
+				}
+			}
 		}
 
 		//HUD stuff
@@ -109,10 +109,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		} else {
 			Global.HUD.HideAction();
 		}
-	}
-
-	public void printWord(string blah){
-		GD.Print( blah);
 	}
 
 	public override void _Input(InputEvent ev){
@@ -239,7 +235,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	//process player movement based on user input and other factors. this is WIP
 	private void DoMotion(double delta){
 		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
-		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam);
+		controlDir = inputDir.Rotated(Vector3.Down, angleToCam);
 		angleToFacingDirection = GlobalTransform.Basis.Z.SignedAngleTo(-controlDir, Vector3.Up);
 
 		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses

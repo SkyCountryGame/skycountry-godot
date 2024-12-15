@@ -20,3 +20,14 @@ todo:
 * make Equipable a Component
 * file organization: prefabs folder. Pickup etc. out of components/. 
 * update Player to use statemanagement and motionmodule similar to npc. 
+* fix player movement with other camera anglese
+
+
+-----
+look at some plugins:
+* https://github.com/bbbscarter/GodotRuntimeDebugTools
+* https://github.com/godot-extended-libraries/godot-debug-menu?tab=readme-ov-file
+* 
+
+
+make runtime debug widgets: camera params widget, 

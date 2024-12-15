@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bantfsh2sxy0v"]
+[gd_scene load_steps=3 format=3 uid="uid://bantfsh2sxy0v"]
 
 [ext_resource type="Script" path="res://ui/HUDManager.cs" id="1_qxbrm"]
-[ext_resource type="PackedScene" uid="uid://drdtr3ebbuw44" path="res://ui/dialogue_panel.tscn" id="2_bvn34"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tskj6"]
 font_color = Color(0.0923971, 0.0923971, 0.0923971, 1)
@@ -75,12 +74,51 @@ label_settings = SubResource("LabelSettings_tskj6")
 vertical_alignment = 2
 autowrap_mode = 2
 
-[node name="DialoguePanel" parent="." instance=ExtResource("2_bvn34")]
-layout_mode = 0
-
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="DialoguePanel" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainerTop" type="PanelContainer" parent="DialoguePanel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="InfoPanel" type="HBoxContainer" parent="DialoguePanel/PanelContainerTop"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="DialogueTitle" type="Label" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title of this dialogue"
+
+[node name="ButtonContinue" type="Button" parent="DialoguePanel/PanelContainerTop/InfoPanel"]
+custom_minimum_size = Vector2(100, 0)
+layout_direction = 2
+layout_mode = 2
+text = "Continue"
+
+[node name="PanelContainerMessage" type="PanelContainer" parent="DialoguePanel"]
+layout_mode = 2
+
+[node name="MessageLabel" type="RichTextLabel" parent="DialoguePanel/PanelContainerMessage"]
+custom_minimum_size = Vector2(960, 80)
+layout_mode = 2
+
+[node name="ResponsesList" type="ItemList" parent="DialoguePanel"]
+custom_minimum_size = Vector2(700, 400)
+layout_direction = 2
+layout_mode = 2
+max_text_lines = 6
+text_overrun_behavior = 0
+item_count = 1
+
 [connection signal="item_clicked" from="InventoryMenu" to="." method="OnInventoryMenuItemClicked"]
+[connection signal="pressed" from="DialoguePanel/PanelContainerTop/InfoPanel/ButtonContinue" to="." method="_on_button_continue_pressed"]
+[connection signal="item_clicked" from="DialoguePanel/ResponsesList" to="." method="OnDialogueResponseItemClicked"]
