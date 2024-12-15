@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=43 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://gameobjects/tscn/rocks/rock_1.tscn" id="33_fv50v"]
 [ext_resource type="PackedScene" uid="uid://doy5efrnbsvds" path="res://gameobjects/Bushes/bush_1c.tscn" id="34_4mi8k"]
 [ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://gameobjects/tscn/rocks/rock_2.tscn" id="34_4y261"]
+[ext_resource type="AudioStream" uid="uid://c4xnkvi27q71j" path="res://assets/SFX/Metroid Fusion Music - Environmental Tension.mp3" id="35_nwils"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -284,3 +285,7 @@ transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 13
 
 [node name="Sapling4" parent="Scenery" instance=ExtResource("28_grsil")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 38.5559, -7.03204, 21.5913)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("35_nwils")
+autoplay = true

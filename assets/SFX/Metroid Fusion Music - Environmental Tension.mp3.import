@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c4xnkvi27q71j"
+path="res://.godot/imported/Metroid Fusion Music - Environmental Tension.mp3-c84b3bb72d1b37cf20267557f8a6bcac.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/Metroid Fusion Music - Environmental Tension.mp3"
+dest_files=["res://.godot/imported/Metroid Fusion Music - Environmental Tension.mp3-c84b3bb72d1b37cf20267557f8a6bcac.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

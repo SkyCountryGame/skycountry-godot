@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5ki31l6wkdhg"
+path="res://.godot/imported/Pokemon Black_White Music- Village Bridge (with Buildup).mp3-90b321c618d2230c5b35f6c18a3bfbc9.mp3str"
+
+[deps]
+
+source_file="res://assets/SFX/Pokemon Black_White Music- Village Bridge (with Buildup).mp3"
+dest_files=["res://.godot/imported/Pokemon Black_White Music- Village Bridge (with Buildup).mp3-90b321c618d2230c5b35f6c18a3bfbc9.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

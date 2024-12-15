@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://darxsa5kedpia"]
+[gd_scene load_steps=22 format=3 uid="uid://darxsa5kedpia"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_dmqny"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="3_uxc7l"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="5_tmuy4"]
 [ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://gameobjects/tscn/Wood Props/keg.tscn" id="9_3yk1m"]
 [ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="9_c61dd"]
+[ext_resource type="AudioStream" uid="uid://b5ki31l6wkdhg" path="res://assets/SFX/Pokemon Black_White Music- Village Bridge (with Buildup).mp3" id="10_imc5s"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="14_a0y17"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="22_f2v6q"]
 [ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://gameobjects/tscn/Wood Props/wood_stool.tscn" id="27_1rl33"]
@@ -266,3 +267,7 @@ destination = "res://levels/Demo/Demo_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
 shape = SubResource("BoxShape3D_2s7nr")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_imc5s")
+autoplay = true
