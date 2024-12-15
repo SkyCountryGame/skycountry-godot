@@ -76,6 +76,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xhdy3")
 
 [node name="PickaxePickup" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_rrefl")
 invItem = ExtResource("2_vmyae")
 info = "Pickaxe"
