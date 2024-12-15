@@ -1,7 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://degb480meonrx"]
+[gd_scene load_steps=6 format=3 uid="uid://degb480meonrx"]
 
 [ext_resource type="Script" path="res://characters/Enemy.cs" id="1_3pxg8"]
+[ext_resource type="Script" path="res://brain/CollisionZone.cs" id="2_88lik"]
 
-[node name="Enemy0" type="Node3D" node_paths=PackedStringArray("listenerNodes")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_6rrxk"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qierq"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_plxmk"]
+height = 3.0
+radius = 5.0
+
+[node name="Enemy0" type="Node3D" node_paths=PackedStringArray("physBody", "nav", "listenerNodes")]
 script = ExtResource("1_3pxg8")
+physBody = NodePath("CharacterBody3D")
+nav = NodePath("NavigationAgent3D")
+states = Array[int]([0, 1, 4])
 listenerNodes = []
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_6rrxk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("BoxMesh_qierq")
+
+[node name="Area3D" type="Area3D" parent="CharacterBody3D"]
+script = ExtResource("2_88lik")
+zone = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
+shape = SubResource("CylinderShape3D_plxmk")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
