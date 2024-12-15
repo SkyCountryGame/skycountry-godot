@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_6awk4"]
 [ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/Grass_Simple.png" id="9_i6pf1"]
 [ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="10_ygowh"]
-[ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="12_74lmr"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
+[ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="12_wi5p8"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://gameobjects/trees/BareTree3_B.tscn" id="14_bpjh8"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
@@ -67,7 +67,7 @@ exposure_multiplier = 0.828
 [sub_resource type="Resource" id="Resource_liskl"]
 script = ExtResource("8_6awk4")
 mode = 0
-textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_74lmr")], [null, null, null, null]]
+textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_wi5p8")], [null, null, null, null]]
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_1m4au")
@@ -122,10 +122,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_qukrv")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -84.7283, -7.15256e-06, -118.409)
+transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 148.223, -7.15256e-06, 90.7341)
 
 [node name="spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.9731, 1.66496, -122.648)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.361, 1.66496, 146.268)
 script = ExtResource("17_38mhm")
 
 [node name="Rock29" parent="." instance=ExtResource("18_5tvrn")]
