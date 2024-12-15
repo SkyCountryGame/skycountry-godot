@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Godot;
 
 public partial class DialogueFunctionController: GodotObject //needs to be GodotObject in order to use #Call
 {
+    private enum Function{
+        [Description("CheckAndRemoveInventory")] // can work without this description now, but this would be the name of the function
+        CheckAndRemoveInventory //can name whatever we want as long as we populate description, if its named the same as the function we dont need description
+    }
+
     public bool run(string methodName, List<object> args)
     {
+        Function function = (Function)Enum.Parse(typeof(Function), methodName);
         Variant[] convertedArgs = new Variant[args.Count];
         for(int i = 0; i<args.Count; i++){
             if(int.TryParse((string)args[i], out int j)){
@@ -15,7 +22,7 @@ public partial class DialogueFunctionController: GodotObject //needs to be Godot
                 convertedArgs[i]=(string)args[i];
             }
         }
-        Variant result = Call(methodName,convertedArgs);
+        Variant result = Call(function.GetDescription(), convertedArgs);
         switch(result.VariantType){
             case Variant.Type.Bool:
                 return (bool)result;
