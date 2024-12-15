@@ -6,11 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://c64e35du7ups5" path="res://assets/sky_hdri/Sky_Anime_16_Night_a.png" id="4_wjo57"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="5_mamqx"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="6_k11m3"]
-[ext_resource type="Resource" path="res://assets/DemoTerrain/data.hterrain" id="7_4ox13"]
+[ext_resource type="Resource" path="res://assets/FORESTDemoTerrain/data.hterrain" id="7_at66j"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_6awk4"]
 [ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/Grass_Simple.png" id="9_i6pf1"]
 [ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="10_ygowh"]
-[ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="11_manrk"]
+[ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="12_74lmr"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_0qrwk"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
@@ -70,10 +70,10 @@ vertices = PackedVector3Array(-199.5, 0.45, -199.5, -199.5, 0.45, 199.5, 199.5, 
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 geometry_parsed_geometry_type = 2
 
-[sub_resource type="Resource" id="Resource_88805"]
+[sub_resource type="Resource" id="Resource_liskl"]
 script = ExtResource("8_6awk4")
 mode = 0
-textures = [[ExtResource("9_i6pf1"), ExtResource("10_ygowh"), ExtResource("11_manrk"), ExtResource("12_hueh4")], [null, null, null, null]]
+textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_74lmr")], [null, null, null, null]]
 
 [sub_resource type="Resource" id="Resource_wjhiy"]
 script = ExtResource("15_jgwq1")
@@ -99,8 +99,8 @@ camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
-light_energy = 0.0
-light_angular_distance = 0.25
+light_color = Color(0.76, 0.872, 1, 1)
+light_angular_distance = 1.55
 shadow_enabled = true
 sky_mode = 1
 
@@ -112,24 +112,21 @@ navigation_mesh = SubResource("NavigationMesh_464t1")
 [node name="HTerrain" type="Node3D" parent="NavigationRegion3D"]
 script = ExtResource("6_k11m3")
 centered = true
-_terrain_data = ExtResource("7_4ox13")
+_terrain_data = ExtResource("7_at66j")
 chunk_size = 32
 collision_enabled = true
 collision_layer = 1
 collision_mask = 1
-shader_type = "Classic4"
+shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null
-texture_set = SubResource("Resource_88805")
+texture_set = SubResource("Resource_liskl")
 render_layers = 1
 cast_shadow = 1
-shader_params/u_ground_uv_scale_per_texture = Vector4(6, 6, 0, 6)
+shader_params/u_ground_uv_scale = 20
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
-shader_params/u_globalmap_blend_start = null
-shader_params/u_globalmap_blend_distance = null
-shader_params/u_colormap_opacity_per_texture = null
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
 
@@ -138,7 +135,6 @@ shape = ExtResource("13_0qrwk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
-visible = false
 light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_qukrv")]
@@ -146,7 +142,7 @@ transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -9.25845
 playerModel = SubResource("Resource_wjhiy")
 
 [node name="spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.97308, 1.66496, 13.3522)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.9731, 1.66496, -122.648)
 script = ExtResource("17_38mhm")
 
 [node name="Rock29" parent="." instance=ExtResource("18_5tvrn")]
