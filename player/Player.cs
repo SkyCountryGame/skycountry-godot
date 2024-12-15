@@ -235,7 +235,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	//process player movement based on user input and other factors. this is WIP
 	private void DoMotion(double delta){
 		float angleToCam = camForward.SignedAngleTo(Vector3.Forward, Vector3.Up); //angle between control forward and camera forward
-		controlDir = inputDir.Rotated(Vector3.Down, angleToCam);
+		controlDir = inputDir.Normalized().Rotated(Vector3.Down, angleToCam); //TODO joystick magnitude
 		angleToFacingDirection = GlobalTransform.Basis.Z.SignedAngleTo(-controlDir, Vector3.Up);
 
 		//TODO if controlDir is close to 180d from current vel, then set accel to some multiple of maxmagnitude until vel reverses
