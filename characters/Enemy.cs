@@ -10,7 +10,9 @@ using System.Threading;
 //enemy 0: every 5 seconds, update goal position to player position
 public partial class Enemy : NPCNode {
 
-    Godot.Timer timer;
+    private Godot.Timer timer;
+    private Godot.Timer timerCooldown;
+    private Damageable attackTarget;
 
 	public override void _Ready(){
 		base._Ready();
@@ -20,6 +22,13 @@ public partial class Enemy : NPCNode {
         timer.WaitTime = 5;
         timer.OneShot = false;
         timer.Start();
+        timerCooldown = new Godot.Timer();
+        AddChild(timerCooldown);
+        timerCooldown.OneShot = true;
+        timerCooldown.WaitTime = 1;
+        timerCooldown.Timeout += () => {
+            SetState(State.ALERT);
+        };
         SetState(defaultState);
 	}
 
@@ -57,21 +66,19 @@ public partial class Enemy : NPCNode {
 	{
         base.OnStateChange(state, duration);
 		switch (state){
-			case State.IDLE:
-				nav.TargetPosition = physBody.GlobalPosition;
-                physBody.Velocity = Vector3.Zero;
-				break;
-            case State.ROAMING:
-                nav.TargetPosition = new Vector3(1, 1, 3); // TODO fix. Global.currentLevel not yet updated here   //(Vector3)CallDeferred("GetRandomNavPoint", Global.currentLevel);
-                break;
-			case State.ALERT: //player is detected. chase
+			case State.ALERT: //default state. go to player
+                if (attackTarget != null){
+                    SetState(State.ATTACKING);
+                    return;
+                }
+                UpdatePathGoal();
 				break;
             case State.ATTACKING: //player is close enough. attack
+                attackTarget.ApplyDamage(1);
+                GD.Print("Enemy is attacking you!");
+                Global.HUD.LogEvent("Enemy is attacking you!");
                 //do cooldown
-                Task.Run(() => {
-                    Thread.Sleep(1000);
-                    SetState(State.ALERT);
-                });
+                timerCooldown.Start();
                 break;
 			default:
 				break;
@@ -83,10 +90,8 @@ public partial class Enemy : NPCNode {
 		switch (zone) {
             case ColliderZone.Awareness1:
                 if (other is Player){
+                    attackTarget = (Damageable) other;
                     SetState(State.ATTACKING);
-                    ((Damageable)other).ApplyDamage(1);
-                    GD.Print("Enemy is attacking you!");
-                    Global.HUD.LogEvent("Enemy is attacking you!");
                 }
                 break;
         }
@@ -95,15 +100,9 @@ public partial class Enemy : NPCNode {
 	public override void HandleDecollide(ColliderZone zone, Node other)
 	{
 		switch (zone) {
-            case ColliderZone.Awareness0:
-                if (other is Player){
-                    //target = (Node3D) other;
-                    SetState(State.IDLE);
-                }
-                break;
             case ColliderZone.Awareness1:
-                if (other is Player){
-                    target = (Node3D) other;
+                if (other is Damageable && other == attackTarget){
+                    attackTarget = null;
                     SetState(State.ALERT);
                 }
                 break;
