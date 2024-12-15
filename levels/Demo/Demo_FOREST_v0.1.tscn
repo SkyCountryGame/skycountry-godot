@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=32 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -10,12 +10,10 @@
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_6awk4"]
 [ext_resource type="Texture2D" uid="uid://q2o4m8elvbtd" path="res://assets/texture/Environment/Grass/Grass_Simple.png" id="9_i6pf1"]
 [ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="10_ygowh"]
-[ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="12_74lmr"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
-[ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_0qrwk"]
+[ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="12_wi5p8"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://gameobjects/trees/BareTree3_B.tscn" id="14_bpjh8"]
-[ext_resource type="Script" path="res://player/PlayerModel.cs" id="15_jgwq1"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://gameobjects/tscn/rocks/rock_9.tscn" id="18_5tvrn"]
 [ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://gameobjects/trees/RegularTree1_C.tscn" id="20_dkfk8"]
@@ -25,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://da4ranwjj47xe" path="res://gameobjects/trees/RegularSapling2_C.tscn" id="24_ic5n3"]
 [ext_resource type="PackedScene" uid="uid://hbx8qr1enmrd" path="res://gameobjects/trees/BareSapling2_B.tscn" id="25_b5cll"]
 [ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://gameobjects/trees/BareSapling1_B.tscn" id="26_b3hh8"]
-[ext_resource type="PackedScene" uid="uid://degb480meonrx" path="res://characters/enemy0.tscn" id="26_kukou"]
 [ext_resource type="PackedScene" uid="uid://ieq8t38xr25g" path="res://gameobjects/trees/BareTree1_B.tscn" id="27_e1mau"]
 [ext_resource type="PackedScene" uid="uid://be0m87coffwag" path="res://gameobjects/trees/RegularSapling1_C.tscn" id="28_grsil"]
 
@@ -66,19 +63,11 @@ adjustment_saturation = 1.22
 exposure_multiplier = 0.828
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_464t1"]
-vertices = PackedVector3Array(-199.5, 0.45, -199.5, -199.5, 0.45, 199.5, 199.5, 0.45, 199.5, 199.5, 0.45, -199.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-geometry_parsed_geometry_type = 2
 
 [sub_resource type="Resource" id="Resource_liskl"]
 script = ExtResource("8_6awk4")
 mode = 0
-textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_74lmr")], [null, null, null, null]]
-
-[sub_resource type="Resource" id="Resource_wjhiy"]
-script = ExtResource("15_jgwq1")
-activityState = 1
-hp = 3
+textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_wi5p8")], [null, null, null, null]]
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_1m4au")
@@ -128,21 +117,15 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
 
-[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
-shape = ExtResource("13_0qrwk")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_qukrv")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -9.25845, 4.76837e-07, 17.2892)
-playerModel = SubResource("Resource_wjhiy")
+transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 148.223, -7.15256e-06, 90.7341)
 
 [node name="spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.9731, 1.66496, -122.648)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.361, 1.66496, 146.268)
 script = ExtResource("17_38mhm")
 
 [node name="Rock29" parent="." instance=ExtResource("18_5tvrn")]
@@ -180,7 +163,3 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 9.30563, 0, 13.4536)
 
 [node name="Sapling4" parent="." instance=ExtResource("28_grsil")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 38.5559, 0, 21.5913)
-
-[node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
-states = Array[int]([1, 4])
-defaultState = 1
