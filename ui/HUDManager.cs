@@ -147,6 +147,11 @@ public partial class HUDManager : Node {
             Dialogue.StatementNode sn = currentDialogue.statements[id];
             currentDialogue.currentStatement = sn;
             UpdateDialoguePanel(sn);
+            if(currentDialogue.currentStatement.startFunction!=null){
+                if(Global.dialogueFunctionController.run(currentDialogue.currentStatement.startFunction,null)){
+                    
+                } //TODO add arg support for this?
+            }
         }
     }
     public void OnButtonContinuePressed(){

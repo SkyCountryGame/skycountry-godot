@@ -1,0 +1,7 @@
+{
+    "RockProgressFlags":{
+        "TenRocks": true,
+        "TwentyRocks": true,
+        "ThirtyRocks": false
+    }
+}
