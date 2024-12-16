@@ -35,6 +35,9 @@
             }
         ],
         "speed": 2,
+        "exec": {
+            "name": "ChangeRockFlag"
+        },
         "fontSize": 1,
         "emotion": 0
     },

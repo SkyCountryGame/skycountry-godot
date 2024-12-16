@@ -31,10 +31,12 @@ public partial class Dialogue : Resource
         public List<ResponseNode> responses;
         public int nextStatementID = -1; //when there's no responses but a continuation to another statement. -1 means to exit dialogue
         public EventType eventType; //when the next thing that happens is some in game action
+        public string startFunction;
         public StatementNode(string statement){
             this.statement = statement;
             responses = new List<ResponseNode>();
             eventType = EventType.None;
+            startFunction = null;
         }
     }
     public struct ResponseNode {
@@ -96,6 +98,11 @@ public partial class Dialogue : Resource
                             statementNode.eventType = Enum.Parse<EventType>(eventJsonElement.GetString()); //not worrying about payload for dialogue-triggered events
                         } else { return false; } //event json not string
                     }
+                    if (jsonElement.TryGetProperty("exec", out JsonElement dialogueStartExec)){
+                        if(dialogueStartExec.TryGetProperty("name", out JsonElement functionName)){
+                            statementNode.startFunction = functionName.ToString();
+                        }
+                    }
                     if ( jsonElement.TryGetProperty("responses", out JsonElement responsesJsonElement)){ //responses. rj = responses json
                         if (responsesJsonElement.ValueKind == JsonValueKind.Array){
                             foreach (JsonElement response in responsesJsonElement.EnumerateArray()){
@@ -104,9 +111,9 @@ public partial class Dialogue : Resource
                                         //rtj = response text json, nij = next id json
                                         statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), nextIdJsonElement.GetInt32()));   
                                     }
-                                    else if (response.TryGetProperty("exec", out JsonElement execJsonElement)) {
-                                        if(execJsonElement.TryGetProperty("success", out JsonElement successJsonElement) && execJsonElement.TryGetProperty("failure", out JsonElement failureJsonElement) && execJsonElement.TryGetProperty("name", out JsonElement methodNameJsonElement)){
-                                            if(execJsonElement.TryGetProperty("args", out JsonElement argsJsonElement) && argsJsonElement.ValueKind == JsonValueKind.Array){
+                                    else if (response.TryGetProperty("exec", out JsonElement dialogueEndExec)) {
+                                        if(dialogueEndExec.TryGetProperty("success", out JsonElement successJsonElement) && dialogueEndExec.TryGetProperty("failure", out JsonElement failureJsonElement) && dialogueEndExec.TryGetProperty("name", out JsonElement methodNameJsonElement)){
+                                            if(dialogueEndExec.TryGetProperty("args", out JsonElement argsJsonElement) && argsJsonElement.ValueKind == JsonValueKind.Array){
                                                 statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), methodNameJsonElement.GetString(), successJsonElement.GetInt32(), failureJsonElement.GetInt32(), argsJsonElement.EnumerateArray().Select(x => x.ToString() as object).ToList()));
                                             } else {
                                                 statementNode.responses.Add(new ResponseNode(responseTextJsonElement.GetString(), methodNameJsonElement.GetString(), successJsonElement.GetInt32(), failureJsonElement.GetInt32(), null));

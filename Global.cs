@@ -30,7 +30,7 @@ public partial class Global : Node
 	public static Dictionary<GameObject, Interactable> mapGameObjectToInteractable = new Dictionary<GameObject, Interactable>();
 	public static Dictionary<GameObject, List<Node>> mapGameObjectNodes = new Dictionary<GameObject, List<Node>>(); //map game objects to their nodes
 	public static Dictionary<GameObjectType, HashSet<GameObject>> mapTypeGameObjects = new Dictionary<GameObjectType, HashSet<GameObject>>(); //map types to game objects
-
+	public static FlagManager flagManager = new FlagManager();
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
