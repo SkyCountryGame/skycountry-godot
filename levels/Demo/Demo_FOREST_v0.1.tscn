@@ -66,7 +66,7 @@ fog_height_density = 0.1441
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0194
 volumetric_fog_albedo = Color(0.0498621, 0.304609, 0.590697, 1)
-volumetric_fog_emission = Color(0.191912, 0.344577, 0.350766, 1)
+volumetric_fog_emission = Color(0.207453, 0.368586, 0.375114, 1)
 volumetric_fog_emission_energy = 16.62
 volumetric_fog_length = 28.22
 adjustment_enabled = true
@@ -224,7 +224,7 @@ transform = Transform3D(1.79895, -0.507424, -0.682937, 0.540233, 1.91527, 0, 0.6
 transform = Transform3D(-0.351304, 0.355633, -0.696162, 0.0858562, 0.863618, 0.320119, 0.69165, 0.0734307, -0.393332, -10.9991, -6.69857, 14.1011)
 
 [node name="Tree3" parent="Scenery" instance=ExtResource("14_bpjh8")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 125.352, 0.131609, 111.308)
+transform = Transform3D(3.9996, -0.0567562, 0, 0.0567562, 3.9996, 0, 0, 0, 4, 125.352, 0.131609, 111.308)
 
 [node name="Tree7" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -46.9071, -6.90043, -16.5495)
@@ -257,7 +257,7 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 9.30563, -7.03204, 13.4536)
 transform = Transform3D(3.99173, -0.257154, 0, 0.257099, 3.99087, 0.0829321, -0.00533158, -0.0827605, 3.99914, 127.935, -5.18414, 61.5966)
 
 [node name="Tree9" parent="Scenery" instance=ExtResource("14_bpjh8")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 58.1284, -7.11286, 61.3855)
+transform = Transform3D(4, 0, 0, 0, 3.99933, -0.0730903, 0, 0.0730903, 3.99933, 58.1284, -7.3931, 61.3855)
 
 [node name="Tree10" parent="Scenery" instance=ExtResource("23_o3ldj")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 86.6361, -5.29406, 66.6294)
@@ -273,6 +273,9 @@ transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 98
 
 [node name="Tree13" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(-2.63877, 0.205509, 2.99911, 0.135752, 3.99472, -0.15429, -3.00307, 0, -2.64226, 145.018, -5.6689, 77.4781)
+
+[node name="Tree20" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-3.21568, -0.0118813, 2.37891, -0.0353401, 3.99975, -0.0277949, -2.37868, -0.0433626, -3.21559, 87.5005, -7.76061, 46.4787)
 
 [node name="Tree14" parent="Scenery" instance=ExtResource("23_o3ldj")]
 transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 136.701, -5.86355, 42.1394)

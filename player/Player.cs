@@ -20,7 +20,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
 	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
-	public float velMagnitudeMax = 11f; //approximate max velocity allowed
+	public float velMagnitudeMax = 9f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
 	//INTERACTION and BEHAVIOR STUFF
@@ -84,7 +84,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public override void _Process(double delta)
 	{
 		if(playerModel.GetState() == State.DEFAULT){
-			//if (Input.IsMouseButtonPressed(0)){
+			if (Input.IsMouseButtonPressed(Godot.MouseButton.Right)){
 				//RayCast Stuff
 				Vector2 mousePosition = GetViewport().GetMousePosition();
 				Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
@@ -96,11 +96,11 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
 					LookAt(viewAngle);
 				}
-			//} else {
-			//	if (Velocity.Length() > 0){
-			//		LookAt(Velocity, Vector3.Up);
-			//	}
-			//}
+			} else {
+				if (Velocity.Length() > 0){
+					LookAt(GlobalPosition + controlDir);
+				}
+			}
 		}
 
 		//HUD stuff
