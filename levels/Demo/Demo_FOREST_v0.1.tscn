@@ -80,7 +80,7 @@ exposure_multiplier = 0.828
 [sub_resource type="Resource" id="Resource_wjhiy"]
 script = ExtResource("15_jgwq1")
 activityState = 1
-hp = 3
+hp = 173
 
 [sub_resource type="Resource" id="Resource_liskl"]
 script = ExtResource("8_6awk4")
