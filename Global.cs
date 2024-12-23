@@ -79,8 +79,9 @@ public partial class Global : Node
 			playerNode = (Player) ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate();
 			nextLevel.AddChild(playerNode);
 		}
-
-		playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition; //TODO use exported spawnpoint node instead, or have Level handle player spawning and positioning. 
+		if (nextLevel.HasNode("SpawnLocation")){
+			playerNode.Position = ((Node3D) nextLevel.FindChild("SpawnLocation")).GlobalPosition; //TODO use exported spawnpoint node instead, or have Level handle player spawning and positioning. 
+		}
 		_.GetTree().Root.CallDeferred("remove_child", previousScene);
 		currentLevel = nextLevel;		
 	}
@@ -144,9 +145,9 @@ public partial class Global : Node
 	}
 
 	//helper functin to get all the nodes that comprise a game object, given its root node
-    public static List<Node> GetGameObjectNodes(Node n){
+	public static List<Node> GetGameObjectNodes(Node n){
 		List<Node> res = new List<Node>(){n};
-        res.AddRange(n.GetChildren());
+		res.AddRange(n.GetChildren());
 		return res;
 	}
 
