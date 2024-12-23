@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://brt5upnw6wocy"]
+
+[ext_resource type="Script" path="res://components/Pickup.cs" id="1_jhyl0"]
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="2_4yfgu"]
+
+[sub_resource type="Resource" id="Resource_3h5y1"]
+resource_name = "fishingpole"
+script = ExtResource("2_4yfgu")
+name = "fishingpole"
+itemType = 64
+equipable = true
+
+[node name="FishingPole" type="Node3D"]
+script = ExtResource("1_jhyl0")
+invItem = SubResource("Resource_3h5y1")
+info = "catch fish"
