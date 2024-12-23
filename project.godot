@@ -45,6 +45,9 @@ import/fbx/enabled=false
 [global_group]
 
 navigation=""
+prop=""
+floor=""
+building=""
 
 [input]
 
