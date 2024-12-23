@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://t0deicl6s7yp"]
+[gd_scene load_steps=11 format=4 uid="uid://t0deicl6s7yp"]
 
 [ext_resource type="PackedScene" uid="uid://db1hrmefcmh63" path="res://assets/Models/Trees/Tree1.glb" id="1_kwxrp"]
 [ext_resource type="Texture2D" uid="uid://dnqowfsh0rivb" path="res://assets/texture/Environment/Trees/RegularTree1_1.png" id="2_rhinr"]
+[ext_resource type="Script" path="res://util/AutomaticCollisionShapeFromMesh.cs" id="2_x6apc"]
 [ext_resource type="Texture2D" uid="uid://bwvc8sji1fnca" path="res://assets/texture/Environment/Trees/StandardLeaves.png" id="3_scoe3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5dyc"]
@@ -75,7 +76,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_f5v77")
 
-[node name="Tree1" instance=ExtResource("1_kwxrp")]
+[node name="Tree1" node_paths=PackedStringArray("meshes") instance=ExtResource("1_kwxrp")]
+script = ExtResource("2_x6apc")
+meshes = [NodePath("Tree 1")]
 
 [node name="Tree 1" parent="." index="0"]
 mesh = SubResource("ArrayMesh_5qwwi")

@@ -75,6 +75,10 @@ public partial class Level : Node
 			//navRegion.BakeNavigationMesh();
 		}
 		worldBounds = GetWorldBounds();
+		
+		//grab all the nodes with group "building", "prop", and process them
+		ProcessNodeGroups(); 
+
 	//GetTree().CreateTimer(sunlightAngleUpdateInterval);
 	/*
 		Task.Run(()=>{
@@ -92,6 +96,23 @@ public partial class Level : Node
 	{
 		//TODO where change lighting for time of day? maybe a timer that repeats every several minutes to slightly change the color.
 				
+	}
+
+	private void ProcessNodeGroups(){
+		GD.Print("processing node groups");
+		foreach (Node n in GetChildren(true)){
+			GD.Print(n.Name);
+			if (n.IsInGroup("floor")){
+				
+			}
+			if (n.IsInGroup("prop")){
+				GD.Print("  prop"); //add cylinder collision mesh
+			}
+			if (n.IsInGroup("building")){
+				//add box colliion mesh
+				
+			}
+		}
 	}
 
 	//get a point that's on the navmesh that's closest to the given point
@@ -138,7 +159,7 @@ public partial class Level : Node
 	{
 		worldBounds = new Aabb();
 		bool firstMesh = true;
-		foreach (Node node in GetTree().GetNodesInGroup("mesh"))
+		foreach (Node node in GetTree().GetNodesInGroup("floor"))
 		{
 			if (node is MeshInstance3D mesh)
 			{
