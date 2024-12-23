@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://btl0xnkreo34w"]
+[gd_scene load_steps=6 format=4 uid="uid://btl0xnkreo34w"]
 
 [ext_resource type="PackedScene" uid="uid://bria06gvlbes6" path="res://assets/Models/Wood Props/Wood Stool Stump/WoodStoolStump.gltf" id="1_vsce5"]
 [ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_n0mnw"]
@@ -35,7 +35,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4wcvy")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a1x18"]
+points = PackedVector3Array(-6.23763e-05, 0.238879, -0.318672, -6.23763e-05, -0.23888, -0.280741, -0.159398, 0.238879, -0.275999, 0.159274, 0.238879, -0.275999, -0.14037, -0.23888, -0.243122, 0.140308, -0.23888, -0.243122, -0.275999, 0.238879, -0.159398, 0.275937, 0.238879, -0.159398, -0.243122, -0.23888, -0.14037, 0.243059, -0.23888, -0.14037, -0.318672, 0.238879, -6.23763e-05, -0.280741, -0.23888, -6.23763e-05, 0.31861, 0.238879, -6.23763e-05, 0.280678, -0.23888, -6.23763e-05, -0.275999, 0.238879, 0.159274, -0.243122, -0.23888, 0.140308, 0.275937, 0.238879, 0.159274, 0.243059, -0.23888, 0.140308, -0.159398, 0.238879, 0.275937, -0.14037, -0.23888, 0.243059, 0.159274, 0.238879, 0.275937, 0.140308, -0.23888, 0.243059, -6.23763e-05, -0.23888, 0.280678, -6.23763e-05, 0.238879, 0.31861)
+
 [node name="WoodStoolStump" instance=ExtResource("1_vsce5")]
 
 [node name="Wood Stool Stump" parent="." index="0"]
 mesh = SubResource("ArrayMesh_3vbep")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wood Stool Stump" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wood Stool Stump/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_a1x18")

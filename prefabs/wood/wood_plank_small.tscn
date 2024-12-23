@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://c36b2557p3k16"]
+[gd_scene load_steps=6 format=4 uid="uid://c36b2557p3k16"]
 
 [ext_resource type="PackedScene" uid="uid://b1665xfh5l6r1" path="res://assets/Models/Wood Props/Wood Plank Small/WoodPlank_Small.gltf" id="1_d5uuj"]
 [ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_eggw2"]
@@ -33,7 +33,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_p73ge")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ijuhu"]
+points = PackedVector3Array(0.4817, -0.0314336, -0.103386, 0.4817, 0.0314265, -0.103386, 0.484832, -0.0314336, 0.0945604, -0.481321, -0.03631, 0.103365, -0.484833, -0.03631, -0.0988927, -0.484833, 0.03631, -0.0988927, -0.481321, 0.03631, 0.103365, 0.484832, 0.0314265, 0.0945604)
+
 [node name="WoodPlank_Small" instance=ExtResource("1_d5uuj")]
 
 [node name="WoodPlankShort" parent="." index="0"]
 mesh = SubResource("ArrayMesh_d622u")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WoodPlankShort" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WoodPlankShort/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_ijuhu")

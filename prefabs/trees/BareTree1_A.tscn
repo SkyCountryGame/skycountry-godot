@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://v43hxhrvubte"]
+[gd_scene load_steps=7 format=4 uid="uid://v43hxhrvubte"]
 
 [ext_resource type="PackedScene" uid="uid://db1hrmefcmh63" path="res://assets/Models/Trees/Tree1.glb" id="1_kab33"]
 [ext_resource type="Texture2D" uid="uid://dnqowfsh0rivb" path="res://assets/texture/Environment/Trees/RegularTree1_1.png" id="2_cd28k"]
@@ -38,10 +38,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d1so7")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_unsam"]
+points = PackedVector3Array(2.00474, 2.05883, 0.455274, -2.01139, 0.308308, 0.764257, -2.01139, 0.308308, 0.867356, 0.562773, -3.29464, -0.0589703, 0.25378, 2.26458, -1.60358, 0.356778, 0.514707, 1.58811, -0.775414, 2.88249, 0.661471, -0.260424, -3.29464, -0.676938, -1.90839, 0.617262, 0.146602, -0.157426, -3.29464, 0.249389, 0.150782, 3.29464, -0.676938, 0.459775, -3.29464, -0.573839, -0.981409, 0.617262, 1.58811, 0.974765, 2.16203, 1.27913, 1.90175, 1.44092, 0.0435036, -0.157426, 2.36778, -1.39738, 1.90175, 2.47034, 0.146602, 0.356778, 2.16203, -1.60358, 0.356778, 2.88249, 0.558372, 2.00474, 1.95563, 0.558372, 0.356778, -3.29464, 0.249389, -0.46642, -3.29464, -0.367954, -0.878411, 0.411508, 1.58811, 0.356778, 3.29464, -0.676938, -0.363422, -3.29464, 0.146602, -2.01139, 0.514707, 0.867356, 0.356778, -3.29464, -0.676938, -0.363422, 2.88249, -0.367954, -1.90839, 0.514707, 0.146602, 1.90175, 2.47034, 0.249389, 0.356778, 2.26458, -1.60358, 0.562773, -3.29464, -0.367954)
+
 [node name="Tree1" instance=ExtResource("1_kab33")]
 
 [node name="Tree 1" parent="." index="0"]
 mesh = SubResource("ArrayMesh_2yikr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Tree 1" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tree 1/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_unsam")
 
 [node name="Tree 1 Leaves" parent="." index="1"]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://caya4vxnoin85"]
+[gd_scene load_steps=7 format=4 uid="uid://caya4vxnoin85"]
 
 [ext_resource type="PackedScene" uid="uid://ckixccxaxsfan" path="res://assets/Models/Trees/Sapling2.glb" id="1_av0iq"]
 [ext_resource type="Texture2D" uid="uid://bto2nhu2q6kvk" path="res://assets/texture/Environment/Trees/Sapling2_1.png" id="2_l6hpj"]
@@ -38,10 +38,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_x4sli")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nxpqm"]
+points = PackedVector3Array(-0.152834, -2.83113, -0.377264, -1.16668, 2.0269, 0.811191, -1.16668, 2.09674, 0.811191, 1.17557, 1.43274, 0.0770042, -0.712031, 2.83113, -0.866779, -0.502246, -2.83113, -0.20223, -0.222762, -2.83113, -0.167326, -0.257612, -2.83113, -0.517053, -1.16668, 2.06182, 0.881171, -0.509961, -2.68813, -0.390825, -0.642103, 2.6909, -0.866779, -0.712031, 2.72582, -0.866779, -0.537325, -2.83113, -0.272209, -0.435988, -2.64267, -0.482156, 1.03572, 1.36291, 0.111908, -0.152834, -2.83113, -0.272209, -0.187684, -2.83113, -0.482148, -0.642103, 2.79565, -0.866779)
+
 [node name="Sapling2" instance=ExtResource("1_av0iq")]
 
 [node name="Sapling 2" parent="." index="0"]
 mesh = SubResource("ArrayMesh_6j3tl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Sapling 2" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sapling 2/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_nxpqm")
 
 [node name="Sapling 2 Leaves" parent="." index="1"]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://doy5efrnbsvds"]
+[gd_scene load_steps=7 format=4 uid="uid://doy5efrnbsvds"]
 
 [ext_resource type="PackedScene" uid="uid://ckdx2ri3uxffu" path="res://assets/Models/Bushes/Bush1.glb" id="1_do68k"]
 [ext_resource type="Texture2D" uid="uid://co3vsfnq0pw56" path="res://assets/texture/Environment/Trees/EerieBlueLeaves.png" id="2_llmq8"]
@@ -39,7 +39,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_e2qpx")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nastt"]
+points = PackedVector3Array(0.455512, -1.15109, -2.35828, 0.455512, -0.999015, -2.35828, 2.43108, -0.847314, 0.0723932, -1.36729, 1.81118, -1.29417, -1.29114, -1.91108, 1.21166, -2.27869, -0.0118389, -1.67408, 0.303691, 1.81118, -0.154907, 1.67103, 0.899487, -1.59847, -0.987498, 0.443638, 2.27531, 0.37984, -0.467316, 2.19924, -2.35484, 0.291936, -0.534354, -0.91135, 1.43119, -1.97838, -1.8989, -1.22694, -0.83865, 0.683481, -1.68316, -1.37025, 0.227543, -1.45486, 2.04755, -1.8989, -1.07487, 1.66764, 0.227543, 0.671562, 1.81979, 2.12697, -0.239763, -1.52239, -1.82275, 1.58326, -0.610428, 1.899, -1.37901, -0.534815, 1.97515, 0.064012, 0.0723932, -1.74708, 0.291936, 1.51595, -0.759529, -1.45486, 2.35185, -1.13932, -0.0873179, -2.28221, -0.987498, 0.747413, 1.97148, -2.35484, 0.519489, -1.52193, -1.44296, -0.69524, 2.35185, -0.0756223, 1.88704, -0.610889, -0.455412, -1.75901, 1.66764, -1.29114, -0.847314, -1.75015, -1.51911, 1.58326, -0.154907, -2.27869, -0.391465, -0.534354)
+
 [node name="Bush1" instance=ExtResource("1_do68k")]
 
 [node name="Bush1" parent="." index="0"]
 mesh = SubResource("ArrayMesh_xh8cl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Bush1" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bush1/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_nastt")

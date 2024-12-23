@@ -42,32 +42,45 @@ public partial class AutomaticCollisionShapeFromMesh : Node3D
 			Mesh m = mi.Mesh;
 			if (m is ArrayMesh am)
 			{
-				//get vertices from each surface. and print some debug info
-				var vertices = new Array<Vector3>();
-				GD.Print($"    surface count: {am.GetSurfaceCount()}");
-				for (int i = 0; i < am.GetSurfaceCount(); i++)
-				{
-					Godot.Collections.Array sa = am.SurfaceGetArrays(i);
-					GD.Print($"    surface {i}: {am.SurfaceGetFormat(i)}; {am.SurfaceGetPrimitiveType(i)}");
-					GD.Print($"        array len: {am.SurfaceGetArrayLen(i)}");
-					GD.Print($"        arrays: {sa.Count}");
-					//TODO each array data. faces? 
-					if (sa.Count > 0)
-					{
-						vertices.AddRange((Array<Vector3>)sa[(int)Mesh.ArrayType.Vertex]); 
-					}
-				}
-
-				if (vertices.Count > 0)
-				{
+				if (IsInGroup("building")){ //use a box shape
+					Aabb aabb = m.GetAabb();
 					CollisionShape3D cs = new CollisionShape3D();
-					var shape = new ConvexPolygonShape3D();
-					shape.Points = vertices.ToArray();
-					cs.Shape = shape;
+					BoxShape3D s = new BoxShape3D();
+					s.Size = aabb.Size;
 					
-					// Match the mesh's transform
+					cs.Shape = s;
 					cs.Transform = mi.Transform;
-					AddChild(cs);
+					mi.AddChild(cs);
+
+				} else { //general collisionshape generation case
+					//get vertices from each surface. and print some debug info
+					var vertices = new Array<Vector3>();
+					GD.Print($"    surface count: {am.GetSurfaceCount()}");
+					for (int i = 0; i < am.GetSurfaceCount(); i++)
+					{
+						Godot.Collections.Array sa = am.SurfaceGetArrays(i);
+						GD.Print($"    surface {i}: {am.SurfaceGetFormat(i)}; {am.SurfaceGetPrimitiveType(i)}");
+						GD.Print($"        array len: {am.SurfaceGetArrayLen(i)}");
+						GD.Print($"        arrays: {sa.Count}");
+						//TODO each array data. faces? 
+						if (sa.Count > 0)
+						{
+							vertices.AddRange((Array<Vector3>)sa[(int)Mesh.ArrayType.Vertex]); 
+						}
+					}
+
+					if (vertices.Count > 0)
+					{
+						//GD.Print($"adding collisionshape  {vertices}");
+						CollisionShape3D cs = new CollisionShape3D();
+						var shape = new ConvexPolygonShape3D();
+						shape.Points = vertices.ToArray();
+						cs.Shape = shape;
+						
+						// Match the mesh's transform
+						//cs.Transform = mi.Transform;
+						mi.AddChild(cs);
+					}
 				}
 			}
 			else

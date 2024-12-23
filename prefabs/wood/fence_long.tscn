@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://budk7sld21llg"]
+[gd_scene load_steps=6 format=4 uid="uid://budk7sld21llg"]
 
 [ext_resource type="PackedScene" uid="uid://djv4t3o31xe8y" path="res://assets/Models/Wood Props/Fence Long/FenceLong.gltf" id="1_0qb6l"]
 [ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_kcwlk"]
@@ -35,8 +35,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5dlxb")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_opbii"]
+points = PackedVector3Array(3.40073, 0.688377, -0.100676, 3.39873, 0.688377, 0.109623, 3.39873, 0.442028, 0.103742, 3.40006, 0.442028, -0.0948168, 3.36744, -0.688373, -0.0733126, 3.1544, 0.679752, -0.102371, 1.08986, 0.65226, -0.109625, -3.15373, 0.688377, -0.103036, 3.36678, -0.688373, 0.0817875, -3.15506, 0.688377, 0.107262, -3.18769, -0.688373, 0.0794267, 3.39407, 0.209964, -0.0875843, 3.39274, 0.209964, 0.096424, 3.18635, -0.688373, -0.0745789, 1.18373, -0.67894, -0.0892798, -3.3994, 0.679752, -0.10471, -3.40073, 0.679752, 0.105502, -3.36877, -0.688373, 0.0781605, -3.36811, -0.688373, -0.0769396)
+
 [node name="FenceLong" instance=ExtResource("1_0qb6l")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [node name="FenceLong" parent="." index="0"]
 mesh = SubResource("ArrayMesh_8yltu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FenceLong" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FenceLong/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_opbii")

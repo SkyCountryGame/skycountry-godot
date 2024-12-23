@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=71 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://prefabs/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -63,7 +63,6 @@
 [ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://prefabs/wood/picket_fence_long.tscn" id="58_ume02"]
 [ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://prefabs/rocks/rock_3.tscn" id="59_pa6em"]
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://prefabs/bush_1a.tscn" id="62_20uy7"]
-[ext_resource type="AudioStream" uid="uid://wns0fvqqirx1" path="res://assets/SFX/Pokémon Diamond Music_ Eterna City (Night).mp3" id="64_5gm03"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_2821l")
@@ -1083,5 +1082,4 @@ light_negative = true
 omni_range = 46.854
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("64_5gm03")
 autoplay = true

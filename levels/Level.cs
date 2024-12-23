@@ -101,7 +101,6 @@ public partial class Level : Node
 	private void ProcessNodeGroups(){
 		GD.Print("processing node groups");
 		foreach (Node n in GetChildren(true)){
-			GD.Print(n.Name);
 			if (n.IsInGroup("floor")){
 				
 			}
