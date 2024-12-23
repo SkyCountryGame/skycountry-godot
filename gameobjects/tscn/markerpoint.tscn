@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://du803eg85ajvm"]
-
-[ext_resource type="Texture2D" uid="uid://cwxr6uluxobq0" path="res://assets/texture/noise.png" id="1_jtqin"]
-
-[node name="Node3D" type="Node3D"]
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-texture = ExtResource("1_jtqin")
