@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=51 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://prefabs/trees/BareTree3_B.tscn" id="14_bpjh8"]
 [ext_resource type="Script" path="res://player/PlayerModel.cs" id="15_jgwq1"]
+[ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="16_ua20t"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://prefabs/rocks/rock_9.tscn" id="18_5tvrn"]
 [ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://prefabs/trees/RegularTree1_C.tscn" id="20_dkfk8"]
@@ -25,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://prefabs/trees/BareSapling1_B.tscn" id="26_b3hh8"]
 [ext_resource type="PackedScene" uid="uid://degb480meonrx" path="res://characters/enemy0.tscn" id="26_kukou"]
 [ext_resource type="PackedScene" uid="uid://ieq8t38xr25g" path="res://prefabs/trees/BareTree1_B.tscn" id="27_e1mau"]
-[ext_resource type="PackedScene" uid="uid://be0m87coffwag" path="res://prefabs/trees/RegularSapling1_C.tscn" id="28_grsil"]
 [ext_resource type="PackedScene" uid="uid://budk7sld21llg" path="res://prefabs/wood/fence_long.tscn" id="29_o8tc1"]
 [ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://prefabs/wood/fence_connector_long.tscn" id="30_amugy"]
 [ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://prefabs/wood/fence_connector_short.tscn" id="31_y7ofi"]
@@ -64,10 +64,12 @@ tonemap_mode = 2
 ssao_radius = 0.31
 ssao_intensity = 0.36
 ssao_sharpness = 0.58
+fog_enabled = true
 fog_light_color = Color(0.4185, 0.716875, 0.93, 1)
 fog_light_energy = 0.0
 fog_sun_scatter = 0.03
 fog_height_density = 0.1441
+volumetric_fog_enabled = true
 volumetric_fog_density = 0.0194
 volumetric_fog_albedo = Color(0.0498621, 0.304609, 0.590697, 1)
 volumetric_fog_emission = Color(0.191912, 0.344577, 0.350766, 1)
@@ -90,6 +92,9 @@ hp = 173
 script = ExtResource("8_6awk4")
 mode = 0
 textures = [[ExtResource("9_i6pf1"), ExtResource("12_hueh4"), ExtResource("10_ygowh"), ExtResource("12_74lmr")], [null, null, null, null]]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_amd4m"]
+size = Vector3(4.5592, 2.04535, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukaq3"]
 albedo_color = Color(0.1679, 0.224825, 0.23, 0.396078)
@@ -136,11 +141,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
 [node name="Player" parent="." instance=ExtResource("13_qukrv")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 169.66, 4.76837e-07, 104.622)
+transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 159.82, -1.7053e-13, 112.265)
 playerModel = SubResource("Resource_wjhiy")
 
 [node name="spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 162.391, 1.2704, 126.249)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 0.908557, 113.204)
 script = ExtResource("17_38mhm")
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
@@ -165,6 +170,15 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
 
+[node name="DoorToTown" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.942115, 0.0519638, -0.74143, 0.0718019, 1.19783, -0.0072859, 0.739773, -0.0500834, -0.94352, 160.047, 0.682657, 116.792)
+script = ExtResource("16_ua20t")
+destination = "res://levels/Demo/Demo_v0.1.tscn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorToTown"]
+transform = Transform3D(0.871214, 2.58908e-07, -0.490904, -5.31785e-07, 0.999996, 3.72529e-09, 0.490904, 2.23517e-07, 0.871214, 0.0540619, 0.323882, 0.0304718)
+shape = SubResource("BoxShape3D_amd4m")
+
 [node name="Scenery" type="Node3D" parent="." groups=["navigation"]]
 
 [node name="FenceLong" parent="Scenery" instance=ExtResource("29_o8tc1")]
@@ -182,6 +196,9 @@ transform = Transform3D(1.19599, -0.00736896, -0.0977631, 0.0211541, 1.18781, 0.
 [node name="FenceConnectorLong" parent="Scenery" instance=ExtResource("30_amugy")]
 transform = Transform3D(1.19389, 0.120425, 0.0113093, -0.120955, 1.18866, 0.111629, 0, -0.1122, 1.19474, 133.548, -0.317837, 99.8113)
 
+[node name="FenceConnectorLong13" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(0.376791, 0.144472, -1.13011, -0.242422, 1.17322, 0.0691574, 1.11322, 0.206589, 0.397567, 125.834, 0.037559, 109.829)
+
 [node name="FenceConnectorLong2" parent="Scenery" instance=ExtResource("30_amugy")]
 transform = Transform3D(1.16756, -0.168168, -0.2203, 0.173883, 1.18724, 0.0152634, 0.215818, -0.0467728, 1.17951, 146.329, -2.96188, 90.6465)
 
@@ -190,6 +207,57 @@ transform = Transform3D(0.619056, -0.0922057, 1.02385, 0.106176, 1.19451, 0.0433
 
 [node name="FenceConnectorLong3" parent="Scenery" instance=ExtResource("30_amugy")]
 transform = Transform3D(0.889381, 0.0292632, 0.805075, 0.119159, 1.18124, -0.174573, -0.796745, 0.209328, 0.872571, 160.517, -0.428211, 87.8489)
+
+[node name="FenceLong11" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(1.19263, 0.0343388, -0.128273, -0.0214153, 1.19375, 0.120455, 0.13105, -0.117426, 1.18703, 153.225, 0.716538, 116.79)
+
+[node name="FenceConnectorLong4" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(1.10408, -0.043344, -0.46812, 0.0194572, 1.19808, -0.0650425, 0.469719, 0.0522532, 1.10301, 145.836, 0.735404, 115.075)
+
+[node name="FenceLong12" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(1.19263, 0.0343388, -0.128273, -0.0214153, 1.19375, 0.120455, 0.13105, -0.117426, 1.18703, 138.136, 0.716538, 113.101)
+
+[node name="FenceConnectorLong5" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(1.10408, -0.043344, -0.46812, 0.0194572, 1.19808, -0.0650425, 0.469719, 0.0522532, 1.10301, 130.748, 0.735404, 111.386)
+
+[node name="FenceConnectorLong12" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(0.501739, -0.0672147, -1.088, 0.0844782, 1.19651, -0.0349609, 1.08679, -0.0619755, 0.505012, 123.082, 0.419146, 102.705)
+
+[node name="FenceLong13" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-1.112, 0.0254921, -0.450336, -0.0214153, 1.19375, 0.120455, 0.450551, 0.119658, -1.10575, 166.303, 0.716538, 114.112)
+
+[node name="FenceConnectorLong6" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(-1.19475, 0.0133594, -0.111318, 0.0194572, 1.19808, -0.0650425, 0.110416, -0.066563, -1.19305, 173.621, 0.735404, 112.116)
+
+[node name="FenceLong14" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-1.112, 0.0254921, -0.450336, -0.0214153, 1.19375, 0.120455, 0.450551, 0.119658, -1.10575, 181.336, 0.716538, 110.2)
+
+[node name="FenceConnectorLong7" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(-1.19475, 0.0133594, -0.111318, 0.0194572, 1.19808, -0.0650425, 0.110416, -0.066563, -1.19305, 188.653, 0.735404, 108.204)
+
+[node name="FenceLong15" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-0.211053, -0.122343, 1.17494, -0.0214153, 1.19375, 0.120455, -1.1811, 0.000216775, -0.212134, 193.232, 0.716539, 79.9143)
+
+[node name="FenceConnectorLong8" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(0.138839, 0.062366, 1.19031, 0.0194572, 1.19808, -0.0650425, -1.19178, 0.0268251, 0.137606, 193.673, 0.735406, 87.4863)
+
+[node name="FenceLong16" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-0.211053, -0.122343, 1.17494, -0.0214153, 1.19375, 0.120455, -1.1811, 0.000216775, -0.212134, 193.953, 0.716539, 95.4307)
+
+[node name="FenceConnectorLong9" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(0.138839, 0.062366, 1.19031, 0.0194572, 1.19808, -0.0650425, -1.19178, 0.0268251, 0.137606, 194.394, 0.735406, 103.003)
+
+[node name="FenceLong17" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-1.1604, 0.0100173, -0.305579, -0.0214153, 1.19375, 0.120455, 0.304995, 0.121933, -1.15417, 171.13, 0.716539, 77.665)
+
+[node name="FenceConnectorLong10" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(-1.19907, 0.0217426, 0.0418058, 0.0194572, 1.19808, -0.0650425, -0.0429172, -0.0643146, -1.19751, 178.642, 0.735406, 76.6188)
+
+[node name="FenceLong18" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-1.1604, 0.0100173, -0.305579, -0.0214153, 1.19375, 0.120455, 0.304995, 0.121933, -1.15417, 186.539, 0.716539, 75.703)
+
+[node name="FenceConnectorLong11" parent="Scenery" instance=ExtResource("30_amugy")]
+transform = Transform3D(-1.14585, 0.355732, 0.0219607, 0.353816, 1.14426, -0.0741349, -0.0429172, -0.0643146, -1.19751, 194.051, -0.263636, 74.8263)
 
 [node name="FenceConnectorShort" parent="Scenery" instance=ExtResource("31_y7ofi")]
 transform = Transform3D(1.08677, -0.0785869, 0.502753, 0.086549, 1.19687, 5.04024e-09, -0.501444, 0.0362606, 1.08961, 147.839, -0.35383, 99.8614)
@@ -205,6 +273,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 173.144, 1.24009, 128.232)
 
 [node name="Tree16" parent="Scenery" instance=ExtResource("27_e1mau")]
 transform = Transform3D(-1.7795, 0, -0.912892, 0, 2, 0, 0.912892, 0, -1.7795, 143.818, -5.17805, 62.4826)
+
+[node name="Tree130" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-1.7795, 0, -0.912892, 0, 2, 0, 0.912892, 0, -1.7795, 177.633, -0.556303, 90.0039)
 
 [node name="Tree19" parent="Scenery" instance=ExtResource("27_e1mau")]
 transform = Transform3D(0.337564, 0, 1.97131, 0, 2, 0, -1.97131, 0, 0.337564, 114.331, -5.17805, 62.4826)
@@ -242,8 +313,74 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 139.812, 0.13975, 120.192)
 [node name="Tree4" parent="Scenery" instance=ExtResource("22_rrhu1")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 178.481, -1.02612, 132.097)
 
+[node name="Tree131" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.93076, 0, -0.74102, 0, 4, 0, 0.74102, 0, -3.93076, 156.152, -1.02612, 124.738)
+
+[node name="Tree132" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 146.274, 0.135544, 160.844)
+
+[node name="Tree133" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 185.49, -1.02612, 150.444)
+
+[node name="Tree134" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.93076, 0, -0.74102, 0, 4, 0, 0.74102, 0, -3.93076, 163.16, -1.02612, 143.084)
+
+[node name="Tree139" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 178.481, 8.33388, 192.185)
+
+[node name="Tree140" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 185.49, 11.3628, 210.532)
+
+[node name="Tree141" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.93076, 0, -0.74102, 0, 4, 0, 0.74102, 0, -3.93076, 145.675, 7.68507, 198.565)
+
+[node name="Tree142" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.93076, 0, -0.74102, 0, 4, 0, 0.74102, 0, -3.93076, 165.173, 1.74199, 175.775)
+
+[node name="Tree145" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 119.209, -4.06227, 164.897)
+
+[node name="Tree146" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.93076, 0, -0.74102, 0, 4, 0, 0.74102, 0, -3.93076, 138.109, 5.07494, 179.828)
+
+[node name="Tree135" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-2.27459, 0, -3.29032, 0, 4, 0, 3.29032, 0, -2.27459, 212.718, 0.135544, 130.737)
+
+[node name="Tree138" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(0.90171, 0, 3.89704, 0, 4, 0, -3.89704, 0, 0.90171, 198.145, 0.135544, 120.881)
+
+[node name="Tree136" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-2.27459, 0, -3.29032, 0, 4, 0, 3.29032, 0, -2.27459, 198.972, -1.02612, 168.909)
+
+[node name="Tree137" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.62567, 0, 3.65475, 0, 4, 0, -3.65475, 0, 1.62567, 217.723, -1.02612, 154.726)
+
+[node name="Tree143" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-2.27459, 0, -3.29032, 0, 4, 0, 3.29032, 0, -2.27459, 217.066, 3.61092, 192.77)
+
+[node name="Tree144" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.62567, 0, 3.65475, 0, 4, 0, -3.65475, 0, 1.62567, 235.817, 3.61092, 178.587)
+
+[node name="Tree23" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, -1.51842, -7.13383, 21.0563)
+
+[node name="Tree24" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, 33.2241, -7.12962, -21.7597)
+
+[node name="Tree25" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, 38.7666, -8.2955, 21.575)
+
+[node name="Tree40" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.14583, 0, -3.83237, 0, 4, 0, 3.83237, 0, 1.14583, 60.737, -5.60248, -7.22188)
+
+[node name="Tree118" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.14583, 0, -3.83237, 0, 4, 0, 3.83237, 0, 1.14583, 88.897, -5.60248, 76.9879)
+
 [node name="Tree5" parent="Scenery" instance=ExtResource("23_o3ldj")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -18.3994, -7.01035, -11.3056)
+
+[node name="Tree26" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 61.3801, -5.12234, 9.20603)
 
 [node name="Sapling2" parent="Scenery" instance=ExtResource("24_ic5n3")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 137.267, -3.8147e-06, 137.514)
@@ -256,6 +393,24 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -28.262, -7.03204, 13.6627)
 
 [node name="Tree6" parent="Scenery" instance=ExtResource("27_e1mau")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 9.30563, -7.03204, 13.4536)
+
+[node name="Tree27" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, 106.903, -5.92978, -46.5567)
+
+[node name="Tree39" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, 96.3014, -5.92977, -79.2505)
+
+[node name="Tree28" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.75982, 0, -1.36519, 0, 4, 0, 1.36519, 0, 3.75982, 107.627, -8.2955, -6.23585)
+
+[node name="Tree29" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 130.241, -6.08184, -18.6048)
+
+[node name="Tree30" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 78.1662, -7.03204, -14.3572)
+
+[node name="Tree170" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 63.5551, -7.97234, -40.762)
 
 [node name="Tree8" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(3.99173, -0.257154, 0, 0.257099, 3.99087, 0.0829321, -0.00533158, -0.0827605, 3.99914, 127.935, -5.18414, 61.5966)
@@ -275,8 +430,14 @@ transform = Transform3D(3.99804, 0.125224, 0, -0.125224, 3.99804, 0, 0, 0, 4, 10
 [node name="Tree12" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 98.9057, -7.59762, 25.0693)
 
+[node name="Tree119" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 119.141, -8.3763, 25.0693)
+
 [node name="Tree13" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(-2.63877, 0.205509, 2.99911, 0.135752, 3.99472, -0.15429, -3.00307, 0, -2.64226, 145.018, -5.6689, 77.4781)
+
+[node name="Tree129" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-2.63877, 0.205509, 2.99911, 0.135752, 3.99472, -0.15429, -3.00307, 0, -2.64226, 171.827, -5.6689, 109.435)
 
 [node name="Tree14" parent="Scenery" instance=ExtResource("23_o3ldj")]
 transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 136.701, -5.86355, 42.1394)
@@ -287,14 +448,75 @@ transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 15
 [node name="Tree15" parent="Scenery" instance=ExtResource("27_e1mau")]
 transform = Transform3D(-2.64226, 0, 3.00307, 0, 4, 0, -3.00307, 0, -2.64226, 130.411, -7.72923, 15.4564)
 
-[node name="LodgingBuildingDemo" parent="Scenery" instance=ExtResource("36_7pnf7")]
-transform = Transform3D(0.811288, 0, -0.584646, 0, 1, 0, 0.584646, 0, 0.811288, 107.752, -7.35437, -67.3254)
+[node name="Tree31" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(2.00091, 0, -3.46358, 0, 4, 0, 3.46358, 0, 2.00091, 69.5347, -7.01035, 31.4846)
+
+[node name="Tree32" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(1.27861, 0, 3.79013, 0, 4, 0, -3.79013, 0, 1.27861, 40.1265, -7.72923, 48.6703)
+
+[node name="Tree33" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(1.5982, 0, 3.66685, 0, 4, 0, -3.66685, 0, 1.5982, -25.2027, -7.12962, -41.9285)
+
+[node name="Tree34" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.5982, 0, 3.66685, 0, 4, 0, -3.66685, 0, 1.5982, 18.3941, -8.2955, -44.7436)
+
+[node name="Tree35" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(0.250744, 0, 3.99213, 0, 4, 0, -3.99213, 0, 0.250744, 7.46707, -7.01035, -68.0881)
+
+[node name="Tree36" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(0.250744, 0, 3.99213, 0, 4, 0, -3.99213, 0, 0.250744, 59.3401, -7.11286, -61.5718)
+
+[node name="Tree37" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(3.5822, 0, 1.77985, 0, 4, 0, -1.77985, 0, 3.5822, 30.213, -7.01035, -74.83)
+
+[node name="Tree38" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-3.70253, 0, 1.51369, 0, 4, 0, -1.51369, 0, -3.70253, 45.5215, -7.72923, -44.4024)
+
+[node name="Tree120" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(-1.92695, 0, -3.50526, 0, 4, 0, 3.50526, 0, -1.92695, 63.0378, -7.12962, -97.0987)
+
+[node name="Tree121" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.96296, 0, -0.54307, 0, 4, 0, 0.54307, 0, -3.96296, 44.4433, -5.60248, -72.1477)
+
+[node name="Tree122" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.37757, 0, -2.14289, 0, 4, 0, 2.14289, 0, 3.37757, 88.0283, -8.2955, -108.219)
+
+[node name="Tree123" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(2.06487, 0, 3.42582, 0, 4, 0, -3.42582, 0, 2.06487, 83.5208, -7.72923, -81.4667)
+
+[node name="LodgingBuildingDemo" parent="Scenery" node_paths=PackedStringArray("meshes") instance=ExtResource("36_7pnf7")]
+transform = Transform3D(0.94809, 0, -0.318, 0, 1, 0, 0.318, 0, 0.94809, 103.705, -2.88376, -69.075)
+meshes = []
 
 [node name="FenceLong6" parent="Scenery" instance=ExtResource("29_o8tc1")]
 transform = Transform3D(0.246072, 0, -1.1745, -0.0402109, 1.1993, -0.00842468, 1.17381, 0.041084, 0.245927, 88.053, -6.42666, -32.3013)
 
 [node name="FenceShort2" parent="Scenery" instance=ExtResource("32_jvidp")]
 transform = Transform3D(-0.336137, 0, -1.15196, -0.0394393, 1.1993, 0.0115082, 1.15128, 0.041084, -0.33594, 88.5178, -6.71759, -27.2681)
+
+[node name="FenceLong9" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(1.1629, -0.00732369, -0.295971, 0.0101654, 1.19992, 0.01025, 0.295886, -0.0124404, 1.16288, 75.1941, -6.53668, -23.538)
+
+[node name="FenceShort5" parent="Scenery" instance=ExtResource("32_jvidp")]
+transform = Transform3D(0.88642, -0.0073237, -0.808826, 0.0137948, 1.19992, 0.00425379, 0.808739, -0.0124404, 0.886444, 79.925, -6.60757, -21.7362)
+
+[node name="FenceLong10" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(-1.02913, 0.0139893, -0.61701, 0.0101654, 1.19992, 0.01025, 0.617085, 0.00356367, -1.02917, 72.9224, -6.53668, -35.4218)
+
+[node name="FenceShort6" parent="Scenery" instance=ExtResource("32_jvidp")]
+transform = Transform3D(-1.19844, 0.0139893, -0.0595495, 0.0137948, 1.19992, 0.00425379, 0.0595932, 0.00356366, -1.19851, 68.3111, -6.60757, -33.3326)
+
+[node name="FenceLong7" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(1.07013, 0.0396841, 0.54153, -0.0402109, 1.1993, -0.00842468, -0.541492, -0.0106333, 1.07083, 5.2494, -6.42666, -29.8669)
+
+[node name="FenceShort3" parent="Scenery" instance=ExtResource("32_jvidp")]
+transform = Transform3D(1.19905, 0.0396841, -0.0263439, -0.0394393, 1.1993, 0.0115082, 0.0267102, -0.0106333, 1.19966, 9.9908, -6.71759, -31.6185)
+
+[node name="FenceLong8" parent="Scenery" instance=ExtResource("29_o8tc1")]
+transform = Transform3D(1.18912, -0.0432144, 0.155325, 0.0432583, 1.19922, 0.00247044, -0.155314, 0.00315121, 1.1899, -8.36968, -6.60417, -24.6965)
+
+[node name="FenceShort4" parent="Scenery" instance=ExtResource("32_jvidp")]
+transform = Transform3D(1.12211, -0.0432144, -0.423073, 0.0393226, 1.19922, -0.018196, 0.423452, 0.00315121, 1.1228, -3.3077, -6.54007, -24.7739)
 
 [node name="Signpost04" parent="Scenery" instance=ExtResource("33_5e8q3")]
 transform = Transform3D(1.15143, 0, -0.337946, 0, 1.2, 0, 0.337946, 0, 1.15143, 77.0961, -5.50193, -23.2138)
@@ -398,6 +620,80 @@ material = ExtResource("40_s2li8")
 [node name="Signpost07" parent="Scenery" instance=ExtResource("39_ugcy1")]
 transform = Transform3D(0.816673, -0.0436128, 0.878147, 0.0718019, 1.19783, -0.0072859, -0.876293, 0.0575023, 0.817805, 10.9228, -5.42346, -12.9812)
 
+[node name="Signpost08" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(-0.816673, 0.0436128, -0.878147, 0.0718019, 1.19783, -0.0072859, 0.876293, -0.0575023, -0.817805, 104.378, -1.39967, -60.1087)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost08"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost09" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(0.635063, -0.0442551, -1.01722, 0.0718019, 1.19783, -0.0072859, 1.01565, -0.0570094, 0.636561, 98.7924, -1.39967, -61.9704)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost09"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost10" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(-0.876293, 0.0575023, 0.817805, 0.0718019, 1.19783, -0.0072859, -0.816673, 0.0436128, -0.878147, 96.4232, -3.49844, -47.1725)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost10"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost11" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(1.12504, -0.069942, -0.411583, 0.0718019, 1.19783, -0.0072859, 0.411262, -0.0177963, 1.12719, 84.8075, -5.07655, -45.5713)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost11"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost13" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(-0.0483872, -0.00439256, -1.19902, 0.0718019, 1.19783, -0.0072859, 1.19687, -0.0720368, -0.0480375, 136.042, -3.57951, 86.6505)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost13"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost14" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(-1.16861, 0.0684453, -0.263928, 0.0718019, 1.19783, -0.0072859, 0.263035, -0.0228874, -1.17059, 162.281, 1.24239, 115.515)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost14"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Signpost15" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(1.16861, -0.0684453, 0.263928, 0.0718019, 1.19783, -0.0072859, -0.263035, 0.0228874, 1.17059, 157.607, 1.26, 117.21)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost15"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
+[node name="Sign1" type="CSGBox3D" parent="Scenery"]
+transform = Transform3D(0.997529, -0.0702614, 0, 0.0702614, 0.997529, 0, 0, 0, 1, 83.0796, -5.78614, -38.6671)
+size = Vector3(1, 0.630371, 0.0831299)
+material = ExtResource("40_s2li8")
+
+[node name="Sign2" type="CSGBox3D" parent="Scenery/Sign1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0321045, -0.290314, -0.0728226)
+size = Vector3(0.143799, 1.43585, 0.0831299)
+material = ExtResource("40_s2li8")
+
+[node name="Signpost12" parent="Scenery" instance=ExtResource("39_ugcy1")]
+transform = Transform3D(-1.14391, 0.0707328, 0.355629, 0.0718019, 1.19783, -0.0072859, -0.355414, 0.0143337, -1.14607, 86.7115, -5.07655, -36.6345)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Scenery/Signpost12"]
+transform = Transform3D(0.833333, -1.43424e-07, 2.38419e-07, 2.42144e-08, 0.833332, 3.91155e-08, 3.27826e-07, -1.11759e-08, 0.833333, 0.654663, 1.0749, -0.0222664)
+light_color = Color(1, 0.866667, 0.8, 1)
+light_energy = 2.379
+
 [node name="PicketFenceConnector" parent="Scenery" instance=ExtResource("41_ac3wr")]
 transform = Transform3D(0.879707, 0, -0.816159, 0, 1.2, 0, 0.816159, 0, 0.879707, 14.1855, -6.49825, 0.297848)
 
@@ -413,19 +709,355 @@ transform = Transform3D(0.700845, 0, 0.974072, 0, 1.2, 0, -0.974072, 0, 0.700845
 [node name="Tree20" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(-2.17241, 0, -3.35867, 0, 4, 0, 3.35867, 0, -2.17241, 8.09373, -7.11286, 40.1405)
 
+[node name="Tree41" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, 35.74, -7.13383, 39.7425)
+
+[node name="Tree49" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.99401, 0, 0.218824, 0, 4, 0, -0.218824, 0, -3.99401, 46.302, -8.2955, 82.3121)
+
+[node name="Tree50" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-2.20577, 0, 3.33685, 0, 4, 0, -3.33685, 0, -2.20577, 33.6044, -5.60248, 116.234)
+
+[node name="Tree51" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-3.82887, 0, -1.15746, 0, 4, 0, 1.15746, 0, -3.82887, 28.2351, -5.12234, 100.695)
+
+[node name="Tree52" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-3.82887, 0, -1.15746, 0, 4, 0, 1.15746, 0, -3.82887, 16.2487, -7.11286, 49.8074)
+
+[node name="Tree53" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-2.91755, 0, 2.73641, 0, 4, 0, -2.73641, 0, -2.91755, 13.9827, -7.01035, 81.7297)
+
+[node name="Tree54" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(3.88387, 0, 0.956846, 0, 4, 0, -0.956846, 0, 3.88387, 43.9421, -7.13383, 64.046)
+
+[node name="Tree42" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, -2.94108, -8.2955, 51.0085)
+
+[node name="Tree43" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-0.11629, 0, -3.99831, 0, 4, 0, 3.99831, 0, -0.11629, -12.1528, -7.72923, 25.4908)
+
+[node name="Tree44" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.09712, 0, 3.8466, 0, 4, 0, -3.8466, 0, 1.09712, 20.9747, -7.11286, 24.2963)
+
+[node name="Tree45" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, -23.857, -7.13383, 29.2348)
+
+[node name="Tree46" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, -62.5381, -8.2955, 40.5007)
+
+[node name="Tree124" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, -80.8076, -8.2955, 50.5225)
+
+[node name="Tree125" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.99459, 0, 0.207949, 0, 4, 0, -0.207949, 0, -3.99459, -52.015, -10.7042, -1.48289)
+
+[node name="Tree126" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.78248, 0, 3.58089, 0, 4, 0, -3.58089, 0, 1.78248, -47.4424, -10.7042, -38.7113)
+
+[node name="Tree47" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-0.11629, 0, -3.99831, 0, 4, 0, 3.99831, 0, -0.11629, -71.7498, -7.72923, 14.983)
+
+[node name="Tree48" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.09712, 0, 3.8466, 0, 4, 0, -3.8466, 0, 1.09712, -38.6224, -7.11286, 13.7886)
+
 [node name="Tree21" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(3.95659, 0, 0.587649, 0, 4, 0, -0.587649, 0, 3.95659, 16.4411, -7.59762, 94.1033)
 
 [node name="Tree22" parent="Scenery" instance=ExtResource("27_e1mau")]
 transform = Transform3D(3.95659, 0, 0.587649, 0, 4, 0, -0.587649, 0, 3.95659, 7.40213, -7.72923, 125.778)
 
-[node name="Sapling4" parent="Scenery" instance=ExtResource("28_grsil")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 38.5559, -7.03204, 21.5913)
+[node name="Tree55" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.56781, 0, 3.67994, 0, 4, 0, -3.67994, 0, 1.56781, -11.1278, -8.2955, 141.555)
+
+[node name="Tree56" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.88906, 0, 0.935547, 0, 4, 0, -0.935547, 0, 3.88906, -38.6862, -5.60248, 118.05)
+
+[node name="Tree57" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(0.217709, 0, 3.99407, 0, 4, 0, -3.99407, 0, 0.217709, -22.2476, -5.12234, 118.302)
+
+[node name="Tree58" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(3.56735, 0, 1.80943, 0, 4, 0, -1.80943, 0, 3.56735, 0.441754, -7.01035, 111.372)
+
+[node name="Tree59" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-0.425056, 0, -3.97735, 0, 4, 0, 3.97735, 0, -0.425056, 6.84808, -7.13383, 145.566)
+
+[node name="Tree97" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-2.20577, 0, 3.33685, 0, 4, 0, -3.33685, 0, -2.20577, 45.8775, -5.60247, 101.002)
+
+[node name="Tree98" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-0.425056, 0, -3.97735, 0, 4, 0, 3.97735, 0, -0.425056, 19.1212, -7.13382, 130.333)
+
+[node name="Tree99" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(2.96144, 0, -2.68885, 0, 4, 0, 2.68885, 0, 2.96144, 50.0236, -7.17669, 147.025)
+
+[node name="Tree100" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-0.57024, 0, 3.95914, 0, 4, 0, -3.95914, 0, -0.57024, 68.7085, -8.70805, 111.995)
+
+[node name="Tree101" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(2.96144, 0, -2.68885, 0, 4, 0, 2.68885, 0, 2.96144, 41.8919, -7.17668, 164.817)
+
+[node name="Tree102" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-0.57024, 0, 3.95914, 0, 4, 0, -3.95914, 0, -0.57024, 60.5768, -8.70804, 129.787)
+
+[node name="Tree103" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.36819, 0.0148377, -2.15756, -0.00763038, 3.99996, 0.0155962, 2.1576, -0.00901699, 3.36819, 99.1977, -1.15814, 162.128)
+
+[node name="Tree104" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-1.22221, 0.0148377, 3.80867, -0.00405207, 3.99996, -0.0168833, -3.8087, -0.00901699, -1.22219, 111.776, -2.82104, 124.477)
+
+[node name="Tree105" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-1.22221, 0.0148377, 3.80867, -0.00405207, 3.99996, -0.0168833, -3.8087, -0.00901699, -1.22219, 106.724, -2.75969, 143.375)
+
+[node name="Tree106" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 205.094, -6.83961, 41.2897)
+
+[node name="Tree107" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 205.641, -6.83541, 18.9847)
+
+[node name="Tree108" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.36819, 0.0148377, -2.15756, -0.00763038, 3.99996, 0.0155962, 2.1576, -0.00901699, 3.36819, 165.026, -8.1333, 60.9209)
+
+[node name="Tree116" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.128773, 0.0153425, -3.9979, -0.00763038, 3.99996, 0.0155962, 3.99792, 0.00812846, -0.128743, 124.554, -8.1333, 72.6283)
+
+[node name="Tree117" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.77929, -0.0123183, 1.31028, -0.00763038, 3.99996, 0.0155962, -1.31031, 0.0122362, -3.77928, 98.4668, -8.1333, 46.0916)
+
+[node name="Tree109" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-1.22221, 0.0148377, 3.80867, -0.00405207, 3.99996, -0.0168833, -3.8087, -0.00901699, -1.22219, 177.605, -9.7962, 23.2699)
+
+[node name="Tree110" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-1.22221, 0.0148377, 3.80867, -0.00405207, 3.99996, -0.0168833, -3.8087, -0.00901699, -1.22219, 172.553, -9.73485, 42.1679)
+
+[node name="Tree111" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(0.885377, 0, -3.90078, 0, 4, 0, 3.90078, 0, 0.885377, 221.178, -2.33508, 110.156)
+
+[node name="Tree112" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(0.885377, 0, -3.90078, 0, 4, 0, 3.90078, 0, 0.885377, 243.051, -2.33087, 105.752)
+
+[node name="Tree113" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-1.35855, 0.0120776, -3.76221, -0.00763038, 3.99996, 0.0155962, 3.76222, 0.0124738, -1.35852, 193.165, -3.62876, 75.4279)
+
+[node name="Tree114" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(3.4437, 0.0120776, 2.0349, -0.00405207, 3.99996, -0.0168833, -2.03493, 0.0124738, 3.44368, 232.666, -0.709547, 79.3605)
+
+[node name="Tree115" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-1.10789, -0.0173451, -3.84347, -0.00405207, 3.99996, -0.0168833, 3.84351, -0.00078268, -1.10789, 213.119, -2.24296, 78.6166)
+
+[node name="Tree128" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-3.68793, -0.0102737, -1.5489, -0.00405207, 3.99996, -0.0168833, 1.54893, -0.013997, -3.6879, 192.928, -5.23031, 107.167)
+
+[node name="Tree60" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-0.79692, 0, -3.9198, 0, 4, 0, 3.9198, 0, -0.79692, -12.0285, -7.59762, 109.463)
+
+[node name="Tree61" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-0.79692, 0, -3.9198, 0, 4, 0, 3.9198, 0, -0.79692, -38.7216, -7.72923, 90.1637)
+
+[node name="Tree62" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.29449, 0, 2.26856, 0, 4, 0, -2.26856, 0, -3.29449, -65.6833, -8.2955, 89.2289)
+
+[node name="Tree127" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.29449, 0, 2.26856, 0, 4, 0, -2.26856, 0, -3.29449, -120.668, -9.37459, 65.5068)
+
+[node name="Tree63" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.143156, 0, 3.99744, 0, 4, 0, -3.99744, 0, -0.143156, -94.2012, -5.60248, 111.56)
+
+[node name="Tree64" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-3.87092, 0, 1.00794, 0, 4, 0, -1.00794, 0, -3.87092, -90.684, -5.12235, 95.5005)
+
+[node name="Tree65" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-1.06357, 0, 3.85601, 0, 4, 0, -3.85601, 0, -1.06357, -92.9615, -7.01035, 71.886)
+
+[node name="Tree66" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(3.81329, 0, -1.20782, 0, 4, 0, 1.20782, 0, 3.81329, -58.1765, -7.13384, 72.4103)
+
+[node name="Tree67" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(3.68291, 0, -1.5608, 0, 4, 0, 1.5608, 0, 3.68291, -97.3131, -8.11956, 53.363)
+
+[node name="Tree68" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(3.68291, 0, -1.5608, 0, 4, 0, 1.5608, 0, 3.68291, -121.537, -7.72924, 106.047)
+
+[node name="Tree69" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.275614, 0, 3.99049, 0, 4, 0, -3.99049, 0, -0.275614, -48.0129, -8.29549, 166.353)
+
+[node name="Tree70" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.03922, 0, 2.6006, 0, 4, 0, -2.6006, 0, 3.03922, -83.2427, -5.60247, 157.937)
+
+[node name="Tree71" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-1.62101, 0, 3.65682, 0, 4, 0, -3.65682, 0, -1.62101, -68.4849, -5.12233, 150.692)
+
+[node name="Tree72" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(2.35554, 0, 3.23286, 0, 4, 0, -3.23286, 0, 2.35554, -51.4224, -7.01034, 134.208)
+
+[node name="Tree73" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(1.42871, 0, -3.73614, 0, 4, 0, 3.73614, 0, 1.42871, -30.1776, -7.13382, 161.757)
+
+[node name="Tree74" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.07131, 0, -3.85386, 0, 4, 0, 3.85386, 0, 1.07131, -63.3982, -7.59761, 138.174)
+
+[node name="Tree75" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(1.07131, 0, -3.85386, 0, 4, 0, 3.85386, 0, 1.07131, -95.9461, -7.72922, 133.113)
+
+[node name="Tree76" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.19109, 0, 2.41183, 0, 4, 0, -2.41183, 0, 3.19109, 145.878, -8.2955, -16.0189)
+
+[node name="Tree77" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.83891, 0, -1.12374, 0, 4, 0, 1.12374, 0, 3.83891, 133.67, -5.60248, -50.1206)
+
+[node name="Tree78" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(2.17633, 0, 3.35613, 0, 4, 0, -3.35613, 0, 2.17633, 147.804, -5.12235, -41.7221)
+
+[node name="Tree79" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(3.99471, 0, -0.205649, 0, 4, 0, 0.205649, 0, 3.99471, 179.623, -7.01035, -38.1942)
+
+[node name="Tree80" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(-2.34786, 0, -3.23845, 0, 4, 0, 3.23845, 0, -2.34786, 159.475, -7.13384, -3.59487)
+
+[node name="Tree81" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-2.64178, 0, -3.00349, 0, 4, 0, 3.00349, 0, -2.64178, 135.388, -7.59763, -67.0853)
+
+[node name="Tree82" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(-2.64178, 0, -3.00349, 0, 4, 0, 3.00349, 0, -2.64178, 147.516, -7.72924, -74.3267)
+
+[node name="Tree83" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-3.86738, 0, 1.02145, 0, 4, 0, -1.02145, 0, -3.86738, 196.929, -8.29551, -35.4617)
+
+[node name="Tree84" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-1.48593, 0, 3.71376, 0, 4, 0, -3.71376, 0, -1.48593, 177.638, -5.60249, -4.80528)
+
+[node name="Tree85" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-3.98378, 0, -0.359818, 0, 4, 0, 0.359818, 0, -3.98378, 175.52, -5.12236, -21.1088)
+
+[node name="Tree86" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-2.30436, 0, 3.26954, 0, 4, 0, -3.26954, 0, -2.30436, 172.397, -7.01036, -52.475)
+
+[node name="Tree87" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(3.9971, 0, 0.152226, 0, 4, 0, -0.152226, 0, 3.9971, 198.309, -7.13385, -53.8279)
+
+[node name="Tree88" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(3.99371, 0, -0.22405, 0, 4, 0, 0.22405, 0, 3.99371, 161.855, -7.59764, -38.1697)
+
+[node name="Tree89" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(3.99371, 0, -0.22405, 0, 4, 0, 0.22405, 0, 3.99371, 150.048, -7.72925, -0.753803)
+
+[node name="Tree90" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(0.015917, 0, 3.99997, 0, 4, 0, -3.99997, 0, 0.015917, 173.855, -8.29551, -73.8616)
+
+[node name="Tree91" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(3.22065, 0, 2.37221, 0, 4, 0, -2.37221, 0, 3.22065, 139.332, -5.60249, -84.8219)
+
+[node name="Tree92" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(-1.35022, 0, 3.76522, 0, 4, 0, -3.76522, 0, -1.35022, 154.579, -5.12236, -90.9727)
+
+[node name="Tree93" parent="Scenery" instance=ExtResource("23_o3ldj")]
+transform = Transform3D(2.58487, 0, 3.05261, 0, 4, 0, -3.05261, 0, 2.58487, 172.797, -7.01036, -106.169)
+
+[node name="Tree94" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(1.15265, 0, -3.83033, 0, 4, 0, 3.83033, 0, 1.15265, 191.978, -7.13385, -77.1452)
+
+[node name="Tree95" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(0.787619, 0, -3.92168, 0, 4, 0, 3.92168, 0, 0.787619, 160.564, -7.59764, -103.086)
+
+[node name="Tree96" parent="Scenery" instance=ExtResource("27_e1mau")]
+transform = Transform3D(0.787619, 0, -3.92168, 0, 4, 0, 3.92168, 0, 0.787619, 128.472, -7.72925, -110.506)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Scenery"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.4736, -16.631, 69.5005)
-size = Vector3(51.2568, 15.7344, 46.626)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.7285, -16.631, 13.583)
+size = Vector3(606.618, 15.7344, 502.688)
 material = SubResource("StandardMaterial3D_ukaq3")
+
+[node name="Bush2" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(0.669792, 0, -0.742549, 0, 1, 0, 0.742549, 0, 0.669792, 6.73905, -7.00007, -2.34854)
+
+[node name="Bush3" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(0.669792, 0, -0.742549, 0, 1, 0, 0.742549, 0, 0.669792, 32.0346, -7.00006, -13.4245)
+
+[node name="Bush4" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(-0.655611, 0, -0.755099, 0, 1, 0, 0.755099, 0, -0.655611, 5.13584, -7.00006, -16.0926)
+
+[node name="Bush5" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(-0.232156, 0, -0.972679, 0, 1, 0, 0.972679, 0, -0.232156, 12.9188, -7.00006, -17.5206)
+
+[node name="Bush6" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(-0.89442, 0, 0.447229, 0, 1, 0, -0.447229, 0, -0.89442, 3.90295, -7.00006, -27.6258)
+
+[node name="Bush7" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.9236, -5.31839, -50.7508)
+
+[node name="Bush8" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(-0.38465, 0, -0.923063, 0, 1, 0, 0.923063, 0, -0.38465, 107.138, -2.45023, -61.9536)
+
+[node name="Bush9" parent="Scenery" instance=ExtResource("34_4mi8k")]
+transform = Transform3D(-0.338196, 0, -0.941076, 0, 1, 0, 0.941076, 0, -0.338196, 97.759, -2.45023, -64.4193)
+
+[node name="Tree147" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.93458, 0, 0.507347, 0, 2, 0, -0.507347, 0, 1.93458, 20.0644, -7, -23.2845)
+
+[node name="Tree148" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.354135, 0, -1.9684, 0, 2, 0, 1.9684, 0, -0.354135, -0.644047, -8.22147, -16.8979)
+
+[node name="Tree149" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(1.93458, 0, 0.507347, 0, 2, 0, -0.507347, 0, 1.93458, 109.201, -4.07663, -62.2033)
+
+[node name="Tree150" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.354135, 0, -1.9684, 0, 2, 0, 1.9684, 0, -0.354135, 88.4922, -5.15093, -55.8166)
+
+[node name="Tree169" parent="Scenery" instance=ExtResource("22_rrhu1")]
+transform = Transform3D(-0.354135, 0, -1.9684, 0, 2, 0, 1.9684, 0, -0.354135, 70.9692, -7.17105, -58.5188)
+
+[node name="Tree151" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 10.3146, -7, -22.553)
+
+[node name="Tree152" parent="Scenery" instance=ExtResource("21_qq80u")]
+transform = Transform3D(1.26409, 0, -0.807516, 0, 1.5, 0, 0.807516, 0, 1.26409, 19.5315, -7, 7.88804)
+
+[node name="Tree153" parent="Scenery" instance=ExtResource("20_dkfk8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.7842, -7, -8.24148)
+
+[node name="Tree154" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 34.8386, -7, 0.774345)
+
+[node name="Tree155" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.27689, 0, -1.53933, 0, 2, 0, 1.53933, 0, 1.27689, 48.0711, -7, -8.44573)
+
+[node name="Tree156" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-1.71733, 0, -1.02507, 0, 2, 0, 1.02507, 0, -1.71733, 47.5997, -7, -84.4749)
+
+[node name="Tree157" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 103.699, -6.26828, -27.0365)
+
+[node name="Tree158" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.27689, 0, -1.53933, 0, 2, 0, 1.53933, 0, 1.27689, 116.932, -6.70297, -36.2566)
+
+[node name="Tree159" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.00045, 0, -1.73179, 0, 2, 0, 1.73179, 0, 1.00045, 57.3163, -7, -24.1007)
+
+[node name="Tree160" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.00045, 0, -1.73179, 0, 2, 0, 1.73179, 0, 1.00045, 89.8156, -7, -37.5314)
+
+[node name="Tree161" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(-0.694166, 0, -1.87567, 0, 2, 0, 1.87567, 0, -0.694166, 78.1617, -7, 11.1305)
+
+[node name="Tree162" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(0.121714, 0, 1.99629, 0, 2, 0, -1.99629, 0, 0.121714, 11.6146, -7, 103.709)
+
+[node name="Tree163" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.83511, 0, -0.795225, 0, 2, 0, 0.795225, 0, 1.83511, -19.4127, -7, 101.65)
+
+[node name="Tree164" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.14441, 0, 1.64022, 0, 2, 0, -1.64022, 0, 1.14441, -106.439, -7.00001, 89.4094)
+
+[node name="Tree165" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.99606, 0, 0.125511, 0, 2, 0, -0.125511, 0, 1.99606, -73.5264, -6.99999, 134.57)
+
+[node name="Tree166" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.19606, 0, -1.60295, 0, 2, 0, 1.60295, 0, 1.19606, 158.549, -7.00001, -54.7553)
+
+[node name="Tree167" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(0.522627, 0, 1.93051, 0, 2, 0, -1.93051, 0, 0.522627, 158.633, -7.00002, -21.5158)
+
+[node name="Tree168" parent="Scenery" instance=ExtResource("14_bpjh8")]
+transform = Transform3D(1.9999, 0, -0.0202806, 0, 2, 0, 0.0202806, 0, 1.9999, 150.726, -7.00002, -107.419)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("35_nwils")
