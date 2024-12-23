@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://dcheyehyrnnmq"]
+
+[ext_resource type="PackedScene" uid="uid://hcbku3nbltt7" path="res://assets/Models/Misc/GoldBullion.glb" id="1_qs1f5"]
+[ext_resource type="Material" uid="uid://88ydiibr3eby" path="res://assets/Materials/DummyMaterials/DummyWindow.tres" id="2_d23dk"]
+
+[sub_resource type="Curve" id="Curve_742qp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4yaxr"]
+texture_mode = 1
+curve = SubResource("Curve_742qp")
+
+[sub_resource type="Curve" id="Curve_h4jwu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_asilo"]
+curve = SubResource("Curve_h4jwu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7mslt"]
+particle_flag_rotate_y = true
+emission_shape = 3
+emission_box_extents = Vector3(0.25, 0.25, 0.5)
+angle_min = -834.3
+angle_max = 720.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 186.53
+gravity = Vector3(0, 1, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = 0.0999978
+radial_accel_min = -2.23517e-06
+radial_accel_max = 3.0
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 4.0
+scale_min = 0.1
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_asilo")
+scale_over_velocity_max = 181.35
+color = Color(1, 0.833333, 0, 1)
+alpha_curve = SubResource("CurveTexture_4yaxr")
+turbulence_noise_strength = 8.87
+turbulence_noise_scale = 2.675
+
+[sub_resource type="SphereMesh" id="SphereMesh_tjv21"]
+material = ExtResource("2_d23dk")
+radius = 0.1
+height = 0.2
+radial_segments = 4
+rings = 3
+
+[sub_resource type="Skin" id="Skin_2ld5i"]
+
+[node name="GoldBullion" instance=ExtResource("1_qs1f5")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1"]
+randomness = 0.65
+process_material = SubResource("ParticleProcessMaterial_7mslt")
+draw_pass_1 = SubResource("SphereMesh_tjv21")
+draw_skin = SubResource("Skin_2ld5i")
