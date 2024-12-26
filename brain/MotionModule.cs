@@ -16,9 +16,15 @@ public partial class MotionModule : Node3D  {
     private bool jump = false;
     [Export] private float max_accel = 40f;
     [Export] private float max_speed = 16f;
-    //TODO 
-    /* need to decrease acceleration when some distance from target. to avoid overshooting
-    */
+    [Export] private MotionMode mode;
+
+    private enum MotionMode {
+        NORMAL, //accelerate to max_vel towards goal, then decelerate when within some distance to slow down and reach target
+        SPRING, //overshoot target, then oscillate about it with dampening factor, which dictates the max distance as a percentage of that of the previous oscillation
+        RANDOM_WITHIN_RADIUS, //like NORMAL except the actual goal_pos is a random point within a circle around the set goal_pos
+        ORBIT //move on tangent line of circle at goal_pos with some radius then enter orbit 
+    }
+
 
     public override void _Ready(){
         base._Ready();

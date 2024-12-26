@@ -1,0 +1,19 @@
+[
+    {
+        "name": "firstQuest",
+        "initiator": {
+            "type": "item",
+            "item": "shovel"
+        },
+
+    },
+    {
+        "name": "questThatIsCool",
+        "initiator": {
+            "type": "npc",
+            "name": "birdhunter",
+            "requirements": ["firstQuest", "anotherQuest"]
+        },
+
+    }
+]
