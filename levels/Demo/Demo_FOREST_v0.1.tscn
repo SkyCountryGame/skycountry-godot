@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=64 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -42,6 +42,7 @@
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="40_s2li8"]
 [ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://prefabs/wood/picket_fence_connector.tscn" id="41_ac3wr"]
 [ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://gameobjects/gold_bullion.tscn" id="42_cqfb4"]
+[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="43_su6v8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -109,6 +110,66 @@ geometry_source_geometry_mode = 1
 geometry_source_group_name = &"navigation"
 agent_max_climb = 0.1
 agent_max_slope = 75.0
+
+[sub_resource type="Curve" id="Curve_aers2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0737913, 1), 0.0, 0.0, 0, 0, Vector2(0.244275, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_wqypc"]
+curve = SubResource("Curve_aers2")
+
+[sub_resource type="Gradient" id="Gradient_x256c"]
+offsets = PackedFloat32Array(0, 0.0931507, 0.306849, 0.493151, 0.871233)
+colors = PackedColorArray(0.837193, 0.410256, 0.0744734, 1, 0.973128, 0.252008, 1.92523e-07, 1, 0.960589, 0.767429, 0.0659272, 1, 0.263572, 0.30069, 0.387595, 1, 0.088, 0.1452, 0.22, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p1a4j"]
+gradient = SubResource("Gradient_x256c")
+
+[sub_resource type="Curve" id="Curve_tao5a"]
+max_value = 2.0
+_data = [Vector2(0.00508906, 1.25), 0.0, 0.0, 0, 0, Vector2(0.694656, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dhpei"]
+curve = SubResource("Curve_tao5a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u0brq"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 0.2
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 5.0
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_dhpei")
+color_ramp = SubResource("GradientTexture1D_p1a4j")
+alpha_curve = SubResource("CurveTexture_wqypc")
+
+[sub_resource type="Gradient" id="Gradient_ptp2y"]
+offsets = PackedFloat32Array(0.197832, 0.95664)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4ub4q"]
+gradient = SubResource("Gradient_ptp2y")
+fill = 1
+fill_from = Vector2(0.491453, 0.474359)
+fill_to = Vector2(0.863248, 0.183761)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds4bd"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.984314)
+albedo_texture = SubResource("GradientTexture2D_4ub4q")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_krrfl"]
+material = SubResource("StandardMaterial3D_ds4bd")
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("sunlight", "navRegion")]
 script = ExtResource("1_1m4au")
@@ -1068,3 +1129,39 @@ navigation_mesh = SubResource("NavigationMesh_464t1")
 
 [node name="GoldBullion" parent="." instance=ExtResource("42_cqfb4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.765, 0.914174, 101.423)
+
+[node name="Bonfire" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.686, 0.812242, 103.872)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Bonfire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.150151, 0)
+amount = 50
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_u0brq")
+draw_pass_1 = SubResource("QuadMesh_krrfl")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Bonfire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489199, 0)
+light_color = Color(1, 0.412, 0.16, 1)
+light_energy = 8.0
+
+[node name="WoodLog" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(1.93355, 1.10134, 0.682159, -0.746654, 2.94667, -0.0917506, -0.451436, -0.156476, 3.07352, 0.962936, -0.452111, -0.276268)
+
+[node name="WoodLog3" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(0.118458, 0.163956, 3.14045, -0.746654, 2.94667, -0.0917506, -1.98202, -1.10025, 0.222257, 0.0725555, -0.45211, -0.790291)
+
+[node name="WoodLog4" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(-1.42773, -0.728647, 2.2126, -0.746654, 2.94667, -0.0917504, -1.37986, -0.840541, -2.2397, -0.731979, -0.452111, -0.635765)
+
+[node name="WoodLog5" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(-1.9249, -1.09827, -0.738687, -0.746654, 2.94667, -0.0917506, 0.486994, 0.176746, -3.06042, -0.731979, -0.452113, 0.215515)
+
+[node name="WoodLog6" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(-0.649489, -0.45509, -2.96365, -0.746654, 2.94667, -0.0917506, 1.87632, 1.01505, -1.06238, -0.285782, -0.452109, 0.769302)
+
+[node name="WoodLog7" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(1.03436, 0.477427, -2.70808, -1.27199, 2.43764, -0.641311, 1.34612, 1.93655, 1.47489, 0.264435, -0.281171, 0.880302)
+
+[node name="WoodLog2" parent="Bonfire" instance=ExtResource("43_su6v8")]
+transform = Transform3D(1.86874, 1.14969, -0.948553, -0.796718, 2.91806, 0.0765351, 0.610696, 0.288834, 3.00244, 0.74202, -0.492574, 0.418304)
