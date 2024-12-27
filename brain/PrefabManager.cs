@@ -73,20 +73,45 @@ public partial class PrefabManager {
         return null;
     }
 
-    //get a prefab
+    //get a prefab. account for cases where prefab name doesn't have suffix of "_[pickup,equip]"
     public static PackedScene Get(string label){
         if (prefabs.ContainsKey(label)){
             return prefabs[label];
         }
+        //this packedscene has not yet been loaded in runtime mem. so look for it on disk
         PackedScene p = null;
-        if (ResourceLoader.Exists($"res://gameobjects/tscn/{label}.tscn")){
-            p = ResourceLoader.Load<PackedScene>($"res://gameobjects/tscn/{label}.tscn");
+        string[] filepaths = System.IO.Directory.GetFiles("prefabs", $"{label}.tscn", System.IO.SearchOption.AllDirectories);
+        if (filepaths.Length == 0){ //handle the case where doesn't have suffix of pickup or equip
+            filepaths = System.IO.Directory.GetFiles("prefabs", $"{label.Split("_pickup")[0]}*.tscn");
+        }
+        if (filepaths.Length == 0){
+            filepaths = System.IO.Directory.GetFiles("prefabs", $"{label.Split("_equip")[0]}*.tscn");
+        }
+        if (filepaths.Length > 0) {
+            foreach (string fp in filepaths){
+                GD.Print($"found {fp}");    
+                try {
+                    p = ResourceLoader.Load<PackedScene>($"res://{fp}");
+                    prefabs[label] = p;
+                    return p;
+                } catch (InvalidCastException e){
+                    GD.PushError(e);
+                    GD.PushError($"{label} prefab file invalid: {fp}");
+                    continue;
+                }
+            }
+        }
+        /*
+        if (ResourceLoader.Exists($"res://prefabs/{label}.tscn")){
+            p = ResourceLoader.Load<PackedScene>($"res://prefabs/{label}.tscn");
             prefabs[label] = p;
-        } else if (ResourceLoader.Exists($"res://gameobjects/{label.Split("_")[0]}/{label}.tscn")) {
-            p = ResourceLoader.Load<PackedScene>($"res://gameobjects/{label.Split("_")[0]}/{label}.tscn");
+        } else if (ResourceLoader.Exists($"res://prefabs/{label.Split("_pickup")[0]}/{label}.tscn")) {
+            p = ResourceLoader.Load<PackedScene>($"res://prefabs/{label.Split("_pickup")[0]}/{label}.tscn");
             prefabs[label] = p;
-        } 
-        //TODO else check other dirs        
+        } else if (ResourceLoader.Exists($"res://prefabs/{label.Split("_equip")[0]}/{label}.tscn")) {
+            p = ResourceLoader.Load<PackedScene>($"res://prefabs/{label.Split("_equip")[0]}/{label}.tscn");
+            prefabs[label] = p;
+        } */ 
         return p;
     }
 }

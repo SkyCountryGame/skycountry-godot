@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://b8hyrw1tl5tgk"]
 
 [ext_resource type="Script" path="res://components/Pickup.cs" id="1_x0yfv"]
-[ext_resource type="Resource" uid="uid://imcy51vsk1cx" path="res://gameobjects/resources/rock.tres" id="2_seskq"]
+[ext_resource type="Resource" uid="uid://imcy51vsk1cx" path="res://res/rock_invitem.tres" id="2_seskq"]
 [ext_resource type="Texture2D" uid="uid://b6xbp5tc2ja6i" path="res://assets/texture/Environment/Rocks/Rock 1/Rock_Small_4_BaseColor.png" id="3_fghht"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lwepn"]

@@ -20,13 +20,13 @@
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_13urj"]
 [ext_resource type="Material" uid="uid://cciy1lix1177c" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://prefabs/rocks/rock_9.tscn" id="17_d1aw2"]
+[ext_resource type="Script" path="res://gameobjects/Door.cs" id="17_famop"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://prefabs/rocks/rock_12.tscn" id="18_6qjtl"]
 [ext_resource type="Material" uid="uid://88ydiibr3eby" path="res://assets/Materials/DummyMaterials/DummyWindow.tres" id="18_qxavl"]
 [ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://prefabs/rocks/rock_11.tscn" id="19_pm21m"]
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://prefabs/rocks/rock_10.tscn" id="20_qhbjg"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="21_vtgu2"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
-[ext_resource type="Script" path="res://gameobjects/door/Door.cs" id="23_0kef8"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://prefabs/trees/RegularTree1_A.tscn" id="32_orf7b"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://prefabs/trees/RegularTree2_A.tscn" id="33_2l3aj"]
@@ -49,7 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://prefabs/trees/RegularTree3_C.tscn" id="44_vv8sr"]
 [ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://prefabs/wood/wood_stool.tscn" id="45_57l3c"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://prefabs/trees/BareTree3_B.tscn" id="45_a7miq"]
-[ext_resource type="PackedScene" uid="uid://b8hyrw1tl5tgk" path="res://gameobjects/rock/rock_pickup.tscn" id="45_idycp"]
+[ext_resource type="PackedScene" uid="uid://b8hyrw1tl5tgk" path="res://prefabs/rock_pickup.tscn" id="45_idycp"]
 [ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://prefabs/trees/BareTree2_B.tscn" id="46_2pbc0"]
 [ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="46_xv32s"]
 [ext_resource type="PackedScene" uid="uid://cekpx3bad5706" path="res://prefabs/wood/log_bench.tscn" id="47_eby20"]
@@ -170,8 +170,7 @@ radius = 1.0
 
 [node name="Door2Forest" type="StaticBody3D" parent="."]
 transform = Transform3D(0.898112, 0.285752, -0.334277, -0.326162, 0.942684, -0.0704679, 0.294981, 0.172316, 0.939837, 4.00428, 1.36033, 1.36422)
-script = ExtResource("23_0kef8")
-destination = "res://levels/Demo/Demo_FOREST_v0.1.tscn"
+script = ExtResource("17_famop")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door2Forest"]
 shape = SubResource("BoxShape3D_lxb5p")
@@ -463,8 +462,7 @@ material = ExtResource("21_vtgu2")
 
 [node name="Door" type="StaticBody3D" parent="PlayerHouseDemo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.269, 0.975, 2.035)
-script = ExtResource("23_0kef8")
-destination = "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn"
+script = ExtResource("17_famop")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHouseDemo/Door"]
 shape = SubResource("BoxShape3D_lxb5p")
