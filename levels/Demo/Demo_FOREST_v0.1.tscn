@@ -75,13 +75,15 @@ tonemap_mode = 2
 ssao_radius = 0.31
 ssao_intensity = 0.36
 ssao_sharpness = 0.58
-fog_light_color = Color(0.4185, 0.716875, 0.93, 1)
-fog_light_energy = 0.0
-fog_sun_scatter = 0.03
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
 fog_height_density = 0.1441
-volumetric_fog_density = 0.0194
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0635
 volumetric_fog_albedo = Color(0.0498621, 0.304609, 0.590697, 1)
-volumetric_fog_emission = Color(0.191912, 0.344577, 0.350766, 1)
+volumetric_fog_emission = Color(0.1045, 0.18715, 0.19, 1)
 volumetric_fog_emission_energy = 16.62
 volumetric_fog_length = 28.22
 adjustment_enabled = true
@@ -196,11 +198,11 @@ environment = SubResource("Environment_eexlt")
 camera_attributes = SubResource("CameraAttributesPhysical_07dr7")
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.791587, 0.471953, -0.388138, 0.0823572, 0.711796, 0.697541, 0.605481, 0.520198, -0.602317, 2.80378, 29.0259, 25.7876)
+transform = Transform3D(-0.697305, 0.711543, -0.0864349, 0.383612, 0.472334, 0.793564, 0.605481, 0.520198, -0.602318, 2.80378, 29.0259, 25.7876)
 light_color = Color(0.76, 0.872, 1, 1)
-light_angular_distance = 1.55
 shadow_enabled = true
-shadow_opacity = 0.5
+shadow_opacity = 0.2
+shadow_blur = 10.0
 sky_mode = 1
 
 [node name="HUD" parent="." instance=ExtResource("5_mamqx")]
