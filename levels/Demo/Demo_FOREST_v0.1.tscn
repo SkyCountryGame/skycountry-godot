@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=73 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -51,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://prefabs/rocks/rock_7.tscn" id="49_8cq82"]
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://prefabs/rocks/rock_10.tscn" id="50_c3s0m"]
 [ext_resource type="PackedScene" uid="uid://ctxwefr3jrq18" path="res://prefabs/wood/wood_plank_large.tscn" id="51_rx07x"]
+[ext_resource type="PackedScene" uid="uid://bmp0vfedrd0si" path="res://gameobjects/funny_rock.tscn" id="52_2r6tq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -1360,3 +1361,5 @@ transform = Transform3D(0.578558, 0.728933, -0.365961, -0.616037, 0.684585, 0.38
 
 [node name="WoodPlank_Large2" parent="ScissorbeakNest" instance=ExtResource("51_rx07x")]
 transform = Transform3D(-0.0680951, 0.446547, -0.892165, -0.616037, 0.684585, 0.389668, 0.784768, 0.576141, 0.228473, -1.06264, -0.711331, -2.66363)
+
+[node name="FunnyRock" parent="." instance=ExtResource("52_2r6tq")]

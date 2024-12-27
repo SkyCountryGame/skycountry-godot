@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmp0vfedrd0si"]
+
+[ext_resource type="PackedScene" uid="uid://lon880hbhqgr" path="res://assets/ParticleFX/ShinyGold.tscn" id="1_h8vtv"]
+[ext_resource type="PackedScene" uid="uid://hcbku3nbltt7" path="res://assets/Models/Misc/GoldBullion.glb" id="2_jct3v"]
+[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://prefabs/rocks/rock_2.tscn" id="3_snuee"]
+
+[node name="FunnyRock" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 156.02, 1.12746, 109.002)
+
+[node name="GPUParticles3D" parent="." instance=ExtResource("1_h8vtv")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="GoldBullion2" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.938437, -0.246745, -0.241773, 0.32607, 0.863818, 0.384053, 0.114084, -0.439245, 0.891094, 0.29895, 0.202632, 0.370613)
+
+[node name="GoldBullion5" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.551683, -0.563233, 0.615154, 0.348427, 0.82574, 0.443569, -0.757789, -0.0303734, 0.651792, 0.582764, -0.12858, -0.0365295)
+
+[node name="GoldBullion6" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(-0.155226, 0.519349, 0.840346, 0.986791, 0.121425, 0.107235, -0.0463463, 0.845892, -0.531337, -0.465179, -0.12858, -0.0365295)
+
+[node name="GoldBullion7" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.872846, -0.429006, 0.232579, 0.485747, 0.7181, -0.49838, 0.0467939, 0.547984, 0.835179, -0.465179, 0.231654, 0.0417328)
+
+[node name="GoldBullion8" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.63916, -0.48757, -0.59477, 0.483761, 0.856085, -0.181919, 0.597872, -0.17145, 0.783042, -0.171097, 0.0239831, 0.38588)
+
+[node name="GoldBullion9" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.907489, 0.0698673, 0.414227, -0.242377, 0.892466, 0.380471, -0.3431, -0.445672, 0.826837, -0.171097, -0.155141, -0.616051)
+
+[node name="GoldBullion10" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.907489, 0.0698673, 0.414227, 0.0923909, 0.928731, -0.359058, -0.409791, 0.364111, 0.836358, 0.10289, 0.48535, -0.361214)
+
+[node name="GoldBullion3" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.913482, -0.0975524, -0.395012, 0.393065, 0.462404, 0.794785, 0.105122, -0.881287, 0.460742, 0.00553894, 0.448689, -0.154724)
+
+[node name="GoldBullion11" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.0576356, -0.80101, 0.924462, 0.462065, 0.587278, 1.08206, -1.08912, 0.206766, 0.507989, 0.0417633, 0.0456966, 0.0212631)
+
+[node name="GoldBullion4" parent="." instance=ExtResource("2_jct3v")]
+transform = Transform3D(0.913482, -0.0975524, -0.395012, 0.393065, 0.462404, 0.794785, 0.105122, -0.881287, 0.460742, 0.403397, 0.280452, -0.604332)
+
+[node name="Rock2" parent="." instance=ExtResource("3_snuee")]
