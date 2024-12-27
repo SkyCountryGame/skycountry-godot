@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=72 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -43,6 +43,14 @@
 [ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://prefabs/wood/picket_fence_connector.tscn" id="41_ac3wr"]
 [ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://prefabs/gold_bullion.tscn" id="42_cqfb4"]
 [ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="43_su6v8"]
+[ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="44_vdko8"]
+[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://prefabs/rocks/rock_6.tscn" id="45_jpcnq"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://prefabs/rocks/rock_12.tscn" id="46_g2aen"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://prefabs/rocks/rock_11.tscn" id="47_5qp0g"]
+[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://prefabs/rocks/rock_3.tscn" id="48_pbxmk"]
+[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://prefabs/rocks/rock_7.tscn" id="49_8cq82"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://prefabs/rocks/rock_10.tscn" id="50_c3s0m"]
+[ext_resource type="PackedScene" uid="uid://ctxwefr3jrq18" path="res://prefabs/wood/wood_plank_large.tscn" id="51_rx07x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -66,12 +74,10 @@ tonemap_mode = 2
 ssao_radius = 0.31
 ssao_intensity = 0.36
 ssao_sharpness = 0.58
-fog_enabled = true
 fog_light_color = Color(0.4185, 0.716875, 0.93, 1)
 fog_light_energy = 0.0
 fog_sun_scatter = 0.03
 fog_height_density = 0.1441
-volumetric_fog_enabled = true
 volumetric_fog_density = 0.0194
 volumetric_fog_albedo = Color(0.0498621, 0.304609, 0.590697, 1)
 volumetric_fog_emission = Color(0.191912, 0.344577, 0.350766, 1)
@@ -781,7 +787,7 @@ transform = Transform3D(-3.99401, 0, 0.218824, 0, 4, 0, -0.218824, 0, -3.99401, 
 transform = Transform3D(-2.20577, 0, 3.33685, 0, 4, 0, -3.33685, 0, -2.20577, 33.6044, -5.60248, 116.234)
 
 [node name="Tree51" parent="Scenery" instance=ExtResource("23_o3ldj")]
-transform = Transform3D(-3.82887, 0, -1.15746, 0, 4, 0, 1.15746, 0, -3.82887, 28.2351, -5.12234, 100.695)
+transform = Transform3D(-3.82887, 0, -1.15746, 0, 4, 0, 1.15746, 0, -3.82887, 28.2351, -6.13482, 100.695)
 
 [node name="Tree52" parent="Scenery" instance=ExtResource("14_bpjh8")]
 transform = Transform3D(-3.82887, 0, -1.15746, 0, 4, 0, 1.15746, 0, -3.82887, 16.2487, -7.11286, 49.8074)
@@ -844,7 +850,7 @@ transform = Transform3D(3.56735, 0, 1.80943, 0, 4, 0, -1.80943, 0, 3.56735, 0.44
 transform = Transform3D(-0.425056, 0, -3.97735, 0, 4, 0, 3.97735, 0, -0.425056, 6.84808, -7.13383, 145.566)
 
 [node name="Tree97" parent="Scenery" instance=ExtResource("22_rrhu1")]
-transform = Transform3D(-2.20577, 0, 3.33685, 0, 4, 0, -3.33685, 0, -2.20577, 45.8775, -5.60247, 101.002)
+transform = Transform3D(-2.20577, 0, 3.33685, 0, 4, 0, -3.33685, 0, -2.20577, 45.8775, -6.61495, 101.002)
 
 [node name="Tree98" parent="Scenery" instance=ExtResource("20_dkfk8")]
 transform = Transform3D(-0.425056, 0, -3.97735, 0, 4, 0, 3.97735, 0, -0.425056, 19.1212, -7.13382, 130.333)
@@ -925,7 +931,7 @@ transform = Transform3D(-3.29449, 0, 2.26856, 0, 4, 0, -2.26856, 0, -3.29449, -1
 transform = Transform3D(-0.143156, 0, 3.99744, 0, 4, 0, -3.99744, 0, -0.143156, -94.2012, -5.60248, 111.56)
 
 [node name="Tree64" parent="Scenery" instance=ExtResource("23_o3ldj")]
-transform = Transform3D(-3.87092, 0, 1.00794, 0, 4, 0, -1.00794, 0, -3.87092, -90.684, -5.12235, 95.5005)
+transform = Transform3D(-3.87092, 0, 1.00794, 0, 4, 0, -1.00794, 0, -3.87092, -90.684, -6.23158, 95.5005)
 
 [node name="Tree65" parent="Scenery" instance=ExtResource("23_o3ldj")]
 transform = Transform3D(-1.06357, 0, 3.85601, 0, 4, 0, -3.85601, 0, -1.06357, -92.9615, -7.01035, 71.886)
@@ -1165,3 +1171,192 @@ transform = Transform3D(1.03436, 0.477427, -2.70808, -1.27199, 2.43764, -0.64131
 
 [node name="WoodLog2" parent="Bonfire" instance=ExtResource("43_su6v8")]
 transform = Transform3D(1.86874, 1.14969, -0.948553, -0.796718, 2.91806, 0.0765351, 0.610696, 0.288834, 3.00244, 0.74202, -0.492574, 0.418304)
+
+[node name="ItemLocations" type="Node3D" parent="."]
+
+[node name="FunnyBux" type="Node3D" parent="ItemLocations"]
+
+[node name="FunnyBuxSpot" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0899, -6.69532, -7.8099)
+
+[node name="FunnyBuxSpot8" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.921, -4.57035, 62.2518)
+
+[node name="FunnyBuxSpot9" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -87.0877, -4.74642, 63.3413)
+
+[node name="FunnyBuxSpot10" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.0831, -4.74642, 63.3413)
+
+[node name="FunnyBuxSpot11" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.0831, -4.74642, 62.2409)
+
+[node name="FunnyBuxSpot12" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.5489, -4.74642, 62.8307)
+
+[node name="FunnyBuxSpot7" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.403, -4.18815, 77.6217)
+
+[node name="FunnyBuxSpot2" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.3952, -6.69532, -29.4917)
+
+[node name="FunnyBuxSpot3" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4698, -6.69531, 98.3442)
+
+[node name="FunnyBuxSpot4" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.3314, -6.69531, 86.5539)
+
+[node name="FunnyBuxSpot5" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.947, -1.8395, -62.5277)
+
+[node name="FunnyBuxSpot6" type="Node3D" parent="ItemLocations/FunnyBux"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.1116, -6.46407, -39.0755)
+
+[node name="FunnyBuxRocks" type="Node3D" parent="ItemLocations"]
+
+[node name="FunnyRockSpot" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06784, -5.1486, 33.4955)
+
+[node name="FunnyRockSpot2" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6758, -5.4916, -41.6491)
+
+[node name="FunnyRockSpot3" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.0051, -5.4916, 33.2142)
+
+[node name="FunnyRockSpot4" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.054, -5.4916, 117.489)
+
+[node name="FunnyRockSpot5" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100.998, -4.40438, 91.7929)
+
+[node name="FunnyRockSpot6" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 211.144, -3.70471, 6.2062)
+
+[node name="FunnyRockSpot7" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.474, -4.80776, -26.5037)
+
+[node name="ScissorbeakNest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.4921, -3.66497, 62.6438)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(1, 0, 0, 0, 0.416328, -0.909214, 0, 0.909214, 0.416328, 0, -0.71062, 2.4112)
+radius = 0.098246
+height = 3.02207
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(0.457036, -0.808699, -0.370303, 0, 0.416328, -0.909214, 0.889448, 0.415544, 0.190277, -2.04848, -0.71062, 0.881588)
+radius = 0.0876227
+height = 3.02207
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D9" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(0.277574, -0.1604, -0.94722, 0.316335, 0.94624, -0.0675352, 0.90713, -0.280893, 0.313391, -2.38972, -0.0301681, -4.55789)
+radius = 0.114122
+height = 4.95542
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D10" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(0.948576, -0.316384, 0.0102565, 0.315164, 0.946954, 0.0628458, -0.0295959, -0.0563815, 0.997971, -5.75974, 0.860323, -1.76568)
+radius = 0.0876988
+height = 4.95542
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.0816602, -0.906178, -0.414938, 1.36207e-08, 0.416328, -0.909214, 0.99666, -0.0742466, -0.0339975, -2.31174, -0.71062, -0.725727)
+radius = 0.114122
+height = 3.02207
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.662267, 0.681245, 0.311942, 1.4198e-08, 0.416328, -0.909214, -0.749268, -0.602143, -0.275721, 1.54359, -0.71062, -1.29785)
+radius = 0.0741564
+height = 3.02207
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.417122, 0.82634, 0.37838, 1.4198e-08, 0.416328, -0.909214, -0.908851, -0.379253, -0.17366, 1.87542, -0.71062, -0.886158)
+radius = 0.114122
+height = 1.79851
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(0.739255, 0.612288, 0.280366, 1.30862e-08, 0.416328, -0.909214, -0.673426, 0.672141, 0.307773, 0.765144, -0.914127, 1.61997)
+radius = 0.114122
+height = 1.79851
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.965677, 0.236165, 0.10814, 1.30862e-08, 0.416328, -0.909214, -0.259746, -0.878007, -0.402039, -0.0897141, -0.749657, -2.42484)
+radius = 0.114122
+height = 1.79851
+material = ExtResource("44_vdko8")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ScissorbeakNest"]
+transform = Transform3D(1, 0, 0, 0, 0.918439, 0.395562, 0, -0.395562, 0.918439, -0.189941, -0.745458, 2.15316)
+size = Vector3(0.620117, 0.367676, 0.649414)
+material = ExtResource("44_vdko8")
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.315235, 0.187937, -0.930219, 0, -0.980195, -0.198034, -0.949014, -0.0624272, 0.308992, -2.13371, 0.786299, 3.13846)
+radius = 0.114122
+height = 3.02207
+material = ExtResource("44_vdko8")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="ScissorbeakNest"]
+transform = Transform3D(-0.315235, 0.934249, 0.166752, 0, 0.17571, -0.984442, -0.949014, -0.310331, -0.0553901, -2.05019, 1.04549, 3.31087)
+size = Vector3(0.620117, 0.367676, 0.649414)
+material = ExtResource("44_vdko8")
+
+[node name="Rock6" parent="ScissorbeakNest" instance=ExtResource("45_jpcnq")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, -3.44402, -0.419874, -1.77579)
+
+[node name="Rock9" parent="ScissorbeakNest" instance=ExtResource("18_5tvrn")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, 0.773064, -0.272902, 3.21628)
+
+[node name="Rock12" parent="ScissorbeakNest" instance=ExtResource("46_g2aen")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, 1.39655, -0.627306, -1.97226)
+
+[node name="Rock11" parent="ScissorbeakNest" instance=ExtResource("47_5qp0g")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, -1.97601, -0.580774, 2.13099)
+
+[node name="Rock10" parent="ScissorbeakNest" instance=ExtResource("18_5tvrn")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, -4.87384, -0.695842, 1.04387)
+
+[node name="Rock13" parent="ScissorbeakNest" instance=ExtResource("46_g2aen")]
+transform = Transform3D(1, 0, 0, 0, -0.821657, -0.569983, -2.98023e-08, 0.569983, -0.821657, 2.14434, -0.6019, 1.53491)
+
+[node name="Rock3" parent="ScissorbeakNest" instance=ExtResource("48_pbxmk")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, 2.74011, -0.505821, 4.86362)
+
+[node name="Rock7" parent="ScissorbeakNest" instance=ExtResource("49_8cq82")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, 1.33637, -0.757883, -3.66709)
+
+[node name="Rock14" parent="ScissorbeakNest" instance=ExtResource("50_c3s0m")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, -1.21175, -0.460478, 4.02736)
+
+[node name="Rock4" parent="ScissorbeakNest" instance=ExtResource("48_pbxmk")]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 2.98023e-08, -2.98023e-08, 0, 1, -2.60403, -0.985564, -5.18166)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="ScissorbeakNest"]
+transform = Transform3D(0.783162, -0.12906, -0.608277, -0.20113, 0.873061, -0.444197, 0.588391, 0.470221, 0.65779, 0.604332, -1.22279, -1.30664)
+size = Vector3(0.620117, 0.367676, 0.649414)
+material = ExtResource("44_vdko8")
+
+[node name="WoodLog" parent="ScissorbeakNest" instance=ExtResource("43_su6v8")]
+transform = Transform3D(2.85902, 1.74292, 0, -3.02016, 1.64992, 0, 0, 0, 2.4, -2.24509, -0.508997, 0.143665)
+
+[node name="WoodLog2" parent="ScissorbeakNest" instance=ExtResource("43_su6v8")]
+transform = Transform3D(1.72916, 1.05413, 1.91129, -2.20742, 1.98778, -0.431216, -3.07127, -0.835195, 1.38601, -1.08372, -0.508996, 2.1872)
+
+[node name="WoodLog3" parent="ScissorbeakNest" instance=ExtResource("43_su6v8")]
+transform = Transform3D(0.185814, -1.25313, 2.04406, 3.00259, 1.45467, 0.800895, -2.87146, 1.44, 0.969741, 0.712509, -0.508996, -2.53267)
+
+[node name="WoodLog4" parent="ScissorbeakNest" instance=ExtResource("43_su6v8")]
+transform = Transform3D(3.42372, -1.00512, -0.919739, 2.32776, 1.70746, 1.01981, 0.393775, -1.35436, 1.96827, 1.58508, -1.19916, 0.487968)
+
+[node name="WoodPlank_Large" parent="ScissorbeakNest" instance=ExtResource("51_rx07x")]
+transform = Transform3D(0.578558, 0.728933, -0.365961, -0.616037, 0.684585, 0.389668, 0.534574, 0, 0.845122, -1.85345, -0.711331, -1.83908)
+
+[node name="WoodPlank_Large2" parent="ScissorbeakNest" instance=ExtResource("51_rx07x")]
+transform = Transform3D(-0.0680951, 0.446547, -0.892165, -0.616037, 0.684585, 0.389668, 0.784768, 0.576141, 0.228473, -1.06264, -0.711331, -2.66363)
