@@ -43,6 +43,8 @@ public partial class Global : Node
 
 	public void init(){
 		PrefabManager.Init();
+		//load save game files
+
 		atmosphereManager = new AtmosphereManager();
 		dialogueFunctionController = new DialogueFunctionController();
 		ProcessMode = ProcessModeEnum.Always;
@@ -207,5 +209,12 @@ public partial class Global : Node
 		cfg.Load($"user://savegame{saveSlot}.cfg");
 		playerNode.LoadSaveData(cfg);
 		currentLevel.LoadSaveData(cfg);
+	}
+
+	public static void RestartLevel(){
+		_.GetTree().ReloadCurrentScene();
+	}
+	public static void RestartGame(){
+		//_.GetTree().ChangeSceneToPacked();
 	}
 }
