@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://bwx0amkfjsedu"]
+
+[ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="1_msysg"]
+
+[resource]
+script = ExtResource("1_msysg")
+name = ""
+itemType = 0
+equipable = false

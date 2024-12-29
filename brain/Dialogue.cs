@@ -1,12 +1,8 @@
 ﻿using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml.Schema;
 /*
  * represents a conversation between the player and another character. keeps track of progression through the dialogue. 
     - typewriting text, hold button to skip, 

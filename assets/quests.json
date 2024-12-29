@@ -4,7 +4,7 @@
         "initiator": {
             "type": "item",
             "item": "shovel"
-        },
+        }
 
     },
     {
@@ -13,7 +13,7 @@
             "type": "npc",
             "name": "birdhunter",
             "requirements": ["firstQuest", "anotherQuest"]
-        },
+        }
 
     }
 ]

@@ -21,11 +21,11 @@ public partial class PrefabManager {
     public static void Init(){
         prefabs = new Dictionary<string, PackedScene>();
         //gameObjects.Add("LampPost", ResourceLoader.Load<PackedScene>("res://gameobjects/lamppost.tscn"));
-        prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/floatingtext.tscn"));
-        prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/error.tscn"));
+        //prefabs.Add("FloatingText", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/floatingtext.tscn"));
+        //prefabs.Add("ERROR", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/error.tscn"));
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
         prefabs.Add("PauseMenu", ResourceLoader.Load<PackedScene>("res://ui/pause_menu.tscn"));
-        prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/markerpoint.tscn"));
+       // prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/markerpoint.tscn"));
     }
 
     public void SpawnObject(string obj, Vector3 position){

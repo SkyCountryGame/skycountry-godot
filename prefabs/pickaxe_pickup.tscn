@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://c83di2s6skyw5"]
 
 [ext_resource type="Script" path="res://components/Pickup.cs" id="1_rrefl"]
-[ext_resource type="Resource" uid="uid://bq2s1qc4i0q5" path="res://gameobjects/pickaxe/pickaxe_invitem.tres" id="2_vmyae"]
+[ext_resource type="Resource" uid="uid://bmd88axmpykue" path="res://res/pickaxe_invitem.tres" id="2_vmyae"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e18mv"]
 radius = 0.720012

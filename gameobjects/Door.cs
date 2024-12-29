@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 //a door that leads to another level. implementation might change.
-public partial class Door : Node3D, Interactable
+public partial class Door : Area3D, Interactable
 {
 	public InteractionType interactionType => InteractionType.General;
 
@@ -16,9 +16,16 @@ public partial class Door : Node3D, Interactable
 		if (destination == null){
 			GD.PushWarning("no destination set for door");
 		} 
+		BodyEntered += (body) => OnBodyEntered(body); 
 	}
 
-	public override void _Process(double delta)
+    private void OnBodyEntered(Node3D body)
+    {
+		if(body==Global.playerNode)
+        	Interact();
+    }
+
+    public override void _Process(double delta)
 	{
 	}
 

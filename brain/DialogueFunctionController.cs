@@ -8,7 +8,7 @@ public partial class DialogueFunctionController: GodotObject //needs to be Godot
     private enum Function{
         [Description("CheckAndRemoveInventory")] // can work without this description now, but this would be the name of the function
         CheckAndRemoveInventory, //can name whatever we want as long as we populate description, if its named the same as the function we dont need description
-        ChangeRockFlag,
+        ChangeFunnyBucksFlag,
     }
 
     public bool run(string methodName, List<object> args)
@@ -54,7 +54,7 @@ public partial class DialogueFunctionController: GodotObject //needs to be Godot
 		return false;	
 	}
 
-    public bool ChangeRockFlag(){
-        return Global.flagManager.ChangeRockProgressFlagValue((int)Global.flagManager.rockFlagValue << 1);
+    public bool ChangeFunnyBucksFlag(){
+        return Global.flagManager.ChangeFunnyBucksProgressFlagValue((int)Global.flagManager.funnyBucksFlagValue << 1);
     }
 }
