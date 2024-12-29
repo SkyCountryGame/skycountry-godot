@@ -1356,9 +1356,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 155.142, 0.560033, 107.069)
 [node name="PickaxePickup" parent="." instance=ExtResource("54_2aq3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.993, 0.124769, 100.867)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="HTerrain" type="Node3D" parent="StaticBody3D"]
+[node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("6_k11m3")
 centered = true
 _terrain_data = ExtResource("7_at66j")
