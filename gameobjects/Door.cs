@@ -1,63 +1,23 @@
 using Godot;
 using System;
 
-//a door that leads to another level. implementation might change.
-public partial class Door : Area3D, Interactable
+//teleportation mechanism. 
+public partial class Door : Area3D
 {
-	public InteractionType interactionType => InteractionType.General;
-
-	public InteractionMethod interactionMethod => InteractionMethod.Contact;
-
 	[Export] private string destination; //where door leads to
 
 	public override void _Ready()
 	{
-		Global.RegisterGameObject(this, Name, GameObjectType.Interactable);
 		if (destination == null){
 			GD.PushWarning("no destination set for door");
 		} 
 		BodyEntered += (body) => OnBodyEntered(body); 
 	}
 
-    private void OnBodyEntered(Node3D body)
-    {
-		if(body==Global.playerNode)
-        	Interact();
-    }
-
-    public override void _Process(double delta)
+	private void OnBodyEntered(Node3D body)
 	{
-	}
-
-	public dynamic Interact()
-	{
-		if (destination == null){
-			Global.HUD.LogEvent("Door leads nowhere.");
-		} else {
-			GD.Print("Door leads to " + destination);
+		if(body==Global.playerNode){
 			Global.ChangeLevel(destination);
 		}
-		return true;
 	}
-
-	public void Retain()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void Clear()
-	{
-		throw new NotImplementedException();
-	}
-
-	public string Info()
-	{
-		return "A door";
-	}
-
-	public bool IsInteractionValid(Interactor interactor)
-	{
-		throw new NotImplementedException();
-	}
-
 }
