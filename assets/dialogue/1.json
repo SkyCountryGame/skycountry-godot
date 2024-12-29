@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "text": "Hey do you have 10 rocks?",
+        "text": "Hey do you have 10 Funny Bucks?",
         "responses": [
             {
                 "text": "Yes.",
@@ -9,7 +9,7 @@
                     "success" : 2,
                     "failure": 3,
                     "name": "CheckAndRemoveInventory",
-                    "args": ["Rock", 10]
+                    "args": ["gold_bullion", 10]
                 }
             },
             {
@@ -27,7 +27,7 @@
     },
     {
         "id": 2,
-        "text": "Nice! Thanks haha now we can ROCK out haha",
+        "text": "WERE RICH! WERE RICH! WERE RICH! ROCK AND STONE!!! WERE RICH!! ROCK AND STONE!!!",
         "responses": [
             {
                 "text": "...",
@@ -36,7 +36,7 @@
         ],
         "speed": 2,
         "exec": {
-            "name": "ChangeRockFlag"
+            "name": "ChangeFunnyBucksFlag"
         },
         "fontSize": 1,
         "emotion": 0

@@ -29,6 +29,7 @@
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://prefabs/trees/RegularTree1_A.tscn" id="32_orf7b"]
+[ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://prefabs/gold_bullion.tscn" id="33_1iut6"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://prefabs/trees/RegularTree2_A.tscn" id="33_2l3aj"]
 [ext_resource type="PackedScene" uid="uid://jk3ldkc354nb" path="res://prefabs/wood/crate_01.tscn" id="33_idm5b"]
 [ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://prefabs/wood/signpost_03.tscn" id="34_2874q"]
@@ -49,7 +50,6 @@
 [ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://prefabs/trees/RegularTree3_C.tscn" id="44_vv8sr"]
 [ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://prefabs/wood/wood_stool.tscn" id="45_57l3c"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://prefabs/trees/BareTree3_B.tscn" id="45_a7miq"]
-[ext_resource type="PackedScene" uid="uid://b8hyrw1tl5tgk" path="res://prefabs/rock_pickup.tscn" id="45_idycp"]
 [ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://prefabs/trees/BareTree2_B.tscn" id="46_2pbc0"]
 [ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="46_xv32s"]
 [ext_resource type="PackedScene" uid="uid://cekpx3bad5706" path="res://prefabs/wood/log_bench.tscn" id="47_eby20"]
@@ -168,9 +168,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.323, 0, 0)
 stations = [NodePath("../TREES/Tree4"), NodePath("../TREES/Tree14"), NodePath("../Firepit"), NodePath("../TREES/Sapling3")]
 radius = 1.0
 
-[node name="Door2Forest" type="StaticBody3D" parent="."]
+[node name="Door2Forest" type="Area3D" parent="."]
 transform = Transform3D(0.898112, 0.285752, -0.334277, -0.326162, 0.942684, -0.0704679, 0.294981, 0.172316, 0.939837, 4.00428, 1.36033, 1.36422)
 script = ExtResource("17_famop")
+destination = "res://levels/Demo/Demo_FOREST_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door2Forest"]
 shape = SubResource("BoxShape3D_lxb5p")
@@ -460,9 +461,10 @@ transform = Transform3D(0.999992, 0, 0.00392698, 0, 1, 0, -0.00392698, 0, 0.9999
 size = Vector3(0.368652, 0.11377, 5.81)
 material = ExtResource("21_vtgu2")
 
-[node name="Door" type="StaticBody3D" parent="PlayerHouseDemo"]
+[node name="Door" type="Area3D" parent="PlayerHouseDemo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.269, 0.975, 2.035)
 script = ExtResource("17_famop")
+destination = "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHouseDemo/Door"]
 shape = SubResource("BoxShape3D_lxb5p")
@@ -559,37 +561,37 @@ transform = Transform3D(-0.144988, -0.427423, 0.999093, 0.112654, 1.10802, 0.401
 transform = Transform3D(-0.351304, 0.355633, -0.696162, 0.0858562, 0.863618, 0.320119, 0.69165, 0.0734307, -0.393332, -3.26374, 0.109171, 0.3682)
 
 [node name="ROCKS PICKUPABLE" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1498, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1498, 43.4226)
 
-[node name="RockPickup" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.41948, 0, 45.8169)
+[node name="GoldBullion" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68977, 0, 0)
 
-[node name="RockPickup2" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4867, 0, 45.8169)
+[node name="GoldBullion2" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42646, 0, 0)
 
-[node name="RockPickup3" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94128, 0, 45.8169)
+[node name="GoldBullion3" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.42043, 0, 0)
 
-[node name="RockPickup4" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.7351, 0, 45.8169)
+[node name="GoldBullion4" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3388, 0, 0)
 
-[node name="RockPickup5" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30964, 0, 45.8169)
+[node name="GoldBullion5" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6331, 0, 0)
 
-[node name="RockPickup6" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4477, 0, 45.8169)
+[node name="GoldBullion6" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5245, 0, 0)
 
-[node name="RockPickup7" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.00931, 0, 45.8169)
+[node name="GoldBullion7" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1701, 0, 0)
 
-[node name="RockPickup8" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7267, 0, 45.8169)
+[node name="GoldBullion8" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7644, 0, 0)
 
-[node name="RockPickup9" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.676631, 0, 45.8169)
+[node name="GoldBullion9" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5853, 0, 0)
 
-[node name="RockPickup10" parent="ROCKS PICKUPABLE" instance=ExtResource("45_idycp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40231, 0, 45.8169)
+[node name="GoldBullion10" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12198, 0, 0)
 
 [node name="BUSHES" type="Node3D" parent="."]
 

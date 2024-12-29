@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cccp3ej23bt6l" path="res://assets/Models/Equipment/Bat.fbx" id="1_nh67s"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="2_2o4vf"]
-[ext_resource type="Script" path="res://gameobjects/bat/Bat.cs" id="2_u8br8"]
+[ext_resource type="Script" path="res://gameobjects/Bat.cs" id="2_u8br8"]
 [ext_resource type="Resource" uid="uid://dcbpcddjl8p1u" path="res://gameobjects/resources/bat.tres" id="3_up0wy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1baj3"]

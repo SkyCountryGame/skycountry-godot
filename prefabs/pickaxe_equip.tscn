@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://de1imo3mxdeis"]
 
-[ext_resource type="Script" path="res://gameobjects/pickaxe/Pickaxe.cs" id="1_g1rbu"]
+[ext_resource type="Script" path="res://gameobjects/Pickaxe.cs" id="1_g1rbu"]
 [ext_resource type="Resource" uid="uid://bp8isajsf3lxu" path="res://gameobjects/resources/pickaxe.tres" id="2_clwul"]
 [ext_resource type="Script" path="res://brain/CollisionZone.cs" id="3_sgbh8"]
 

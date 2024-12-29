@@ -1,5 +1,4 @@
 using Godot;
-using Prefab = PrefabManager;
 
 //an item that sits somewhere in the game world that can be picked up and added to inventory or consumed in some way
 //PAYLOAD: InventoryItem

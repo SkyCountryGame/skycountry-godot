@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://c48ne3hparnm"]
 
 [ext_resource type="Script" path="res://components/Pickup.cs" id="2_m6eql"]
-[ext_resource type="Resource" uid="uid://sh0tpugx4pt7" path="res://gameobjects/bat/bat_invitem.tres" id="3_pxd3f"]
+[ext_resource type="Resource" path="res://res/bat_invitem.tres" id="3_pxd3f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2xxw"]
 
