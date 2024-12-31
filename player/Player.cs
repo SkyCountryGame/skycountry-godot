@@ -19,7 +19,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	private float angleToFacingDirection;
 	private Vector3 inputDir = new Vector3(); //user-inputted vector of intended direction of player
 	private Node3D rightHand;
-	public float accelScalar = 0; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
+	public float accelScalar = 13; //made this public for the devtool. personally i'm ok with this being public, but understand if we want to keep it private. in that case just have devtool broadcast changeevents that objects can listen to 
 	public float velMagnitudeMax = 9f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
@@ -42,10 +42,11 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected AnimationController animController;
 	[Export] protected MotionModule mot;
+    private double rotationSpeed = 20;
 
-	//rings, amulets, etc. ?
+    //rings, amulets, etc. ?
 
-	public override void _Ready()
+    public override void _Ready()
 	{
 		base._Ready();
 		EventManager.RegisterListener(this);
@@ -98,7 +99,10 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 				}
 			} else {
 				if (Velocity.Length() > 0){
-					LookAt(GlobalPosition + controlDir);
+					float lookDirection = Mathf.Atan2(-Velocity.X, -Velocity.Z);
+					Vector3 rotation = new Vector3();
+					rotation.Y = Mathf.LerpAngle(Rotation.Y, lookDirection, (float)(rotationSpeed * delta));
+					Rotation = rotation;
 				}
 			}
 		}
@@ -249,17 +253,18 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 				}
 				velocity.Y = Velocity.Y; //thank you adam
 			} else {
-				Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-				if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-					velocity = Vector3.Zero;
-					accel = Vector3.Zero;
-				} else if (Velocity.Length() > gv.Length()) {
-					velocity = gv;
-				}
-				velocity.Y = Velocity.Y;
-				if (Velocity.Length() < velMagnitudeMax){
-					velocity += accel * (float)delta;
-				}
+				velocity = Velocity.Lerp(gv, (float)(accelScalar * delta));
+				// Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
+				// if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
+				// 	velocity = Vector3.Zero;
+				// 	accel = Vector3.Zero;
+				// } else if (Velocity.Length() > gv.Length()) {
+				// 	velocity = gv;
+				// }
+				// velocity.Y = Velocity.Y;
+				// if (Velocity.Length() < velMagnitudeMax){
+				// 	velocity += accel * (float)delta;
+				// }
 			}
 			if (jump && IsOnFloor()){
 				velocity.Y += JumpVelocity;
