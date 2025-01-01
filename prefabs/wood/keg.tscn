@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://xhnixsgym7pe"]
+[gd_scene load_steps=6 format=4 uid="uid://xhnixsgym7pe"]
 
 [ext_resource type="PackedScene" uid="uid://ciuh8mwhok605" path="res://assets/Models/Wood Props/Keg/Keg.gltf" id="1_l541h"]
 [ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_mn76c"]
@@ -35,8 +35,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hc121")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fotpd"]
+size = Vector3(1.95905, 1.83646, 1.56006)
+
 [node name="Keg" instance=ExtResource("1_l541h")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [node name="Keg" parent="." index="0"]
 mesh = SubResource("ArrayMesh_k5e75")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0684509, -0.135879, 0.0524902)
+shape = SubResource("BoxShape3D_fotpd")

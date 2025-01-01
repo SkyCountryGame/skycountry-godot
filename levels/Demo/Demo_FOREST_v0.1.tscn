@@ -42,7 +42,7 @@
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="40_s2li8"]
 [ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://prefabs/wood/picket_fence_connector.tscn" id="41_ac3wr"]
 [ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://prefabs/gold_bullion.tscn" id="42_cqfb4"]
-[ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://res/funnybux_invitem.tres" id="43_dogb4"]
+[ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://gameobjects/resources/funnybux_invitem.tres" id="43_dogb4"]
 [ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="43_su6v8"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="44_vdko8"]
 [ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://prefabs/rocks/rock_6.tscn" id="45_jpcnq"]

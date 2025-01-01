@@ -1,11 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://darxsa5kedpia"]
+[gd_scene load_steps=28 format=3 uid="uid://darxsa5kedpia"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_dmqny"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="3_uxc7l"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="4_1nru1"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="5_tmuy4"]
+[ext_resource type="Script" path="res://gameobjects/ItemSpawnPoint.cs" id="6_n6y5a"]
+[ext_resource type="PackedScene" uid="uid://dt5iv5ucs6vyk" path="res://assets/Models/Wood Props/Wood Stool/WoodStool.gltf" id="7_jbk3j"]
 [ext_resource type="PackedScene" uid="uid://xhnixsgym7pe" path="res://prefabs/wood/keg.tscn" id="9_3yk1m"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="9_c61dd"]
+[ext_resource type="Script" path="res://brain/FlagResource.cs" id="9_dso64"]
+[ext_resource type="PackedScene" uid="uid://ciuh8mwhok605" path="res://assets/Models/Wood Props/Keg/Keg.gltf" id="9_tcp0o"]
 [ext_resource type="AudioStream" uid="uid://b5ki31l6wkdhg" path="res://assets/SFX/Pokemon Black_White Music- Village Bridge (with Buildup).mp3" id="10_imc5s"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="14_a0y17"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="22_f2v6q"]
@@ -30,6 +34,14 @@ ssao_enabled = true
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
 exposure_multiplier = 0.828
+
+[sub_resource type="Resource" id="Resource_5uqgm"]
+script = ExtResource("9_dso64")
+funnyBucksFlagValue = 2
+
+[sub_resource type="Resource" id="Resource_vdmlc"]
+script = ExtResource("9_dso64")
+funnyBucksFlagValue = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fncg7"]
 
@@ -100,14 +112,21 @@ script = ExtResource("14_a0y17")
 
 [node name="ObjectUnlock1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.476389, 0)
+script = ExtResource("6_n6y5a")
+itemToSpawn = ExtResource("27_1rl33")
+flagToCheck = SubResource("Resource_5uqgm")
 
-[node name="WoodStool" parent="ObjectUnlock1" instance=ExtResource("27_1rl33")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+[node name="DebugStool" parent="ObjectUnlock1" instance=ExtResource("7_jbk3j")]
+visible = false
 
 [node name="ObjectUnlock2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.17639, 0)
+script = ExtResource("6_n6y5a")
+itemToSpawn = ExtResource("9_3yk1m")
+flagToCheck = SubResource("Resource_vdmlc")
 
-[node name="Keg" parent="ObjectUnlock2" instance=ExtResource("9_3yk1m")]
+[node name="DebugKeg" parent="ObjectUnlock2" instance=ExtResource("9_tcp0o")]
+visible = false
 
 [node name="HOUSE" type="Node3D" parent="."]
 

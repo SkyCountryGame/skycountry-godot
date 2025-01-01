@@ -1,7 +1,7 @@
 {
-    "RockProgressFlags":{
-        "TenRocks": true,
-        "TwentyRocks": true,
-        "ThirtyRocks": false
+    "FunnyBucksProgressFlags":{
+        "TenBucks": false,
+        "TwentyBucks": false,
+        "ThirtyBucks": false
     }
 }

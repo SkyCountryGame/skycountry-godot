@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://gameobjects/Rock.cs" id="1_3h57a"]
 [ext_resource type="PackedScene" uid="uid://lon880hbhqgr" path="res://assets/ParticleFX/ShinyGold.tscn" id="1_h8vtv"]
 [ext_resource type="PackedScene" uid="uid://hcbku3nbltt7" path="res://assets/Models/Misc/GoldBullion.glb" id="2_jct3v"]
-[ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://res/funnybux_invitem.tres" id="2_v4bks"]
+[ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://gameobjects/resources/funnybux_invitem.tres" id="2_v4bks"]
 [ext_resource type="Texture2D" uid="uid://oudkdqu4qxab" path="res://assets/texture/Environment/Rocks/Rock 1/Rock_Large_2_BaseColor.png" id="5_cs7ci"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6nptc"]
