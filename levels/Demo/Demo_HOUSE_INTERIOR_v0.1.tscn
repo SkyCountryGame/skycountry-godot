@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://darxsa5kedpia"]
+[gd_scene load_steps=31 format=3 uid="uid://darxsa5kedpia"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_dmqny"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="3_uxc7l"]
@@ -43,13 +43,18 @@ funnyBucksFlagValue = 2
 script = ExtResource("9_dso64")
 funnyBucksFlagValue = 4
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_qud67"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1lgqj"]
+size = Vector3(2.00098, 1, 2.14954)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_fncg7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jwjgn"]
 size = Vector3(2.0083, 0.182434, 1.99683)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xjvuv"]
-size = Vector3(15.972, 6.38, 0.5)
+size = Vector3(12.1891, 6.38, 3.27539)
 
 [sub_resource type="Gradient" id="Gradient_5ti73"]
 colors = PackedColorArray(0.0697, 0.154775, 0.41, 1, 0.559, 1, 0.46, 1)
@@ -65,8 +70,11 @@ emission_enabled = true
 emission = Color(0.818114, 0.929618, 0.980198, 1)
 emission_texture = SubResource("GradientTexture2D_ouqy0")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_vcdbh"]
+size = Vector3(1.23193, 6.423, 3.09912)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_2s7nr"]
-size = Vector3(2.8, 3, 0.1)
+size = Vector3(2.8, 6.13135, 0.1)
 
 [node name="World2" type="Node3D" node_paths=PackedStringArray("sunlight")]
 script = ExtResource("1_dmqny")
@@ -102,12 +110,12 @@ sky_mode = 1
 script = ExtResource("4_1nru1")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, -0.0262375, 9.8821, 7.02006)
+transform = Transform3D(1, 0, 0, 0, 0.605988, 0.795473, 0, -0.795473, 0.605988, 0, 12.359, 9.979)
 current = true
 fov = 65.0
 
 [node name="SpawnLocation" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.60841, 0.66496, 3.34993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86762, 0.66496, 6.09772)
 script = ExtResource("14_a0y17")
 
 [node name="ObjectUnlock1" type="Node3D" parent="."]
@@ -129,6 +137,16 @@ flagToCheck = SubResource("Resource_vdmlc")
 visible = false
 
 [node name="HOUSE" type="Node3D" parent="."]
+
+[node name="FLOOR2" type="MeshInstance3D" parent="HOUSE"]
+transform = Transform3D(1.3, 0, 0, 0, 1, 0, 0, 0, 1.585, -5.55493, 0, 7.52798)
+mesh = SubResource("PlaneMesh_qud67")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="HOUSE/FLOOR2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HOUSE/FLOOR2/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00341797, -0.47851, 0.0962524)
+shape = SubResource("BoxShape3D_1lgqj")
 
 [node name="FLOOR" type="MeshInstance3D" parent="HOUSE"]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 6, 0, 0, 0)
@@ -160,7 +178,7 @@ size = Vector3(12.9816, 6.42957, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 6.1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HOUSE/FRONTWALL"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0366211, -0.256714, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85482, -0.256714, 1.3877)
 shape = SubResource("BoxShape3D_xjvuv")
 
 [node name="WINDOW" type="CSGBox3D" parent="HOUSE"]
@@ -279,12 +297,20 @@ transform = Transform3D(-4.37114e-08, -4, 0, 0.25, -4.37114e-08, 0, 0, 0, 1, -1.
 size = Vector3(0.399963, 1, 0.156128)
 material = ExtResource("22_f2v6q")
 
+[node name="FRONTWALL2" type="StaticBody3D" parent="HOUSE"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.81495, 0, 7.46007)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HOUSE/FRONTWALL2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.373291, 2.7115, 0.0627446)
+shape = SubResource("BoxShape3D_vcdbh")
+
 [node name="Door" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.551, 1.428, 5.64542)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.551, 1.49449, 9.07783)
 script = ExtResource("9_c61dd")
 destination = "res://levels/Demo/Demo_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56567, 0)
 shape = SubResource("BoxShape3D_2s7nr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
