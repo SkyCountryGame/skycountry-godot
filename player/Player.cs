@@ -42,11 +42,11 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	[Export] protected CharacterBody3D physBody; //used for handling motion
 	[Export] protected AnimationController animController;
 	[Export] protected MotionModule mot;
-    private double rotationSpeed = 20;
+	private double rotationSpeed = 20;
 
-    //rings, amulets, etc. ?
+	//rings, amulets, etc. ?
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		base._Ready();
 		EventManager.RegisterListener(this);

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dfcv6fwygm0j6"
-path="res://.godot/imported/BlockheadTest1.glb-97c915d09fb4089f5b5d9e625baf4fa2.scn"
+path="res://.godot/imported/BlockheadTest1.glb-1e3eb9661fabfa8c89ee0684da5bc45c.scn"
 
 [deps]
 
-source_file="res://assets/NPCS/Blockhead/BlockheadTest1.glb"
-dest_files=["res://.godot/imported/BlockheadTest1.glb-97c915d09fb4089f5b5d9e625baf4fa2.scn"]
+source_file="res://assets/Characters/Blockhead/BlockheadTest1.glb"
+dest_files=["res://.godot/imported/BlockheadTest1.glb-1e3eb9661fabfa8c89ee0684da5bc45c.scn"]
 
 [params]
 

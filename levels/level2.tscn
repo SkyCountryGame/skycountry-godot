@@ -5,7 +5,7 @@
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="3_pxpml"]
 [ext_resource type="Script" path="res://components/Talker.cs" id="4_een1g"]
 [ext_resource type="AudioStream" uid="uid://b3wxbeo8g51ml" path="res://assets/aud/1.mp3" id="4_jtexw"]
-[ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/NPCS/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
+[ext_resource type="PackedScene" uid="uid://dfcv6fwygm0j6" path="res://assets/Characters/Blockhead/BlockheadTest1.glb" id="5_pwp6t"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_5c0iq"]
 vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)

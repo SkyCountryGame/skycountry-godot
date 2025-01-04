@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=72 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://prefabs/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -63,6 +63,7 @@
 [ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://prefabs/wood/picket_fence_long.tscn" id="58_ume02"]
 [ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://prefabs/rocks/rock_3.tscn" id="59_pa6em"]
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://prefabs/bush_1a.tscn" id="62_20uy7"]
+[ext_resource type="PackedScene" uid="uid://dy5wrh835m3u4" path="res://prefabs/Characters/Blockhead.tscn" id="64_ary3o"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_2821l")
@@ -1106,3 +1107,6 @@ omni_range = 46.854
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 autoplay = true
+
+[node name="blockheadGodot" parent="." instance=ExtResource("64_ary3o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6573, 0.128664, 8.27676)
