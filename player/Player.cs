@@ -23,6 +23,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public float velMagnitudeMax = 9f; //approximate max velocity allowed
 	public Vector3 camForward = Vector3.Forward; //forward vector of camer
 
+
 	//INTERACTION and BEHAVIOR STUFF
 	private HashSet<Interactable> availableInteractables = new HashSet<Interactable>();
 	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.WorldItemDestroyed}; 
@@ -86,22 +87,12 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	{
 		if(playerModel.GetState() == State.DEFAULT){
 			if (Input.IsMouseButtonPressed(Godot.MouseButton.Right)){
-				//RayCast Stuff
-				Vector2 mousePosition = GetViewport().GetMousePosition();
-				Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
-				Vector3 rayTarget = rayOrigin+Global.cam.ProjectRayNormal(mousePosition)*10000;
-				PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-				Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
-				if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
-					Vector3 pos = (Vector3)intersection["position"];
-					Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
-					LookAt(viewAngle);
-				}
+				LookAtCursor();
 			} else {
 				if (Velocity.Length() > 0){
-					float lookDirection = Mathf.Atan2(-Velocity.X, -Velocity.Z);
+					float lookAngle = Mathf.Atan2(-Velocity.X, -Velocity.Z);
 					Vector3 rotation = new Vector3();
-					rotation.Y = Mathf.LerpAngle(Rotation.Y, lookDirection, (float)(rotationSpeed * delta));
+					rotation.Y = Mathf.LerpAngle(Rotation.Y, lookAngle, (float)(rotationSpeed * delta));
 					Rotation = rotation;
 				}
 			}
@@ -209,10 +200,10 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 						equippedRightHand.EnableHitbox();
 						if(equippedRightHand.GetItemProperties().GetType() == typeof(MeleeItemProperties)){ //TODO feel like this should be an enum check? 
 							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel(((MeleeItemProperties)equippedRightHand.GetItemProperties()).swingAnimation); //TODO player has an animationmap
-				
 						} else {
 							((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("Mining02"); //Default for now, we need to figure out the relationship soon
 						}
+						LookAtCursor(true);
 					}
 					break;
 				case State.COOLDOWN:
@@ -254,17 +245,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 				velocity.Y = Velocity.Y; //thank you adam
 			} else {
 				velocity = Velocity.Lerp(gv, (float)(accelScalar * delta));
-				// Vector3 accel = (gv - Velocity).Normalized() * accelScalar; //accelerate towards desired velocity
-				// if (controlDir.Length() == 0 && Velocity.Length() < 0.01f){
-				// 	velocity = Vector3.Zero;
-				// 	accel = Vector3.Zero;
-				// } else if (Velocity.Length() > gv.Length()) {
-				// 	velocity = gv;
-				// }
-				// velocity.Y = Velocity.Y;
-				// if (Velocity.Length() < velMagnitudeMax){
-				// 	velocity += accel * (float)delta;
-				// }
 			}
 			if (jump && IsOnFloor()){
 				velocity.Y += JumpVelocity;
@@ -468,5 +448,19 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		Rotation = (Vector3) cfg.GetValue("player", "rotation");
 		playerModel = (PlayerModel) cfg.GetValue("player", "model");
 		Global.playerModel = playerModel; //don't think that is actually necessary
+	}
+
+	private void LookAtCursor(bool lerp = false){
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Vector3 rayOrigin = Global.cam.ProjectRayOrigin(mousePosition);
+		Vector3 rayTarget = rayOrigin+Global.cam.ProjectRayNormal(mousePosition)*10000;
+		PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+		Godot.Collections.Dictionary intersection = spaceState.IntersectRay(PhysicsRayQueryParameters3D.Create(rayOrigin, rayTarget,(uint)Math.Pow(2,14-1)));
+		if(intersection.ContainsKey("position") && !intersection["position"].Equals(null)){
+			Vector3 pos = (Vector3)intersection["position"];
+			Vector3 viewAngle = new Vector3(pos.X, Position.Y, pos.Z);
+			//Rotation.
+			LookAt(viewAngle);
+		}
 	}
 }

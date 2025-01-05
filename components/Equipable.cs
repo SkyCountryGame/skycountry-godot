@@ -29,6 +29,10 @@ public abstract partial class Equipable : Node3D {
         return itemProperties;
     }
 
+    private void DisableHitbox(){
+        hitbox.Disabled = true;
+    }
+
     public void EnableHitbox(bool en = true){
         if (hitbox != null){
             hitbox.Disabled = !en;

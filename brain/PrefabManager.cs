@@ -80,12 +80,12 @@ public partial class PrefabManager {
         }
         //this packedscene has not yet been loaded in runtime mem. so look for it on disk
         PackedScene p = null;
-        string[] filepaths = System.IO.Directory.GetFiles("prefabs", $"{label}.tscn", System.IO.SearchOption.AllDirectories);
+        string[] filepaths = System.IO.Directory.GetFiles("tscn", $"{label}.tscn", System.IO.SearchOption.AllDirectories);
         if (filepaths.Length == 0){ //handle the case where doesn't have suffix of pickup or equip
-            filepaths = System.IO.Directory.GetFiles("prefabs", $"{label.Split("_pickup")[0]}*.tscn");
+            filepaths = System.IO.Directory.GetFiles("tscn", $"{label.Split("_pickup")[0]}*.tscn");
         }
         if (filepaths.Length == 0){
-            filepaths = System.IO.Directory.GetFiles("prefabs", $"{label.Split("_equip")[0]}*.tscn");
+            filepaths = System.IO.Directory.GetFiles("tscn", $"{label.Split("_equip")[0]}*.tscn");
         }
         if (filepaths.Length > 0) {
             foreach (string fp in filepaths){
@@ -96,7 +96,7 @@ public partial class PrefabManager {
                     return p;
                 } catch (InvalidCastException e){
                     GD.PushError(e);
-                    GD.PushError($"{label} prefab file invalid: {fp}");
+                    GD.PushError($"{label} tscn file invalid: {fp}");
                     continue;
                 }
             }
