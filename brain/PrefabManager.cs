@@ -144,6 +144,18 @@ public partial class PrefabManager {
         });
     }
 
+    //load some prefabs from a list of filepaths
+    public static void LoadPrefabs(string[] tscnFilepaths){
+        foreach (string path in tscnFilepaths){
+            GD.Print("loading "+path);
+            if (path.StartsWith("res://")){
+                prefabs[Path.GetFileNameWithoutExtension(path)] = ResourceLoader.Load<PackedScene>(path);	
+            } else {
+                prefabs[Path.GetFileNameWithoutExtension(path)] = ResourceLoader.Load<PackedScene>("res://"+path);
+            }
+        }
+    }
+
     //will scan the filesystem to find the tscn file for this node. 
     //only pass nodes that have a tscn file associated with them
     public static void AddFromNode(Node node, string label = null){

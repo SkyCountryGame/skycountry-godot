@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://djavv00u0k6fn"]
+
+[ext_resource type="Script" path="res://levels/LoadingScreen.cs" id="1_t5q77"]
+
+[node name="LoadingScreen" type="Node3D"]
+script = ExtResource("1_t5q77")
+tscnFilepathsToLoad = Array[String](["res://levels/Demo/Demo_v0.1.tscn", "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn", "res://levels/Demo/Demo_FOREST_v0.1.tscn"])
+nextScene = "Demo_v0.1"
