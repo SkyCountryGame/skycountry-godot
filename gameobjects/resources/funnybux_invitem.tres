@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_msysg")
-name = ""
+name = "gold_bullion"
 itemType = 0
 equipable = false
