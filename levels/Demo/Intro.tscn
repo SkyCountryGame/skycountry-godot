@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://drynyp80t0050"]
+[gd_scene load_steps=13 format=3 uid="uid://drynyp80t0050"]
 
-[ext_resource type="Script" path="res://levels/Level.cs" id="1_opfev"]
+[ext_resource type="Script" path="res://levels/LoadingScreen.cs" id="1_eunn8"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="2_881yj"]
 [ext_resource type="PackedScene" uid="uid://ogmuhift3a0v" path="res://assets/Models/Wood Props/Signpost 3/Signpost03.gltf" id="3_t00yv"]
 [ext_resource type="Script" path="res://brain/CameraFancy.cs" id="4_nbv13"]
-[ext_resource type="Script" path="res://util/TimerLevelChange.cs" id="5_fiadu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vxx3"]
 
@@ -42,7 +41,9 @@ frustum_focus_distance = 82.28
 frustum_focal_length = 5.49
 
 [node name="Intro" type="Node3D"]
-script = ExtResource("1_opfev")
+script = ExtResource("1_eunn8")
+tscnFilepathsToLoad = Array[String](["res://levels/Demo/Demo_v0.1.tscn"])
+nextScene = "Demo_v0.1"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -62,7 +63,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 0)
 layout_direction = 2
 layout_mode = 2
-text = "Intro"
+text = "Loading..."
 fit_content = true
 
 [node name="Button" type="Button" parent="Control/CenterContainer/VFlowContainer"]
@@ -106,10 +107,3 @@ transform = Transform3D(0.707602, 0.287481, -0.645488, 0.244313, 0.757621, 0.605
 light_color = Color(0.796172, 0.801828, 0.649819, 1)
 shadow_enabled = true
 sky_mode = 1
-
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-script = ExtResource("5_fiadu")
-time = 10
-level = "res://levels/Demo/Demo_v0.1.tscn"

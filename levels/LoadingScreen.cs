@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 public partial class LoadingScreen : Node
 {
-	[Export] public int time = 7;
-
 	[Export(PropertyHint.File, "All the tscn files that should be preloaded")] private Godot.Collections.Array<string> tscnFilepathsToLoad;
 	[Export] private string nextScene; //the scene to load after the timer is up
 
