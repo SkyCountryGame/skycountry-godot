@@ -30,7 +30,7 @@ public partial class PrefabManager {
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
         prefabs.Add("PauseMenu", ResourceLoader.Load<PackedScene>("res://ui/pause_menu.tscn"));
        // prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/markerpoint.tscn"));
-       LoadAllPrefabs();
+       LoadAllPrefabs(); //experimenting with this for now. obviously won't load all tscn files in the end
     }
 
     public void SpawnObject(string obj, Vector3 position){
@@ -147,13 +147,25 @@ public partial class PrefabManager {
     //load some prefabs from a list of filepaths
     public static void LoadPrefabs(string[] tscnFilepaths){
         foreach (string path in tscnFilepaths){
-            GD.Print("loading "+path);
-            if (path.StartsWith("res://")){
-                prefabs[Path.GetFileNameWithoutExtension(path)] = ResourceLoader.Load<PackedScene>(path);	
-            } else {
-                prefabs[Path.GetFileNameWithoutExtension(path)] = ResourceLoader.Load<PackedScene>("res://"+path);
-            }
+            LoadPrefab(path);
         }
+    }
+
+    //load a prefab from a tscn file and return the key used to access it. for now that will be the filename without extension by default. though this won't do for long term because we might end up with duplicates
+    public static string LoadPrefab(string tcsnFilepath){
+        GD.Print("loading "+tcsnFilepath);
+        string k = Path.GetFileNameWithoutExtension(tcsnFilepath);
+        if (prefabs.ContainsKey(k)){
+            return k;
+        } else if (prefabs.ContainsKey(tcsnFilepath)){
+            return tcsnFilepath;
+        }
+        if (tcsnFilepath.StartsWith("res://")){
+            prefabs[k] = ResourceLoader.Load<PackedScene>(tcsnFilepath);
+        } else {
+            prefabs[k] = ResourceLoader.Load<PackedScene>("res://"+tcsnFilepath);
+        }
+        return k;
     }
 
     //will scan the filesystem to find the tscn file for this node. 

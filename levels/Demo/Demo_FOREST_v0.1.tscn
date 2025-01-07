@@ -222,14 +222,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 0.908557, 111.564)
 script = ExtResource("17_38mhm")
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.533, -5.59145, 95.8524)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.433, 0.120037, 88.6666)
 states = null
 defaultState = 0
 
 [node name="DoorToTown" type="Area3D" parent="."]
 transform = Transform3D(-0.942115, 0.0519638, -0.74143, 0.0718019, 1.19783, -0.0072859, 0.739773, -0.0500834, -0.94352, 160.047, 0.682657, 116.792)
 script = ExtResource("16_ua20t")
-destination = "Demo_v0.1"
+destinationPath = "res://levels/Demo/Demo_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DoorToTown"]
 transform = Transform3D(-0.325568, 1.86265e-09, -0.945523, 3.50177e-07, 0.999996, 8.9407e-08, 0.945519, 0, -0.325564, -0.309265, 0.356855, 0.427734)

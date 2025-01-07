@@ -115,10 +115,6 @@ sky_mode = 1
 [node name="DummyCamera" type="Camera3D" parent="."]
 script = ExtResource("3_byha7")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -17.0839, 12.8491, 20.5822)
-fov = 63.0
-
 [node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -171,7 +167,7 @@ radius = 1.0
 [node name="Door2Forest" type="Area3D" parent="."]
 transform = Transform3D(0.898112, 0.285752, -0.334277, -0.326162, 0.942684, -0.0704679, 0.294981, 0.172316, 0.939837, 4.00428, 1.36033, 1.36422)
 script = ExtResource("17_famop")
-destination = "Demo_FOREST_v0.1"
+destinationPath = "res://levels/Demo/Demo_FOREST_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door2Forest"]
 shape = SubResource("BoxShape3D_lxb5p")
@@ -464,7 +460,7 @@ material = ExtResource("21_vtgu2")
 [node name="Door" type="Area3D" parent="PlayerHouseDemo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.269, 0.975, 2.035)
 script = ExtResource("17_famop")
-destination = "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn"
+destinationPath = "res://levels/Demo/Demo_HOUSE_INTERIOR_v0.1.tscn"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHouseDemo/Door"]
 shape = SubResource("BoxShape3D_lxb5p")

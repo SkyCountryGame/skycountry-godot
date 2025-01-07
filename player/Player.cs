@@ -165,6 +165,8 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 				}
 			} else if (Input.IsActionJustPressed("player_equip")){
 				EquipItem();
+			} else if (Input.IsActionJustPressed("restart")){
+				Global.RestartGame();
 			}
 		}
 	}

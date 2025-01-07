@@ -219,6 +219,6 @@ public partial class Global : Node
 		_.GetTree().ReloadCurrentScene();
 	}
 	public static void RestartGame(){
-		//_.GetTree().ChangeSceneToPacked();
+		ChangeLevel("Demo_v0.1");
 	}
 }
