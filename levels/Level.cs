@@ -10,11 +10,8 @@ public partial class Level : Node
 {
 	public HashSet<EventType> eventTypes => new HashSet<EventType>(){EventType.CustomScene1}; //TODO
 
-	//TODO actually gonna store the levels in Global, because need to load and access before Level node loaded
 	[Export(PropertyHint.File, "Without 'res://'")] 
-	public Godot.Collections.Dictionary<string,string> subsequentLevelScenesFilenames 
-		= new Godot.Collections.Dictionary<string, string>(); //subsequent levels that can be accessed from this level
-	private Dictionary<string, PackedScene> levelPackedScenes = new Dictionary<string, PackedScene>();
+	public string tscnFilePath; //tscn file which represents this level Node
 
 	//the properties that are common to all levels
 	[Export] public DirectionalLight3D sunlight;
@@ -32,6 +29,11 @@ public partial class Level : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
+		//if (!ValidateLevel()){
+			//GD.PushError("Level is not valid");
+			//return;
+		//}
 		Global.currentLevel = this;
 		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
 			Global.navRegion = navRegion;
@@ -180,8 +182,17 @@ public partial class Level : Node
 
 	//make sure level has the proper nodes
 	public bool ValidateLevel(){
+		bool valid = true;
+		//make sure the tscn path exists and things are set up correctly
+		if (tscnFilePath == null){
+			GD.PushWarning($"Level tscn file path is not set. Will try to find a file in /levels/ with the same name as this Node name {Name} ");
+			tscnFilePath = PrefabManager.FindSceneFile(Name, "levels");
+		}
+		if (tscnFilePath == null){
+			valid = false;
+		}
 		//check hud, pausemenu, camera, light?
-		return true;
+		return valid;
 	}
 
 	public void LoadSaveData(ConfigFile cfg){

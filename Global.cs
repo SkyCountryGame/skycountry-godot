@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class Global : Node
 {
@@ -64,7 +65,10 @@ public partial class Global : Node
 	}
 
 	public static void ChangeLevel(string levelName, Node previousScene = null){
-		Level nextLevel = (Level) ResourceLoader.Load<PackedScene>(levelName).Instantiate();
+		Stopwatch sw = Stopwatch.StartNew();
+		Level nextLevel = (Level) PrefabManager.prefabs[levelName].Instantiate();
+		sw.Stop();
+		GD.Print($"loading level {levelName} took {sw.ElapsedMilliseconds}ms");
 		if (previousScene == null){
 			if (currentLevel == null){
 				GD.PushError("No previous scene. Perhaps trying to enter a level from menu and forgot to pass previousScene?");

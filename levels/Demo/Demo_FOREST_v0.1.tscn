@@ -12,48 +12,48 @@
 [ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="12_74lmr"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
-[ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://prefabs/trees/BareTree3_B.tscn" id="14_bpjh8"]
+[ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://tscn/trees/BareTree3_B.tscn" id="14_bpjh8"]
 [ext_resource type="Script" path="res://player/PlayerModel.cs" id="15_jgwq1"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="16_ua20t"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
-[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://prefabs/rocks/rock_9.tscn" id="18_5tvrn"]
-[ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://prefabs/trees/RegularTree1_C.tscn" id="20_dkfk8"]
-[ext_resource type="PackedScene" uid="uid://cabag3v5pe1ro" path="res://prefabs/trees/RegularTree2_C.tscn" id="21_qq80u"]
-[ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://prefabs/trees/RegularTree3_C.tscn" id="22_rrhu1"]
-[ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://prefabs/trees/BareTree2_B.tscn" id="23_o3ldj"]
-[ext_resource type="PackedScene" uid="uid://da4ranwjj47xe" path="res://prefabs/trees/RegularSapling2_C.tscn" id="24_ic5n3"]
-[ext_resource type="PackedScene" uid="uid://hbx8qr1enmrd" path="res://prefabs/trees/BareSapling2_B.tscn" id="25_b5cll"]
-[ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://prefabs/trees/BareSapling1_B.tscn" id="26_b3hh8"]
-[ext_resource type="PackedScene" uid="uid://degb480meonrx" path="res://characters/enemy0.tscn" id="26_kukou"]
-[ext_resource type="PackedScene" uid="uid://ieq8t38xr25g" path="res://prefabs/trees/BareTree1_B.tscn" id="27_e1mau"]
-[ext_resource type="PackedScene" uid="uid://budk7sld21llg" path="res://prefabs/wood/fence_long.tscn" id="29_o8tc1"]
-[ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://prefabs/wood/fence_connector_long.tscn" id="30_amugy"]
-[ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://prefabs/wood/fence_connector_short.tscn" id="31_y7ofi"]
-[ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://prefabs/wood/fence_short.tscn" id="32_jvidp"]
-[ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://prefabs/wood/signpost_03.tscn" id="33_5e8q3"]
-[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://prefabs/rocks/rock_1.tscn" id="33_fv50v"]
-[ext_resource type="PackedScene" uid="uid://doy5efrnbsvds" path="res://prefabs/bush_1c.tscn" id="34_4mi8k"]
-[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://prefabs/rocks/rock_2.tscn" id="34_4y261"]
+[ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="18_5tvrn"]
+[ext_resource type="PackedScene" uid="uid://wh6pua77ncjg" path="res://tscn/trees/RegularTree1_C.tscn" id="20_dkfk8"]
+[ext_resource type="PackedScene" uid="uid://cabag3v5pe1ro" path="res://tscn/trees/RegularTree2_C.tscn" id="21_qq80u"]
+[ext_resource type="PackedScene" uid="uid://b47bnfgo8t8k1" path="res://tscn/trees/RegularTree3_C.tscn" id="22_rrhu1"]
+[ext_resource type="PackedScene" uid="uid://bhighnyqwl5i1" path="res://tscn/trees/BareTree2_B.tscn" id="23_o3ldj"]
+[ext_resource type="PackedScene" uid="uid://da4ranwjj47xe" path="res://tscn/trees/RegularSapling2_C.tscn" id="24_ic5n3"]
+[ext_resource type="PackedScene" uid="uid://hbx8qr1enmrd" path="res://tscn/trees/BareSapling2_B.tscn" id="25_b5cll"]
+[ext_resource type="PackedScene" uid="uid://rfxjh444otwc" path="res://tscn/trees/BareSapling1_B.tscn" id="26_b3hh8"]
+[ext_resource type="PackedScene" uid="uid://degb480meonrx" path="res://tscn/characters/enemy0.tscn" id="26_kukou"]
+[ext_resource type="PackedScene" uid="uid://ieq8t38xr25g" path="res://tscn/trees/BareTree1_B.tscn" id="27_e1mau"]
+[ext_resource type="PackedScene" uid="uid://budk7sld21llg" path="res://tscn/wood/fence_long.tscn" id="29_o8tc1"]
+[ext_resource type="PackedScene" uid="uid://bchlu7x74r2cb" path="res://tscn/wood/fence_connector_long.tscn" id="30_amugy"]
+[ext_resource type="PackedScene" uid="uid://dqrrg4do60ne0" path="res://tscn/wood/fence_connector_short.tscn" id="31_y7ofi"]
+[ext_resource type="PackedScene" uid="uid://rsf131clt053" path="res://tscn/wood/fence_short.tscn" id="32_jvidp"]
+[ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://tscn/wood/signpost_03.tscn" id="33_5e8q3"]
+[ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://tscn/rocks/rock_1.tscn" id="33_fv50v"]
+[ext_resource type="PackedScene" uid="uid://doy5efrnbsvds" path="res://tscn/bush_1c.tscn" id="34_4mi8k"]
+[ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://tscn/rocks/rock_2.tscn" id="34_4y261"]
 [ext_resource type="AudioStream" uid="uid://c4xnkvi27q71j" path="res://assets/SFX/Metroid Fusion Music - Environmental Tension.mp3" id="35_nwils"]
-[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://prefabs/buildings/lodging_building_demo.tscn" id="36_7pnf7"]
-[ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://prefabs/wood/picket_fence_long.tscn" id="37_ne8nc"]
+[ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="36_7pnf7"]
+[ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://tscn/wood/picket_fence_long.tscn" id="37_ne8nc"]
 [ext_resource type="Material" uid="uid://ce2yd1f7minsj" path="res://assets/Materials/Rock1.tres" id="38_tgnmw"]
-[ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://prefabs/wood/signpost_02.tscn" id="39_ugcy1"]
+[ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://tscn/wood/signpost_02.tscn" id="39_ugcy1"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="40_s2li8"]
-[ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://prefabs/wood/picket_fence_connector.tscn" id="41_ac3wr"]
-[ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://prefabs/gold_bullion.tscn" id="42_cqfb4"]
+[ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://tscn/wood/picket_fence_connector.tscn" id="41_ac3wr"]
+[ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://tscn/gold_bullion.tscn" id="42_cqfb4"]
 [ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://gameobjects/resources/funnybux_invitem.tres" id="43_dogb4"]
-[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://prefabs/wood/wood_log.tscn" id="43_su6v8"]
+[ext_resource type="PackedScene" uid="uid://bqfifaucyd6gb" path="res://tscn/wood/wood_log.tscn" id="43_su6v8"]
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="44_vdko8"]
-[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://prefabs/rocks/rock_6.tscn" id="45_jpcnq"]
-[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://prefabs/rocks/rock_12.tscn" id="46_g2aen"]
-[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://prefabs/rocks/rock_11.tscn" id="47_5qp0g"]
-[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://prefabs/rocks/rock_3.tscn" id="48_pbxmk"]
-[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://prefabs/rocks/rock_7.tscn" id="49_8cq82"]
-[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://prefabs/rocks/rock_10.tscn" id="50_c3s0m"]
-[ext_resource type="PackedScene" uid="uid://ctxwefr3jrq18" path="res://prefabs/wood/wood_plank_large.tscn" id="51_rx07x"]
+[ext_resource type="PackedScene" uid="uid://kjkisjejkknn" path="res://tscn/rocks/rock_6.tscn" id="45_jpcnq"]
+[ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://tscn/rocks/rock_12.tscn" id="46_g2aen"]
+[ext_resource type="PackedScene" uid="uid://dsps3r388alcd" path="res://tscn/rocks/rock_11.tscn" id="47_5qp0g"]
+[ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://tscn/rocks/rock_3.tscn" id="48_pbxmk"]
+[ext_resource type="PackedScene" uid="uid://diyg8rx53r3m7" path="res://tscn/rocks/rock_7.tscn" id="49_8cq82"]
+[ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://tscn/rocks/rock_10.tscn" id="50_c3s0m"]
+[ext_resource type="PackedScene" uid="uid://ctxwefr3jrq18" path="res://tscn/wood/wood_plank_large.tscn" id="51_rx07x"]
 [ext_resource type="PackedScene" uid="uid://cb6o08oggybf3" path="res://gameobjects/funny_rock.tscn" id="52_2r6tq"]
-[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://prefabs/pickaxe_pickup.tscn" id="54_2aq3n"]
+[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://tscn/pickaxe_pickup.tscn" id="54_2aq3n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -99,7 +99,7 @@ exposure_multiplier = 0.828
 [sub_resource type="Resource" id="Resource_wjhiy"]
 script = ExtResource("15_jgwq1")
 activityState = 1
-hp = 173
+hp = 5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_amd4m"]
 size = Vector3(0.0510548, 2.04535, 4.71484)
@@ -222,14 +222,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 0.908557, 111.564)
 script = ExtResource("17_38mhm")
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.7042, -5.59145, 20.8501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.533, -5.59145, 95.8524)
 states = null
 defaultState = 0
 
 [node name="DoorToTown" type="Area3D" parent="."]
 transform = Transform3D(-0.942115, 0.0519638, -0.74143, 0.0718019, 1.19783, -0.0072859, 0.739773, -0.0500834, -0.94352, 160.047, 0.682657, 116.792)
 script = ExtResource("16_ua20t")
-destination = "res://levels/Demo/Demo_v0.1.tscn"
+destination = "Demo_v0.1"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DoorToTown"]
 transform = Transform3D(-0.325568, 1.86265e-09, -0.945523, 3.50177e-07, 0.999996, 8.9407e-08, 0.945519, 0, -0.325564, -0.309265, 0.356855, 0.427734)

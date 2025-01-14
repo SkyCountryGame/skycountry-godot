@@ -1,16 +1,20 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 /**
  * holds associations between prefabs (PackedScenes and their filepaths) and any nodes instantiated from them
- * this includes levels and gameobject
+ * this includes levels and gameobjects (thus maybe should be renamed to NodeManager or SceneManager)
  * TODO how are the resources that are used for some nodes handled
  * NOTE: this could go in Global, but i'm foreseeing that we'll want to do some specific management of packedsenses and their nodes etc.
     */
 public partial class PrefabManager {
     
     public static Dictionary<string, PackedScene> prefabs = new Dictionary<string, PackedScene>(); //prefabs are just PackedScenes that are used to instantiate game objects
+    public static Dictionary<string, string> tscnPaths = new Dictionary<string, string>(); //map nodes (by name) to filepath of tscn file that represents them. this is for quick access to filepath for loading the PackedScene if needed
     public Dictionary<string, List<Node>> mapPackedSceneToNodes; //assoc packed scenes with all of its instantiated nodes (or nodes that have been instantiated from it), for objects of which there can be multiple
     public Dictionary<string, Node> mapPackedSceneToSingleNode; //assoc packed scenes with the single node that was instantiated from it, for objects of which there can only be one, like a pausemenu or a boss
     //TODO make these 3 variables into a Prefab class for better encapsulation. e.g. rather than 3 HashMaps we have one HashMap<string, Prefab> 
@@ -26,6 +30,7 @@ public partial class PrefabManager {
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
         prefabs.Add("PauseMenu", ResourceLoader.Load<PackedScene>("res://ui/pause_menu.tscn"));
        // prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/markerpoint.tscn"));
+       LoadAllPrefabs();
     }
 
     public void SpawnObject(string obj, Vector3 position){
@@ -113,5 +118,63 @@ public partial class PrefabManager {
             prefabs[label] = p;
         } */ 
         return p;
+    }
+
+    //cache all prefabs into memory on another thread. in future might only load relevant prefabs
+    public static void LoadAllPrefabs(){
+        GD.Print("loading all prefabs");
+        Task.Run(() => {
+            try {
+                string[] filepaths = System.IO.Directory.GetFiles("./tscn", "*.tscn", System.IO.SearchOption.AllDirectories);
+                GD.Print($"found {filepaths.Length} prefabs");
+                foreach (string fp in filepaths){
+                    string label = Path.GetFileNameWithoutExtension(fp);
+                    GD.Print($"loading {fp}; {label}");
+                    prefabs[label] = ResourceLoader.Load<PackedScene>($"res://{fp}");
+                }
+                filepaths = System.IO.Directory.GetFiles("./levels", "*.tscn", System.IO.SearchOption.AllDirectories);
+                foreach (string fp in filepaths){
+                    string label = Path.GetFileNameWithoutExtension(fp);
+                    GD.Print($"loading {fp}; {label}");
+                    prefabs[label] = ResourceLoader.Load<PackedScene>($"res://{fp}");
+                }
+            } catch (Exception e){
+                GD.Print(e);
+            }
+        });
+    }
+
+    //will scan the filesystem to find the tscn file for this node. 
+    //only pass nodes that have a tscn file associated with them
+    public static void AddFromNode(Node node, string label = null){
+        if (label == null){
+            label = node.Name;
+        }
+        if (tscnPaths.ContainsKey(label)){
+            //prefabs[label] = ResourceLoader.Load<PackedScene>(tscnPaths[node]);
+        }
+    }
+
+    ////scans the given directory recursively to find a tscn file named with given name, optional root directory, defaults to project root
+    public static string FindSceneFile(string name, string dir="./"){
+        if (dir.StartsWith("res://")){
+            dir = dir.Substring(6);
+        }
+        if (!name.EndsWith(".tscn")){
+            name = $"{name}.tscn";
+        }
+        string[] filepaths = System.IO.Directory.GetFiles(dir, $"{name}*", System.IO.SearchOption.AllDirectories);
+        if (filepaths.Length > 1){
+            GD.PushWarning($"Found multiple tscn files with name {name}. That's probably not good.\n {filepaths}");
+        }
+        if (filepaths.Length > 0) {
+            foreach (string fp in filepaths){
+                if (ResourceLoader.Exists($"res://{fp}")){
+                    tscnPaths[name] = $"res://{fp}";
+                    return fp;
+                }
+            }
+        }
+        return null;
     }
 }
