@@ -223,8 +223,6 @@ script = ExtResource("17_38mhm")
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.433, 0.120037, 88.6666)
-states = null
-defaultState = 0
 
 [node name="DoorToTown" type="Area3D" parent="."]
 transform = Transform3D(-0.942115, 0.0519638, -0.74143, 0.0718019, 1.19783, -0.0072859, 0.739773, -0.0500834, -0.94352, 160.047, 0.682657, 116.792)
