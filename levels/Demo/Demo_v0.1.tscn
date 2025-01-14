@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=71 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_13urj"]
-[ext_resource type="Material" uid="uid://cciy1lix1177c" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
+[ext_resource type="Material" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="17_d1aw2"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="17_famop"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://tscn/rocks/rock_12.tscn" id="18_6qjtl"]
@@ -1102,6 +1102,3 @@ omni_range = 46.854
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 autoplay = true
-
-[node name="blockheadGodot" parent="." instance=ExtResource("64_ary3o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6573, 0.128664, 8.27676)
