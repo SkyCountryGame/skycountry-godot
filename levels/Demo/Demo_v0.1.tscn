@@ -545,7 +545,7 @@ transform = Transform3D(1.01581, -0.324114, -1.56917, 0.570065, 1.80948, -0.0047
 transform = Transform3D(1.57376, 1.31109, -1.63353, -0.333054, 2.17386, 1.4239, 2.06796, -0.647662, 1.47248, 0.4228, 0.618633, -0.347899)
 
 [node name="LogBench" parent="Firepit" instance=ExtResource("47_eby20")]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.23862, 0.249405, 2.8925)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.28416, 0.249405, 2.8925)
 
 [node name="LogBench2" parent="Firepit" instance=ExtResource("47_eby20")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3.37386, 0.249405, 2.8925)
