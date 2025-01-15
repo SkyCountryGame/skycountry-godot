@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_q8fr7"]
-[ext_resource type="Texture2D" uid="uid://dp8xqjt717rci" path="res://assets/sky_hdri/Sky_Anime_01_dusk_a.png" id="2_2821l"]
+[ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky_hdri/Sky_Anime_01_Day_a.png" id="2_p6fch"]
 [ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://tscn/buildings/market_building_demo.tscn" id="2_ucx1i"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_vmfbb"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="3_byha7"]
@@ -65,7 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
-panorama = ExtResource("2_2821l")
+panorama = ExtResource("2_p6fch")
 energy_multiplier = 2.16
 
 [sub_resource type="Sky" id="Sky_6m6wn"]
