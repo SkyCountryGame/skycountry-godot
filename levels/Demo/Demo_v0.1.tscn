@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="1_q8fr7"]
-[ext_resource type="Texture2D" uid="uid://dp8xqjt717rci" path="res://assets/sky_hdri/Sky_Anime_01_dusk_a.png" id="2_2821l"]
+[ext_resource type="Texture2D" uid="uid://dybwwo18l6ad3" path="res://assets/sky_hdri/Sky_Anime_01_Day_a.png" id="2_p6fch"]
 [ext_resource type="PackedScene" uid="uid://dypfjsi5lkpp6" path="res://tscn/buildings/market_building_demo.tscn" id="2_ucx1i"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_vmfbb"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="3_byha7"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_13urj"]
-[ext_resource type="Material" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
+[ext_resource type="Material" uid="uid://cciy1lix1177c" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="17_d1aw2"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="17_famop"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://tscn/rocks/rock_12.tscn" id="18_6qjtl"]
@@ -65,7 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
-panorama = ExtResource("2_2821l")
+panorama = ExtResource("2_p6fch")
 energy_multiplier = 2.16
 
 [sub_resource type="Sky" id="Sky_6m6wn"]
@@ -545,7 +545,7 @@ transform = Transform3D(1.01581, -0.324114, -1.56917, 0.570065, 1.80948, -0.0047
 transform = Transform3D(1.57376, 1.31109, -1.63353, -0.333054, 2.17386, 1.4239, 2.06796, -0.647662, 1.47248, 0.4228, 0.618633, -0.347899)
 
 [node name="LogBench" parent="Firepit" instance=ExtResource("47_eby20")]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.23862, 0.249405, 2.8925)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.28416, 0.249405, 2.8925)
 
 [node name="LogBench2" parent="Firepit" instance=ExtResource("47_eby20")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3.37386, 0.249405, 2.8925)
