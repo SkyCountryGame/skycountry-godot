@@ -66,7 +66,8 @@ public partial class MotionModule : Node3D  {
         }
         else
         {
-            body.Velocity += accel * (float)dt;
+            // --- body.Velocity += accel * (float)dt;
+            body.Velocity = body.Velocity.Lerp(vel_goal, accel.Length() * (float)dt);
             // Clamp the velocity to the maximum speed
             if (body.Velocity.Length() > max_speed)
             {
@@ -126,6 +127,10 @@ public partial class MotionModule : Node3D  {
     //NOTE later might be OnStateChange, from listener interface
     public void HandleStateChange(State state){
 
+    }
+
+    public Vector2 GetRandomDestination(Vector2 center, float radius){
+        return center + new Vector2((float)GD.RandRange(-radius, radius), (float)GD.RandRange(-radius, radius));
     }
 
 

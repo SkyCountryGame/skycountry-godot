@@ -44,7 +44,7 @@ public partial class Patroller : NPCNode, EventListener {
 			case State.IDLE:
 				break;
 			case State.ALERT:
-				if  (navReady){
+				if  (Global.navReady){
 					mot.pos_goal = nav.GetNextPathPosition();
 				}
 				//GD.Print($"Patroller alert. nav target pos: {nav.TargetPosition}; vel: {physBody.Velocity}; cur pos: {physBody.Position}");

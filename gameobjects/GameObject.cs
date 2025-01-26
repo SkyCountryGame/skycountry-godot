@@ -33,7 +33,9 @@ public enum GameObjectType {
     Structure = 1 << 4, //
     Enemy = 1 << 5, Friendly = 1 << 6, Neutral = 1 << 7, 
     Interactable = 1 << 8, //player needs to know when near one of these 
-    Light = 1 << 9 
+    Light = 1 << 9,
+    Player = 1 << 10,
+    Level = 1 << 11,
 };
 
 public interface GameObjectNodeProvider {

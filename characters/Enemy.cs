@@ -61,7 +61,6 @@ public partial class Enemy : NPCNode {
 		if (Global.playerNode != null){
 			nav.TargetPosition = Global.playerNode.GlobalPosition;
 		}
-		
 	}
 
 	public override void OnStateChange(State state, float duration = -1)
@@ -73,7 +72,6 @@ public partial class Enemy : NPCNode {
 					SetState(State.ATTACKING);
 					return;
 				}
-				UpdatePathGoal();
 				break;
 			case State.ATTACKING: //player is close enough. attack
 				attackTarget.ApplyDamage(1);

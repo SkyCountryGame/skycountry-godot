@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlayerModel" load_steps=3 format=3 uid="uid://2yrf8n18qk4y"]
+
+[ext_resource type="Resource" uid="uid://cafmig18wq7c7" path="res://res/inventory_player_default.tres" id="1_oatdp"]
+[ext_resource type="Script" path="res://player/PlayerModel.cs" id="1_po6iu"]
+
+[resource]
+script = ExtResource("1_po6iu")
+hp = 8
+inv = ExtResource("1_oatdp")

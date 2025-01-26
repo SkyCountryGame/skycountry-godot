@@ -5,10 +5,8 @@ using Godot;
 [GlobalClass]
 public partial class PlayerModel : Resource {
 	public CharacterBody3D playerNode;
-	[Export]
 	public State activityState = State.DEFAULT;
-	[Export]
-	public int hp = 0;
+	[Export] public int hp = 0;
 	public Dictionary<State, HashSet<State>> dS = new Dictionary<State, HashSet<State>>
 		{
 			{ State.DEFAULT, new HashSet<State>() { State.ATTACKING, State.CHARGING, State.HEALING, State.PREPARING, State.RELOADING, State.AIMING, State.INVENTORY, State.DIALOGUE } },
@@ -39,17 +37,16 @@ public partial class PlayerModel : Resource {
 		DIALOGUE = 1 << 10
 	}
 
-	[Export]
-	public Inventory inv; //NOTE this might be moved into an Entity superclass 
+	[Export] public Inventory inv; //NOTE this might be moved into an Entity superclass 
 	//[Export]
 	public InventoryItem equipped; 
 	
 	public PlayerModel(){
-		inv = new Inventory();
+		if (inv == null) inv = new Inventory();
 	}
 	public PlayerModel(CharacterBody3D playerNode) : base() {
 		this.playerNode = playerNode;
-		inv = new Inventory();
+		if (inv == null) inv = new Inventory();
 	}
 
 	public State GetState() { return activityState;}
@@ -73,10 +70,4 @@ public partial class PlayerModel : Resource {
 	{
 		return inv.IsFull();
 	}
-
-	/*public List<Wearable> GetActiveArmor()
-	{
-		return armor;
-	}*/
-
 }

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Inventory" load_steps=3 format=3 uid="uid://cafmig18wq7c7"]
+
+[ext_resource type="Script" path="res://inventory/Inventory.cs" id="1_hbmlr"]
+[ext_resource type="Resource" uid="uid://bmd88axmpykue" path="res://gameobjects/resources/pickaxe_invitem.tres" id="2_88kja"]
+
+[resource]
+script = ExtResource("1_hbmlr")
+capacity = 4
+stock = Array[Object]([ExtResource("2_88kja")])

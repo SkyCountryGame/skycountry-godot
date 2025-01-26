@@ -254,7 +254,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			} else if (IsOnFloor()) {
 				velocity.Y = 0; 
 			} else {
-				velocity.Y += (float) (gravity * delta) * 64; //- 20;
+				velocity.Y += (float) (gravity * delta) * 64 ; //- 20;
 			}
 			Velocity = velocity;
 			MoveAndSlide();

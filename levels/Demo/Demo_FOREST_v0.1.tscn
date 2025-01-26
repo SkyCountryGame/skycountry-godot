@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=72 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -11,9 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ddju5hjo4qpxf" path="res://assets/texture/Environment/Dirt/Dirt.png" id="10_ygowh"]
 [ext_resource type="Texture2D" uid="uid://uq77ragf28ue" path="res://assets/texture/Environment/Grass/Grass.png" id="12_74lmr"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="12_hueh4"]
-[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_qukrv"]
 [ext_resource type="PackedScene" uid="uid://bo6x6rtaryoxu" path="res://tscn/trees/BareTree3_B.tscn" id="14_bpjh8"]
-[ext_resource type="Script" path="res://player/PlayerModel.cs" id="15_jgwq1"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="16_ua20t"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="17_38mhm"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="18_5tvrn"]
@@ -95,11 +93,6 @@ adjustment_saturation = 1.22
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_07dr7"]
 exposure_multiplier = 0.828
-
-[sub_resource type="Resource" id="Resource_wjhiy"]
-script = ExtResource("15_jgwq1")
-activityState = 1
-hp = 5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_amd4m"]
 size = Vector3(0.0510548, 2.04535, 4.71484)
@@ -189,10 +182,9 @@ navRegion = NodePath("NavigationRegion3D")
 
 [node name="Devtool" parent="." instance=ExtResource("2_bhrtk")]
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target", "HUD")]
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("HUD")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7044, 10.9519, 24.1525)
 script = ExtResource("3_s1lgm")
-target = NodePath("../Player")
 HUD = NodePath("../HUD")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -213,16 +205,13 @@ sky_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
-[node name="Player" parent="." instance=ExtResource("13_qukrv")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, 159.82, -1.7053e-13, 111.683)
-playerModel = SubResource("Resource_wjhiy")
-
-[node name="spawnpoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 0.908557, 111.564)
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 1.95044, 103.916)
 script = ExtResource("17_38mhm")
+typeToSpawn = 1024
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.433, 0.120037, 88.6666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.506, -1.50002, 80.5559)
 
 [node name="DoorToTown" type="Area3D" parent="."]
 transform = Transform3D(-0.942115, 0.0519638, -0.74143, 0.0718019, 1.19783, -0.0072859, 0.739773, -0.0500834, -0.94352, 160.047, 0.682657, 116.792)

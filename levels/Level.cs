@@ -34,14 +34,14 @@ public partial class Level : Node
 			//GD.PushError("Level is not valid");
 			//return;
 		//}
+		Global.navReady = false;
 		Global.currentLevel = this;
-		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's be set in editor
+		if (navRegion != null) { // not all levels necessarily have nav regions. if it does, it's set in editor
+			NavigationServer3D.MapChanged += (arg) => { 
+				Global.navReady = true;
+				navMapID = navRegion.GetNavigationMap();
+			};
 			Global.navRegion = navRegion;
-			navMapID = navRegion.GetNavigationMap();
-		}
-
-		if (HasNode("SpawnLocation") && Global.playerNode != null){
-			Global.playerNode.GlobalPosition = GetNode<Node3D>("SpawnLocation").GlobalPosition;
 		}
 
 		//dynamically spawn things

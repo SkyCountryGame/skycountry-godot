@@ -14,7 +14,6 @@ public abstract partial class NPCNode : StateManager, Collideable, StateChangeLi
 
 	
 	protected Stack<Vector3> navPoints = new Stack<Vector3>(); //some places where this NPC can go
-	protected bool navReady = false;
 	private Vector3 navTarget; //where the thing is trying to go currently
 
 	protected Node3D target; //a node of interest to the npc. 
@@ -41,11 +40,6 @@ public abstract partial class NPCNode : StateManager, Collideable, StateChangeLi
 		}
 		if (nav == null && HasNode("NavigationAgent3D")){
 			nav = GetNode<NavigationAgent3D>("NavigationAgent3D");
-		}
-		if (nav != null){
-			NavigationServer3D.MapChanged += (arg) => { 
-				navReady = true;
-			};
 		}
 		if (mot == null && physBody != null){
 			mot = new MotionModule();

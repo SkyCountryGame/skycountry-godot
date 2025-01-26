@@ -36,7 +36,7 @@ public partial class Bird : NPCNode {
 			case State.IDLE:
 				break;
 			case State.ALERT:
-				if  (navReady){
+				if  (Global.navReady){
 					mot.pos_goal = nav.GetNextPathPosition();
 				} else {
 					mot.pos_goal = nav.TargetPosition;

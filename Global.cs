@@ -21,6 +21,8 @@ public partial class Global : Node
 	public static NavigationRegion3D navRegion; // set by each level
 	public static Level currentLevel; // the current "level", set by each level on ready
 	
+	public static bool navReady = false; // is the navigation system ready? i.e. navregion is baked and ready to be used
+
 	//GAME LOGIC MANAGER THINGS
 	public static AtmosphereManager atmosphereManager; // constructed here in init()
 	//public static EffectsManager effectsManager; // constructed here in init() //TODO actually might only have static methods 
@@ -82,7 +84,7 @@ public partial class Global : Node
 			playerNode.CallDeferred("reparent", nextLevel);
 		}
 		else { //NOTE shouldn't assume that the next level has player by default. it is currently done this way to persist child nodes of player such as equiped items. 
-			playerNode = (Player) ResourceLoader.Load<PackedScene>("res://player/player.tscn").Instantiate();
+			playerNode = (Player) PrefabManager.Get("Player").Instantiate();
 			nextLevel.AddChild(playerNode);
 		}
 		if (nextLevel.HasNode("SpawnLocation")){
@@ -180,6 +182,8 @@ public partial class Global : Node
 		_.GetTree().Paused = !_.GetTree().Paused;
 		pauseMenu.Visible = _.GetTree().Paused;
 	}
+
+
 	public static void ResumeGame(){
 		_.GetTree().Paused = false;
 		pauseMenu.Visible = false;

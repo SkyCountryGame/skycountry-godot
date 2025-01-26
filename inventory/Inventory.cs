@@ -10,22 +10,29 @@ using Godot;
 [GlobalClass]
 public partial class Inventory : Resource, System.ICloneable
 {
-	public List<InventoryItem> stock; //currently a linked list because we want to cycle through items. but may change to something else if more similar to zelda    
 	//TODO "favorite" items. able to be equipped with some hotkey? 
 	//public Dictionary<int, InventoryItem> stockIndexed; //for quick access //TODO will only need this if we decide to use a select-anything inv instead of cycle-through
 
-	[Export]
-	public int capacity = 10000; //max # items can be wwww
+	[Export] public int capacity = 2; //max # items can be held
+	[Export] private Godot.Collections.Array<InventoryItem> stock;
+	
 
 	public Inventory()
 	{
-		stock = new List<InventoryItem>(capacity);
+		if (stock == null) stock = new Godot.Collections.Array<InventoryItem>();
 	}
 	public Inventory(int capacity)
 	{
 		this.capacity = capacity;
-		stock = new List<InventoryItem>(capacity);
+		if (stock == null) stock = new Godot.Collections.Array<InventoryItem>();
 	}
+	/*
+	public override void _SetupLocalToScene(){
+		if (stock == null){
+			stock = new Godot.Collections.Array<InventoryItem>();
+		}
+		stockList = stock.ToList();
+	}*/
 
 	public bool Add(InventoryItem item)
 	{
@@ -59,7 +66,7 @@ public partial class Inventory : Resource, System.ICloneable
 
 	public InventoryItem GetItemByID(int itemID) //NOTE to adam (dama33): this is why i wanted to use a hashmap. 
 	{
-		return stock.Find(item => item.id == itemID);
+		return stock.ToList().Find(item => item.id == itemID);
 	}
 
 	public Dictionary<string, int> GetDetailedItemList(){
@@ -80,7 +87,7 @@ public partial class Inventory : Resource, System.ICloneable
 		return stock[idx];
 	}
 
-	public List<InventoryItem> GetItems()
+	public Godot.Collections.Array<InventoryItem> GetItems()
 	{
 		return stock;
 	}
@@ -91,7 +98,7 @@ public partial class Inventory : Resource, System.ICloneable
 	}
 
 	public bool RemoveItemByName(string name){
-		return stock.Remove(stock.Find(item => item.name == name));
+		return stock.Remove(stock.ToList().Find(item => item.name == name));
 	}
 
 	public bool Contains(InventoryItem item)

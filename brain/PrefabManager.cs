@@ -30,7 +30,7 @@ public partial class PrefabManager {
         prefabs.Add("Player", ResourceLoader.Load<PackedScene>("res://player/player.tscn"));
         prefabs.Add("PauseMenu", ResourceLoader.Load<PackedScene>("res://ui/pause_menu.tscn"));
        // prefabs.Add("MarkerPoint", ResourceLoader.Load<PackedScene>("res://gameobjects/tscn/markerpoint.tscn"));
-       LoadAllPrefabs(); //experimenting with this for now. obviously won't load all tscn files in the end
+       LoadAllPrefabs(); //TODO will be LoadEssentialPrefabs() in future, for the stuff that's always needed for all gameplay
     }
 
     public void SpawnObject(string obj, Vector3 position){
