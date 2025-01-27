@@ -57,6 +57,8 @@ public partial class Enemy : NPCNode {
 		mot.Update(delta, physBody);
 		//physBody.LookAt(physBody.Velocity.Length() == 0 ? Vector3.Zero : physBody.Velocity, Vector3.Up);
 	}
+
+	//currently enemy only ever has player as a nav goal. this will probably change so will pass in a position 
 	private void UpdatePathGoal(){
 		if (Global.playerNode != null){
 			nav.TargetPosition = Global.playerNode.GlobalPosition;
@@ -94,6 +96,11 @@ public partial class Enemy : NPCNode {
 					SetState(State.ATTACKING);
 				}
 				break;
+			case ColliderZone.Awareness0:
+				if (other is Player){
+					timer.WaitTime = .05; 
+				}
+				break;
 		}
 	}
 
@@ -104,6 +111,11 @@ public partial class Enemy : NPCNode {
 				if (other is Damageable && other == attackTarget){
 					attackTarget = null;
 					SetState(State.ALERT);
+				}
+				break;
+			case ColliderZone.Awareness0:
+				if (other is Player){
+					timer.WaitTime = 5;
 				}
 				break;
 		}
