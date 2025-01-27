@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=73 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://bouo6k3ynmvpy" path="res://tscn/rocks/rock_1.tscn" id="33_fv50v"]
 [ext_resource type="PackedScene" uid="uid://doy5efrnbsvds" path="res://tscn/bush_1c.tscn" id="34_4mi8k"]
 [ext_resource type="PackedScene" uid="uid://df3frvrklnbh" path="res://tscn/rocks/rock_2.tscn" id="34_4y261"]
+[ext_resource type="PackedScene" uid="uid://hcbku3nbltt7" path="res://assets/Models/Misc/GoldBullion.glb" id="34_o3166"]
 [ext_resource type="AudioStream" uid="uid://c4xnkvi27q71j" path="res://assets/SFX/Metroid Fusion Music - Environmental Tension.mp3" id="35_nwils"]
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="36_7pnf7"]
 [ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://tscn/wood/picket_fence_long.tscn" id="37_ne8nc"]
@@ -206,9 +207,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
 [node name="SpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 1.95044, 103.916)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 1.95044, 113.595)
 script = ExtResource("17_38mhm")
-typeToSpawn = 1024
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.506, -1.50002, 80.5559)
@@ -1108,10 +1108,6 @@ stream = ExtResource("35_nwils")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_464t1")
 
-[node name="GoldBullion" parent="." instance=ExtResource("42_cqfb4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.765, 0.914174, 101.423)
-invItem = ExtResource("43_dogb4")
-
 [node name="Bonfire" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.686, 0.812242, 103.872)
 
@@ -1155,11 +1151,18 @@ transform = Transform3D(1.86874, 1.14969, -0.948553, -0.796718, 2.91806, 0.07653
 [node name="FunnyBuxSpot" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0899, -6.69532, -7.8099)
 
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot" instance=ExtResource("34_o3166")]
+
 [node name="FunnyBuxSpot8" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.921, -4.57035, 62.2518)
 
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot8" instance=ExtResource("42_cqfb4")]
+
 [node name="FunnyBuxSpot9" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -87.0877, -4.74642, 63.3413)
+
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot9" instance=ExtResource("42_cqfb4")]
+transform = Transform3D(0.391647, 0, 0.920116, 0, 1, 0, -0.920116, 0, 0.391647, 0, 0, 0)
 
 [node name="FunnyBuxSpot10" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.0831, -4.74642, 63.3413)
@@ -1167,14 +1170,21 @@ transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214
 [node name="FunnyBuxSpot11" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.0831, -4.74642, 62.2409)
 
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot11" instance=ExtResource("42_cqfb4")]
+transform = Transform3D(0.850499, 0, -0.525976, 0, 1, 0, 0.525976, 0, 0.850499, 0, 0, 0)
+
 [node name="FunnyBuxSpot12" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(0.999214, 0, -0.0396435, 0, 1, 0, 0.0396435, 0, 0.999214, -86.5489, -4.74642, 62.8307)
 
 [node name="FunnyBuxSpot7" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.403, -4.18815, 77.6217)
 
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot7" instance=ExtResource("42_cqfb4")]
+
 [node name="FunnyBuxSpot2" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.3952, -6.69532, -29.4917)
+
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot2" instance=ExtResource("34_o3166")]
 
 [node name="FunnyBuxSpot3" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4698, -6.69531, 98.3442)
@@ -1185,16 +1195,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.3314, -6.69531, 86.5539)
 [node name="FunnyBuxSpot5" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.947, -1.8395, -62.5277)
 
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot5" instance=ExtResource("42_cqfb4")]
+
 [node name="FunnyBuxSpot6" type="Node3D" parent="ItemLocations/FunnyBux"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.1116, -6.46407, -39.0755)
+
+[node name="GoldBullion" parent="ItemLocations/FunnyBux/FunnyBuxSpot6" instance=ExtResource("42_cqfb4")]
 
 [node name="FunnyBuxRocks" type="Node3D" parent="ItemLocations"]
 
 [node name="FunnyRockSpot" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06784, -5.1486, 33.4955)
 
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.240886, 0)
+
 [node name="FunnyRockSpot2" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6758, -5.4916, -41.6491)
+
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot2" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.646912, 0)
 
 [node name="FunnyRockSpot3" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.0051, -5.4916, 33.2142)
@@ -1202,14 +1222,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.0051, -5.4916, 33.2142)
 [node name="FunnyRockSpot4" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.054, -5.4916, 117.489)
 
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot4" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.563371, 0)
+
 [node name="FunnyRockSpot5" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100.998, -4.40438, 91.7929)
+
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot5" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0160232, 0)
 
 [node name="FunnyRockSpot6" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 211.144, -3.70471, 6.2062)
 
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot6" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.611368, 0)
+
 [node name="FunnyRockSpot7" type="Node3D" parent="ItemLocations/FunnyBuxRocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.474, -4.80776, -26.5037)
+
+[node name="FunnyRock" parent="ItemLocations/FunnyBuxRocks/FunnyRockSpot7" instance=ExtResource("52_2r6tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.793931, 0)
 
 [node name="ScissorbeakNest" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.4921, -3.66497, 62.6438)
@@ -1336,6 +1368,10 @@ transform = Transform3D(0.578558, 0.728933, -0.365961, -0.616037, 0.684585, 0.38
 
 [node name="WoodPlank_Large2" parent="ScissorbeakNest" instance=ExtResource("51_rx07x")]
 transform = Transform3D(-0.0680951, 0.446547, -0.892165, -0.616037, 0.684585, 0.389668, 0.784768, 0.576141, 0.228473, -1.06264, -0.711331, -2.66363)
+
+[node name="GoldBullion" parent="." instance=ExtResource("42_cqfb4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.765, 0.914174, 101.423)
+invItem = ExtResource("43_dogb4")
 
 [node name="FunnyRock" parent="." instance=ExtResource("52_2r6tq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 155.142, 0.560033, 107.069)
