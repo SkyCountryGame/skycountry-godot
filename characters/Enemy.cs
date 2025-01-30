@@ -100,6 +100,8 @@ public partial class Enemy : NPCNode {
 			case ColliderZone.Awareness0:
 				if (other is Player){
 					timer.WaitTime = .05;
+				} else if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){ //TODO this will be moved to either NPCNode or MotionModule
+					GD.Print($"encounterd {other.GetParent().Name}:{other.Name} turn right");
 				}
 				break;
 		}
@@ -117,6 +119,8 @@ public partial class Enemy : NPCNode {
 			case ColliderZone.Awareness0:
 				if (other is Player){
 					timer.WaitTime = 5;
+				} else if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){ //TODO this will be moved to either NPCNode or MotionModule
+					GD.Print("collision avoided");
 				}
 				break;
 		}

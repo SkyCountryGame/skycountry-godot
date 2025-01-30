@@ -99,9 +99,9 @@ public partial class Patroller : NPCNode, EventListener {
 	public override void HandleCollide(ColliderZone zone, Node other)
 	{
 		switch (zone){
-			case ColliderZone.Awareness0:
-				if (other.IsInGroup("prop")){
-					GD.Print("turn right");
+			case ColliderZone.Awareness0: //TODO this will be moved to either NPCNode or MotionModule
+				if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){
+					GD.Print($"encounterd {other.GetParent().Name}:{other.Name} turn right");
 				}
 				break;
 		}
@@ -110,8 +110,10 @@ public partial class Patroller : NPCNode, EventListener {
 	public override void HandleDecollide(ColliderZone zone, Node other)
 	{
 		switch (zone){
-			case ColliderZone.Awareness0:
-				GD.Print("collision avoided");
+			case ColliderZone.Awareness0: //TODO this will be moved to either NPCNode or MotionModule
+				if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){
+					GD.Print("collision avoided");
+				}
 				break;
 		}
 	}
