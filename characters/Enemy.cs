@@ -25,7 +25,7 @@ public partial class Enemy : NPCNode {
 		timerCooldown = new Godot.Timer();
 		AddChild(timerCooldown);
 		timerCooldown.OneShot = true;
-		timerCooldown.WaitTime = 1;
+		timerCooldown.WaitTime = 1.0f;
 		timerCooldown.Timeout += () => {
 			SetState(State.ALERT);
 		};
@@ -52,7 +52,6 @@ public partial class Enemy : NPCNode {
 				break;
 			case State.ATTACKING:
 				physBody.RotateY(MathF.PI/16.0f);
-				//attack
 				break;
 		}
 		mot.Update(delta, physBody);
@@ -80,7 +79,7 @@ public partial class Enemy : NPCNode {
 				attackTarget.ApplyDamage(1);
 				GD.Print("Enemy is attacking you!");
 				Global.HUD.LogEvent("Enemy is attacking you!");
-				//do cooldown
+				mot.pos_goal = physBody.GlobalPosition;
 				timerCooldown.Start();
 				break;
 			default:
@@ -113,7 +112,6 @@ public partial class Enemy : NPCNode {
 			case ColliderZone.Awareness1:
 				if (other is Damageable && other == attackTarget){
 					attackTarget = null;
-					SetState(State.ALERT);
 				}
 				break;
 			case ColliderZone.Awareness0:

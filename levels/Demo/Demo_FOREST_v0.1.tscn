@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://xn5gdg1fwrw0"]
+[gd_scene load_steps=72 format=3 uid="uid://xn5gdg1fwrw0"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_1m4au"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="2_bhrtk"]
@@ -52,7 +52,6 @@
 [ext_resource type="PackedScene" uid="uid://csouptwyxpo23" path="res://tscn/rocks/rock_10.tscn" id="50_c3s0m"]
 [ext_resource type="PackedScene" uid="uid://ctxwefr3jrq18" path="res://tscn/wood/wood_plank_large.tscn" id="51_rx07x"]
 [ext_resource type="PackedScene" uid="uid://cb6o08oggybf3" path="res://gameobjects/funny_rock.tscn" id="52_2r6tq"]
-[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://tscn/pickaxe_pickup.tscn" id="54_2aq3n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jh14"]
 resource_local_to_scene = true
@@ -1376,9 +1375,6 @@ invItem = ExtResource("43_dogb4")
 
 [node name="FunnyRock" parent="." instance=ExtResource("52_2r6tq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 155.142, 0.560033, 107.069)
-
-[node name="PickaxePickup" parent="." instance=ExtResource("54_2aq3n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.993, 0.124769, 100.867)
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("6_k11m3")
