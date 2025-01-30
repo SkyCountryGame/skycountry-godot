@@ -209,6 +209,7 @@ light_energy = 0.0
 [node name="SpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 1.95044, 113.595)
 script = ExtResource("17_38mhm")
+typeToSpawn = 1024
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.506, -1.50002, 80.5559)

@@ -100,20 +100,14 @@ public partial class Level : Node
 				
 	}
 
-	private void ProcessNodeGroups(){
+	private void ProcessNodeGroups(){ //TODO set children of node in a group to be in group
 		GD.Print("processing node groups");
-		foreach (Node n in GetChildren(true)){
-			if (n.IsInGroup("floor")){
-				
-			}
-			if (n.IsInGroup("prop")){
-				GD.Print("  prop"); //add cylinder collision mesh
-			}
-			if (n.IsInGroup("building")){
-				//add box colliion mesh
-				
+		foreach (Node n in NodeUtils.GetChildrenRec(this)){
+			foreach (string group in n.GetGroups()){
+				NodeUtils.AddToGroup(n, group);
 			}
 		}
+		//TODO fix the redundancy that happens
 	}
 
 	//get a point that's on the navmesh that's closest to the given point

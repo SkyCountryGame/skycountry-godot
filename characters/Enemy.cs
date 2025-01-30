@@ -51,6 +51,7 @@ public partial class Enemy : NPCNode {
 				//}
 				break;
 			case State.ATTACKING:
+				physBody.RotateY(MathF.PI/16.0f);
 				//attack
 				break;
 		}
@@ -98,7 +99,7 @@ public partial class Enemy : NPCNode {
 				break;
 			case ColliderZone.Awareness0:
 				if (other is Player){
-					timer.WaitTime = .05; 
+					timer.WaitTime = .05;
 				}
 				break;
 		}

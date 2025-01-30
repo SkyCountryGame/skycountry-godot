@@ -98,12 +98,22 @@ public partial class Patroller : NPCNode, EventListener {
 
 	public override void HandleCollide(ColliderZone zone, Node other)
 	{
-		throw new NotImplementedException();
+		switch (zone){
+			case ColliderZone.Awareness0:
+				if (other.IsInGroup("prop")){
+					GD.Print("turn right");
+				}
+				break;
+		}
 	}
 
 	public override void HandleDecollide(ColliderZone zone, Node other)
 	{
-		throw new NotImplementedException();
+		switch (zone){
+			case ColliderZone.Awareness0:
+				GD.Print("collision avoided");
+				break;
+		}
 	}
 
 	public override bool CanChangeState(State state)

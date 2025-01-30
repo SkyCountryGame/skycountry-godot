@@ -44,6 +44,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	[Export] protected AnimationController animController;
 	[Export] protected MotionModule mot;
 	private double rotationSpeed = 20;
+	private List<MeshInstance3D> meshes; //used for visual effects 
 
 	//rings, amulets, etc. ?
 
@@ -63,6 +64,14 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		
 		Global.playerNode = this; //while the playerMODEL will remain the same between scenes, the playerNODE could change
 		ApplyFloorSnap();
+
+		meshes = new List<MeshInstance3D>();
+		foreach (Node n in GetNode("RollinDudeMk5/Armature/Skeleton3D").GetChildren()){ //hardcoded. will probably make a NodeUtils class for recursive traverse, or extend Node3D
+			GD.Print($"player node {n.Name}");
+			if (n is MeshInstance3D){
+				meshes.Add((MeshInstance3D)n);
+			}
+		}
 
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
@@ -430,6 +439,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	public void ApplyDamage(int d)
 	{
 		playerModel.hp -= d; //TODO take into account armor, skills, etc.
+		EffectsManager.Flash(meshes, new Color(1,0,0));
 		if (playerModel.hp < 0){
 			EventManager.Invoke(EventType.GameOver);
 			GD.Print("dead");

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=4 uid="uid://x5706ljfwt3t"]
 
 [ext_resource type="PackedScene" uid="uid://dt5iv5ucs6vyk" path="res://assets/Models/Wood Props/Wood Stool/WoodStool.gltf" id="1_cby1k"]
-[ext_resource type="Material" uid="uid://pnyr4ipqvmmh" path="res://assets/Materials/WoodMetalTrim.tres" id="2_cl1nx"]
+[ext_resource type="Material" path="res://assets/Materials/WoodMetalTrim.tres" id="2_cl1nx"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_h3e5n"]
 _surfaces = [{

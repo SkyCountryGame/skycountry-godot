@@ -44,6 +44,32 @@ public class EffectsManager {
         });
     }
 
+    //apply a flash of color on some meshes
+    public static void Flash(List<MeshInstance3D> meshes, Color color, float duration = 0.5f){
+        foreach (MeshInstance3D mesh in meshes){
+            Flash(mesh, color, duration);
+        }
+    }
+
+    public static void Flash(MeshInstance3D mesh, Color color, float duration = 0.2f){
+        Task.Run(()=>{
+            StandardMaterial3D mat = (StandardMaterial3D) mesh.GetActiveMaterial(0); //assuming only one surface 
+            Color ogColor = mat.AlbedoColor;
+            float ogEmissionIntensity = mat.EmissionIntensity;
+            Color ogEmission = mat.Emission;
+            bool ogEmissionEn = mat.EmissionEnabled;
+            mat.AlbedoColor = color; //TODO interpolate
+            mat.EmissionEnabled = true;
+            mat.Emission = color;
+            mat.EmissionIntensity = 2;
+            System.Threading.Thread.Sleep((int) (duration * 1000));
+            mat.AlbedoColor = ogColor;
+            mat.Emission = ogEmission;
+            mat.EmissionIntensity = ogEmissionIntensity;
+            mat.EmissionEnabled = ogEmissionEn;
+        });
+    }
+
     //highlight mouse-over
 
     //spawn particles
