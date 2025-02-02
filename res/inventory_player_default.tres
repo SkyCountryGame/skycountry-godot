@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource("1_hbmlr")
-capacity = 4
+capacity = 12
 stock = Array[Object]([ExtResource("2_88kja")])

@@ -58,15 +58,20 @@ public class EffectsManager {
             float ogEmissionIntensity = mat.EmissionIntensity;
             Color ogEmission = mat.Emission;
             bool ogEmissionEn = mat.EmissionEnabled;
-            mat.AlbedoColor = color; //TODO interpolate
-            mat.EmissionEnabled = true;
-            mat.Emission = color;
-            mat.EmissionIntensity = 2;
+            if (mesh.IsInsideTree() && mesh.IsNodeReady()){
+                mat.AlbedoColor = color; //TODO interpolate
+                mat.EmissionEnabled = true;
+                mat.Emission = color;
+                mat.EmissionIntensity = 2;
+            }
             System.Threading.Thread.Sleep((int) (duration * 1000));
-            mat.AlbedoColor = ogColor;
-            mat.Emission = ogEmission;
-            mat.EmissionIntensity = ogEmissionIntensity;
-            mat.EmissionEnabled = ogEmissionEn;
+            if (mesh.IsInsideTree() && mesh.IsNodeReady()){
+                mat.AlbedoColor = ogColor;
+                mat.Emission = ogEmission;
+                mat.EmissionIntensity = ogEmissionIntensity;
+                mat.EmissionEnabled = ogEmissionEn;
+            }
+            
         });
     }
 

@@ -223,6 +223,23 @@ public partial class Global : Node
 		_.GetTree().ReloadCurrentScene();
 	}
 	public static void RestartGame(){
+		//playerNode.QueueFree();
+		//playerNode = null;
+		//playerModel = null;
+		//currentLevel.QueueFree();
+		navReady = false;
+
+		//_.GetTree().CallDeferred("change_scene_to_packed", PrefabManager.Get("Demo_v0.1"));
+
 		ChangeLevel("Demo_v0.1");
+		playerModel = null;
+		playerNode.Reset();
+		cam = null;
+		/*dialogueFunctionController = null;
+		cam = null;
+		HUD = null; 
+		pauseMenu = null; 
+	 	navRegion = null; 
+		currentLevel = null;*/ 
 	}
 }

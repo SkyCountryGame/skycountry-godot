@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using static PlayerModel;
 
 public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Interactor, Damageable, EventListener
@@ -52,7 +53,6 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 	{
 		base._Ready();
 		EventManager.RegisterListener(this);
-		animationTree.AnimationFinished += AttackFinished;
 		if (Global.playerModel != null){
 			playerModel = Global.playerModel;
 		} else {
@@ -66,8 +66,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		ApplyFloorSnap();
 
 		meshes = new List<MeshInstance3D>();
-		foreach (Node n in GetNode("RollinDudeMk5/Armature/Skeleton3D").GetChildren()){ //hardcoded. will probably make a NodeUtils class for recursive traverse, or extend Node3D
-			GD.Print($"player node {n.Name}");
+		foreach (Node n in NodeUtils.GetChildrenRec(GetNode("RollinDudeMk5/Armature/Skeleton3D")).ToList()){ 
 			if (n is MeshInstance3D){
 				meshes.Add((MeshInstance3D)n);
 			}
@@ -76,6 +75,17 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		if (animationTree == null){ //animtree might be set from editor (.tscn file)
 			animationTree = GetNode<AnimationTree>("RollinDudeMk5/AnimationTree"); //NOTE in future might we have other player models? 
 		}
+		animationTree.AnimationFinished += AttackFinished;
+		string[] animNames = animationTree.GetAnimationList();
+		foreach (string s in animNames){
+			foreach (string t in animNames){
+				if (s != t){
+					//TODO was working on building anim transition graph here
+				}
+			}
+		}
+	
+		
 		rightHand = GetNode<Node3D>("RollinDudeMk5/Armature/Skeleton3D/HandAttachment/HandContainer/ItemContainer");
 	}
 
@@ -144,7 +154,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 					SetState(State.ATTACKING); //attempt to "attack" (or use a tool)
 				}
 			} else if (Input.IsActionJustPressed("player_action2")){
-
+			
 			} else if (Input.IsActionJustPressed("player_jump")) { 
 				jump = true;
 			} else if (Input.IsActionJustPressed("player_use")){
@@ -443,9 +453,14 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 		if (playerModel.hp < 0){
 			EventManager.Invoke(EventType.GameOver);
 			GD.Print("dead");
-			Global.HUD.LogEvent("You are dead. (TODO implement gameover)");
-			SetProcessMode(ProcessModeEnum.Disabled);
-			Global.RestartGame();
+			//do death animation
+			((AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback")).Travel("SitDown");
+			Global.HUD.LogEvent("You are dead. Restart Game. ");
+			Task.Run(() => {
+				
+				System.Threading.Thread.Sleep(2000);
+				Global.RestartGame();
+			});
 		}
 	}
 
@@ -474,5 +489,10 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			//Rotation.
 			LookAt(viewAngle);
 		}
+	}
+
+	public void Reset(){
+		//TODO figure out game restart stuff
+		playerModel = ResourceLoader.Load<PlayerModel>("res://res/player_default.tres"); //TODO make a ResourceManager similar to PrefabManager. or have PrefabManager do it and rename to ResourceManager, because a PackedScene is a Resource
 	}
 }

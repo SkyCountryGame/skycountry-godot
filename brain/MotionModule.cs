@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using static StateManager;
 
@@ -11,6 +12,7 @@ public partial class MotionModule : Node3D  {
     private Vector3 accel_goal;
     private Vector3 vel_goal; //the velocity that the character is currently trying to reach
     public Vector3 pos_goal; //the position that the character is currently trying to reach
+    public Queue<Vector3> pos_goals = new Queue<Vector3>(); //thinking of an idea where it has a list comprising a path, e.g. to manuever around obstacles. not sure if should use it in this class
     private Vector3 accel;
     [Export] private float gravity = -20f;
     private bool jump = false;

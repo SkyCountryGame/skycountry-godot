@@ -99,9 +99,12 @@ public partial class Patroller : NPCNode, EventListener {
 	public override void HandleCollide(ColliderZone zone, Node other)
 	{
 		switch (zone){
-			case ColliderZone.Awareness0: //TODO this will be moved to either NPCNode or MotionModule
+			case ColliderZone.Awareness0: 
+				//obstacle avoidance
 				if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){
 					GD.Print($"encounterd {other.GetParent().Name}:{other.Name} turn right");
+					//placeholder math for avoidance. will come up with something sensible later.  
+					SetTargetPosition(physBody.GlobalPosition + Vector3.Forward.Rotated(Vector3.Up, Mathf.Pi/8.0f));
 				}
 				break;
 		}
@@ -112,6 +115,7 @@ public partial class Patroller : NPCNode, EventListener {
 		switch (zone){
 			case ColliderZone.Awareness0: //TODO this will be moved to either NPCNode or MotionModule
 				if (other is StaticBody3D || other is RigidBody3D || other.IsInGroup("prop")){
+					SetTargetPosition(stationCurrent.Value.GlobalPosition);
 					GD.Print("collision avoided");
 				}
 				break;

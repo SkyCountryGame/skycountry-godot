@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 
@@ -5,7 +6,7 @@ public class NodeUtils {
 
     public static Array<Node> GetChildrenRec(Node n){
         Array<Node> res = n.GetChildren(true);
-        foreach (Node child in n.GetChildren()){
+        foreach (Node child in res){
             res.AddRange(GetChildrenRec(child));
         }
         return res;
@@ -19,5 +20,7 @@ public class NodeUtils {
             cn.AddToGroup(group);
         }
     }
+
+
 
 }

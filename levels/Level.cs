@@ -100,7 +100,7 @@ public partial class Level : Node
 				
 	}
 
-	private void ProcessNodeGroups(){ //TODO set children of node in a group to be in group
+	private void ProcessNodeGroups(){
 		GD.Print("processing node groups");
 		foreach (Node n in NodeUtils.GetChildrenRec(this)){
 			foreach (string group in n.GetGroups()){
@@ -163,7 +163,7 @@ public partial class Level : Node
 				if (firstMesh)
 				{
 					worldBounds = meshBounds;
-					firstMesh = false;
+					firstMesh = false;	
 				}
 				else
 				{
