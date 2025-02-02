@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=77 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -65,6 +65,10 @@
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 [ext_resource type="AudioStream" uid="uid://wns0fvqqirx1" path="res://assets/SFX/Pokémon Diamond Music_ Eterna City (Night).mp3" id="64_5wmd6"]
 [ext_resource type="PackedScene" uid="uid://bnbwgt4okb4sr" path="res://tscn/characters/blockhead_new.tscn" id="64_c7lnc"]
+[ext_resource type="PackedScene" uid="uid://dkhqi676wwo7k" path="res://assets/Models/Light Poles/LightpoleDetailed.glb" id="66_qq0i6"]
+[ext_resource type="PackedScene" uid="uid://qsanyqxa1c4g" path="res://assets/Models/Light Poles/LightpoleSimple.glb" id="67_8dai0"]
+[ext_resource type="PackedScene" uid="uid://eflx4g7qlym6" path="res://tscn/Village Misc/powerlines.tscn" id="69_cym1i"]
+[ext_resource type="PackedScene" uid="uid://b6dmgdbsndnrb" path="res://assets/Models/Light Poles/ReferencePoles.glb" id="69_vpta0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_2821l")
@@ -1110,3 +1114,15 @@ volume_db = -20.0
 
 [node name="blockheadGodot" parent="." instance=ExtResource("64_c7lnc")]
 transform = Transform3D(0.998391, 0, 0.0567103, 0, 1, 0, -0.0567103, 0, 0.998391, -19.9138, -0.0114212, 5.95232)
+
+[node name="LightpoleDetailed" parent="." instance=ExtResource("66_qq0i6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.55713, -0.0373916, 6.10354)
+
+[node name="LightpoleSimple" parent="." instance=ExtResource("67_8dai0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73815, -0.0573306, 6.68222)
+
+[node name="ReferencePoles" parent="." instance=ExtResource("69_vpta0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.63425, 0.121955, 8.15096)
+
+[node name="Powerlines" parent="." instance=ExtResource("69_cym1i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62957, 0.118456, 8.14697)
