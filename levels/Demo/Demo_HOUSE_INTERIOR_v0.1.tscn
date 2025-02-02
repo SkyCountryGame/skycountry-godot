@@ -324,10 +324,10 @@ shape = SubResource("BoxShape3D_2s7nr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_imc5s")
-autoplay = true
+volume_db = -20.0
 
 [node name="House_6x4" parent="." instance=ExtResource("15_ei8yu")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -19.8891, 0.048502, 0.801514)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -36.1968, 0.048502, 0.801514)
 
 [node name="Bed_Twin_Green_2x1" parent="." instance=ExtResource("16_wahgy")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -14.7955, 0.512336, -2.78907)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -31.1032, 0.512336, -2.78907)
