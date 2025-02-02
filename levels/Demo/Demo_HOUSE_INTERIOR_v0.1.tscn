@@ -94,7 +94,7 @@ shadow_enabled = true
 omni_range = 16.5045
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8942, 9.99471, -0.00179291)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8942, 6.78825, 0.552014)
 light_energy = 8.275
 light_indirect_energy = 0.931
 shadow_enabled = true
@@ -330,4 +330,4 @@ autoplay = true
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -19.8891, 0.048502, 0.801514)
 
 [node name="Bed_Twin_Green_2x1" parent="." instance=ExtResource("16_wahgy")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -14.8278, 0.512335, -2.78516)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -14.7955, 0.512336, -2.78907)
