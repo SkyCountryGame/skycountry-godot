@@ -36,7 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://c4xnkvi27q71j" path="res://assets/SFX/Metroid Fusion Music - Environmental Tension.mp3" id="35_nwils"]
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="36_7pnf7"]
 [ext_resource type="PackedScene" uid="uid://cbh3fm3b3celh" path="res://tscn/wood/picket_fence_long.tscn" id="37_ne8nc"]
-[ext_resource type="Material" uid="uid://ce2yd1f7minsj" path="res://assets/Materials/Rock1.tres" id="38_tgnmw"]
+[ext_resource type="Material" uid="uid://ce2yd1f7minsj" path="res://assets/Materials/Rock/Rock1.tres" id="38_tgnmw"]
 [ext_resource type="PackedScene" uid="uid://bx5luuktsl3q8" path="res://tscn/wood/signpost_02.tscn" id="39_ugcy1"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="40_s2li8"]
 [ext_resource type="PackedScene" uid="uid://u81guijqqaa5" path="res://tscn/wood/picket_fence_connector.tscn" id="41_ac3wr"]
@@ -208,7 +208,6 @@ light_energy = 0.0
 [node name="SpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 160.186, 1.95044, 113.595)
 script = ExtResource("17_38mhm")
-typeToSpawn = 1024
 
 [node name="Enemy0" parent="." instance=ExtResource("26_kukou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.506, -1.50002, 80.5559)

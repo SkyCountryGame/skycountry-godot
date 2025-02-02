@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
 [ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_13urj"]
-[ext_resource type="Material" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
+[ext_resource type="Material" uid="uid://cciy1lix1177c" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="17_d1aw2"]
 [ext_resource type="Script" path="res://gameobjects/Door.cs" id="17_famop"]
 [ext_resource type="PackedScene" uid="uid://bastkr21aocj7" path="res://tscn/rocks/rock_12.tscn" id="18_6qjtl"]
@@ -158,7 +158,6 @@ collision_mask = 1
 [node name="spawnpoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0927, 1.66496, 13.3522)
 script = ExtResource("11_kvv3g")
-typeToSpawn = 1024
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9279, 0, 8.08742)

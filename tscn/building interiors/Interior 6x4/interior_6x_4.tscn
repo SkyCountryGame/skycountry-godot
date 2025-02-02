@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=4 uid="uid://b3gdax3kt5y7n"]
+
+[ext_resource type="PackedScene" uid="uid://dvnxaiwo51lcf" path="res://assets/Models/Building Interiors/House 6x4/House_6x4.glb" id="1_e0ckg"]
+[ext_resource type="Texture2D" uid="uid://c3v6q7qhkxbpb" path="res://assets/texture/Building Interiors/House 6x4/Walls/6x4_StripedBlueWalls_BaseColor.png" id="2_aagdo"]
+[ext_resource type="Texture2D" uid="uid://0p26gxla4swe" path="res://assets/texture/Building Interiors/House 6x4/Floors/6x4_LightWoodFloor_BaseColor.png" id="3_sr2jw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6dbl"]
+albedo_texture = ExtResource("2_aagdo")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gxwv5"]
+_surfaces = [{
+"aabb": AABB(-3.9, -2.6, -2.6, 7.8, 5.2, 5.2),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AAADAAIAAAABAAMAAgAHAAYAAgADAAcABgAFAAQABgAHAAUABAABAAAABAAFAAEA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP////8AAAAAAAAAAAAAAAD//wAAAAD//wAA//8AAP///////wAA//8AAAAAAAD/////AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2t2ek"]
+resource_name = "House_6x4_Cube_356"
+_surfaces = [{
+"aabb": AABB(-3.9, -2.6, -2.6, 7.8, 5.2, 5.2),
+"attribute_data": PackedByteArray("LQDeTC0A3kxOM95MTjPeTC0A/38tAP9/TjP/f04z/38tAC0ALQDR/04zLQBOM9H/LQCwzC0AsMxOM7DMTjOwzA=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AQAHAAUAAQADAAcABAAOAAwABAAGAA4ADQALAAkADQAPAAsACAACAAAACAAKAAIA"),
+"material": SubResource("StandardMaterial3D_k6dbl"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("AAAAAP////8AAAAA//9U1QAA////////AAD/////VNUAAAAAAAD/vwAAAAAAAFTVAAD//wAA/78AAP//AABU1f//AAD///////8AAP//VNX//////////////////1TV//8AAAAA/7///wAAAABU1f////8AAP+//////wAAVNX/v/+/qiqqKv+//7+qKqoq/////6oqqir/////qiqqKv+//79U1VTV/7//v1TVVNX/////VNVU1f////9U1VTV")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_gxwv5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_552oc"]
+albedo_texture = ExtResource("3_sr2jw")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_bto1o"]
+_surfaces = [{
+"aabb": AABB(-3.9, -2.6, -2.6, 7.8, 1e-05, 5.2),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray("AQACAAAAAQADAAIA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAAAAAAAAAP//AAD//wAA//8AAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_x8k18"]
+resource_name = "House_6x4_Floor"
+_surfaces = [{
+"aabb": AABB(-3.9, -2.6, -2.6, 7.8, 1e-05, 5.2),
+"attribute_data": PackedByteArray("qDMgs8lmILOoM9H/yWbR/w=="),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray("AQACAAAAAQADAAIA"),
+"material": SubResource("StandardMaterial3D_552oc"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAAAP//VNUAAAAAAABU1f//AAD//1TV//8AAAAAVNVU1aoqVNWqKlTVqipU1aoq")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_bto1o")
+
+[node name="House_6x4" instance=ExtResource("1_e0ckg")]
+
+[node name="Walls" parent="." index="0"]
+mesh = SubResource("ArrayMesh_2t2ek")
+
+[node name="Floor" parent="." index="1"]
+mesh = SubResource("ArrayMesh_x8k18")

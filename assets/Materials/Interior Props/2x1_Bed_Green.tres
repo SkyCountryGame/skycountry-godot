@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cmg4vbu17f2ym"]
+
+[ext_resource type="Texture2D" uid="uid://lrodwqqnkpi8" path="res://assets/texture/Building Interiors/Interior Props/Bed 2x1/Green/BedSmall_DefaultMaterial_BaseColor.png" id="1_eeu8s"]
+
+[resource]
+albedo_texture = ExtResource("1_eeu8s")
