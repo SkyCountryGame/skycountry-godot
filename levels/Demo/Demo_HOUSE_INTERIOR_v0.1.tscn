@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="14_a0y17"]
 [ext_resource type="PackedScene" uid="uid://b3gdax3kt5y7n" path="res://tscn/building interiors/Interior 6x4/interior_6x_4.tscn" id="15_ei8yu"]
 [ext_resource type="PackedScene" uid="uid://dlw1alj2t1iw6" path="res://tscn/building interior props/Bed/bed_twin_green_2x_1.tscn" id="16_wahgy"]
-[ext_resource type="PackedScene" uid="uid://cx1gd4vlk0ul3" path="res://tscn/building interior props/Sink/kitchen_sink.tscn" id="17_cy40e"]
+[ext_resource type="PackedScene" uid="uid://cyijxe5r6lyi4" path="res://tscn/building interior props/Sink/kitchen_sink.tscn" id="17_cy40e"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="22_f2v6q"]
 [ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://tscn/wood/wood_stool.tscn" id="27_1rl33"]
 
@@ -88,17 +88,11 @@ sunlight = NodePath("DirectionalLight3D")
 [node name="HUD" parent="." instance=ExtResource("5_tmuy4")]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.131808, 9.99471, 0)
-light_energy = 8.275
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.131808, 7.25545, 2.01089)
+light_energy = 15.0
 light_indirect_energy = 0.931
 shadow_enabled = true
-omni_range = 16.5045
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.1487, 6.78825, 0.552014)
-light_energy = 8.275
-light_indirect_energy = 0.931
-shadow_enabled = true
+shadow_opacity = 0.0
 omni_range = 16.5045
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -160,6 +154,7 @@ shape = SubResource("BoxShape3D_1lgqj")
 
 [node name="FLOOR" type="MeshInstance3D" parent="HOUSE"]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 6, 0, 0, 0)
+visible = false
 mesh = SubResource("PlaneMesh_fncg7")
 skeleton = NodePath("../..")
 
@@ -171,16 +166,19 @@ shape = SubResource("BoxShape3D_jwjgn")
 
 [node name="BACKWALL" type="CSGBox3D" parent="HOUSE"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00908661, 2.71478, -6.5239)
+visible = false
 use_collision = true
 size = Vector3(16.0073, 6.42957, 1)
 
 [node name="RIGHTWALL" type="CSGBox3D" parent="HOUSE"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8.48772, 2.71478, -0.519371)
+visible = false
 use_collision = true
 size = Vector3(12.9816, 6.42957, 1)
 
 [node name="LEFTWALL" type="CSGBox3D" parent="HOUSE"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.54612, 2.71478, -0.519371)
+visible = false
 use_collision = true
 size = Vector3(12.9816, 6.42957, 1)
 
@@ -329,10 +327,10 @@ volume_db = -20.0
 autoplay = true
 
 [node name="House_6x4" parent="." instance=ExtResource("15_ei8yu")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -36.1968, 0.048502, 0.801514)
+transform = Transform3D(1.9861, 0, 0, 0, 1.9861, 0, 0, 0, 1.9861, 0.0204892, 0.048502, 0.801514)
 
 [node name="Bed_Twin_Green_2x1" parent="." instance=ExtResource("16_wahgy")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -31.1032, 0.512336, -2.78907)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 5.11409, 0.512336, -2.78907)
 
-[node name="KitchenSink2" parent="." instance=ExtResource("17_cy40e")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -41.4043, 0, -2.51755)
+[node name="KitchenSink" parent="." instance=ExtResource("17_cy40e")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -5.22635, 0, -2.54488)
