@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=75 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -64,7 +64,6 @@
 [ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://tscn/rocks/rock_3.tscn" id="59_pa6em"]
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 [ext_resource type="AudioStream" uid="uid://wns0fvqqirx1" path="res://assets/SFX/Pokémon Diamond Music_ Eterna City (Night).mp3" id="64_5wmd6"]
-[ext_resource type="PackedScene" uid="uid://bnbwgt4okb4sr" path="res://tscn/characters/blockhead_new.tscn" id="64_c7lnc"]
 [ext_resource type="PackedScene" uid="uid://baaavag0p3olq" path="res://tscn/Village Misc/lightpole_detailed.tscn" id="66_b71kn"]
 [ext_resource type="PackedScene" uid="uid://bu3kx7866e0u3" path="res://tscn/Village Misc/lightpole_simple.tscn" id="67_vcaeq"]
 [ext_resource type="PackedScene" uid="uid://dyerbhsu84mk2" path="res://tscn/Village Misc/powerlines.tscn" id="69_cym1i"]
@@ -1024,9 +1023,6 @@ omni_range = 46.854
 stream = ExtResource("64_5wmd6")
 volume_db = -20.0
 autoplay = true
-
-[node name="blockheadGodot" parent="." instance=ExtResource("64_c7lnc")]
-transform = Transform3D(0.998391, 0, 0.0567103, 0, 1, 0, -0.0567103, 0, 0.998391, -19.9138, -0.0114212, 5.95232)
 
 [node name="LightpoleDetailed2" parent="." instance=ExtResource("66_b71kn")]
 transform = Transform3D(0.999962, 0, -0.0087615, 0, 1, 0, 0.0087615, 0, 0.999962, 4.56408, -0.0390865, 7.74113)

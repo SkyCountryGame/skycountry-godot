@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://wk8iywqkdw5w"]
+
+[ext_resource type="Texture2D" uid="uid://cji0oowyu6st6" path="res://assets/texture/Characters/Blockhead/BlockHeadSegmented_Serappe2_BaseColor.png" id="1_rvrmk"]
+[ext_resource type="Texture2D" uid="uid://dy2ab3vta26nq" path="res://assets/texture/Characters/Blockhead/Blockhead_Serape_Normal.png" id="2_708a4"]
+
+[resource]
+albedo_texture = ExtResource("1_rvrmk")
+normal_enabled = true
+normal_texture = ExtResource("2_708a4")
