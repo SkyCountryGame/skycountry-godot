@@ -122,9 +122,11 @@ script = ExtResource("3_byha7")
 [node name="HUD" parent="." instance=ExtResource("1_q8fr7")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.447536, 0)
 navigation_mesh = SubResource("NavigationMesh_lsv2r")
 
 [node name="HTerrain" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423267, 0)
 script = ExtResource("4_sbx5e")
 centered = true
 _terrain_data = ExtResource("5_fajaf")
@@ -147,6 +149,7 @@ shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" groups=["floor"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.423267, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
 shape = ExtResource("13_13urj")
@@ -165,7 +168,7 @@ script = ExtResource("11_kvv3g")
 typeToSpawn = 1024
 
 [node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9279, 0, 8.08742)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3681, 0.00717068, 13.2864)
 stations = [NodePath("../TREES/Tree4"), NodePath("../TREES/Tree14"), NodePath("../Firepit"), NodePath("../TREES/Sapling3")]
 radius = 1.0
 
