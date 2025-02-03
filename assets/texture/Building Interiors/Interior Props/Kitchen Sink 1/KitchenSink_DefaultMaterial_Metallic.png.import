@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwgpn462iulkc"
-path.s3tc="res://.godot/imported/LightPole_Detailed_Pole Base_BaseColor.png-64661682e1a1b65352177b21efd28c86.s3tc.ctex"
+uid="uid://hy1untpwbarw"
+path.s3tc="res://.godot/imported/KitchenSink_DefaultMaterial_Metallic.png-dd7230eeeeca5277511034a2b83a340b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/texture/Light Poles/Light Pole Detailed/LightPole_Detailed_Pole Base_BaseColor.png"
-dest_files=["res://.godot/imported/LightPole_Detailed_Pole Base_BaseColor.png-64661682e1a1b65352177b21efd28c86.s3tc.ctex"]
+source_file="res://assets/texture/Building Interiors/Interior Props/Kitchen Sink 1/KitchenSink_DefaultMaterial_Metallic.png"
+dest_files=["res://.godot/imported/KitchenSink_DefaultMaterial_Metallic.png-dd7230eeeeca5277511034a2b83a340b.s3tc.ctex"]
 
 [params]
 

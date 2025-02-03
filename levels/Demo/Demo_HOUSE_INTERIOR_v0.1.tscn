@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://darxsa5kedpia"]
+[gd_scene load_steps=34 format=3 uid="uid://darxsa5kedpia"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_dmqny"]
 [ext_resource type="PackedScene" uid="uid://c5j50bf0y8cpb" path="res://ui/devtool.tscn" id="3_uxc7l"]
@@ -13,7 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://b5ki31l6wkdhg" path="res://assets/SFX/Pokemon Black_White Music- Village Bridge (with Buildup).mp3" id="10_imc5s"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="14_a0y17"]
 [ext_resource type="PackedScene" uid="uid://b3gdax3kt5y7n" path="res://tscn/building interiors/Interior 6x4/interior_6x_4.tscn" id="15_ei8yu"]
-[ext_resource type="PackedScene" uid="uid://dlw1alj2t1iw6" path="res://tscn/building interior props/bed_twin_green_2x_1.tscn" id="16_wahgy"]
+[ext_resource type="PackedScene" uid="uid://dlw1alj2t1iw6" path="res://tscn/building interior props/Bed/bed_twin_green_2x_1.tscn" id="16_wahgy"]
+[ext_resource type="PackedScene" uid="uid://cx1gd4vlk0ul3" path="res://tscn/building interior props/Sink/kitchen_sink.tscn" id="17_cy40e"]
 [ext_resource type="Material" uid="uid://dbl6fhw5qvmba" path="res://assets/Materials/DummyMaterials/DummyWood.tres" id="22_f2v6q"]
 [ext_resource type="PackedScene" uid="uid://x5706ljfwt3t" path="res://tscn/wood/wood_stool.tscn" id="27_1rl33"]
 
@@ -94,7 +95,7 @@ shadow_enabled = true
 omni_range = 16.5045
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8942, 6.78825, 0.552014)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.1487, 6.78825, 0.552014)
 light_energy = 8.275
 light_indirect_energy = 0.931
 shadow_enabled = true
@@ -332,3 +333,6 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -36.1968, 0.048502, 0.801514)
 
 [node name="Bed_Twin_Green_2x1" parent="." instance=ExtResource("16_wahgy")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -31.1032, 0.512336, -2.78907)
+
+[node name="KitchenSink2" parent="." instance=ExtResource("17_cy40e")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -41.4043, 0, -2.51755)

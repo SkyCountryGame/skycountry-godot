@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://d1sy8xwnsd7n0"]
+
+[ext_resource type="Texture2D" uid="uid://b4jj3v5ejklyg" path="res://assets/texture/Building Interiors/Interior Props/Kitchen Sink 1/KitchenSink_DefaultMaterial_BaseColor.png" id="1_vmhlm"]
+[ext_resource type="Texture2D" uid="uid://hy1untpwbarw" path="res://assets/texture/Building Interiors/Interior Props/Kitchen Sink 1/KitchenSink_DefaultMaterial_Metallic.png" id="2_xr8eo"]
+
+[resource]
+albedo_texture = ExtResource("1_vmhlm")
+metallic = 1.0
+metallic_texture = ExtResource("2_xr8eo")

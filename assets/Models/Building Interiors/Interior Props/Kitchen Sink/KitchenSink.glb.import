@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://yfh3sj4hjcis"
-path="res://.godot/imported/Powerlines.glb-32e269131820217e12a5d33d20acbf1c.scn"
+uid="uid://dd42br6yli6kg"
+path="res://.godot/imported/KitchenSink.glb-bb85e775f3d836c3736a4bb18146a6b3.scn"
 
 [deps]
 
-source_file="res://assets/Models/Light Poles/Powerlines.glb"
-dest_files=["res://.godot/imported/Powerlines.glb-32e269131820217e12a5d33d20acbf1c.scn"]
+source_file="res://assets/Models/Building Interiors/Interior Props/Kitchen Sink/KitchenSink.glb"
+dest_files=["res://.godot/imported/KitchenSink.glb-bb85e775f3d836c3736a4bb18146a6b3.scn"]
 
 [params]
 

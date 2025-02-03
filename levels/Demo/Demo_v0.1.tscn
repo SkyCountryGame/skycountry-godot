@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://hmgp0540tje8"]
+[gd_scene load_steps=76 format=3 uid="uid://hmgp0540tje8"]
 
 [ext_resource type="PackedScene" uid="uid://c4hhml2qqr8n8" path="res://tscn/buildings/lodging_building_demo.tscn" id="1_1jaco"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_kq37l"]
@@ -65,10 +65,9 @@
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 [ext_resource type="AudioStream" uid="uid://wns0fvqqirx1" path="res://assets/SFX/Pokémon Diamond Music_ Eterna City (Night).mp3" id="64_5wmd6"]
 [ext_resource type="PackedScene" uid="uid://bnbwgt4okb4sr" path="res://tscn/characters/blockhead_new.tscn" id="64_c7lnc"]
-[ext_resource type="PackedScene" uid="uid://dkhqi676wwo7k" path="res://assets/Models/Light Poles/LightpoleDetailed.glb" id="66_qq0i6"]
-[ext_resource type="PackedScene" uid="uid://qsanyqxa1c4g" path="res://assets/Models/Light Poles/LightpoleSimple.glb" id="67_8dai0"]
-[ext_resource type="PackedScene" uid="uid://eflx4g7qlym6" path="res://tscn/Village Misc/powerlines.tscn" id="69_cym1i"]
-[ext_resource type="PackedScene" uid="uid://b6dmgdbsndnrb" path="res://assets/Models/Light Poles/ReferencePoles.glb" id="69_vpta0"]
+[ext_resource type="PackedScene" uid="uid://baaavag0p3olq" path="res://tscn/Village Misc/lightpole_detailed.tscn" id="66_b71kn"]
+[ext_resource type="PackedScene" uid="uid://bu3kx7866e0u3" path="res://tscn/Village Misc/lightpole_simple.tscn" id="67_vcaeq"]
+[ext_resource type="PackedScene" uid="uid://dyerbhsu84mk2" path="res://tscn/Village Misc/powerlines.tscn" id="69_cym1i"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fp232"]
 panorama = ExtResource("2_2821l")
@@ -931,100 +930,14 @@ size = Vector3(1, 0.161621, 0.744019)
 [node name="LightPost" type="Node3D" parent="MISC PROPS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.61407, -9.53674e-07, 7.03459)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="MISC PROPS/LightPost"]
-transform = Transform3D(0.9655, 0, -0.260403, 0, 1, 0, 0.260403, 0, 0.9655, -0.463247, 2.25073, -0.114337)
-material_override = ExtResource("22_bokwp")
-size = Vector3(0.314941, 1, 0.714905)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="MISC PROPS/LightPost"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0348816, 3.36375, -0.039382)
-material_override = ExtResource("21_vtgu2")
-use_collision = true
-radius = 0.319519
-height = 7.04056
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="MISC PROPS/LightPost"]
-transform = Transform3D(1, 0, 0, 0, 0.0648099, 0, 0, 0, 1, -0.914634, 6.58393, 0.166475)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.469928
-height = 3.31591
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="MISC PROPS/LightPost"]
-transform = Transform3D(0.00287731, 0.0630612, 0.230708, -0.999992, 0.000140278, 0.00334294, 0.00275339, -0.0149527, 0.973018, -0.487276, 6.91153, 0.0999074)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.0786634
-height = 14.2948
-
 [node name="SpotLight3D" type="SpotLight3D" parent="MISC PROPS/LightPost"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.947013, 6.22522, 0.158668)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.68915, 5.02135, 0.623678)
 light_energy = 5.172
 spot_range = 15.8984
 spot_angle = 21.478
 
-[node name="PowerlinePost" type="Node3D" parent="MISC PROPS"]
-transform = Transform3D(0.985909, 0, 0.167285, 0, 1, 0, -0.167285, 0, 0.985909, 10.0886, -9.53674e-07, 15.1711)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="MISC PROPS/PowerlinePost"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0348816, 3.36375, -0.039382)
-material_override = ExtResource("21_vtgu2")
-use_collision = true
-radius = 0.319519
-height = 7.04056
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="MISC PROPS/PowerlinePost"]
-transform = Transform3D(0.00287731, 0.0630612, 0.230708, -0.999992, 0.000140278, 0.00334294, 0.00275339, -0.0149527, 0.973018, -0.487276, 6.83254, 0.0999069)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.0786634
-height = 23.0589
-
-[node name="PowerlinePost2" type="Node3D" parent="MISC PROPS" groups=["prop"]]
-transform = Transform3D(0.255075, 0, 0.966922, 0, 1, 0, -0.966922, 0, 0.255075, -19.047, -9.53674e-07, 3.82469)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="MISC PROPS/PowerlinePost2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0348816, 3.36375, -0.039382)
-material_override = ExtResource("21_vtgu2")
-use_collision = true
-radius = 0.319519
-height = 7.04056
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="MISC PROPS/PowerlinePost2"]
-transform = Transform3D(0.00287731, 0.0630612, 0.230708, -0.999992, 0.000140278, 0.00334294, 0.00275339, -0.0149527, 0.973018, 0.0120974, 6.83254, -0.0318336)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.0786634
-height = 42.4839
-
 [node name="LightPost2" type="Node3D" parent="MISC PROPS"]
 transform = Transform3D(0.0704877, 0, -0.997513, 0, 1, 0, 0.997513, 0, 0.0704877, -5.15578, 0, 22.3678)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="MISC PROPS/LightPost2"]
-transform = Transform3D(0.9655, 0, -0.260403, 0, 1, 0, 0.260403, 0, 0.9655, -0.463247, 2.25073, -0.114337)
-material_override = ExtResource("22_bokwp")
-size = Vector3(0.314941, 1, 0.714905)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="MISC PROPS/LightPost2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0348816, 3.36375, -0.039382)
-material_override = ExtResource("21_vtgu2")
-use_collision = true
-radius = 0.319519
-height = 7.04056
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="MISC PROPS/LightPost2"]
-transform = Transform3D(1, 0, 0, 0, 0.0648099, 0, 0, 0, 1, -0.914634, 6.58393, 0.166475)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.469928
-height = 3.31591
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="MISC PROPS/LightPost2"]
-transform = Transform3D(0.00287731, 0.0630612, 0.230708, -0.999992, 0.000140278, 0.00334294, 0.00275339, -0.0149527, 0.973018, -0.487276, 6.91153, 0.0999074)
-material_override = ExtResource("22_bokwp")
-use_collision = true
-radius = 0.0786634
-height = 14.2948
 
 [node name="SpotLight3D" type="SpotLight3D" parent="MISC PROPS/LightPost2"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.947013, 6.22522, 0.158668)
@@ -1115,16 +1028,23 @@ autoplay = true
 [node name="blockheadGodot" parent="." instance=ExtResource("64_c7lnc")]
 transform = Transform3D(0.998391, 0, 0.0567103, 0, 1, 0, -0.0567103, 0, 0.998391, -19.9138, -0.0114212, 5.95232)
 
-[node name="LightpoleDetailed" parent="." instance=ExtResource("66_qq0i6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.55713, -0.0373916, 6.10354)
+[node name="LightpoleDetailed2" parent="." instance=ExtResource("66_b71kn")]
+transform = Transform3D(0.999962, 0, -0.0087615, 0, 1, 0, 0.0087615, 0, 0.999962, 4.56408, -0.0390865, 7.74113)
 
-[node name="LightpoleSimple" parent="." instance=ExtResource("67_8dai0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73815, -0.0573306, 6.68222)
+[node name="LightpoleSimple" parent="." instance=ExtResource("67_vcaeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.3051, -0.0685046, 14.4978)
 
-[node name="ReferencePoles" parent="." instance=ExtResource("69_vpta0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.63425, 0.121955, 8.15096)
-visible = false
+[node name="LightpoleSimple2" parent="." instance=ExtResource("67_vcaeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1754, -0.0685046, 24.2082)
+
+[node name="LightpoleSimple3" parent="." instance=ExtResource("67_vcaeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.12544, -0.0685046, -5.8552)
+
+[node name="LightpoleSimple4" parent="." instance=ExtResource("67_vcaeq")]
+transform = Transform3D(0.333494, 0, -0.942752, 0, 1, 0, 0.942752, 0, 0.333494, -16.9491, -0.0685046, -11.0721)
+
+[node name="LightpoleSimple5" parent="." instance=ExtResource("67_vcaeq")]
+transform = Transform3D(0.972849, 0, -0.231442, 0, 1, 0, 0.231442, 0, 0.972849, -19.4027, -0.0685046, -0.306092)
 
 [node name="Powerlines" parent="." instance=ExtResource("69_cym1i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62957, 0.118456, 8.14697)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64583, -0.0460018, 8.08147)
