@@ -434,7 +434,9 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			item = playerModel.equipped;
 		}
 		if (playerModel.inv.RemoveItem(item)){
-			Node3D worldItem = (Node3D) item.GetPackedSceneWorldItem().Instantiate();
+			PickupBase worldItem = (PickupBase) GD.Load<PackedScene>("res://pickup_base.tscn").Instantiate();
+			worldItem.inventoryItem = item;
+			worldItem.setupPickupBase();
 			Global.currentLevel.AddChild(worldItem);
 			worldItem.Position = Global.playerNode.Position + new Vector3(0,1,1);
 			if (item == playerModel.equipped){

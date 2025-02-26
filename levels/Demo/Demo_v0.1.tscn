@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://ds46gopvilnro" path="res://assets/texture/Environment/Stone/Stone.png" id="9_qjwo7"]
 [ext_resource type="Texture2D" uid="uid://c1spdckqp8hr5" path="res://assets/texture/Environment/Mud/Mud.png" id="10_e8vfu"]
 [ext_resource type="Script" path="res://gameobjects/SpawnPoint.cs" id="11_kvv3g"]
-[ext_resource type="PackedScene" uid="uid://cirg5lcesnafx" path="res://player/player.tscn" id="13_2fyb0"]
 [ext_resource type="Shape3D" uid="uid://fq5v2apmp1qq" path="res://assets/shape_floor.tres" id="13_13urj"]
 [ext_resource type="Material" uid="uid://cciy1lix1177c" path="res://assets/Materials/DummyMaterials/DummyBrick.tres" id="14_7kwbv"]
 [ext_resource type="PackedScene" uid="uid://dmm0d1yk4for1" path="res://tscn/rocks/rock_9.tscn" id="17_d1aw2"]
@@ -29,9 +28,9 @@
 [ext_resource type="Material" uid="uid://cs77spgadl1cx" path="res://assets/Materials/DummyMaterials/DummyMetal.tres" id="22_bokwp"]
 [ext_resource type="PackedScene" uid="uid://bqqrx3ymrx5a0" path="res://tscn/characters/blockhead.tscn" id="31_tvud5"]
 [ext_resource type="PackedScene" uid="uid://t0deicl6s7yp" path="res://tscn/trees/RegularTree1_A.tscn" id="32_orf7b"]
-[ext_resource type="PackedScene" uid="uid://dcheyehyrnnmq" path="res://tscn/gold_bullion.tscn" id="33_1iut6"]
 [ext_resource type="PackedScene" uid="uid://bqpyrcuk2g8ua" path="res://tscn/trees/RegularTree2_A.tscn" id="33_2l3aj"]
 [ext_resource type="PackedScene" uid="uid://jk3ldkc354nb" path="res://tscn/wood/crate_01.tscn" id="33_idm5b"]
+[ext_resource type="Resource" uid="uid://bwx0amkfjsedu" path="res://gameobjects/resources/funnybux_invitem.tres" id="34_03m6u"]
 [ext_resource type="PackedScene" uid="uid://cqmdhxv8741tg" path="res://tscn/wood/signpost_03.tscn" id="34_2874q"]
 [ext_resource type="PackedScene" uid="uid://chcp2xs5tfiny" path="res://tscn/trees/RegularTree3_A.tscn" id="34_uyj4k"]
 [ext_resource type="PackedScene" uid="uid://c0dfq044em5yn" path="res://tscn/trees/RegularSapling1_A.tscn" id="35_226f8"]
@@ -64,6 +63,7 @@
 [ext_resource type="PackedScene" uid="uid://b5upeafiq04bi" path="res://tscn/rocks/rock_3.tscn" id="59_pa6em"]
 [ext_resource type="PackedScene" uid="uid://b3ficmer3dppj" path="res://tscn/bush_1a.tscn" id="62_20uy7"]
 [ext_resource type="AudioStream" uid="uid://wns0fvqqirx1" path="res://assets/SFX/Pokémon Diamond Music_ Eterna City (Night).mp3" id="64_5wmd6"]
+[ext_resource type="PackedScene" uid="uid://cc1w8lrr5qvnl" path="res://pickup_base.tscn" id="64_urew2"]
 [ext_resource type="PackedScene" uid="uid://baaavag0p3olq" path="res://tscn/Village Misc/lightpole_detailed.tscn" id="66_b71kn"]
 [ext_resource type="PackedScene" uid="uid://bu3kx7866e0u3" path="res://tscn/Village Misc/lightpole_simple.tscn" id="67_vcaeq"]
 [ext_resource type="PackedScene" uid="uid://dyerbhsu84mk2" path="res://tscn/Village Misc/powerlines.tscn" id="69_cym1i"]
@@ -158,19 +158,10 @@ shape = ExtResource("13_13urj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.1771, 7.19891)
 light_energy = 0.0
 
-[node name="Player" parent="." instance=ExtResource("13_2fyb0")]
-transform = Transform3D(1, 0.000750492, 0, -0.000750492, 1, 0, 0, 0, 1, -15.776, -1.7053e-13, 13.2917)
-collision_mask = 1
-
 [node name="spawnpoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0927, 1.66496, 13.3522)
 script = ExtResource("11_kvv3g")
 typeToSpawn = 1024
-
-[node name="Blockhead" parent="." node_paths=PackedStringArray("stations") instance=ExtResource("31_tvud5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3681, 0.00717068, 13.2864)
-stations = [NodePath("../TREES/Tree4"), NodePath("../TREES/Tree14"), NodePath("../Firepit"), NodePath("../TREES/Sapling3")]
-radius = 1.0
 
 [node name="Door2Forest" type="Area3D" parent="."]
 transform = Transform3D(0.898112, 0.285752, -0.334277, -0.326162, 0.942684, -0.0704679, 0.294981, 0.172316, 0.939837, 4.00428, 1.36033, 1.36422)
@@ -567,35 +558,47 @@ transform = Transform3D(-0.351304, 0.355633, -0.696162, 0.0858562, 0.863618, 0.3
 [node name="ROCKS PICKUPABLE" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1498, 43.4226)
 
-[node name="GoldBullion" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68977, 0, 0)
+[node name="PickupBase" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60212, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion2" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.42646, 0, 0)
+[node name="PickupBase2" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.37349)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion3" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.42043, 0, 0)
+[node name="PickupBase3" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.87122)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion4" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3388, 0, 0)
+[node name="PickupBase4" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7247, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion5" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6331, 0, 0)
+[node name="PickupBase5" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.215, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion6" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5245, 0, 0)
+[node name="PickupBase6" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51628, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion7" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1701, 0, 0)
+[node name="PickupBase7" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6599, -0.0196548, 13.1549)
 
-[node name="GoldBullion8" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7644, 0, 0)
+[node name="PickupBase8" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.63461, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion9" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5853, 0, 0)
+[node name="PickupBase9" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58699, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
 
-[node name="GoldBullion10" parent="ROCKS PICKUPABLE" instance=ExtResource("33_1iut6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12198, 0, 0)
+[node name="PickupBase10" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76834, 0, 0)
+inventoryItem = ExtResource("34_03m6u")
+
+[node name="PickupBase11" parent="ROCKS PICKUPABLE" instance=ExtResource("64_urew2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1478)
 
 [node name="BUSHES" type="Node3D" parent="."]
 
@@ -1046,4 +1049,6 @@ transform = Transform3D(0.333494, 0, -0.942752, 0, 1, 0, 0.942752, 0, 0.333494, 
 transform = Transform3D(0.972849, 0, -0.231442, 0, 1, 0, 0.231442, 0, 0.972849, -19.4027, -0.0685046, -0.306092)
 
 [node name="Powerlines" parent="." instance=ExtResource("69_cym1i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64583, -0.0460018, 8.08147)
+
+[node name="Blockhead" parent="." instance=ExtResource("31_tvud5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.821, 0, 9.68285)

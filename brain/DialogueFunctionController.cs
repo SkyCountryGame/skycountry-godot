@@ -30,13 +30,16 @@ public partial class DialogueFunctionController: GodotObject //needs to be Godot
                 convertedArgs[i]=(string)args[i];
             }
         }
-        Variant result = Call(function.GetDescription(), convertedArgs);
-        switch(result.VariantType){
-            case Variant.Type.Bool:
-                return (bool)result;
-            default:
-                return true;
+        if(HasMethod(function.GetDescription())){
+            Variant result = Call(function.GetDescription(), convertedArgs);
+            switch(result.VariantType){
+                case Variant.Type.Bool:
+                    return (bool)result;
+                default:
+                    return true;
+            }
         }
+        return false;
     }
 
     public bool CheckAndRemoveInventory(string itemName, int count){

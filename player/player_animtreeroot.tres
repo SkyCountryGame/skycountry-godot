@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=16 format=3 uid="uid://dqvxskux8r6i0"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=16 format=3 uid="uid://bpfwygy2ct60g"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bnw5a"]
 animation = &"1H_Melee_Slash2"

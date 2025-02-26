@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://levels/Level0.cs" id="1_iiogu"]
 [ext_resource type="PackedScene" uid="uid://bantfsh2sxy0v" path="res://ui/hud.tscn" id="2_fsd0o"]
 [ext_resource type="PackedScene" uid="uid://brt5upnw6wocy" path="res://prefabs/fishing_pole.tscn" id="5_rmumv"]
-[ext_resource type="PackedScene" uid="uid://c83di2s6skyw5" path="res://prefabs/pickaxe_pickup.tscn" id="6_krsbu"]
 [ext_resource type="Script" path="res://brain/Camera.cs" id="8_7fw5a"]
 [ext_resource type="Script" path="res://components/Talker.cs" id="9_80eq6"]
 [ext_resource type="PackedScene" uid="uid://b7suifadqfxfl" path="res://prefabs/rocks/rock.tscn" id="11_xa5x2"]
@@ -226,9 +225,6 @@ script = ExtResource("15_2fbkt")
 [node name="Bat" parent="." instance=ExtResource("18_d7mr5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38931, 0.0999999, -9.44192)
 collision_mask = 1
-
-[node name="PickaxePickup" parent="." instance=ExtResource("6_krsbu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.624, 0.0499992, 4.44565)
 
 [node name="LampPost" parent="." instance=ExtResource("20_vj7e2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7833, 0.1, -14.6407)

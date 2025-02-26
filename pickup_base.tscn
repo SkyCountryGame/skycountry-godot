@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc1w8lrr5qvnl"]
+
+[ext_resource type="Script" path="res://PickupBase.cs" id="1_dmajr"]
+[ext_resource type="Resource" uid="uid://bmd88axmpykue" path="res://gameobjects/resources/pickaxe_invitem.tres" id="2_5ss2j"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xdkif"]
+margin = 0.5
+
+[node name="PickupBase" type="StaticBody3D" node_paths=PackedStringArray("meshInstance", "collisionShape", "gpuParticles")]
+script = ExtResource("1_dmajr")
+inventoryItem = ExtResource("2_5ss2j")
+meshInstance = NodePath("MeshInstance3D")
+collisionShape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789267, 0)
+shape = SubResource("CylinderShape3D_xdkif")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.3, -2.62268e-08, -2.62268e-08, -2.62268e-08, 0.3, 2.62268e-08, 2.62268e-08, 2.62268e-08, -0.3, 0, 0, 0)
+skeleton = NodePath("")

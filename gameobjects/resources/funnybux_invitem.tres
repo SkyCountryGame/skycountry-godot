@@ -1,9 +1,17 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://bwx0amkfjsedu"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://bwx0amkfjsedu"]
 
+[ext_resource type="ArrayMesh" uid="uid://cxw1d3pn7s0xb" path="res://assets/Models/Misc/GoldBullion_Cube.res" id="1_chebv"]
 [ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="1_msysg"]
+[ext_resource type="PackedScene" uid="uid://lon880hbhqgr" path="res://assets/ParticleFX/ShinyGold.tscn" id="1_oe0ke"]
 
 [resource]
 script = ExtResource("1_msysg")
-name = "gold_bullion"
-itemType = 0
+radius = 0.763
+height = 0.69
+name = "Gold Bullion"
+scale = Vector3(3, 3, 3)
+itemType = 512
 equipable = false
+collisionShapeType = 0
+mesh = ExtResource("1_chebv")
+gpuParticles = ExtResource("1_oe0ke")

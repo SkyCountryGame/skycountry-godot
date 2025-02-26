@@ -18,9 +18,20 @@ public partial class InventoryItem : Resource, System.ICloneable {
         Mineral = 1<<9
     }
 
+    public enum CollisionShapeType {
+        CapsuleShape3D,
+        CylinderShape3D
+    }
+    
+    [Export] public float radius;
+    [Export] public float height;
     [Export] public string name;
+    [Export] public Vector3 scale;
     [Export] public ItemType itemType;
     [Export] public bool equipable;
+    [Export] public CollisionShapeType collisionShapeType;
+    [Export] public Mesh mesh;
+    [Export] public PackedScene gpuParticles;
     
     public int id;
     private static int nextId = 0; //keep count so that id is always unique

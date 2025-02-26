@@ -1,10 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bro53vhk1gvdu"]
 
-[ext_resource type="PackedScene" uid="uid://cg11lk4imlbcy" path="res://tools/out/floor.gltf" id="1_tiiyr"]
-
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5nalt"]
 
-[node name="floor" node_paths=PackedStringArray("meshInstance", "collisionShape") instance=ExtResource("1_tiiyr")]
 meshInstance = NodePath("cube")
 collisionShape = NodePath("StaticBody3D/CollisionShape3D")
 

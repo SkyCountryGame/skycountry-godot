@@ -9,7 +9,7 @@
                     "success" : 2,
                     "failure": 3,
                     "name": "CheckAndRemoveInventory",
-                    "args": ["gold_bullion", 10]
+                    "args": ["Gold Bullion", 10]
                 }
             },
             {
