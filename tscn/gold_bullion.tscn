@@ -7,9 +7,13 @@
 
 [sub_resource type="Resource" id="Resource_fhyk3"]
 script = ExtResource("4_mq2kn")
+radius = 0.0
+height = 0.0
 name = "gold_bullion"
+scale = Vector3(0, 0, 0)
 itemType = 32
 equipable = false
+collisionShapeType = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4a2fs"]
 size = Vector3(0.5, 0.4, 1)

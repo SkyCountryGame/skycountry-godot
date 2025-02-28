@@ -5,8 +5,7 @@
 		"description": "tool for mining",
         "types": ["tool", "weapon", "pickup", "equipable"],
 		"scene_files": [
-            "pickaxe_equip.tscn",
-            "pickaxe_pickup.tscn"
+            "pickaxe_equip.tscn"
         ]
 	},
 	{
@@ -15,8 +14,7 @@
 		"description": "catch fish",
         "types": ["tool", "pickup", "equipable"],
 		"scene_files": [
-            "fishingpole_equip.tscn",
-            "fishingpole_pickup.tscn"
+            "fishingpole_equip.tscn"
         ],
 		"inventoryItem": "",
 		"itemProperties": {

@@ -1,9 +1,15 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://bmd88axmpykue"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bmd88axmpykue"]
 
+[ext_resource type="ArrayMesh" uid="uid://c3efqvy3bucl7" path="res://assets/gameobjects/TestPickaxe_Cube.res" id="1_qvlr6"]
 [ext_resource type="Script" path="res://inventory/InventoryItem.cs" id="3_myje1"]
 
 [resource]
 script = ExtResource("3_myje1")
-name = "pickaxe"
+radius = 0.5
+height = 2.0
+name = "Pickaxe"
+scale = Vector3(0.3, 0.3, 0.3)
 itemType = 64
 equipable = true
+collisionShapeType = 0
+mesh = ExtResource("1_qvlr6")
