@@ -434,7 +434,7 @@ public partial class Player : CharacterBody3D, /*StateManager*/ Collideable, Int
 			item = playerModel.equipped;
 		}
 		if (playerModel.inv.RemoveItem(item)){
-			PickupBase worldItem = (PickupBase) PrefabManager.Get(PrefabManager.LoadPrefab("res://gameobjects/pickup_base.tscn")).Instantiate();
+			PickupBase worldItem = (PickupBase) PrefabManager.Get("pickup_base").Instantiate();
 			worldItem.inventoryItem = item;
 			worldItem.setupPickupBase();
 			Global.currentLevel.AddChild(worldItem);
