@@ -80,5 +80,14 @@
 			}
 		],
 		"accessible_levels": []
-	}   
+	},
+    {   
+        "id": 5,
+        "name": "underground cellar"
+
+    },{
+        "name": "blackwater park"
+    },{
+        "name": "the infinite diner"
+    }
 ]
